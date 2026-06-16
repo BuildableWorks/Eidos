@@ -1,0 +1,201 @@
+# Eidos
+
+**Version:** 1.0.0
+
+The Eidos standard — a markdown spec registry where one file completely defines one
+unit of a product, true whether or not the thing has been built. This file is the
+single source of truth for the format; agents and authors should read it before
+creating or validating specs.
+
+## What a spec is
+
+A **spec** is a living markdown document that defines one unit of a product
+completely: "this is what you're getting," with no ambiguity. A spec is true
+whether or not the thing it describes has been built. It captures **state and
+intent, not work**. Tasks describe work and die when the work ships; a spec
+describes the product and stays accurate across its whole life: proposed, built,
+deprecated.
+
+"Spec" names the artifact. What it specifies is a field (`type`), not a different
+kind of document. Every spec carries the same shape regardless of its `type`.
+
+## Two tiers of document
+
+Eidos holds two classes of document. They behave differently on purpose.
+
+- **Product docs** are singletons at the product root: `Architecture.md`,
+  `Audience.md`, `Criteria.md`, `Market.md`. One of each per product. They are
+  prose, deliberately loose, and point-in-time. They set the frame every spec is
+  judged against: who it serves, what it must respect, where it sits in the
+  market, what it can afford.
+- **Specs** are the many. One per unit of the product, grouped into domains under
+  `specs/`. They share one uniform shape (see [Spec frontmatter](#spec-frontmatter)
+  and [Spec body](#spec-body)).
+
+Product docs drive decisions and audit scope. Specs capture the units that result.
+When defining a *whole product*, reach for product docs. When defining a *piece* of
+it, reach for a spec.
+
+## Directory layout
+
+```
+product/                 # the registry root; name is low-stakes and renameable
+  Architecture.md        # overarching system shape, one entry door
+  Audience.md            # who it serves and how each type interacts
+  Criteria.md            # budget, objective + scope, timeline
+  Market.md              # where it sits, how it differs, how it earns
+  specs/
+    <domain>/
+      <id>.md            # one spec per unit, grouped by domain folder
+  arch/                  # optional, only when architecture detail outgrows one file
+  domains.md             # optional, describes each domain; derived from specs
+```
+
+`product/` is the overarching root; its name is low-stakes and renameable because
+nothing in a spec points at it by path. Domains are folders under `specs/`.
+Everything else (story-map position, capability relationships, jobs) lives in
+frontmatter so the folder choice stays low-stakes. One hierarchy on disk, many
+views from metadata.
+
+For a monorepo with several products, nest as `product/<name>/...`, each with its
+own four docs and `specs/`.
+
+## Product docs
+
+Four singletons at the product root, one of each per product. Prose, deliberately
+loose, point-in-time. Each carries minimal frontmatter (`type: system`, `title`,
+`tags`, `last_validated`) and recommended body sections.
+
+- **Architecture** — the overarching shape of the product as a built system:
+  shape, components, data and flow, boundaries and dependencies. When the detail
+  outgrows one file, expand into an optional `arch/` folder and keep this doc as
+  the map.
+- **Audience** — who the product serves and how each user type interacts
+  differently. Simple blocks of prose; no persona theater.
+- **Criteria** — the frame that decides and audits scope: budget/financing,
+  objective + scope, timeline. When scope creeps, it creeps past this doc.
+- **Market** — where the product sits, the concrete difference that makes it not
+  interchangeable, who it is for and against, and how it earns.
+
+Product docs are point-in-time snapshots of intent and are expected to evolve.
+Record what is true now; revise when it changes.
+
+## Spec frontmatter
+
+The frontmatter is the hard contract: the part a validator checks. The body is
+guidance.
+
+### Required
+
+| Field            | Type   | Notes                                                                                                                   |
+| ---------------- | ------ | --------------------------------------------------------------------------------------------------------------------- |
+| `id`             | string | Stable, unique, kebab-case. Assigned once, never renamed. References point at it.                                     |
+| `title`          | string | Human-readable name. Rename freely.                                                                                   |
+| `type`           | string | Open label, human-chosen. Drives views, never structure. Common: `feature`, `capability`, `domain`, `integration`.   |
+| `domain`         | string | The grouping. Required, soft, descriptive. Matches the folder under `specs/`. An unknown domain is valid (warn only). |
+| `status`         | enum   | `proposed` \| `accepted` \| `in-progress` \| `shipped` \| `deprecated`. Single current value, no history.            |
+| `last_validated` | date   | `YYYY-MM-DD`. The day a human confirmed the spec still matches reality. Not the edit date; git has that.             |
+
+### Optional
+
+| Field        | Type         | Notes                                                              |
+| ------------ | ------------ | ----------------------------------------------------------------- |
+| `owner`      | string       | Who answers questions about this spec.                            |
+| `depends_on` | list of `id` | Specs this one needs to function.                                 |
+| `implements` | `id`         | The capability spec this feature realizes. By reference, not nesting. |
+| `supersedes` | list of `id` | Specs this one replaced.                                          |
+| `serves_job` | string       | The job-to-be-done, in the user's words.                         |
+| `activity`   | string       | Position on the story-map backbone (e.g. `getting-started`).     |
+| `tags`       | list         | Free tags.                                                        |
+
+## Spec body
+
+Recommended, not required. This is the suggestive part of the contract. Present
+these sections in this order when present. A spec in progress, or one where a
+section genuinely does not apply, may omit any of them. The headings exist to help
+fully capture scope, not to block a half-formed spec. A validator may note a
+missing recommended section and offer to fill it; it never refuses the file.
+
+- **Intent** — why this exists, the problem and who has it. One or two paragraphs.
+  Stable. If Intent changes substantially, you probably have a different spec.
+- **Behavior** — what it does, as observable outcomes. The "this is what you're
+  getting" section. If a behavior is not listed, it is not promised. Evolves freely.
+- **Out of Scope** — explicit non-goals. The section the standard leans on
+  hardest, because this is where scope management happens. A spec without it is
+  rarely finished. Still not a hard gate, but the first thing to add when a spec
+  feels thin.
+- **Constraints** — non-functional requirements and boundaries: performance,
+  compliance, platform limits. The constraints architecture must satisfy, not the
+  architecture itself.
+- **Open Questions** — unresolved items. Hold uncertainty here so it does not leak
+  into Behavior as wishful thinking.
+- **Decisions** — append-only log, one dated line per decision:
+  `2026-06-11: Dropped SMS fallback, carrier cost. (brenton)`
+
+## Rules
+
+These are the load-bearing conventions.
+
+1. **The frontmatter is the contract; the body is guidance.** Frontmatter fields
+   are validated. Body sections are recommended structure, not gates.
+2. **Portability over prescription.** Recommended sections may be omitted when a
+   doc is in progress or genuinely does not apply. Note a missing section and offer
+   to fill it; never refuse the file for it.
+3. **One shape for specs, always.** Every spec carries the same body sections
+   regardless of its `type`. Never branch structure on `type`.
+4. **`type` is an open label.** Humans choose it. It drives views and filtering,
+   never structure.
+5. **`domain` is the grouping.** Required, soft, descriptive. Matches the folder.
+   An unknown domain is valid — warn and offer to register it, don't block.
+6. **`id` is permanent.** Stable, unique, kebab-case, assigned once, never renamed.
+   Rename `title` freely.
+7. **Intent is stable, Behavior evolves.** Editing Behavior is routine. If Intent
+   changes substantially, ask whether this is a different spec.
+8. **Out of Scope carries the most weight.** It is where scope management actually
+   happens. The strongest recommended section, but still not a hard gate.
+9. **No work-tracking fields.** No `sprint`, `estimate`, or `assignee`. The moment
+   you add them, a spec becomes a task and rots. Bridge to a tracker with a link.
+10. **Observation over assertion.** `last_validated` records the day a human
+    confirmed the spec matches reality. Not the edit date; git has that.
+11. **Product docs are point-in-time.** Criteria, Market, and Audience capture a
+    snapshot of intent and are expected to evolve.
+
+## Domain descriptions (`domains.md`)
+
+Optional, at the registry root. Derived from specs. Holds domain descriptions
+only; existence is proven by specs, not by this file.
+
+```markdown
+# Domains
+
+- **identity** — Who the user is and how they prove it
+- **billing** — Money in, money out, what they're entitled to
+```
+
+- A domain with specs but no entry here is valid, just undescribed.
+- A domain with an entry here but no specs is dangling; a validator may flag it.
+- `domains.md` never gates. It annotates.
+- Regenerable: crawl every spec's `domain`, rebuild the list, keep hand-written
+  descriptions.
+
+## Validation
+
+When checking a spec:
+
+1. Verify the **frontmatter contract**: required fields present and well-formed
+   (`id` kebab-case, valid `status` enum, `last_validated` as `YYYY-MM-DD`). These
+   are the only true failures.
+2. Check the **body** against recommended sections and report what is missing as
+   *suggestions*, flagging an absent **Out of Scope** most prominently.
+3. Confirm no work-tracking fields have crept in.
+4. Surface, don't enforce. The output is a review a human acts on, not a gate.
+
+## Versioning
+
+- Semantic Versioning (`MAJOR.MINOR.PATCH`). Major bumps for breaking changes,
+  minor for backward-compatible additions, patch for clarifications.
+- This file is 1.0.0. When releasing a new major version, preserve the outgoing
+  `EIDOS.md` in `versions/` (e.g. `versions/v1.md`).
+- See `CHANGELOG.md` for history and migrations.
+- `manifest.json` mirrors the current version for machine consumers.
+- Tools may reject if the version in this file is unsupported.

@@ -1,0 +1,8 @@
+# Personal Obsidian vault config, if you open the repo as a vault
+.obsidian/
+
+# Reserved for future Eidos tooling cache; not your specs
+.eidos/
+
+# OS / editor noise
+.DS_Store
