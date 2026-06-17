@@ -1,0 +1,69 @@
+---
+type: system
+title: Eidos
+tags: [eidos, meta]
+---
+
+# Eidos
+
+Eidos is a spec registry. It holds the authoritative definition of what a product is, one spec per file. A spec is true whether or not the thing it describes has been built. It captures state and intent, not work.
+
+## What a spec is
+
+A spec is a living document describing one unit of a product completely. It answers "this is what you're getting" with no ambiguity. It is not a task. Tasks describe work and die when the work ships. A spec describes the product and stays accurate across its whole life: drafted, built, deprecated.
+
+Every spec shares one uniform shape, regardless of what it describes. See Spec Schema.
+
+## Two tiers of document
+
+Eidos holds two classes of document. They behave differently on purpose.
+
+- **Product docs** sit at the product root: Architecture, Audience, Criteria, Market — one of each per product. They are prose, deliberately loose, and they describe the whole. They set the frame every spec is judged against: who it serves, what it must respect, where it sits in the market, what it can afford.
+- **Specs** are the many. One per unit of the product, grouped into domains under `Specs/`. They share one uniform shape. See Spec Schema.
+
+Product docs drive decisions and audit scope. Specs capture the units that result.
+
+## Core ideas
+
+- **Human-first, agent-assisted.** A person — usually a product owner — holds the intent, the scope, and the decisions. An agent facilitates: it formats, supplements, asks clarifying questions, and presses on scope. It does not author finished specs or set direction. A spec no one thought through is worse than none, because it reads as settled while no one actually knows it.
+- **The file is a spec.** "Spec" names the artifact. What it specifies is a field (`type`), not a different document kind.
+- **One shape, always.** Every spec carries the same sections. Skills validate one structure.
+- **Portability over prescription.** The standard is suggestive, not mandatory. Sections are recommended, not gates. A doc in progress, or one whose section does not apply, may omit it. The structure exists to help fully capture scope, not to block a half-formed thought from being written down. A skill may note a missing recommended section; it never refuses the file for it.
+- **`type` is an open label.** Humans decide it. It drives views and filtering, never structure.
+- **`domain` is the grouping.** Required, soft, descriptive. Domains arise from specs rather than being authored up front.
+- **Intent is stable; Behaviors & Acceptance Criteria evolve.** Editing behaviors is routine. Editing Intent should prompt the question: is this a different spec now?
+- **Out of Scope carries weight.** It is where scope management actually happens. The strongest of the recommended sections, but still recommended, not required.
+- **Product docs are point-in-time.** Criteria, Market, and Audience capture a snapshot of intent. They are expected to evolve. They record what was true when written, not a permanent contract.
+- **Dates at a glance.** `created` is set once; `modified` tracks the last change. Both are `YYYY-MM-DD`; git holds the full edit history.
+
+## Layout
+
+```
+Blueprint/
+  Architecture.md     # overarching system shape, one entry door
+  Audience.md         # who it serves and how each type interacts
+  Criteria.md         # budget, objective + scope, timeline
+  Market.md           # where it sits, how it differs, how it earns
+  Domains.md          # the domains as descriptions; present by default
+  Specs/
+    Identity/
+      Magic Link Sign-In.md
+      Session Management.md
+    Billing/
+      ...
+  Arch/               # optional, only when architecture detail outgrows one file
+templates/            # the standard's official fill-in templates, beside Blueprint
+  Spec Template.md
+  Architecture Template.md
+  Audience Template.md
+  Criteria Template.md
+  Market Template.md
+```
+
+`Blueprint/` is the overarching root. The name is low-stakes and renameable; nothing in a spec points at it by path. `Architecture.md` is the single overarching entry doc. Detailed architecture specs, when a product needs them, expand into an optional `Arch/` folder rather than bloating the one file.
+
+Human-facing names are Title Case; the file tree should read like a table of contents. A spec's filename is its title and renames freely, while the kebab-case `id` inside the file is its permanent reference. Domains are folders under `Specs/`. Relationships between specs (`depends_on`) live in frontmatter so the folder choice stays low-stakes. One hierarchy on disk, many views from metadata.
+
+## Domain descriptions
+
+`Domains.md` is present by default at the registry root — part of the layout so it is there to fill — and uses one `##` sub-heading per domain, each with a short description. It is derived and annotates; it never gates. A domain proven by specs but missing from the file is still valid, and the file can be regenerated by crawling every spec's `domain`. See Spec Schema for details.
