@@ -2,15 +2,13 @@
 id: session-management
 title: Session Management
 type: feature
-domain: identity
-status: proposed
-last_validated: 2026-06-16
+domain: Identity
+status: Intake
+created: 2026-06-16
+modified: 2026-06-17
+eidos_version: 2.0.0
 owner: brenton
 depends_on: [magic-link-signin]
-implements: passwordless-auth
-supersedes: []
-serves_job: "stay signed in across visits without re-proving who I am every time"
-activity: getting-started
 tags: [auth, session]
 ---
 
@@ -18,18 +16,30 @@ tags: [auth, session]
 
 ## Intent
 
-Once a user has proven control of their email, asking them to do it again on every
-visit would defeat the point of low-friction sign-in. A session lets a signed-in
-user keep working across visits and devices, and lets them end that access when a
-device is lost or shared.
+Once a user has proven control of their email, asking them to do it again on every visit would defeat the point of low-friction sign-in. A session lets a signed-in user keep working across visits and devices, and lets them end that access when a device is lost or shared.
 
-## Behavior
+### Implementation Notes
 
-- A successful sign-in starts a session bound to the browser that completed it.
-- A session persists across visits until it expires or is ended.
-- A user can see their active sessions and end any one of them.
-- Ending a session immediately revokes access for that device.
-- Sessions expire after a period of inactivity.
+Intend to keep sessions as server-side records keyed by an opaque cookie token. Revocation deletes the record so the next request fails closed, rather than relying on a client-side expiry the server can't retract.
+
+## Open Questions & Assumptions
+
+- Should ending all sessions also invalidate any unused magic links?
+- What inactivity window balances safety against re-sign-in friction?
+
+## Behaviors & Acceptance Criteria
+
+### Functional
+
+- **AC1:** A successful sign-in starts a session bound to the browser that completed it.
+- **AC2:** A session persists across visits until it expires or is ended.
+- **AC3:** A user can see their active sessions and end any one of them.
+- **AC4:** Ending a session immediately revokes access for that device.
+- **AC5:** Sessions expire after a period of inactivity.
+
+### Quality attributes
+
+- **AC6:** Session identifiers are not guessable, and a session identifier cannot be reused after the session ends.
 
 ## Out of Scope
 
@@ -37,17 +47,21 @@ device is lost or shared.
 - Does not manage team membership or permissions; that is a separate concern.
 - Does not offer single sign-on or third-party identity providers.
 
-## Constraints
+## Dependencies
 
-- Revocation must take effect on the next request, not on the next expiry.
-- Session identifiers must not be guessable or reusable after end.
+- **Magic Link Sign-In** (`depends_on: magic-link-signin`) — currently the only way a session is started.
+- A session store that supports immediate deletion, for the revocation in AC4.
 
-## Open Questions
+## Testing
 
-- Should ending all sessions also invalidate any unused magic links?
-- What inactivity window balances safety against re-sign-in friction?
+- AC1–AC5: a session-lifecycle integration test signs in, persists across requests, ends the session, and asserts access is gone.
+- AC4: assert a revoked session fails on the very next request, not at next expiry.
+- AC6: attempt to reuse an ended session identifier and confirm it is rejected.
 
-## Decisions
+## Constraints & Decisions
 
-<!-- append-only, dated, one line each -->
+- Revocation must take effect on the next request, not at the next expiry — sessions fail closed.
+
+<!-- append-only; date optional but recommended -->
+
 - 2026-06-16: Inactivity expiry over fixed-lifetime sessions, to match infrequent readers. (brenton)
