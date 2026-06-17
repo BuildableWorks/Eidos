@@ -1,0 +1,11 @@
+{
+  "name": "eidos",
+  "owner": { "name": "Brenton Unger II" },
+  "plugins": [
+    {
+      "name": "eidos",
+      "source": "./",
+      "description": "The Eidos spec-registry standard plus its authoring, init, and migration skills."
+    }
+  ]
+}

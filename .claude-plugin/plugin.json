@@ -1,0 +1,9 @@
+{
+  "name": "eidos",
+  "version": "2.0.0",
+  "description": "Eidos — a human-first markdown spec registry standard, with skills to author (eidos), initialize (eidos-init), and migrate (eidos-migrate) product specs.",
+  "author": { "name": "Brenton Unger II" },
+  "homepage": "https://gitlab.com/the-virtual-panda/Eidos",
+  "repository": "https://gitlab.com/the-virtual-panda/Eidos",
+  "keywords": ["eidos", "specs", "spec-registry", "product", "documentation", "product-management"]
+}
