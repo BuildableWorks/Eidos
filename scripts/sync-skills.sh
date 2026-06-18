@@ -13,6 +13,12 @@
 set -euo pipefail
 cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
+# eidos authors specs and product docs from the templates, so it carries a copy
+# to stay self-contained (e.g. Claude Desktop, which sandboxes each skill to its
+# own folder). In Claude Code it reads ${CLAUDE_PLUGIN_ROOT}/templates instead.
+rm -rf "skills/eidos/templates"
+cp -R "templates" "skills/eidos/templates"
+
 # eidos-init scaffolds a new registry from the templates, following the contract.
 rm -rf "skills/eidos-init/templates"
 cp -R "templates" "skills/eidos-init/templates"
@@ -25,4 +31,4 @@ cp -R "versions" "skills/eidos-migrate/versions"
 cp "CHANGELOG.md" "skills/eidos-migrate/CHANGELOG.md"
 cp "EIDOS.md" "skills/eidos-migrate/EIDOS.md"
 
-echo "✓ copied templates -> eidos-init, versions + CHANGELOG -> eidos-migrate, EIDOS.md -> both"
+echo "✓ copied templates -> eidos + eidos-init, versions + CHANGELOG -> eidos-migrate, EIDOS.md -> init + migrate"

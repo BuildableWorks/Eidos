@@ -30,7 +30,7 @@ Blueprint/
 
 - **Product docs** are four files — one of each — that frame the whole product.
 - **Specs** are the many, one per unit, grouped into `<Domain>/` folders. Every spec shares one shape — Intent, Behaviors & Acceptance Criteria, Out of Scope, and the rest; the fields at the top are the firm part, the body is guidance.
-- **Templates** are part of the standard, in their own top-level `templates/` — not bundled into the example. Fill from them directly.
+- **Templates** ship with the standard — bundled in the plugin, and at the standard's own top-level `templates/`. The skills fill from them; you never keep a `templates/` folder in your product repo.
 - Human-facing names are **Title Case** (the tree reads like a table of contents); the `id` inside each spec — lowercase words joined by hyphens — is its permanent reference.
 
 The full rules are in **[EIDOS.md](EIDOS.md)**. See **[`example/`](example/)** for a filled-in product definition you can pattern-match against.
@@ -39,8 +39,8 @@ The full rules are in **[EIDOS.md](EIDOS.md)**. See **[`example/`](example/)** f
 
 Use Eidos on your own project:
 
-1. **Get the skills.** Install `eidos` (author + validate), `eidos-init` (scaffold a new registry), and `eidos-migrate` (move specs to a new version) — see [Installing the skills](#installing-the-skills). Or work by hand from `EIDOS.md` and [`templates/`](templates/).
-2. **Initialize.** Run `eidos-init`: it scaffolds a `Blueprint/` from the standard's templates, following the current `EIDOS.md` — no copying the example and deleting its contents. (By hand: make a `Blueprint/` folder, copy the four product-doc templates and `Domains.md` from [`templates/`](templates/), and add a `Specs/` folder.)
+1. **Get the skills.** Install `eidos` (author + validate), `eidos-init` (scaffold a new registry), and `eidos-migrate` (move specs to a new version) — see [Installing the skills](#installing-the-skills). Or work by hand from [`EIDOS.md`](EIDOS.md) and the standard's [`templates/`](templates/) (from a clone — you don't keep them in your project).
+2. **Initialize.** Run `eidos-init`: it scaffolds a `Blueprint/` from the standard's templates, following the current `EIDOS.md` — no copying the example and deleting its contents. (By hand: make a `Blueprint/` folder, copy the four product-doc templates and `Domains.md` from the standard's [`templates/`](templates/), and add a `Specs/` folder.)
 3. **Fill the product docs.** Architecture, Audience, Criteria, Market — prose, loose, point-in-time; fill what's known, leave the rest. Describe each domain in `Domains.md` as specs accrue.
 4. **Author specs.** One file per unit under `Specs/<Domain>/`, named for its title in Title Case (`Magic Link Sign-In.md`). Lead with Intent and Behaviors & Acceptance Criteria; press hard on **Out of Scope** — that's where scope is held. The `eidos` skill facilitates; it does not author for you.
 5. **Commit it.** Specs are the product definition. Review them in PRs alongside code. Eidos relies on git history (`created`/`modified` dates, the Decisions log, scope drift), so do **not** gitignore them.
@@ -49,33 +49,63 @@ See [`example/`](example/) for a filled-in registry to pattern-match against.
 
 ## Installing the skills
 
-Eidos ships as a **Claude Code plugin** bundling three skills:
+Eidos ships as a **Claude plugin** bundling three skills:
 
-- **`eidos`** (author + validate)
-- **`eidos-init`** (scaffold a new registry)
-- **`eidos-migrate`** (move specs to a new version).
+- **`eidos`** — author + validate
+- **`eidos-init`** — scaffold a new registry
+- **`eidos-migrate`** — move specs to a new version
 
-The plugin carries the standard with it — `EIDOS.md`, the templates, and the full version history — so the skills behave the same in this repo or anywhere else.
+The plugin carries the standard with it — `EIDOS.md`, `templates/`, and the full version history — so the skills behave the same wherever it's installed: Claude Code, or the Chat tab in Claude Desktop, the web, and Cowork.
 
-**Install the plugin** (recommended):
+### In Claude Code
+
+Not published yet, so install from your local clone (use an absolute path):
 
 ```
-/plugin marketplace add https://gitlab.com/the-virtual-panda/Eidos.git
+# try it for one session (ephemeral):
+claude --plugin-dir /path/to/eidos
+
+# …or install it persistently — add the clone as a local marketplace, then install
+# (run these inside Claude Code):
+/plugin marketplace add /path/to/eidos
 /plugin install eidos@eidos
 ```
 
-Developing locally? Load it straight from a clone with `claude --plugin-dir .`, or `/plugin marketplace add ./` and then install.
+No build step: the plugin reads `EIDOS.md`, `templates/`, `versions/`, and `CHANGELOG.md` from its own root, and those are committed. Once the repo is public, the marketplace step becomes `/plugin marketplace add https://gitlab.com/the-virtual-panda/Eidos.git`.
 
-**Or use a skill raw**, without the plugin — a skill is just a folder with a `SKILL.md`, auto-discovered, no registration:
+### In Claude Desktop (and web / Cowork)
 
-- **One project:** drop the folder at `<repo>/.claude/skills/<name>/`.
-- **All your projects:** drop it at `~/.claude/skills/<name>/` (a project copy wins over a global one).
+Desktop runs each skill **scoped to its own folder** — it can't reach sibling files at the plugin root, and there's no `${CLAUDE_PLUGIN_ROOT}` like in Claude Code. So `eidos-init` (needs `templates/`) and `eidos-migrate` (needs the version history) only work if those assets sit **inside their own folders**. One script handles that and builds the zip:
 
-To use a skill on its own, run [`scripts/sync-skills.sh`](scripts/sync-skills.sh) first — it copies the templates and version history into each skill folder so the folder works standalone. (Those copies are gitignored; the installed plugin reads the originals from its own root instead.) Re-run it whenever the standard changes.
+```
+./scripts/package-plugin.sh        # → dist/eidos-plugin.zip
+```
 
-**Adding your own skill:** create `skills/<your-skill>/SKILL.md` — it ships with the plugin automatically (the plugin's skills live in the top-level `skills/`).
+Then, on any paid plan (Pro, Max, Team, Enterprise): **Customize → Plugins → +** → _upload a custom plugin file_ → pick `dist/eidos-plugin.zip` ([docs](https://support.claude.com/en/articles/13837440-use-plugins-in-claude)). The skills then work in chat on Desktop, the web, and Cowork. (Eidos has no hooks or sub-agents, which would otherwise run only in Cowork.)
 
-> The skills live in the top-level **`skills/`** — the conventional plugin layout, visible and portable across AI tools. They aren't auto-loaded just by opening the repo; use `claude --plugin-dir .` (or install the plugin) to activate them, and run `scripts/sync-skills.sh` to populate the assets they vendor.
+The **Add marketplace → git URL** route also exists, but in Desktop it only works if those vendored copies are committed (they're gitignored by default) — the packaged zip is the reliable path.
+
+### Sharing it with someone else
+
+Hand a colleague the self-contained zip the package script builds — it works in both Claude Code and Desktop:
+
+```
+./scripts/package-plugin.sh        # → dist/eidos-plugin.zip
+```
+
+They install it with **Customize → Plugins → +** → _upload a custom plugin file_ (Desktop), or `claude --plugin-dir dist/eidos-plugin.zip` (Code). It's well under Desktop's 50 MB cap.
+
+For ongoing iteration, push to a **private** git repo and share the URL — `/plugin marketplace add <url>` (Code). The URL route works cleanly in Code; for Desktop it needs the vendored copies committed.
+
+### Raw, in another Claude Code project
+
+A skill is just a folder with a `SKILL.md`. Run `./scripts/sync-skills.sh` to make it self-contained, then drop the folder at `<repo>/.claude/skills/<name>/` (one project) or `~/.claude/skills/<name>/` (everywhere). A project copy wins over a global one.
+
+### When you need `sync-skills.sh`
+
+`package-plugin.sh` already runs it when building a Desktop zip — you invoke it **directly** only for the **raw** route above (a skill folder dropped into another repo's `.claude/skills/`). Either way, it copies `templates/` and the version history into each skill so the folder stands alone. **Claude Code's plugin doesn't need it** — there, skills read the originals from the plugin root (`${CLAUDE_PLUGIN_ROOT}`). The copies are gitignored; re-run after the standard changes.
+
+**Adding your own skill:** create `skills/<your-skill>/SKILL.md` — it ships with the plugin automatically.
 
 ## Versioning
 
@@ -83,4 +113,6 @@ The standard is versioned with [Semantic Versioning](https://semver.org/). The c
 
 ## License
 
-TBD.
+Licensed under the [Apache License 2.0](LICENSE).
+
+Copyright © 2026 Brenton Unger II.

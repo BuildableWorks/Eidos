@@ -52,7 +52,7 @@ Blueprint/
     Billing/
       ...
   Arch/               # optional, only when architecture detail outgrows one file
-templates/            # the standard's official fill-in templates, beside Blueprint
+templates/            # part of the standard; ships with the plugin, not your repo
   Spec Template.md
   Architecture Template.md
   Audience Template.md

@@ -48,9 +48,9 @@ If one repository holds several products, nest them as `Blueprint/<name>/...`, e
 
 Everything a human reads in the file tree is **Title Case**, because the tree is a table of contents: product docs (`Architecture.md`), domain folders (`Identity/`), and spec files (`Magic Link Sign-In.md`). A spec's filename is its title and may be renamed freely; the part that never changes is the `id` _inside_ the file — lowercase words joined by hyphens (`Magic Link Sign-In.md` carries `id: magic-link-signin`). The `domain` value is Title Case to match its folder. Fields meant for tools (`status`, `type`, `tags`) are not names in the file tree, so they stay as written.
 
-### Templates are in the open
+### Templates ship with the standard
 
-The fill-in templates are part of the standard, kept in a top-level `templates/` folder of their own — not hidden in tooling, and not bundled into the example or any one product. They sit beside Blueprint so a product owner can open `templates/` and start from one without an agent in the loop. An agent fills _from_ these templates; it does not replace them.
+The fill-in templates are part of the standard — not hidden in tooling, and not bundled into the example or any one product. They travel with Eidos itself: carried in the plugin, and present at the top level of the standard's own repo. A product owner starts from one with the `eidos` skill, or by hand from a clone of the standard — without copying them into the product repo. A product's repo holds only its `Blueprint/`; it never needs a `templates/` folder of its own. An agent fills _from_ these templates; it does not replace them.
 
 ## Product docs
 

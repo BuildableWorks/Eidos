@@ -39,10 +39,20 @@ Help the user author, structure, and validate documents to the Eidos standard. F
 
 Eidos holds two classes of document. They behave differently on purpose.
 
-- **Product docs** — one of each at the product root: `Architecture.md`, `Audience.md`, `Criteria.md`, `Market.md`. They are prose, deliberately loose, point-in-time. They set the frame every spec is judged against — who it serves, what it must respect, where it sits in the market, what it can afford. Templates are the standard's own, in the top-level `templates/` folder.
-- **Specs** are the many. One per unit of the product, grouped into domains under `Specs/`. They share one uniform shape — the schema in `references/spec-schema.md`. Template in `templates/Spec Template.md`, worked example in `references/example-spec.md`.
+- **Product docs** — one of each at the product root: `Architecture.md`, `Audience.md`, `Criteria.md`, `Market.md`. They are prose, deliberately loose, point-in-time. They set the frame every spec is judged against — who it serves, what it must respect, where it sits in the market, what it can afford. Fill them from the standard's templates (see **Where the templates live** below).
+- **Specs** are the many. One per unit of the product, grouped into domains under `Specs/`. They share one uniform shape — the schema in `references/spec-schema.md`. Fill from the standard's `Spec Template.md` (see **Where the templates live**); worked example in `references/example-spec.md`.
 
 Product docs drive decisions and audit scope. Specs capture the units that result. When a user is defining a _whole product_, reach for product docs. When they're defining a _piece_ of it, reach for a spec.
+
+## Where the templates live
+
+When you create files, you fill them from the standard's templates — and **the templates ship with Eidos, not with the product repo you're working in. A product's own repo holds only `Blueprint/`; it never needs a `templates/` folder of its own.** Read them from whichever location exists:
+
+- **`${CLAUDE_PLUGIN_ROOT}/templates/`** — when installed as the plugin in Claude Code (the canonical copy).
+- **This skill's own `templates/`** — present when the skill was made standalone by `scripts/sync-skills.sh` (e.g. Claude Desktop, which sandboxes each skill to its own folder). These are gitignored, so run that script first if the folder is empty.
+- **The repo's top-level `templates/`** — only when working inside the standard's own repo.
+
+Never read a bare `templates/` from the user's working directory expecting it to be there — it won't be, by design. Resolve it from one of the locations above.
 
 ## The rules
 
@@ -85,7 +95,6 @@ Blueprint/
     Billing/
       ...
   Arch/               # optional, only when architecture detail outgrows one file
-templates/            # the standard's official fill-in templates, beside Blueprint
 ```
 
 `Blueprint/` is the overarching root; its name is low-stakes and renameable because nothing in a spec points at it by path. Domains are folders under `Specs/`. Relationships between specs (`depends_on`) live in frontmatter so the folder choice stays low-stakes.
@@ -95,7 +104,7 @@ Human-facing names are Title Case — folders, product docs, and spec files read
 ## Authoring a spec (with the user, not for them)
 
 1. Read `references/spec-schema.md` for the full frontmatter contract and section meanings. Read `references/example-spec.md` to see it done well.
-2. Start from `templates/Spec Template.md`. Name the file for its title in Title Case (`Magic Link Sign-In.md`); the kebab-case `id` inside is the permanent reference.
+2. Start from the standard's `Spec Template.md` (resolved per **Where the templates live** — never the working directory). Name the file for its title in Title Case (`Magic Link Sign-In.md`); the kebab-case `id` inside is the permanent reference.
 3. Fill frontmatter from what the user tells you: a permanent kebab-case `id`, a `title`, a `type`, a Title Case `domain` (matching the folder), a `status`, and `created`/`modified` dates. Add optional fields (`owner`, `depends_on`, `tags`) when the user supplies them.
 4. Capture the body from the user's intent — don't supply it for them. Lead with **Intent** (why it exists, who has the problem) and **Behaviors & Acceptance Criteria** (observable outcomes, each labeled `AC{n}` — if it isn't listed, it isn't promised). An optional **Implementation Notes** under Intent can hold the intended approach (intent, not status). Where the user is vague, ask; don't fill the gap with plausible invention.
 5. Press hard on **Out of Scope.** If the user hasn't named non-goals, prompt for them — this is where scope is held. Don't refuse a spec that lacks it, but don't let it pass silently either.
@@ -103,7 +112,7 @@ Human-facing names are Title Case — folders, product docs, and spec files read
 
 ## Authoring product docs
 
-Pick the doc that matches what the user is defining and start from its template in the standard's top-level `templates/` folder:
+Pick the doc that matches what the user is defining and start from its template — resolved per **Where the templates live**, not from the user's working directory:
 
 - **Architecture** (`templates/Architecture Template.md`) — the overarching shape of the product as a built system: components, data and flow, boundaries.
 - **Audience** (`templates/Audience Template.md`) — who the product serves, and how each user type interacts differently. Simple blocks of prose, no persona theater.
@@ -127,4 +136,4 @@ When asked to check a spec:
 - `references/core-overview.md` — the philosophy: human-first authoring, why specs aren't tasks, the two-tier model, domain descriptions. Read when the user wants the _why_.
 - `references/example-spec.md` — a complete, well-formed spec to pattern-match against.
 
-The fill-in templates are not bundled in the skill, and not part of the example — they are the standard's own, in the top-level `templates/` folder, in the open so the human can use them without an agent. Copy from those when creating files.
+The fill-in templates ship with the standard — bundled into the plugin (and into this skill itself when it's made standalone), and present at the top level of the standard's own repo. They are **not** carried in the product repo you're working in, and shouldn't need to be. Resolve them per **Where the templates live** and copy from there when creating files; a human can also fill from them by hand from a clone of the standard.
