@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-06-19
+
+An additive release. A registry now chooses how its files are named, the root folder is officially any name, and a registry can carry its own free-form top-level docs. Nothing here breaks an existing 3.0.0 registry — an unset naming convention defaults to today's Title Case.
+
+### Added
+
+- **Configurable naming convention.** A registry picks how human-facing names — spec files, domain folders, product docs — read, recorded as a `naming` key in `.eidos/Registry.md`'s YAML frontmatter: `Title Case` (the default; spaces, as before), `TitleCase` (no spaces), or `kebab-case` (lowercase, hyphenated — the filename then equals the `id`). The link format follows from it: only a Title Case registry encodes spaces as `%20`, so the two space-free options give clean, scriptable paths. `eidos-init` asks for the convention at setup; `eidos`, `eidos-format`, and `eidos-domains` read it when naming or linking.
+- **Free-form top-level docs.** Beyond the canonical four product docs (Architecture, Audience, Criteria, Market), a registry may add its own top-level docs — a Roadmap, a Vision, a Glossary. These are free-form: no shape, no validation. They carry the light product-doc frontmatter and are supported by `eidos-format`, which organizes a draft into the house style rather than checking it against a template — because a top-level doc is filled in once and edited in place, not stamped out like a spec. The example registry gains a `Roadmap.md` to show the pattern.
+
+### Changed
+
+- **The registry root is officially any name.** It was always renameable, but the skills now locate a registry by its `.eidos/` marker rather than the folder name, so `Abstract/`, `Product/`, or the product's own name work as well as the default `Blueprint/`. The root is simply wherever `.eidos/` lives.
+- **`Registry.md` is the registry's small config card, now YAML frontmatter.** It records the Eidos version (`eidos_version`) and the naming convention (`naming`) as frontmatter — the two registry-level facts the skills read, in the same metadata format the specs use and ready for `yq`/tooling.
+- **`eidos-format` reshapes any registry doc**, not only specs: a spec toward the Spec shape, a product doc toward its shape, and a free-form top-level doc into the house style with no shape at all.
+
+**Migration from 3.0.0:** nothing required — a 3.0.0 registry keeps working, defaulting to Title Case. To adopt the new format, convert `.eidos/Registry.md` to YAML frontmatter with `eidos_version` and `naming` (or run `eidos-migrate`, which does it and bumps the version). The canonical property set is unchanged.
+
 ## [3.0.0] - 2026-06-19
 
 A breaking release that moves a registry's **form** — its body shapes and its property contract — out of the standard and into the registry itself, as a hidden `.eidos/` folder. Eidos becomes an opinionated baseline you can extend without forking: adopt as-is, add your own properties, still migrate.
@@ -104,7 +121,8 @@ Initial published version of the Eidos standard. The normative definition lives 
 
 - The blank `product/` scaffold. Authors copy `example/` (or run the skill) instead of filling empty templates checked into the standard's repo.
 
-[Unreleased]: https://github.com/BuildableWorks/Eidos/compare/v3.0.0...HEAD
+[Unreleased]: https://github.com/BuildableWorks/Eidos/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/BuildableWorks/Eidos/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/BuildableWorks/Eidos/compare/v2.1.0...v3.0.0
 [2.1.0]: https://github.com/BuildableWorks/Eidos/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/BuildableWorks/Eidos/compare/v1.0.0...v2.0.0

@@ -25,7 +25,7 @@ When unsure what the user means, **ask** rather than write. The measure of a goo
 Two sources — and neither is this file:
 
 - **EIDOS.md — the ruleset.** The officially maintained standard: what a spec is, the form-layer model, the property and body rules, the layout, the referencing conventions, and an `## AI` operating guide for authoring and validating. Read it for any question of _what is correct_. It ships as a committed `EIDOS.md` in this skill's own folder (kept in sync with the standard's top-level `EIDOS.md` by `scripts/sync-skills.sh`), so it's there whether you're in Claude Code or a sandboxed host like Claude Desktop.
-- **The registry's `.eidos/` — the operative form.** A v3 registry owns its form in a hidden `.eidos/` at its root (usually `Blueprint/.eidos/`): `Schema.md` (the property contract — canonical properties plus this registry's custom ones), `shapes/` (the body template per kind of doc), `Registry.md` (the version). This is the **live** contract — a registry may have extended it, so always read it, never a copy of your own. **No `.eidos/` means the registry isn't set up — stop and offer `eidos-init`.**
+- **The registry's `.eidos/` — the operative form.** A registry owns its form in a hidden `.eidos/` at its root — found by that marker, not the folder name (usually `Blueprint/.eidos/`, but the root may be named anything): `Schema.md` (the property contract — canonical properties plus this registry's custom ones), `shapes/` (the body template per kind of doc), `Registry.md` (the version and the naming convention). This is the **live** contract — a registry may have extended it, so always read it, never a copy of your own. **No `.eidos/` means the registry isn't set up — stop and offer `eidos-init`.**
 
 `references/example-spec.md` is a complete, well-formed spec to pattern-match against.
 
@@ -33,7 +33,7 @@ Two sources — and neither is this file:
 
 **Authoring a spec, with the user:**
 
-1. Read the registry's `.eidos/Schema.md` (the contract) and `.eidos/shapes/Spec.md` (the body shape). **Generate the frontmatter from the Schema's required properties** — canonical plus any custom-required — so the spec is born conforming; don't hand-assemble a guessed set of fields. Name the file for its Title Case title; put a permanent kebab-case `id` inside.
+1. Read the registry's `.eidos/Schema.md` (the contract), `.eidos/shapes/Spec.md` (the body shape), and `.eidos/Registry.md` (the naming convention). **Generate the frontmatter from the Schema's required properties** — canonical plus any custom-required — so the spec is born conforming; don't hand-assemble a guessed set of fields. Name the file for its title in the registry's naming convention (Title Case by default), and link to other specs by that same convention; put a permanent kebab-case `id` inside.
 2. Capture the body from the user's intent. Lead with **Intent** and **Behaviors & Acceptance Criteria** (observable outcomes, each `**AC{n}:**`). Press hard on **Out of Scope** — prompt for non-goals if the user hasn't named them. Capture the rest as it surfaces; where the user is vague, ask rather than fill.
 3. Reference other specs as markdown links, never bare names (the link mechanics are in EIDOS.md).
 
@@ -43,6 +43,6 @@ Two sources — and neither is this file:
 2. Check the body against the registry's `Spec` shape; report missing sections as suggestions, flagging an absent **Out of Scope** first. Confirm no work-tracking fields crept in, and that Implementation Notes read as intent, not progress.
 3. Surface, don't enforce — the output is a review the human acts on.
 
-**Authoring a product doc:** pick Architecture, Audience, Criteria, or Market, start from its shape in `.eidos/shapes/`, keep it loose prose, fill what's known and leave the rest.
+**Authoring a product doc:** pick Architecture, Audience, Criteria, or Market, start from its shape in `.eidos/shapes/`, keep it loose prose, fill what's known and leave the rest. A top-level doc beyond the four — a Roadmap, a Vision — is free-form: it gets no shape and no validation, just the light product-doc frontmatter; develop it with the user here, and use `eidos-format` to organize an existing draft into the house style.
 
 For anything the rules decide — section order and names, AC labels, the property model, `type`/`domain`/`id` semantics, the directory layout — defer to EIDOS.md. This skill holds the process; EIDOS.md holds the standard.

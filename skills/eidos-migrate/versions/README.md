@@ -6,5 +6,6 @@ Each released version of the Eidos standard is frozen here under its **full semv
 - `v2.0.0.md` — the breaking redesign: `Blueprint/` root, `created`/`modified`, `Behaviors & Acceptance Criteria` with `AC{n}`, merged `Constraints & Decisions`, `Dependencies` and `Testing`, and a default `Domains.md`.
 - `v2.1.0.md` — adds the readability and reference-as-links conventions (including `depends_on` as links) and an `## AI` operating section.
 - `v3.0.0.md` — the form-layer release: a registry owns its shapes and property contract in a hidden `.eidos/` (`shapes/`, `Schema.md`, `Registry.md`); property types from the Obsidian set; `eidos_version` retired in favour of `Registry.md`; frontmatter generated from the Schema; a new `eidos-property` skill; skills read the registry's form instead of vendoring templates.
+- `v3.1.0.md` — additive: a per-registry naming convention (Title Case | TitleCase | kebab-case) recorded in `Registry.md` (now YAML frontmatter); the registry root located by its `.eidos/` marker, so it can take any name; and free-form top-level docs beyond the four, organized by `eidos-format` with no shape. The canonical property set is unchanged.
 
 The current version always lives in the top-level `EIDOS.md` (identical to the latest snapshot here until work on the next version begins). See `CHANGELOG.md` for history and migrations.

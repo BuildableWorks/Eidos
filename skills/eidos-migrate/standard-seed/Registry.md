@@ -1,4 +1,8 @@
-# Registry
+---
+# The Eidos version this registry targets; eidos-migrate reads and bumps it.
+eidos_version: 3.1.0
+# How files, folders, and links are named: Title Case | TitleCase | kebab-case. Absent = Title Case.
+naming: Title Case
+---
 
-<!-- Used by the eidos-migrate skill to detect which version this registry targets. -->
-**Eidos Version:** 3.0.0
+# Registry

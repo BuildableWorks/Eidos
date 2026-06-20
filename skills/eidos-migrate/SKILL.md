@@ -54,6 +54,17 @@ These ship as committed copies inside this skill's own folder — `versions/`, `
 
 7. **Report.** Summarize per file: what changed, what was carried over, and every place a human decision is still needed.
 
+## Worked example: 3.0.0 → 3.1.0
+
+A small, additive move — nothing in a 3.0.0 registry breaks. Diffing `versions/v3.0.0.md` against `EIDOS.md` (3.1.0) yields:
+
+- **Form layer** — the shapes and the canonical property set are unchanged; the only edit to the `## Eidos Canonical` block is the `domain` property's wording, now "matching its folder … in the registry's naming convention." Rewrite the canonical block to the 3.1.0 seed and leave `## Custom Registry Properties` untouched.
+- **`Registry.md` becomes YAML frontmatter.** The 3.0.0 bold-key lines move into frontmatter: `**Eidos Version:** 3.0.0` becomes an `eidos_version` key (bumped to `3.1.0`), and a `naming` key is added.
+- **Naming** — set `naming: Title Case`: it is the prior behavior, so this just records what the registry already does. Switch to `TitleCase` or `kebab-case` only if the owner wants space-free names — which then means renaming the files, a separate and deliberate pass.
+- **Top-level docs** — no migration. The registry may now add its own free-form top-level docs (a Roadmap, a Vision) via `eidos-format`, but nothing existing changes.
+
+The net is the small `Registry.md` conversion plus the one-line Schema reword; specs and product docs are otherwise untouched.
+
 ## Worked example: v2.x → 3.0.0
 
 This is the move that introduces the form layer. Diffing `versions/v2.1.0.md` against `EIDOS.md` (3.0.0) yields:

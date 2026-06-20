@@ -2,7 +2,7 @@
 
 _**εἶδος** (eidos), Greek — the form or essence of a thing: the look that makes it what it is. Plato's eternal Form; Aristotle's essence behind the matter._
 
-> **[Eidos v3.0.0](EIDOS.md)** — the full standard.
+> **[Eidos v3.1.0](EIDOS.md)** — the full standard.
 
 A markdown spec registry for defining what a product _is_. One file completely defines one unit of a product, true whether or not the thing has been built. Specs live as plain `.md` files next to your code. No SaaS. No lock-in. No hidden state.
 
@@ -31,10 +31,10 @@ Blueprint/
       <Title>.md      # one spec per unit, grouped by domain
 ```
 
-- **Product docs** are four files — one of each — that frame the whole product.
+- **Product docs** are four files — one of each — that frame the whole product, plus any free-form top-level docs you add yourself (a Roadmap, a Vision).
 - **Specs** are the many, one per unit, grouped into `<Domain>/` folders. Every spec shares one shape — Intent, Behaviors & Acceptance Criteria, Out of Scope, and the rest, used as they apply; the frontmatter is the firm part, the body is guidance you keep what you need of.
 - **The form layer** — a hidden `.eidos/` holds the registry's shapes (the body template for each kind of doc) and its `Schema.md` (the property contract: an Eidos-canonical baseline plus any custom properties you add). It's seeded with an opinionated default — public and browsable in [`standard-seed/`](standard-seed) — that you can extend without forking the standard, and it's committed alongside the specs, not gitignored.
-- Human-facing names are **Title Case** (the tree reads like a table of contents); the `id` inside each spec — lowercase words joined by hyphens — is its permanent reference.
+- Human-facing names follow a **naming convention you pick at init** — Title Case (default), TitleCase, or kebab-case — so the tree reads like a table of contents (and scripts cleanly if you want it to); the `id` inside each spec — lowercase words joined by hyphens — is its permanent reference.
 
 The full rules are in **[EIDOS.md](EIDOS.md)**. See **[`example/`](example/)** for a filled-in product definition you can pattern-match against.
 
@@ -55,7 +55,7 @@ Doing Eidos needs the skills and a seeded registry: `EIDOS.md` gives the method,
 Eidos ships as a **Claude plugin** bundling six skills:
 
 - **`eidos`** — author + validate
-- **`eidos-format`** — reshape a rough draft into the spec shape
+- **`eidos-format`** — reshape a rough draft into Eidos shape (a spec, a product doc, or a free-form top-level doc)
 - **`eidos-init`** — scaffold a new registry (installs the `.eidos/` form layer)
 - **`eidos-property`** — add, rename, or retire a custom property and backfill the specs
 - **`eidos-domains`** — regenerate `Domains.md` as a navigation map of the specs

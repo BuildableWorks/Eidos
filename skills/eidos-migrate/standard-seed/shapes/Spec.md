@@ -60,4 +60,4 @@ _How this is verified: the testing approach and the key cases that prove the beh
 
 _Two things under one header. **Constraints**: non-functional boundaries and hard limits the build must respect — not the architecture itself. **Decisions**: an append-only log, one line each, with an optional but recommended date._
 
-<!-- 2026-06-17: Dropped SMS fallback, carrier cost. (brenton) -->
+<!-- 2026-06-17: Dropped SMS fallback, carrier cost. (Brenton) -->

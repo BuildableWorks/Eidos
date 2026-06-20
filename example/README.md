@@ -14,6 +14,7 @@ example/
     Criteria.md
     Market.md
     Domains.md
+    Roadmap.md       # a custom top-level doc — free-form, no shape
     Specs/
       Identity/
         Magic Link Sign-In.md
@@ -25,3 +26,5 @@ example/
 Human-facing names are Title Case so the tree reads like a table of contents. A spec's filename is its title; its permanent reference is the kebab-case `id` inside (`Magic Link Sign-In.md` carries `id: magic-link-signin`), so you can rename a title without breaking what points at it.
 
 The `.eidos/Schema.md` here shows the form layer in use: alongside the canonical properties it adds one **custom property** — `beta`, a required Checkbox marking whether a unit is in scope for the private beta — which every spec then carries. That is a registry extending the opinionated baseline without forking the standard.
+
+Marginalia also keeps a **custom top-level doc** of its own — `Roadmap.md` — beyond the canonical four. It has no shape and isn't validated: a registry writes the top-level docs its product needs and keeps them organized with `eidos-format`. The four are the baseline, not the whole set.

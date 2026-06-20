@@ -6,14 +6,14 @@ A property's `type` is drawn from the set Obsidian uses — Text, List, Number, 
 
 ## Eidos Canonical
 
-_Managed by the standard (Eidos 3.0.0). `eidos-migrate` rewrites this block on a version change — don't hand-edit it._
+_Managed by the standard (Eidos 3.1.0). `eidos-migrate` rewrites this block on a version change — don't hand-edit it._
 
 | name       | type | required | meaning                                                                                       |
 | ---------- | ---- | -------- | --------------------------------------------------------------------------------------------- |
 | id         | Text | yes      | Stable, unique, kebab-case identity. Assigned once, never renamed. References point at it.     |
 | title      | Text | yes      | Human-readable name. Rename freely.                                                            |
 | type       | Text | yes      | Open, soft label. Drives views, never structure. e.g. feature, capability, domain, integration. |
-| domain     | Text | yes      | The grouping. Title Case, matching the folder under Specs/. An unknown domain warns, not fails. |
+| domain     | Text | yes      | The grouping, matching its folder under Specs/ in the registry's naming convention. An unknown domain warns, not fails. |
 | status     | Text | yes      | Lifecycle value: Draft / Intake / In Progress / Done / Archived / Deprecated. Off-list warns.   |
 | created    | Date | yes      | YYYY-MM-DD. The day the spec was first written. Set once.                                       |
 | modified   | Date | yes      | YYYY-MM-DD. The day the spec was last changed.                                                  |

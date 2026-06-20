@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 3.0.0
+**Version:** 3.1.0
 
 The Eidos standard — a markdown spec registry where one file completely defines one unit of a product, true whether or not the thing has been built. This file is the method: what a spec is, how a registry is shaped, and how the pieces fit. It gives the direction; the skills and a seeded registry are how you actually do the work (see [AI](#ai)).
 
@@ -22,7 +22,7 @@ Eidos is opinionated but not rigid. It ships a strong default — the shapes and
 
 Eidos holds two kinds of document. They behave differently on purpose.
 
-- **Product docs** — one of each, at the top of the product: `Architecture.md`, `Audience.md`, `Criteria.md`, `Market.md`, plus a derived `Domains.md` that lists the domains. The four authored docs are prose, deliberately loose, and point-in-time. They set the frame every spec is judged against: who it serves, what it must respect, where it sits in the market, what it can afford.
+- **Product docs** — one of each, at the top of the product: `Architecture.md`, `Audience.md`, `Criteria.md`, `Market.md`, plus a derived `Domains.md` that lists the domains. The four authored docs are prose, deliberately loose, and point-in-time. They set the frame every spec is judged against: who it serves, what it must respect, where it sits in the market, what it can afford. The four are the opinionated baseline, not a closed set — a registry can add its own top-level docs (see [Product docs](#product-docs)).
 - **Specs** are the many. One per unit of the product, grouped into domains under `Specs/`. They share one shape — a small frontmatter contract and a set of body sections in a consistent order (see [The form layer](#the-form-layer)).
 
 Product docs drive decisions and audit scope. Specs capture the units that result. When defining a _whole product_, reach for product docs. When defining a _piece_ of it, reach for a spec.
@@ -44,7 +44,7 @@ A registry is two things: **content** and **form**.
     Market.md
     Domains.md
   Schema.md        # the property contract: canonical (Eidos's) + custom (yours)
-  Registry.md      # the Eidos version this registry targets
+  Registry.md      # the Eidos version + naming convention this registry targets
 ```
 
 The registry owns its form. Eidos seeds `.eidos/` with the opinionated baseline (`eidos-init`), and from there the owner may extend it — add a property, adjust a shape — without leaving the standard. This is what makes Eidos adoptable without a fork: the default works out of the box, and the parts you change are yours.
@@ -66,14 +66,14 @@ The canonical shapes Eidos ships — the opinionated baseline — live, public a
 
 Each property is a row: **name · type · required · meaning**. A property's `type` is drawn from the same small set Obsidian uses — **Text, List, Number, Checkbox, Date, Date & time** — so a registry's frontmatter renders natively in an Obsidian vault. Anything that wants more structure than one of those types almost belongs in the body (the shape), not in a property.
 
-The canonical baseline, as seeded in 3.0.0:
+The canonical baseline (unchanged since 3.0.0):
 
 | Property     | Type | Required | Meaning                                                                                                        |
 | ------------ | ---- | -------- | ------------------------------------------------------------------------------------------------------------- |
 | `id`         | Text | yes      | Stable, unique, kebab-case identity. Assigned once, never renamed. References point at it.                     |
 | `title`      | Text | yes      | Human-readable name. Rename freely.                                                                            |
 | `type`       | Text | yes      | Open, soft label. Human-chosen. Drives views, never structure. Suggested: `feature`, `capability`, `domain`, `integration`. |
-| `domain`     | Text | yes      | The grouping. Title Case, matching the folder under `Specs/`. An unknown domain is valid (warn only).         |
+| `domain`     | Text | yes      | The grouping, matching its folder under `Specs/` in the registry's naming convention. An unknown domain is valid (warn only). |
 | `status`     | Text | yes      | Current lifecycle value. Suggested baseline: `Draft` \| `Intake` \| `In Progress` \| `Done` \| `Archived` \| `Deprecated`. An off-list value warns, never fails. |
 | `created`    | Date | yes      | `YYYY-MM-DD`. The day the spec was first written. Set once.                                                    |
 | `modified`   | Date | yes      | `YYYY-MM-DD`. The day the spec was last changed. Git holds the full history.                                   |
@@ -89,21 +89,28 @@ The canonical baseline, as seeded in 3.0.0:
 
 ### Registry (`.eidos/Registry.md`)
 
-`Registry.md` records, in one spot, the Eidos version the registry targets:
+`Registry.md` records the registry-level facts in one spot — the things true of the whole registry rather than of any one spec. They live in **YAML frontmatter**, the same metadata mechanism every spec carries, so the file reads cleanly and tooling can parse it:
 
 ```markdown
-# Registry
+---
+# The Eidos version this registry targets; eidos-migrate reads and bumps it.
+eidos_version: 3.1.0
+# How files, folders, and links are named: Title Case | TitleCase | kebab-case. Absent = Title Case.
+naming: Title Case
+---
 
-**Eidos Version:** 3.0.0
-<!-- Used by the eidos-migrate skill to detect which version this registry targets. -->
+# Registry
 ```
 
-The version is a registry-level fact, not a per-spec one — every spec in a registry is on the same version, so stamping each file would only invite drift. `eidos-migrate` reads the version here, diffs to the target, and bumps this line when done.
+- **`eidos_version`** — the version this registry targets. `eidos-migrate` reads it, diffs to the target, and bumps it when done.
+- **`naming`** — the convention for human-facing names: `Title Case` (the default — capitalized, spaces between words), `TitleCase` (no spaces), or `kebab-case` (lowercase, hyphenated). Chosen at `eidos-init`; the skills read it to name and link files. An absent key means `Title Case`. See [Naming](#naming).
+
+Both are registry-level facts, not per-spec ones — every spec in a registry shares them, so stamping each file would only invite drift.
 
 ## Directory layout
 
 ```txt
-Blueprint/               # the registry root; name is low-stakes and renameable
+Blueprint/               # the registry root (found by its .eidos/); name is the default, renameable
   .eidos/                # the form layer (hidden) — shapes, Schema, Registry
   Architecture.md        # overarching system shape, one entry door
   Audience.md            # who it serves and how each type interacts
@@ -116,17 +123,34 @@ Blueprint/               # the registry root; name is low-stakes and renameable
   Arch/                  # optional, only when architecture detail outgrows one file
 ```
 
-`Blueprint/` is the overarching root; its name is low-stakes and renameable because nothing in a spec points at it by path. Domains are folders under `Specs/`. Relationships between specs (`depends_on`) live in frontmatter so the folder choice stays low-stakes. One hierarchy on disk, many views from metadata.
+`Blueprint/` is the overarching root; `Blueprint` is only the default name. Nothing in a spec points at the root by path, and the skills locate a registry by its `.eidos/` marker rather than the folder name — so the root may be called anything (`Abstract/`, `Product/`, the product's own name). Domains are folders under `Specs/`. Relationships between specs (`depends_on`) live in frontmatter so the folder choice stays low-stakes. One hierarchy on disk, many views from metadata.
 
 If one repository holds several products, nest them as `Blueprint/<name>/...`, each with its own `.eidos/`, four docs, and `Specs/`.
 
 ### Naming
 
-Everything a human reads in the file tree is **Title Case**, because the tree is a table of contents: product docs (`Architecture.md`), domain folders (`Identity/`), and spec files (`Magic Link Sign-In.md`). The `.eidos/` form layer is the exception — it is hidden machinery, lowercase by the same convention that names `.git`. A spec's filename is its title and may be renamed freely; the part that never changes is the `id` _inside_ the file — lowercase words joined by hyphens (`Magic Link Sign-In.md` carries `id: magic-link-signin`). The `domain` value is Title Case to match its folder. Fields meant for tools (`status`, `type`, `tags`) are not names in the file tree, so they stay as written.
+Everything a human reads in the file tree — product docs, domain folders, and spec files — follows the registry's **naming convention**, chosen once at `eidos-init` and recorded as `naming` in [`Registry.md`](#registry-eidosregistrymd). The tree is a table of contents, and the convention decides how it reads:
+
+| Convention | A spec file | A domain folder | For |
+| --- | --- | --- | --- |
+| **Title Case** (default) | `Magic Link Sign-In.md` | `User Management/` | the most readable tree; the original Eidos look |
+| **TitleCase** | `MagicLinkSignIn.md` | `UserManagement/` | readable but space-free, for shells and scripts |
+| **kebab-case** | `magic-link-signin.md` | `user-management/` | fully lowercase and space-free; the filename _is_ the `id` |
+
+One convention governs the whole registry; pick the one your tooling wants and stay with it. The default is **Title Case** — the two space-free options are for registries that script over their files or would rather not see `%20` in their links.
+
+A few things hold whichever you choose:
+
+- **The `.eidos/` form layer is always lowercase** — hidden machinery named the way `.git` is, never following the content convention.
+- **The `id` is always kebab-case** (`id: magic-link-signin`): the permanent reference, with the filename only a handle over it. In a kebab-case registry the filename and the `id` coincide; in the other two the filename renders the `title` and the `id` sits inside, so a title can be reworded without disturbing the `id`.
+- **The `domain` value matches its folder** in whatever convention the registry uses, so the property and the folder are the same string and matching needs no normalization.
+- **Fields meant for tools** (`status`, `type`, `tags`) are not names in the file tree, so they stay as written.
+
+Changing the convention later means renaming the files and folders — a deliberate pass, not a flag you flip — so it is settled at init.
 
 ### Referencing other specs
 
-Links to other specs and sections are encouraged — they read well and you can follow them, where a bare name is neither. Standard markdown links are the best format for compatibility across editors and tools. This extends to the properties that point at other specs: `depends_on` holds links too, not bare ids — each spec's `id` stays its permanent identity behind them.
+Links to other specs and sections are encouraged — they read well and you can follow them, where a bare name is neither. Standard markdown links are the best format for compatibility across editors and tools. The link **text** is the human title; the link **path** is the target's filename in the registry's naming convention — so a space-free registry (TitleCase or kebab-case) carries no `%20` in its paths, and only a Title Case registry encodes spaces as `%20`. This extends to the properties that point at other specs: `depends_on` holds links too, not bare ids — each spec's `id` stays its permanent identity behind them.
 
 ## Product docs
 
@@ -139,6 +163,12 @@ A few files at the top of the product that frame the whole thing — one of each
 - **Domains** — the product's domains, each with a short description. Derived from the specs and regenerable, so it carries no frontmatter; present by default.
 
 Product docs are point-in-time snapshots of intent and are expected to evolve. Record what is true now; revise when it changes.
+
+### Your own top-level docs
+
+The four authored docs are the opinionated baseline, not a closed set. A product often wants a top-level doc of its own — a **Roadmap**, a **Vision**, a **Glossary**, a set of **Principles** — and a registry is free to add one. These are **free-form**: unlike specs, they get no shape and no validation. You write the doc the product needs; Eidos asks only that it carry the same light product-doc frontmatter (`type`, `title`, `tags`, `created`, `modified`) and read like the rest of the registry.
+
+They need no shape for the same reason the four are loose. A shape earns its keep when it is instantiated again and again — the Spec shape is a cookie-cutter, stamped once per unit. A top-level doc is filled in **once** and then edited in place for the life of the product; a shape for it would be a scaffold used a single time. So Eidos supports a custom top-level doc the way that actually helps: not by checking it against a template, but by **organizing** it. Hand a draft to [`eidos-format`](#ai) and it shapes the thinking into the house style — readable headings, tables, lists, links over bare names — and keeps the frontmatter in order, adding nothing of its own. The canonical four keep their shapes only because a blank scaffold helps the very first brain-dump; a doc you have already written doesn't need one.
 
 ## Spec body
 
@@ -173,7 +203,7 @@ These are the load-bearing conventions.
 17. **`created` is set once; `modified` tracks the last change.** Both `YYYY-MM-DD`. Git holds the full edit history. The Eidos version is a registry fact, in `Registry.md`, not a per-spec property.
 18. **Product docs are point-in-time.** Criteria, Market, and Audience capture a snapshot of intent and are expected to evolve.
 19. **The human authors; the agent facilitates.** Intent, scope, and decisions stay with the person. An agent formats, supplements, asks, and holds scope; it does not generate finished specs or set direction.
-20. **Human-facing names are Title Case.** Folders, product docs, and spec files read like a table of contents. The hidden `.eidos/` form layer is the exception. The kebab-case `id`, not the filename, is the permanent reference.
+20. **Human-facing names follow the registry's naming convention.** Folders, product docs, and spec files read like a table of contents, in the convention chosen at init — Title Case (default), TitleCase, or kebab-case — recorded as `naming` in `.eidos/Registry.md`. The hidden `.eidos/` form layer is always lowercase, the exception. The kebab-case `id`, not the filename, is the permanent reference.
 
 ## Domains (`Domains.md`)
 
@@ -201,7 +231,7 @@ Who the user is and how they prove it.
 ## Versioning
 
 - Semantic Versioning (`MAJOR.MINOR.PATCH`). Major bumps for breaking changes, minor for backward-compatible additions, patch for clarifications.
-- This file always holds the current version — right now, 3.0.0. When a version is tagged, this file is copied as-is into `versions/` under its full semver name (e.g. `versions/v3.0.0.md`). Each release is frozen there, so any two — even non-adjacent — can be diffed to migrate specs between them (see the `eidos-migrate` skill).
+- This file always holds the current version — right now, 3.1.0. When a version is tagged, this file is copied as-is into `versions/` under its full semver name (e.g. `versions/v3.0.0.md`). Each release is frozen there, so any two — even non-adjacent — can be diffed to migrate specs between them (see the `eidos-migrate` skill).
 - A registry records the version it targets in its `.eidos/Registry.md`; migration reads and bumps it there.
 - See `CHANGELOG.md` for history and migrations.
 - Tools may reject if the version in this file is unsupported.
@@ -214,22 +244,22 @@ Eidos gives the direction; **the skills and a seeded registry are how the work g
 
 **Facilitate, don't author.** Eidos is human-first. Format and structure what the owner gives you, supplement, ask clarifying questions, and press on Out of Scope — but never invent Intent, decide direction, or hand back a finished spec to rubber-stamp. When unsure, ask. A spec the owner didn't think through is worse than none.
 
-**Find the form in the registry.** Every operation reads the registry's `.eidos/`: `Schema.md` for the property contract, `shapes/` for the body templates, `Registry.md` for the version. If a registry has no `.eidos/`, it is not yet an Eidos registry — offer to install one with `eidos-init`. Do not fall back to a hardcoded contract; the registry's form is the source of truth.
+**Find the form in the registry.** Locate a registry by its `.eidos/` marker, not the folder name — the root may be called anything (`Blueprint` is just the default). Every operation reads that `.eidos/`: `Schema.md` for the property contract, `shapes/` for the body templates, `Registry.md` for the version and the naming convention. If a registry has no `.eidos/`, it is not yet an Eidos registry — offer to install one with `eidos-init`. Do not fall back to a hardcoded contract; the registry's form is the source of truth.
 
 **Start at `Domains.md`.** It is the registry's map — every domain with its specs, each spec a link and a one-line summary. Read it first to navigate straight to the spec you need instead of scraping the tree, and regenerate it with `eidos-domains` when it has gone stale.
 
 **Authoring a spec:**
 
-1. Read the registry's `.eidos/Schema.md` for the property contract and `.eidos/shapes/Spec.md` for the body shape. Name the file for its Title Case title; put a permanent kebab-case `id` inside.
+1. Read the registry's `.eidos/Schema.md` for the property contract, `.eidos/shapes/Spec.md` for the body shape, and `.eidos/Registry.md` for the naming convention. Name the file for its title in that convention (Title Case by default); put a permanent kebab-case `id` inside.
 2. Generate the frontmatter from the Schema's required properties (canonical plus any custom-required); fill values from what the owner tells you; set `created`/`modified` to today. Don't guess a `status` or invent an `owner`.
 3. Lead with **Intent** and **Behaviors & Acceptance Criteria** — short, observable criteria labeled `**AC1:**`, `**AC2:**`… Press hard on **Out of Scope**. Capture the rest as it surfaces; omit a section that doesn't apply, but keep the shape's order and names.
 4. Where the owner is vague, ask — don't fill the gap with plausible prose. Push rich detail (a data model, a payload) into a table or sub-section rather than onto an AC line.
 
-**Authoring a product doc:** pick Architecture, Audience, Criteria, or Market and start from its shape in `.eidos/shapes/`. Prose, loose, point-in-time — fill what's known, leave the rest.
+**Authoring a product doc:** pick Architecture, Audience, Criteria, or Market and start from its shape in `.eidos/shapes/`. Prose, loose, point-in-time — fill what's known, leave the rest. For a top-level doc the product needs beyond the four — a Roadmap, a Vision — there is no shape and none is required: write it free-form with the light product-doc frontmatter, and reach for `eidos-format` to organize a rough draft into the house style without checking it against a template.
 
 **Validating a spec:** read the registry's `Schema.md` and check the frontmatter against it — required properties present and well-formed (`id` kebab-case, `created`/`modified` as `YYYY-MM-DD`; a `status` off the baseline warns, never fails), plus any custom-required property the Schema declares. Report missing body sections as suggestions, flagging an absent **Out of Scope** first, and note acceptance criteria that lack `**AC{n}:**` labels. Confirm no work-tracking fields crept in and that Implementation Notes read as intent, not progress. Surface, don't block — the output is a review the human acts on, and a missing required property is added with a note on why rather than failing the file.
 
-**Linking other specs:** a relative markdown link with spaces as `%20` — `[Session Management](../Identity/Session%20Management.md)`; add a `#heading` anchor for a section (GitLab/GitHub lowercase-and-hyphenate the heading; an Obsidian vault uses the literal heading text). Linking properties like `depends_on` use the same link, one markdown-link string per entry — quote it in YAML, since a leading `[` starts a list:
+**Linking other specs:** a relative markdown link whose path is the target's filename in the registry's naming convention — `[Session Management](../Identity/Session%20Management.md)` in a Title Case registry (spaces as `%20`), `[Session Management](../Identity/SessionManagement.md)` in a TitleCase one, `[Session Management](../Identity/session-management.md)` in a kebab-case one. The link text stays the human title. Add a `#heading` anchor for a section (GitLab/GitHub lowercase-and-hyphenate the heading; an Obsidian vault uses the literal heading text). Linking properties like `depends_on` use the same link, one markdown-link string per entry — quote it in YAML, since a leading `[` starts a list:
 
 ```yaml
 depends_on:

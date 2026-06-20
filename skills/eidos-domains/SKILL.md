@@ -28,7 +28,7 @@ The index is navigation derived from the specs, so regenerating it is safe and m
 3. **Group by `domain`.** Use the frontmatter `domain`, not the folder, if the two ever differ (and flag the mismatch).
 4. **Rebuild `Domains.md`.** One `##` per domain. Under each:
    - keep the owner's existing description prose untouched;
-   - below it, regenerate the spec index — a marker comment, then a bullet per spec: `- [Title](Specs/<Domain>/<File>.md) — one-line summary`, with spaces in the path encoded as `%20`.
+   - below it, regenerate the spec index — a marker comment, then a bullet per spec: `- [Title](Specs/<Domain>/<File>.md) — one-line summary`. Build each path from the target's filename in the registry's naming convention (read `naming` from `.eidos/Registry.md`): encode spaces as `%20` in a Title Case registry; a TitleCase or kebab-case one has no spaces to encode.
 
    ```markdown
    ## Identity
