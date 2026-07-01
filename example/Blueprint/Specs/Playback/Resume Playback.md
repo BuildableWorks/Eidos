@@ -1,6 +1,7 @@
 ---
 id: resume-playback
 title: Resume Playback
+summary: remember where each viewer left off, and offer to resume.
 type: feature
 domain: Playback
 flavor: micro
@@ -9,6 +10,8 @@ created: 2026-06-22
 modified: 2026-06-23
 owner: Brenton
 depends_on:
+  - "[Watch a Video](Watch%20a%20Video.md)"
+connects_to:
   - "[Watch a Video](Watch%20a%20Video.md)"
 tags: [playback]
 beta: false

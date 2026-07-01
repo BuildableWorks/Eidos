@@ -14,14 +14,11 @@ the registry stays small enough to read in a sitting against a product you alrea
 
 ## Top-level documents
 
-- [Architecture](Architecture.md) — the subset as a built system.
-- [Audience](Audience.md) — viewers and creators, and how they differ.
-- [Criteria](Criteria.md) — budget, scope objectives, and timeline.
-- [Market](Market.md) — where it sits among video platforms, and how it would earn.
-- [Roadmap](Roadmap.md) — where it's headed, in plain horizons.
+- [Roadmap](Roadmap.md) — where it's headed, in plain horizons (a custom top-level doc).
 
 ## Collections
 
+- **[Frames](Frames/index.md)** — the framing docs: Architecture, Audience, Criteria, Market.
 - **[Specs](Specs/index.md)** — the product's units, grouped by the Playback and Channels domains.
 
 ---

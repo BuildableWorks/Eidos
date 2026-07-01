@@ -17,11 +17,15 @@ tags: [auth, onboarding]
 
 Passwords are the largest source of sign-in friction and the largest support cost in account recovery. Users who sign in rarely forget their password almost every time, then abandon or open a ticket. Magic links let a returning user prove control of their email and get in, with nothing to remember.
 
+### Assumptions
+
+Assuming the existing `email-delivery` capability is reliable and fast enough to carry sign-in — if delivery is slow or flaky, magic links don't work.
+
 ### Implementation Notes
 
 Intend to reuse the existing `email-delivery` capability rather than stand up a new sender. Tokens are single-use and held server-side, keyed to the email and looked up when the link is followed — the link carries an opaque token, not the identity — so an intercepted or logged link grants nothing after first use.
 
-## Open Questions & Assumptions
+## Open Questions
 
 - What happens when a link is opened on a different device than it was requested from? Allow, block, or warn?
 - Should an active session be required to remain on the original device?

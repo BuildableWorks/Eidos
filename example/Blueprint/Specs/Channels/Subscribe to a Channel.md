@@ -1,6 +1,7 @@
 ---
 id: subscribe-to-a-channel
 title: Subscribe to a Channel
+summary: follow a creator so their channel is yours to return to.
 type: feature
 domain: Channels
 status: Intake

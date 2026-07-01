@@ -1,6 +1,7 @@
 ---
 id: upload-a-video
 title: Upload a Video
+summary: publish a source file to a channel; accepted fast, processed reliably.
 type: feature
 domain: Channels
 status: Intake
@@ -8,6 +9,7 @@ created: 2026-06-20
 modified: 2026-06-23
 owner: Brenton
 depends_on: [transcode-pipeline]
+connects_to: ["[Watch a Video](../Playback/Watch%20a%20Video.md)"]
 tags: [channels, publishing]
 beta: true
 ---

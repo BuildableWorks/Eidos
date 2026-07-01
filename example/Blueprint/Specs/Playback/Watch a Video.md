@@ -1,6 +1,7 @@
 ---
 id: watch-a-video
 title: Watch a Video
+summary: play a video reliably, signed in or not, adapting to the connection.
 type: feature
 domain: Playback
 status: Intake

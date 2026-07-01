@@ -22,8 +22,8 @@ The watchable, publishable core: [Watch a Video](Specs/Playback/Watch%20a%20Vide
 ## Later
 
 - **Recommendations** — algorithmic discovery beyond your subscriptions; the largest surface, and the one most easily mistaken for a near-term promise.
-- **A revenue surface** — ads against watch time and an ad-free subscription; noted here so the delivery-cost work in [Criteria](Criteria.md) reads as deliberate, not premature.
+- **A revenue surface** — ads against watch time and an ad-free subscription; noted here so the delivery-cost work in [Criteria](Frames/Criteria.md) reads as deliberate, not premature.
 
 ## Explicitly not on the roadmap
 
-Short-form (a Shorts-style feed) and live streaming. They are different products with different rhythms (see [Market](Market.md)); naming them here keeps them from creeping back in as "just one more feed."
+Short-form (a Shorts-style feed) and live streaming. They are different products with different rhythms (see [Market](Frames/Market.md)); naming them here keeps them from creeping back in as "just one more feed."
