@@ -5,8 +5,8 @@ summary: publish a source file to a channel; accepted fast, processed reliably.
 type: feature
 domain: Channels
 status: Intake
-created: 2026-06-20
-modified: 2026-06-23
+date_created: 2026-06-20
+date_modified: 2026-06-23
 owner: Brenton
 depends_on: [transcode-pipeline]
 connects_to: ["[Watch a Video](../Playback/Watch%20a%20Video.md)"]
@@ -20,11 +20,15 @@ beta: true
 
 Publishing is the creator's core action. If an upload is fragile, or a video won't play on some device, creators leave for a platform that "just works." This defines what uploading means and what a creator can count on — accepted fast, processed reliably, published when ready.
 
+### Assumptions
+
+Assuming a single client→ingest upload is good enough for this cut — no resumable or multipart upload for very large files yet.
+
 ### Implementation Notes
 
 The client sends a source file to the ingest endpoint; a background pipeline transcodes it into the streaming renditions and publishes to the catalog when ready. Acceptance is decoupled from processing so a large file or a slow transcode never blocks the creator.
 
-## Open Questions & Assumptions
+## Open Questions
 
 - What is the largest source file and longest duration accepted in this cut?
 - If transcoding fails partway, does the creator get a retry, or a clear failure with the source preserved?

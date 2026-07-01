@@ -1,11 +1,12 @@
 ---
 id: magic-link-signin
 title: Magic Link Sign-In
+summary: let a returning user sign in by proving control of their email, with nothing to remember.
 type: feature
 domain: Identity
 status: Intake
-created: 2026-06-11
-modified: 2026-06-17
+date_created: 2026-06-11
+date_modified: 2026-06-17
 owner: Brenton
 depends_on: [email-delivery]
 tags: [auth, onboarding]

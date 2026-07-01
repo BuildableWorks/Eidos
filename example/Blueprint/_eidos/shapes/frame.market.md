@@ -2,7 +2,7 @@
 The Frame shape — market flavor. Where the product sits in its marketplace, why it is not just another
 one of many, and how it is intended to make money. Answers the two questions a product must survive:
 why would anyone pick this, and how does it earn. A point-in-time snapshot — markets move, revise when
-they do. Suggestive, not prescriptive. A Frame's frontmatter is generated from .eidos/Schema.md, so it
+they do. Suggestive, not prescriptive. A Frame's frontmatter is generated from the registry's Schema (in Registry.md), so it
 is not written here. Delete the italic prompts as you fill each section in.
 -->
 

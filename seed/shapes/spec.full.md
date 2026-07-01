@@ -1,6 +1,6 @@
 <!--
 The Spec shape — the body of a spec, and the documentation of each section. A spec's
-frontmatter is generated from _eidos/Schema.md, so it is not written here. Keep the sections
+frontmatter is generated from the registry's Schema (in Registry.md), so it is not written here. Keep the sections
 that apply and delete the rest, but leave the order and headings as they are — a reader should
 know what to expect from any spec in this registry. The italic prompts are guidance; delete
 them as you fill each section in.
@@ -12,13 +12,17 @@ them as you fill each section in.
 
 _Why this exists — the problem and who has it. One or two paragraphs. This is the stable part: if Intent changes substantially, you probably have a different spec, not an edit to this one._
 
+### Assumptions
+
+_The assumptions you're proceeding on — what you're taking as given about the problem or the world, not yet confirmed. Nested under Intent because they frame it. Surface them so a guess doesn't slip into Behaviors as if it were settled._
+
 ### Implementation Notes
 
 _Optional, nested under Intent. The intent of the implementation — the approach you mean to take and why. Direction, not status: how you intend to build it (e.g. "reuse the existing queue"), never how far along it is. Delete if the approach is obvious or undecided._
 
-## Open Questions & Assumptions
+## Open Questions
 
-_Unresolved questions, and the assumptions you're proceeding on. Kept high, right after Intent, so uncertainty is seen rather than buried — and so guesses don't leak into Behaviors as if they were settled._
+_Unresolved questions — what you don't yet know and still need answered. Kept high, right after Intent, so uncertainty is seen rather than buried. When one is settled it graduates into an Assumption, a Behavior, or a Decision._
 
 ## Behaviors & Acceptance Criteria
 

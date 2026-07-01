@@ -48,7 +48,7 @@ If the owner offers only a name, ask for the rest. Don't fill them in yourself.
      - [decision.full.md](shapes/decision.full.md) — context, decision, consequences (default).
    - Ungrouped — a flat, dated list.
    ```
-5. **`domain` is the Specs grouping property.** It's a recommended property scoped (applies-to) to `Specs`; other collections group by their sub-folders, recorded in the Registry, not by a property. If the owner wants `domain` on another collection, or off Specs, that's a Schema question — redirect to `eidos-schema`; don't change core properties here.
+5. **`domain` is the Specs grouping property.** It's a custom property scoped (applies-to) to `Specs`; other collections group by their sub-folders, recorded in the Registry, not by a property. If the owner wants `domain` on another collection, or off Specs, that's a Schema question — redirect to `eidos-schema`; don't change core properties here.
 6. **Build the leaf and hand off.** Run `eidos-index` to create the new collection's `index.md`, and point the owner to `eidos` to author the first item. Report the folder created, the shape file added, and the Collections entry written.
 
 ## Adding a flavor to a collection

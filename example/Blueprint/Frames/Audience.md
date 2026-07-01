@@ -2,11 +2,11 @@
 id: audience
 title: Audience
 summary: "who it serves: viewers, creators, and how each differs."
-type: frame
 flavor: audience
 status: Done
-created: 2026-06-16
-modified: 2026-07-01
+date_created: 2026-06-16
+date_modified: 2026-07-01
+owner: Brenton
 tags: [eidos, product, audience]
 ---
 

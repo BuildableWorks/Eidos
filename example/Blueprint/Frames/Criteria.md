@@ -2,11 +2,11 @@
 id: criteria
 title: Criteria
 summary: budget, scope objectives, and timeline that decide and audit scope.
-type: frame
 flavor: criteria
 status: Done
-created: 2026-06-16
-modified: 2026-07-01
+date_created: 2026-06-16
+date_modified: 2026-07-01
+owner: Brenton
 tags: [eidos, product, criteria]
 ---
 

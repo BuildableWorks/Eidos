@@ -5,8 +5,8 @@ summary: play a video reliably, signed in or not, adapting to the connection.
 type: feature
 domain: Playback
 status: Intake
-created: 2026-06-20
-modified: 2026-06-23
+date_created: 2026-06-20
+date_modified: 2026-06-23
 owner: Brenton
 depends_on: [video-catalog, cdn-delivery]
 tags: [playback]
@@ -19,11 +19,15 @@ beta: true
 
 A view is the core action of the whole product. If a video is slow to start or stalls, the viewer leaves — so what "playing a video" means, and what a viewer can count on, is the first thing to pin down. It must hold whether the viewer is signed in or arrived from a shared link.
 
+### Assumptions
+
+Assuming adaptive-bitrate delivery over the CDN is available and affordable at launch scale — if it isn't, the whole playback approach changes.
+
 ### Implementation Notes
 
 Intend to use adaptive-bitrate streaming served from the CDN. The catalog hands the player short-lived **signed segment URLs**; the app server never proxies video bytes. Quality is chosen by the player from the connection, not by the viewer.
 
-## Open Questions & Assumptions
+## Open Questions
 
 - How long should a signed playback URL stay valid before it has to be refreshed?
 - Does a view count on play start, or only after a watch-time threshold (to resist inflation)?

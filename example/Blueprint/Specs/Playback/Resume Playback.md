@@ -6,8 +6,8 @@ type: feature
 domain: Playback
 flavor: micro
 status: Draft
-created: 2026-06-22
-modified: 2026-06-23
+date_created: 2026-06-22
+date_modified: 2026-06-23
 owner: Brenton
 depends_on:
   - "[Watch a Video](Watch%20a%20Video.md)"
@@ -23,10 +23,13 @@ beta: false
 
 People watch long videos in more than one sitting, and across devices. If reopening a video always starts at zero, the viewer loses their place and drops off. This remembers where each viewer stopped and offers to pick up there. It's a **micro** spec on purpose — the smallest useful definition, written to grow into the full flavor once it earns its place.
 
-## Open Questions & Assumptions
+### Assumptions
+
+Position is per-viewer and follows them across devices via their account, not stored only on one device. Unconfirmed.
+
+## Open Questions
 
 - How precise should a remembered position be — to the second, or near enough to feel right after a re-watch?
-- Assuming position is per-viewer and follows them across devices via their account, not stored only on one device. Unconfirmed.
 
 ## Behaviors & Acceptance Criteria
 

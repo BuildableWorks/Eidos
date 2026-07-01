@@ -1,4 +1,4 @@
 # Eidos: the per-actor persona file is personal and never shared.
-# Each person who works in this registry keeps their own user.md (here in .eidos/); the agent reads
-# it to know who they are. It is the one .eidos/ file that is not checked in.
+# Each person who works in this registry keeps their own user.md (here in _eidos/); the agent reads
+# it to know who they are. It is the one _eidos/ file that is not checked in.
 user.md

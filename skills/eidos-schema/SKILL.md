@@ -25,7 +25,7 @@ If the owner only offers a name, ask for the rest. Don't fill them in yourself.
 
 ## Boundaries
 
-- **The custom block, not the core.** You edit `### Custom Properties` in the Registry's `## Schema` — including the seed's shipped defaults (`status`, the dates, `tags`, `domain`, `depends_on`), which are the registry's to keep, scope, or drop. Never touch `### Eidos Core` — those are the standard's, and they move with the version (`eidos-migrate`). If the owner wants to change a core property, that's a standards change, not a registry customization; redirect.
+- **The custom block, not the core.** You edit `### Custom Properties` in the Registry's `## Schema` — including the seed's shipped defaults: `status`, the two dates, and `tags` (applies-to: all), plus `domain`, `depends_on`, and `type` (applies-to: `Specs`) — which are the registry's to keep, scope, or drop. Never touch `### Eidos Core` — those are the standard's, and they move with the version (`eidos-migrate`). If the owner wants to change a core property, that's a standards change, not a registry customization; redirect.
 - **Needs a registry.** Read `_eidos/Registry.md` from the registry root (usually `Blueprint/_eidos/`). If there is no `_eidos/`, the registry isn't set up — offer `eidos-install` first.
 - **Don't silently drop values.** Retiring or renaming a property touches real data in real items. Surface what's there before changing it.
 

@@ -1,7 +1,7 @@
 <!--
 The Frame shape — architecture flavor. The overarching shape of the product as a built system, one
 per product. Suggestive, not prescriptive: keep the sections that serve the product, drop what doesn't
-yet apply, add what's missing. A Frame's frontmatter is generated from _eidos/Schema.md, so it is not
+yet apply, add what's missing. A Frame's frontmatter is generated from the registry's Schema (in Registry.md), so it is not
 written here. Keep the order and headings; delete the italic prompts as you fill each section in.
 -->
 

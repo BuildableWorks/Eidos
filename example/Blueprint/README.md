@@ -4,7 +4,7 @@
 > source of truth for what this slice of the product is.
 
 This README is the front door. The full index and config live in
-[`.eidos/Registry.md`](.eidos/Registry.md); this file orients you and points the way.
+[`_eidos/Registry.md`](_eidos/Registry.md); this file orients you and points the way.
 
 ## What this is
 
@@ -23,4 +23,4 @@ the registry stays small enough to read in a sitting against a product you alrea
 
 ---
 
-_An Eidos registry. The form lives in [`.eidos/`](.eidos/); see [`.eidos/Registry.md`](.eidos/Registry.md) for the full index._
+_An Eidos registry. The form lives in [`_eidos/`](_eidos/); see [`_eidos/Registry.md`](_eidos/Registry.md) for the full index._

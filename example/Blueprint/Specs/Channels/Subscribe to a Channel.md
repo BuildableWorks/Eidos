@@ -5,8 +5,8 @@ summary: follow a creator so their channel is yours to return to.
 type: feature
 domain: Channels
 status: Intake
-created: 2026-06-20
-modified: 2026-06-23
+date_created: 2026-06-20
+date_modified: 2026-06-23
 owner: Brenton
 tags: [channels]
 beta: true
@@ -18,11 +18,15 @@ beta: true
 
 Subscriptions turn a one-off watch into following a creator. Without them, every visit starts from scratch and creators have no durable audience. This defines what subscribing means and what each side can count on.
 
+### Assumptions
+
+Assuming a subscription is a flat viewer→channel follow — no tiers, memberships, or paid levels in this cut.
+
 ### Implementation Notes
 
 A subscription is an edge from viewer to channel in the catalog. Counts are derived from the edges, not hand-maintained, and the write is idempotent so a double-tap can't double-subscribe.
 
-## Open Questions & Assumptions
+## Open Questions
 
 - Can a channel owner see who subscribed, or only the count?
 - Are a viewer's subscriptions public by default, or private?

@@ -2,7 +2,7 @@
 The Frame shape — criteria flavor. The frame that decides and audits scope: what the product can
 afford, what it is trying to be, and by when. Paired with Audience, this is what a spec is measured
 against. A point-in-time snapshot — record what's true now, revise when it changes. Suggestive, not
-prescriptive. A Frame's frontmatter is generated from .eidos/Schema.md, so it is not written here.
+prescriptive. A Frame's frontmatter is generated from the registry's Schema (in Registry.md), so it is not written here.
 Delete the italic prompts as you fill each section in.
 -->
 

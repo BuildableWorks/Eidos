@@ -2,11 +2,11 @@
 id: market
 title: Market
 summary: where it sits among video platforms, and how it would earn.
-type: frame
 flavor: market
 status: Done
-created: 2026-06-16
-modified: 2026-07-01
+date_created: 2026-06-16
+date_modified: 2026-07-01
+owner: Brenton
 tags: [eidos, product, market]
 ---
 

@@ -2,11 +2,11 @@
 id: architecture
 title: Architecture
 summary: the YouTube subset as a built system, the one entry door.
-type: frame
 flavor: architecture
 status: Done
-created: 2026-06-16
-modified: 2026-07-01
+date_created: 2026-06-16
+date_modified: 2026-07-01
+owner: Brenton
 tags: [eidos, product, architecture]
 ---
 
@@ -22,7 +22,7 @@ This registry defines a **small subset of YouTube**: watching videos, resuming w
 - **Catalog** — the source of truth for videos and channels: titles, descriptions, ownership, subscription edges, view counts.
 - **Upload & transcode pipeline** — ingests a creator's source file, transcodes it into the streaming renditions, and publishes the result to the catalog when ready. Asynchronous by design.
 - **Delivery (CDN)** — serves the transcoded segments to the player from the edge. The catalog hands the player signed URLs; the bytes never touch the app server.
-- **Playback store** — per-viewer state: the furthest-watched position per video, for [Resume Playback](Specs/Playback/Resume%20Playback.md).
+- **Playback store** — per-viewer state: the furthest-watched position per video, for [Resume Playback](../Specs/Playback/Resume%20Playback.md).
 
 ## Data and flow
 

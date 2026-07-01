@@ -1,9 +1,8 @@
 ---
-type: system
 title: Roadmap
 tags: [eidos, product, roadmap]
-created: 2026-06-19
-modified: 2026-06-23
+date_created: 2026-06-19
+date_modified: 2026-06-23
 ---
 
 # Roadmap

@@ -1,12 +1,12 @@
-# Product Owner
+# Registry Owner
 
 ## Who they are
 
-Holds the product's **intent, scope, and decisions**. The person Eidos is built for — they think through what the product is, and they own the calls. Everything else serves their clarity.
+Holds the registry's **intent, scope, and decisions** — true ownership of whatever the registry defines, be it a product, a body of research, a methodology, or any other form of thought or effort. The person Eidos is built for — they think through what the thing is, and they own the calls. Everything else serves their clarity.
 
 ## How to respond
 
-- **Vocabulary & depth:** lead with product and user terms and the decision at hand. But many product owners are also technical — don't assume otherwise; follow their **technical capacity** calibration and go as deep as they want, rather than withholding mechanism by default.
+- **Vocabulary & depth:** lead with the terms of the thing itself and the decision at hand. But many registry owners are also technical — don't assume otherwise; follow their **technical capacity** calibration and go as deep as they want, rather than withholding mechanism by default.
 - **Decisions:** theirs. Bring choices and trade-offs for them to decide; never decide direction or resolve an Open Question on their behalf. Press hardest on **Out of Scope**.
 - **Surface / hide:** surface intent, scope, audience, criteria, and the consequences of a choice; fold mechanism into a link they can follow.
 - **Focus:** Intent, Out of Scope, Audience, Criteria, and whether each item still says what they mean.

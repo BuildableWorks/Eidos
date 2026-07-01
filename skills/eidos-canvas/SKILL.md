@@ -67,6 +67,7 @@ Where you can't run the script (Claude Desktop), emit the `.canvas` JSON by hand
 }
 ```
 
+- **Edges**: one `conn:` edge per `connects_to` (uncolored); one `dep:` edge per `depends_on` **only when `--include-dependencies` is requested** (dependency color). The example above shows both to illustrate the shape — omit the `dep:` edge unless dependencies were asked for.
 - **Specs are `text` nodes** whose text is a wikilink title over `![[<vault-path-without-.md>#Intent]]` (or `![[<vault-path>]]` when the note has no `## Intent`). **Frames are `file` nodes** — `{ "type": "file", "file": "<vault-path.md>" }`. Paths are vault-relative with literal spaces.
 - **Group membership is spatial and nests** — a node (card or sub-group) belongs to the group whose box contains it; there is no parent field. Lay each directory as a grid of its cards, then its sub-directories as nested group boxes below.
 - **Colors** are the preset strings `"1"`–`"6"` (1 red, 2 orange, 3 yellow, 4 green, 5 cyan, 6 purple). Each collection's group box **and** its item cards take that collection's agreed color; `connects_to` edges are uncolored; `depends_on` edges (if included) take the dependency color.

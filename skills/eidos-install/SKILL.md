@@ -4,7 +4,7 @@ description: >-
   Stand up a new Eidos registry in a repo that doesn't have one yet. Use when someone wants to set up Eidos, initialize a product/Blueprint, scaffold a registry, "start documenting our product", or says there's no Eidos here yet. It installs the `_eidos/` form layer (the shapes and property Schema) and scaffolds a `Blueprint/`, following the current `EIDOS.md` — no copying the example and deleting its contents. Trigger on "set up eidos", "init the blueprint", "scaffold our product docs", "we have no specs yet, get us started". For a registry that already exists, use `eidos` (author/validate) or `eidos-migrate` (version upgrade) instead.
 ---
 
-# Eidos Init
+# Eidos Install
 
 Create a fresh Eidos registry: install the form layer, then scaffold the starting collections (`Specs`, and the encouraged `Frames`) around it. The point is to start from well-formed structure — **not** by copying the worked example and editing over it.
 
@@ -38,7 +38,7 @@ It ships as a committed `seed/` in this skill's own folder, kept in sync with th
 
 ## Procedure
 
-1. **Confirm it's a fresh start.** If a registry already exists (a `_eidos/` anywhere, a `Blueprint/`, or any `Specs/` folder), stop: point the user to `eidos` to author, or `eidos-migrate` if it's on an older version. Init is for empty ground. (The skills find a registry by its `_eidos/` marker, so look for that, not only the default name.)
+1. **Confirm it's a fresh start.** A registry's authoritative marker is an `_eidos/` folder anywhere in the tree (usually `Blueprint/_eidos/`). If one already exists, stop: point the user to `eidos` to author, or `eidos-migrate` if it's on an older version. Install is for empty ground — find a registry by that `_eidos/` marker, not by the default `Blueprint/` name or the presence of a `Specs/` folder.
 
 2. **Name the root.** Default `Blueprint/`; offer to rename. The name is low-stakes — nothing points at it by path, and the skills locate the registry by its `_eidos/`, not its name — so `Abstract/`, `Product/`, or the product's own name all work. For several products in one repo, nest as `Blueprint/<name>/`, each with its own form layer.
 

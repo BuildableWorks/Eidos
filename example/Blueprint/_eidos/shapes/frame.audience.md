@@ -2,7 +2,7 @@
 The Frame shape — audience flavor. Who the product is for, and how each kind of person interacts with
 it differently. This frame and criteria are the two that decide scope. Keep it to simple blocks of
 prose — no tables, no stock-photo personas. Suggestive, not prescriptive. A Frame's frontmatter is
-generated from .eidos/Schema.md, so it is not written here. Delete the italic prompts as you fill in.
+generated from the registry's Schema (in Registry.md), so it is not written here. Delete the italic prompts as you fill in.
 -->
 
 # {{title}}
