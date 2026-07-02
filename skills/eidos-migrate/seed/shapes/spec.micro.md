@@ -3,7 +3,7 @@ The Spec shape — micro flavor. The smallest spec worth writing: why it exists,
 and what it will not do. A starting point that grows into the full flavor (spec.full.md) as the unit
 firms up — add the full flavor's sections (Implementation Notes, Dependencies, Testing, Constraints &
 Decisions, …) when they earn their place, and set `flavor: full` (or drop `flavor`) once it has.
-A spec's frontmatter is generated from the registry's Schema (in Registry.md), so it is not written here. Keep the order and
+A spec's frontmatter is generated from the framework's Schema (in Framework.md), so it is not written here. Keep the order and
 headings; the italic prompts are guidance — delete them as you fill each section in.
 -->
 

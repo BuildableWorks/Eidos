@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-build-canvas.py — generate an Obsidian .canvas (JSON Canvas 1.0) from an Eidos registry.
+build-canvas.py — generate an Obsidian .canvas (JSON Canvas 1.0) from an Eidos framework.
 
-A visual map of the registry, opened in Obsidian's Canvas:
+A visual map of the framework, opened in Obsidian's Canvas:
 
   Specs (and spec-like collections)  -> text nodes embedding each item's `## Intent`
   the Frames collection               -> full-file nodes (the whole framing doc)
@@ -11,10 +11,10 @@ A visual map of the registry, opened in Obsidian's Canvas:
   `depends_on`  (with --include-dependencies) -> directed edges in a distinct color (purple)
 
 Each collection gets a distinct color (its group box and its item cards). The eidos-canvas skill
-proposes a schema from the registry, confirms it, and passes it as `--color NAME:N`; unset collections
+proposes a schema from the framework, confirms it, and passes it as `--color NAME:N`; unset collections
 fall back to a palette in order. Regenerating an existing canvas reuses its colors, so a chosen schema
 sticks. Top-level documents are NOT mapped (they frame the product; the canvas maps the collections).
-The generated `.canvas` is itself a top-level document — register it in `_eidos/Registry.md`
+The generated `.canvas` is itself a top-level document — register it in `_eidos/Framework.md`
 (## Top-Level) after building.
 
 Stdlib only — runs wherever Python 3 and a shell are available (Claude Code / IDE),
@@ -22,21 +22,21 @@ matching its sibling `eidos-index/build-index.py`. On a sandboxed host the skill
 back to emitting the canvas JSON by hand.
 
 Usage:
-  build-canvas.py [REGISTRY_ROOT] [--collection NAME ...] [--color NAME:N ...]
+  build-canvas.py [FRAMEWORK_ROOT] [--collection NAME ...] [--color NAME:N ...]
                   [--include-dependencies] [--dependency-color N]
                   [--vault PATH] [--out FILE] [--list]
 
-  REGISTRY_ROOT          folder containing `_eidos/` (usually the registry root, e.g. Blueprint/).
+  FRAMEWORK_ROOT          folder containing `_eidos/` (usually the framework root, e.g. Blueprint/).
   --collection           include this collection; repeatable. Default: all declared collections.
   --color NAME:N         color a collection (Obsidian preset 1-6); repeatable. Overrides the palette
                          and any existing canvas colors.
   --include-dependencies also draw `depends_on` edges (off by default).
   --dependency-color N   Obsidian preset color for dependency edges (default 6 = purple).
-  --vault                vault root that embed/file paths are relative to. Default: REGISTRY_ROOT.
-  --out                  output .canvas path. Default: <vault>/Registry Map.canvas.
-  --list                 print the registry's declared collections, then exit.
+  --vault                vault root that embed/file paths are relative to. Default: FRAMEWORK_ROOT.
+  --out                  output .canvas path. Default: <vault>/Framework Map.canvas.
+  --list                 print the framework's declared collections, then exit.
 
-Exit codes: 0 = wrote (or --list); 1 = nothing to map / bad selection; 2 = not a registry.
+Exit codes: 0 = wrote (or --list); 1 = nothing to map / bad selection; 2 = not a framework.
 """
 
 import argparse
@@ -58,7 +58,7 @@ MAX_COLS = 4
 FRAMES_COLLECTION = "frames"
 
 # Obsidian canvas preset colors (1 red, 2 orange, 3 yellow, 4 green, 5 cyan, 6 purple).
-# Each collection gets a distinct color. The eidos-canvas skill proposes a schema from the registry,
+# Each collection gets a distinct color. The eidos-canvas skill proposes a schema from the framework,
 # confirms it with the owner, and passes it as --color NAME:N overrides; unset collections fall back
 # to this palette in order. Regenerating reuses an existing canvas's colors, so a chosen schema sticks.
 PALETTE = ["4", "5", "6", "2", "3", "1"]
@@ -126,9 +126,9 @@ def link_target(entry):
     return unquote(m.group(1).strip()) if m else None
 
 
-# ---- registry parsing -----------------------------------------------------
-def declared_collections(registry_md):
-    text = registry_md.read_text(encoding="utf-8")
+# ---- framework parsing -----------------------------------------------------
+def declared_collections(framework_md):
+    text = framework_md.read_text(encoding="utf-8")
     m = re.search(r"^##\s+Collections\s*$", text, re.MULTILINE)
     if not m:
         return []
@@ -361,25 +361,25 @@ def build(root, vault_root, collections, include_deps, dep_color, colors, warnin
 
 # ---- cli ------------------------------------------------------------------
 def main():
-    ap = argparse.ArgumentParser(description="Generate an Obsidian .canvas map of an Eidos registry.")
-    ap.add_argument("root", nargs="?", default=".", help="registry root (contains _eidos/)")
+    ap = argparse.ArgumentParser(description="Generate an Obsidian .canvas map of an Eidos framework.")
+    ap.add_argument("root", nargs="?", default=".", help="framework root (contains _eidos/)")
     ap.add_argument("--collection", action="append", default=[], help="include this collection (repeatable)")
     ap.add_argument("--include-dependencies", action="store_true", help="also draw depends_on edges")
     ap.add_argument("--dependency-color", default="6", help="Obsidian preset color for dependency edges (default 6=purple)")
     ap.add_argument("--color", action="append", default=[], metavar="NAME:N",
                     help="color a collection: NAME:N (Obsidian preset 1-6). Repeatable. Overrides the palette and any existing canvas colors.")
-    ap.add_argument("--vault", help="vault root for embed/file paths (default: registry root)")
-    ap.add_argument("--out", help="output .canvas path (default: <vault>/Registry Map.canvas)")
+    ap.add_argument("--vault", help="vault root for embed/file paths (default: framework root)")
+    ap.add_argument("--out", help="output .canvas path (default: <vault>/Framework Map.canvas)")
     ap.add_argument("--list", action="store_true", help="list declared collections, then exit")
     args = ap.parse_args()
 
     root = Path(args.root).resolve()
-    registry_md = root / "_eidos" / "Registry.md"
-    if not registry_md.is_file():
-        print(f"error: no _eidos/Registry.md under {root} — not an Eidos registry", file=sys.stderr)
+    framework_md = root / "_eidos" / "Framework.md"
+    if not framework_md.is_file():
+        print(f"error: no _eidos/Framework.md under {root} — not an Eidos framework", file=sys.stderr)
         return 2
 
-    collections = declared_collections(registry_md)
+    collections = declared_collections(framework_md)
 
     if args.list:
         print("Collections (mappable):")
@@ -393,7 +393,7 @@ def main():
         wanted = set(args.collection)
         selected = [c for c in collections if c in wanted]
         for miss in sorted(wanted - set(collections)):
-            print(f"error: collection '{miss}' not declared in Registry.md", file=sys.stderr)
+            print(f"error: collection '{miss}' not declared in Framework.md", file=sys.stderr)
         if wanted - set(collections):
             return 1
     else:
@@ -403,7 +403,7 @@ def main():
         return 1
 
     vault_root = Path(args.vault).resolve() if args.vault else root
-    out_file = Path(args.out).resolve() if args.out else (vault_root / "Registry Map.canvas")
+    out_file = Path(args.out).resolve() if args.out else (vault_root / "Framework Map.canvas")
 
     # colors: --color overrides > existing canvas (so a chosen schema sticks on regenerate) > palette
     overrides = {}
@@ -439,7 +439,7 @@ def main():
         rel_out = out_file.relative_to(vault_root).as_posix()
     except ValueError:
         rel_out = out_file.name
-    print(f"    ↳ register it as a top-level document in _eidos/Registry.md (## Top-Level): [{out_file.stem}]({rel_out})")
+    print(f"    ↳ register it as a top-level document in _eidos/Framework.md (## Top-Level): [{out_file.stem}]({rel_out})")
     if warnings:
         print(f"\n  {len(warnings)} warning(s):", file=sys.stderr)
         for w in warnings:

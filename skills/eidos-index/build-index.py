@@ -14,11 +14,11 @@ IDE. On a sandboxed platform (Claude Desktop) the skill falls back to doing the 
 by hand; this script is an accelerator and correctness guarantee, never a dependency.
 
 Usage:
-  build-index.py [REGISTRY_ROOT] [--collection NAME ...] [--check]
+  build-index.py [FRAMEWORK_ROOT] [--collection NAME ...] [--check]
 
-  REGISTRY_ROOT   the folder containing `_eidos/` (default: current directory).
+  FRAMEWORK_ROOT   the folder containing `_eidos/` (default: current directory).
   --collection    re-index only the named collection(s); repeatable. Default: all
-                  collections declared in `_eidos/Registry.md`.
+                  collections declared in `_eidos/Framework.md`.
   --check         don't write; exit non-zero if any index is stale (CI / pre-commit).
 
 Exit codes: 0 = wrote (or, with --check, all current); 1 = stale (--check); 2 = error.
@@ -57,9 +57,9 @@ def parse_frontmatter(text):
     return out
 
 
-def declared_collections(registry_md):
-    """Collection names = the `### ` headings under `## Collections` in Registry.md."""
-    text = registry_md.read_text(encoding="utf-8")
+def declared_collections(framework_md):
+    """Collection names = the `### ` headings under `## Collections` in Framework.md."""
+    text = framework_md.read_text(encoding="utf-8")
     m = re.search(r"^##\s+Collections\s*$", text, re.MULTILINE)
     if not m:
         return []
@@ -130,28 +130,28 @@ def collect(folder):
 
 def main():
     ap = argparse.ArgumentParser(description="Regenerate Eidos collection index.md files.")
-    ap.add_argument("root", nargs="?", default=".", help="registry root (contains _eidos/)")
+    ap.add_argument("root", nargs="?", default=".", help="framework root (contains _eidos/)")
     ap.add_argument("--collection", action="append", default=[], help="limit to this collection (repeatable)")
     ap.add_argument("--check", action="store_true", help="verify only; non-zero if stale")
     args = ap.parse_args()
 
     root = Path(args.root).resolve()
-    registry_md = root / "_eidos" / "Registry.md"
-    if not registry_md.is_file():
-        print(f"error: no _eidos/Registry.md under {root} — not an Eidos registry", file=sys.stderr)
+    framework_md = root / "_eidos" / "Framework.md"
+    if not framework_md.is_file():
+        print(f"error: no _eidos/Framework.md under {root} — not an Eidos framework", file=sys.stderr)
         return 2
 
-    collections = declared_collections(registry_md)
+    collections = declared_collections(framework_md)
     if args.collection:
         wanted = set(args.collection)
         collections = [c for c in collections if c in wanted]
         missing = wanted - set(collections)
         for m in sorted(missing):
-            print(f"error: collection '{m}' not declared in Registry.md", file=sys.stderr)
+            print(f"error: collection '{m}' not declared in Framework.md", file=sys.stderr)
         if missing:
             return 2
     if not collections:
-        print("error: no collections declared in _eidos/Registry.md (## Collections)", file=sys.stderr)
+        print("error: no collections declared in _eidos/Framework.md (## Collections)", file=sys.stderr)
         return 2
 
     stale = 0

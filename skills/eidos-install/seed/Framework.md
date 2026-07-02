@@ -1,30 +1,30 @@
 ---
-# The Eidos version this registry targets; eidos-migrate reads and bumps it.
+# The Eidos version this framework targets; eidos-migrate reads and bumps it.
 eidos_version: 4.1.0
 # How files, folders, and links are named: Title Case | TitleCase | kebab-case. Absent = Title Case.
 naming: Title Case
 ---
 
-# Registry
+# Framework
 
-The registry's index and config, in one place: the version and naming convention above, and below the
+The framework's index and config, in one place: the version and naming convention above, and below the
 Top-Level documents, the Collections (with their flavors and grouping), and the property Schema. The
-visible `README.md` at the registry root is the friendly door to it; keep it current with the
-`eidos-registry` and `eidos-schema` skills.
+visible `README.md` at the framework root is the friendly door to it; keep it current with the
+`eidos-configure` skill.
 
 ## Top-Level
 
-<!-- eidos-registry: top-level index (regenerated) -->
-- [README](../README.md) — the registry's front door: what this is, and pointers in.
+<!-- eidos-configure: top-level index (regenerated) -->
+- [README](../README.md) — the framework's front door: what this is, and pointers in.
 <!-- One bullet per top-level document. README is the door and comes first; add your own below (a
-     Roadmap, a Vision, the generated Registry Map canvas), each a link and a one-line description.
-     The framing docs live in the Frames collection, not here. eidos-registry refreshes this list. -->
+     Roadmap, a Vision, the generated Framework Map canvas), each a link and a one-line description.
+     The framing docs live in the Frames collection, not here. eidos-configure refreshes this list. -->
 
 ## Collections
 
 A collection is a top-level folder of repeated items that share a body shape. `Frames` holds the
-framing docs — the most primary thing the registry says about itself — and `Specs` the product's
-units. Add more with `eidos-registry`. Each lists its flavors (the default marked) and its grouping,
+framing docs — the most primary thing the framework says about itself — and `Specs` the product's
+units. Add more with `eidos-configure`. Each lists its flavors (the default marked) and its grouping,
 and points at its generated `index.md` leaf.
 
 ### Frames
@@ -57,7 +57,7 @@ The property contract — what an item's frontmatter may carry, across every col
 custom property declares which collections it **applies to** — `all`, or a list — so a property never
 lands where it makes no sense (`domain` is Specs-only). A property's type comes from the Obsidian set
 (Text, List, Number, Checkbox, Date, Date & time), so frontmatter renders natively in an Obsidian
-vault. The `eidos-schema` skill edits this section.
+vault. The `eidos-configure` skill edits this section.
 
 ### Eidos Core
 
@@ -69,12 +69,12 @@ _Present on every item. Managed by the standard (Eidos 4.1.0); `eidos-migrate` r
 | title       | Text | Human-readable name.                                                                           |
 | summary     | Text | One plain line — what this item is, in a sentence, distilled from Intent. Source for the collection index.md listing; absent, the index flags it. |
 | flavor      | Text | Which body flavor this item follows, from its collection's declared flavors. Absent = the collection's default flavor. |
-| owner       | Text | Who owns the document. Non-owners are warned before editing it (the registry owner aside).      |
-| connects_to | List | Items this one connects to on the registry canvas, each a markdown link; drawn as a directed edge (this → target). The intentional map, distinct from depends_on. |
+| owner       | Text | Who owns the document. Non-owners are warned before editing it (the framework owner aside).      |
+| connects_to | List | Items this one connects to on the framework canvas, each a markdown link; drawn as a directed edge (this → target). The intentional map, distinct from depends_on. |
 
 ### Custom Properties
 
-_Yours to shape with the `eidos-schema` skill. The seed ships a few useful defaults below — keep, scope, or drop any of them; Eidos doesn't depend on them. Absence where a property applies is a soft gap the validator notes, never refuses._
+_Yours to shape with the `eidos-configure` skill. The seed ships a few useful defaults below — keep, scope, or drop any of them; Eidos doesn't depend on them. Absence where a property applies is a soft gap the validator notes, never refuses._
 
 | Name          | Type | Applies To | Meaning                                                                                    |
 | ------------- | ---- | ---------- | ------------------------------------------------------------------------------------------ |

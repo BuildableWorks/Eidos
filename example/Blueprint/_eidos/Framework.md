@@ -1,19 +1,19 @@
 ---
-# The Eidos version this registry targets; eidos-migrate reads and bumps it.
+# The Eidos version this framework targets; eidos-migrate reads and bumps it.
 eidos_version: 4.1.0
 # How files, folders, and links are named: Title Case | TitleCase | kebab-case. Absent = Title Case.
 naming: Title Case
 ---
 
-# Registry
+# Framework
 
-This registry's index and config, in one place: the version and naming convention above, and below
+This framework's index and config, in one place: the version and naming convention above, and below
 the Top-Level documents, the Collections (with their flavors and grouping), and the property Schema.
-The root `README.md` is the friendly door to it. Kept current with `eidos-registry` and `eidos-schema`.
+The root `README.md` is the friendly door to it. Kept current with `eidos-configure`.
 
 ## Top-Level
 
-<!-- eidos-registry: top-level index (regenerated) -->
+<!-- eidos-configure: top-level index (regenerated) -->
 - [README](../README.md) — the front door: what this subset is, and pointers in.
 - [Roadmap](../Roadmap.md) — where the subset is headed, in plain horizons (a custom top-level doc).
 
@@ -46,10 +46,10 @@ The product's units, one per item, grouped by domain.
 ## Schema
 
 The property contract — what an item's frontmatter may carry, across every collection. Two parts: the
-**core** properties Eidos's own machinery uses, and the **custom** ones this registry (or the seed)
+**core** properties Eidos's own machinery uses, and the **custom** ones this framework (or the seed)
 adds. Every custom property declares which collections it **applies to** — `all`, or a list — so a
 property never lands where it makes no sense (`domain` and `beta` are Specs-only here). Types come
-from the Obsidian set (Text, List, Number, Checkbox, Date, Date & time). The `eidos-schema` skill
+from the Obsidian set (Text, List, Number, Checkbox, Date, Date & time). The `eidos-configure` skill
 edits this section.
 
 ### Eidos Core
@@ -62,12 +62,12 @@ _Present on every item. Managed by the standard (Eidos 4.1.0); `eidos-migrate` r
 | title       | Text | Human-readable name.                                                                           |
 | summary     | Text | One plain line — what this item is, in a sentence, distilled from Intent. Source for the collection index.md listing; absent, the index flags it. |
 | flavor      | Text | Which body flavor this item follows, from its collection's declared flavors. Absent = the collection's default flavor. |
-| owner       | Text | Who owns the document. Non-owners are warned before editing it (the registry owner aside).      |
-| connects_to | List | Items this one connects to on the registry canvas, each a markdown link; drawn as a directed edge (this → target). The intentional map, distinct from depends_on. |
+| owner       | Text | Who owns the document. Non-owners are warned before editing it (the framework owner aside).      |
+| connects_to | List | Items this one connects to on the framework canvas, each a markdown link; drawn as a directed edge (this → target). The intentional map, distinct from depends_on. |
 
 ### Custom Properties
 
-_Yours to shape with the `eidos-schema` skill. The seed ships a few useful defaults; keep, scope, or drop any of them — Eidos doesn't depend on them. Absence where a property applies is a soft gap the validator notes, never refuses._
+_Yours to shape with the `eidos-configure` skill. The seed ships a few useful defaults; keep, scope, or drop any of them — Eidos doesn't depend on them. Absence where a property applies is a soft gap the validator notes, never refuses._
 
 | Name          | Type     | Applies To | Meaning                                                                                |
 | ------------- | -------- | ---------- | -------------------------------------------------------------------------------------- |

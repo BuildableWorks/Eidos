@@ -1,8 +1,8 @@
 <!--
 The Spec shape — the body of a spec, and the documentation of each section. A spec's
-frontmatter is generated from the registry's Schema (in Registry.md), so it is not written here. Keep the sections
+frontmatter is generated from the framework's Schema (in Framework.md), so it is not written here. Keep the sections
 that apply and delete the rest, but leave the order and headings as they are — a reader should
-know what to expect from any spec in this registry. The italic prompts are guidance; delete
+know what to expect from any spec in this framework. The italic prompts are guidance; delete
 them as you fill each section in.
 -->
 

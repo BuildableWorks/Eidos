@@ -12,8 +12,8 @@
 # updated copies. Pass --check to verify the copies are current WITHOUT writing (for CI or a
 # pre-commit hook); it exits non-zero if anything is stale.
 #
-# Skills that read the user's registry _eidos/ at runtime (eidos-format, eidos-schema,
-# eidos-registry, eidos-index, eidos-canvas, eidos-whoami) carry nothing and are not touched.
+# Skills that read the user's framework _eidos/ at runtime (eidos-format, eidos-configure,
+# eidos-index, eidos-canvas, eidos-whoami) carry nothing and are not touched.
 #
 set -euo pipefail
 cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
