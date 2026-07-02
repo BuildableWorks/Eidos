@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [4.2.0] - 2026-07-02
+
+The vocabulary release: what a product carries is now a **Framework**, not a "registry." It's a framework because that's what it does — it frames how you think about the product, and it reads coherently alongside the parts that were already construction-shaped (the default `Blueprint/` root, the `Frames` collection — the studs — `Architecture`, and `Specs`). The rename is mechanical and fully migratable; nothing about how an item works changes. This release also consolidates the two registry-tending skills into one.
+
+### Changed
+
+- **"Registry" → "Framework" throughout the standard.** The per-product artifact — the `_eidos/`-governed thing that holds the index, the collections, and the property contract — is a **Framework**. The concept, prose, and skill vocabulary all move from "registry" to "framework". No behavior changes; the shape of an item, the form layer, and every rule are identical.
+- **`_eidos/Registry.md` → `_eidos/Framework.md`.** The index-and-contract file is renamed. Its body (`## Top-Level`, `## Collections`, `## Schema`) is unchanged. The generators (`build-index.py`, `build-canvas.py`) read `Framework.md`; the Top-Level regeneration marker is `<!-- eidos-configure: top-level index (regenerated) -->`.
+- **`registry-owner` persona → `framework-owner`.** Same response contract (holds intent, scope, and decisions) — the owner owns the Framework.
+- **Generated "Registry Map" canvas → "Framework Map."** `eidos-canvas` writes `Framework Map.canvas` by default.
+
+### Removed
+
+- **`eidos-registry` and `eidos-schema` skills, merged into `eidos-configure`.** Both only ever edited `Framework.md`'s body — `eidos-registry` its Top-Level and Collections/Flavors, `eidos-schema` its property Schema — so one skill now owns the whole file: add a collection or flavor, add/rename/retire a custom property (and backfill it), and refresh the Top-Level index.
+
+**Migration from 4.1.0:** run `eidos-migrate` — it renames `_eidos/Registry.md` → `_eidos/Framework.md`, renames the `registry-owner` persona → `framework-owner`, updates the Top-Level marker comment, and bumps `eidos_version` to `4.2.0`. No item frontmatter or body changes; the form layer's contents are otherwise untouched. Breaking only in that files are renamed — mechanical and reversible, following the 4.1.0 precedent of shipping a form-layer rename as a minor.
+
 ## [4.1.0] - 2026-07-01
 
 The release that makes Eidos's navigation mechanical and generalizes the framing docs. Every item gains two optional properties — `summary` (the one-line index/reference blurb) and `connects_to` (canvas edges); the framing docs (Architecture, Audience, Criteria, Market) become an official **`Frames` collection** (the retired `templates/` become its flavor shapes); "top-level documents" become a purely user-created loose layer; two generators ship — `eidos-index` (`build-index.py`) and the new **`eidos-canvas`** skill; and the hidden form directory is renamed **`.eidos/` → `_eidos/`** so Obsidian shows it. Additive over 4.0.0: existing items are untouched and both new properties are optional.

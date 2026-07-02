@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 4.1.0
+**Version:** 4.2.0
 
 The Eidos standard — a markdown framework where one file completely defines one unit of a product, true whether or not the thing has been built. This file is the method: what an item is, how a framework is shaped, and how the pieces fit. It gives the direction; the skills and a seeded framework are how you actually do the work (see [AI](#ai)).
 
@@ -122,7 +122,7 @@ Each property is a row: **Name · Type · Applies To · Meaning** (the core prop
 ```markdown
 ---
 # The Eidos version this framework targets; eidos-migrate reads and bumps it.
-eidos_version: 4.1.0
+eidos_version: 4.2.0
 # How files, folders, and links are named: Title Case | TitleCase | kebab-case. Absent = Title Case.
 naming: Title Case
 ---
@@ -327,7 +327,7 @@ The **canvas** is the spatial counterpart of the index — a generated Obsidian 
 ## Versioning
 
 - Semantic Versioning (`MAJOR.MINOR.PATCH`). Major bumps for breaking changes, minor for backward-compatible additions, patch for clarifications.
-- This file always holds the current version — right now, 4.1.0. When a version is tagged, this file is copied as-is into `versions/` under its full semver name (e.g. `versions/v3.0.0.md`). Each release is frozen there, so any two — even non-adjacent — can be diffed to migrate items between them (see the `eidos-migrate` skill).
+- This file always holds the current version — right now, 4.2.0. When a version is tagged, this file is copied as-is into `versions/` under its full semver name (e.g. `versions/v3.0.0.md`). Each release is frozen there, so any two — even non-adjacent — can be diffed to migrate items between them (see the `eidos-migrate` skill).
 - A framework records the version it targets in its `_eidos/Framework.md`; migration reads and bumps it there.
 - See `CHANGELOG.md` for history and migrations.
 - Tools may reject if the version in this file is unsupported.

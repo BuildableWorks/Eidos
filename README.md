@@ -2,7 +2,7 @@
 
 _**εἶδος** (eidos), Greek — the form or essence of a thing: the look that makes it what it is. Plato's eternal Form; Aristotle's essence behind the matter._
 
-> **[Eidos v4.1.0](EIDOS.md)** — the full standard.
+> **[Eidos v4.2.0](EIDOS.md)** — the full standard.
 
 A markdown framework for defining what a product _is_. One file completely defines one unit of the product — a **spec**, in the common case — true whether or not the thing has been built. The files live as plain `.md` next to your code. No SaaS. No lock-in. No hidden state.
 
