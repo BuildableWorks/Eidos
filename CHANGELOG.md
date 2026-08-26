@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [4.2.1] - 2026-08-26
+
+A vocabulary fix, and nothing else. 4.2.0 renamed the per-product artifact from a "registry" to a **Framework**, and in doing so overloaded the word: it named both the portable form layer *and* the product written in it. 4.2.1 splits them.
+
+A **framework** is the form — the collections, body shapes and flavors, personas, naming convention, and property Schema that live in `_eidos/`. It is portable, carries no product content, and is the piece one team can hand to another. A **definition** is the product — the frames, items, and top-level docs a team writes with a framework. One framework, many definitions.
+
+### Changed
+
+- **A "framework" is now the `_eidos/` form layer only.** Every place the standard used "framework" to mean a whole `Blueprint/` now says **definition**: the definition root, the definition's `_eidos/`, "an Eidos definition." Where "framework" already meant the form — the framework's Schema, its naming convention, its declared collections and flavors — it stays, and reads more precisely than before.
+- **`EIDOS.md` opens with a `## Vocabulary` section** stating the two terms, so neither can drift again.
+- **Skill prose follows the split.** `eidos-install` scaffolds a definition and installs a framework into it; `eidos-migrate` moves a definition to a new version; `eidos-canvas` and `eidos-index` take a `<definition-root>`; the generators' error text reads "not an Eidos definition."
+
+### Unchanged
+
+- **No file, folder, or property changes.** `_eidos/`, `Framework.md`, the shapes, the personas, and every collection folder keep their names. `### Eidos Core` is identical to 4.2.0 but for the version note above it.
+- **The `framework-owner` persona keeps its name.** The role still holds intent, scope, and decisions, and any personal `user.md` naming it stays valid. Whether it becomes `definition-owner` is a separate call, deferred rather than settled here.
+
+**Migration from 4.2.0:** set `eidos_version: 4.2.1` in `_eidos/Framework.md`. That is the whole migration — `eidos-migrate` will do it, and there is nothing else to change. Optionally reword a definition's own `README.md` if it describes itself as "this framework."
+
 ## [4.2.0] - 2026-07-02
 
 The vocabulary release: what a product carries is now a **Framework**, not a "registry." It's a framework because that's what it does — it frames how you think about the product, and it reads coherently alongside the parts that were already construction-shaped (the default `Blueprint/` root, the `Frames` collection — the studs — `Architecture`, and `Specs`). The rename is mechanical and fully migratable; nothing about how an item works changes. This release also consolidates the two registry-tending skills into one.

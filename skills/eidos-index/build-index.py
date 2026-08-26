@@ -130,7 +130,7 @@ def collect(folder):
 
 def main():
     ap = argparse.ArgumentParser(description="Regenerate Eidos collection index.md files.")
-    ap.add_argument("root", nargs="?", default=".", help="framework root (contains _eidos/)")
+    ap.add_argument("root", nargs="?", default=".", help="definition root (contains _eidos/)")
     ap.add_argument("--collection", action="append", default=[], help="limit to this collection (repeatable)")
     ap.add_argument("--check", action="store_true", help="verify only; non-zero if stale")
     args = ap.parse_args()
@@ -138,7 +138,7 @@ def main():
     root = Path(args.root).resolve()
     framework_md = root / "_eidos" / "Framework.md"
     if not framework_md.is_file():
-        print(f"error: no _eidos/Framework.md under {root} — not an Eidos framework", file=sys.stderr)
+        print(f"error: no _eidos/Framework.md under {root} — not an Eidos definition", file=sys.stderr)
         return 2
 
     collections = declared_collections(framework_md)

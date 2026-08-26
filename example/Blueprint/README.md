@@ -1,6 +1,6 @@
 # YouTube (a small subset)
 
-> **Start here.** This is the Eidos framework for a deliberately small **subset of YouTube** — the
+> **Start here.** This is the Eidos definition for a deliberately small **subset of YouTube** — the
 > source of truth for what this slice of the product is.
 
 This README is the front door. The full index and config live in
@@ -10,7 +10,7 @@ This README is the front door. The full index and config live in
 
 A worked example: watching a video and resuming it, and running a channel — uploading to one and
 subscribing to one. Recommendations, comments, ads, Shorts, and live are out of scope on purpose, so
-the framework stays small enough to read in a sitting against a product you already understand.
+the definition stays small enough to read in a sitting against a product you already understand.
 
 ## Top-level documents
 
@@ -23,4 +23,4 @@ the framework stays small enough to read in a sitting against a product you alre
 
 ---
 
-_An Eidos framework. The form lives in [`_eidos/`](_eidos/); see [`_eidos/Framework.md`](_eidos/Framework.md) for the full index._
+_An Eidos definition. Its framework lives in [`_eidos/`](_eidos/); see [`_eidos/Framework.md`](_eidos/Framework.md) for the full index._

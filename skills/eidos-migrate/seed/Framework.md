@@ -1,6 +1,6 @@
 ---
 # The Eidos version this framework targets; eidos-migrate reads and bumps it.
-eidos_version: 4.2.0
+eidos_version: 4.2.1
 # How files, folders, and links are named: Title Case | TitleCase | kebab-case. Absent = Title Case.
 naming: Title Case
 ---
@@ -9,13 +9,13 @@ naming: Title Case
 
 The framework's index and config, in one place: the version and naming convention above, and below the
 Top-Level documents, the Collections (with their flavors and grouping), and the property Schema. The
-visible `README.md` at the framework root is the friendly door to it; keep it current with the
+visible `README.md` at the definition root is the friendly door to it; keep it current with the
 `eidos-configure` skill.
 
 ## Top-Level
 
 <!-- eidos-configure: top-level index (regenerated) -->
-- [README](../README.md) — the framework's front door: what this is, and pointers in.
+- [README](../README.md) — the definition's front door: what this is, and pointers in.
 <!-- One bullet per top-level document. README is the door and comes first; add your own below (a
      Roadmap, a Vision, the generated Framework Map canvas), each a link and a one-line description.
      The framing docs live in the Frames collection, not here. eidos-configure refreshes this list. -->
@@ -23,7 +23,7 @@ visible `README.md` at the framework root is the friendly door to it; keep it cu
 ## Collections
 
 A collection is a top-level folder of repeated items that share a body shape. `Frames` holds the
-framing docs — the most primary thing the framework says about itself — and `Specs` the product's
+framing docs — the most primary thing the definition says about itself — and `Specs` the product's
 units. Add more with `eidos-configure`. Each lists its flavors (the default marked) and its grouping,
 and points at its generated `index.md` leaf.
 
@@ -61,7 +61,7 @@ vault. The `eidos-configure` skill edits this section.
 
 ### Eidos Core
 
-_Present on every item. Managed by the standard (Eidos 4.2.0); `eidos-migrate` rewrites this block on a version change — don't hand-edit it. (`flavor` absent = the collection's default; `connects_to` absent = no canvas edges; a missing `summary` is flagged by the index.)_
+_Present on every item. Managed by the standard (Eidos 4.2.1); `eidos-migrate` rewrites this block on a version change — don't hand-edit it. (`flavor` absent = the collection's default; `connects_to` absent = no canvas edges; a missing `summary` is flagged by the index.)_
 
 | Name        | Type | Meaning                                                                                        |
 | ----------- | ---- | ---------------------------------------------------------------------------------------------- |
@@ -70,7 +70,7 @@ _Present on every item. Managed by the standard (Eidos 4.2.0); `eidos-migrate` r
 | summary     | Text | One plain line — what this item is, in a sentence, distilled from Intent. Source for the collection index.md listing; absent, the index flags it. |
 | flavor      | Text | Which body flavor this item follows, from its collection's declared flavors. Absent = the collection's default flavor. |
 | owner       | Text | Who owns the document. Non-owners are warned before editing it (the framework owner aside).      |
-| connects_to | List | Items this one connects to on the framework canvas, each a markdown link; drawn as a directed edge (this → target). The intentional map, distinct from depends_on. |
+| connects_to | List | Items this one connects to on the definition's canvas, each a markdown link; drawn as a directed edge (this → target). The intentional map, distinct from depends_on. |
 
 ### Custom Properties
 

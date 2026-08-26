@@ -1,20 +1,29 @@
 # Eidos
 
-**Version:** 4.2.0
+**Version:** 4.2.1
 
-The Eidos standard — a markdown framework where one file completely defines one unit of a product, true whether or not the thing has been built. This file is the method: what an item is, how a framework is shaped, and how the pieces fit. It gives the direction; the skills and a seeded framework are how you actually do the work (see [AI](#ai)).
+The Eidos standard — a markdown method where one file completely defines one unit of a product, true whether or not the thing has been built. This file is the method: what an item is, how a definition is shaped, and how the pieces fit. It gives the direction; the skills and a seeded definition are how you actually do the work (see [AI](#ai)).
+
+## Vocabulary
+
+Two words carry the whole standard, and they are not interchangeable.
+
+- A **framework** is the form: the collections, body shapes and flavors, personas, naming convention, and property Schema that govern how a definition is written. It lives in the hidden [`_eidos/`](#the-form-layer) folder, it is portable, and it is the piece one team can hand to another.
+- A **definition** is the product: the frames, items, and top-level docs a team writes with a framework. It describes their product, it is theirs, and it is the thing Eidos exists to produce.
+
+One framework, many definitions. Everything below uses the two words in exactly that sense.
 
 ## What an item is
 
 An **item** is a living markdown document that defines one unit of a product completely: "this is what you're getting," with no ambiguity. An item is true whether or not the thing it describes has been built. It captures **state and intent, not work**. Tasks describe work and die when the work ships; an item describes the product and stays accurate across its whole life: drafted, built, deprecated.
 
-An item has two parts: a small **frontmatter** (the properties at the top, between the `---` lines) and a **body** (the prose below). The frontmatter is a contract; the body follows a shape. Both are defined by the framework itself, in its [form layer](#the-form-layer) — not hardcoded here.
+An item has two parts: a small **frontmatter** (the properties at the top, between the `---` lines) and a **body** (the prose below). The frontmatter is a contract; the body follows a shape. Both are defined by the framework, which lives in the definition's [form layer](#the-form-layer) — not hardcoded here.
 
-A spec is the default unit Eidos defines, and the rest of this file teaches from it — but it isn't the whole of Eidos. A framework organizes its units into [collections](#collections) (`Specs` is the one Eidos seeds) and may define others, each with its own shape; "spec" and "domain" are the default seed, not the essence.
+A spec is the default unit Eidos defines, and the rest of this file teaches from it — but it isn't the whole of Eidos. A framework declares the [collections](#collections) a definition organizes its units into (`Specs` is the one Eidos seeds) and may define others, each with its own shape; "spec" and "domain" are the default seed, not the essence.
 
 ## A human-first standard
 
-Eidos is a tool for a person — typically a framework owner — to think clearly about what their product is. It is not a way to hand product definition to an AI. The human holds the intent, the scope, and the decisions; those are the parts of the job that cannot be delegated without the framework owner losing the thread of their own product.
+Eidos is a tool for a person — typically a Framework Owner — to think clearly about what their product is. It is not a way to hand the job of defining a product to an AI. The human holds the intent, the scope, and the decisions; those are the parts of the job that cannot be delegated without the owner losing the thread of their own product.
 
 An agent's role is **facilitation, not authorship**. It formats, supplements, fills in shapes, asks clarifying questions, and pushes on scope (especially Out of Scope). It does not invent intent, decide direction, or generate a finished item for a human to rubber-stamp. An item the owner did not actually think through is worse than no item: it reads as settled, but no one knows it. When in doubt, an agent asks rather than writes. The measure of a good Eidos session is that the human understands and stands behind every line — not that a lot of text appeared.
 
@@ -22,7 +31,7 @@ Eidos is opinionated but not rigid. It ships a strong default — the shapes and
 
 ## The actor
 
-Eidos is human-first, and not every human in a framework plays the same part — a framework owner decides, a developer builds, a stakeholder reviews, a designer shapes the experience. The agent must respond to each **differently**, so the actor is a core input it reads **before acting**, in two pieces:
+Eidos is human-first, and not every human working on a definition plays the same part — a Framework Owner decides, a developer builds, a stakeholder reviews, a designer shapes the experience. The agent must respond to each **differently**, so the actor is a core input it reads **before acting**, in two pieces:
 
 - **Personas** (`_eidos/personas/`) — the response contracts, one per role. A persona sets the **vocabulary and technical depth**, **what to surface vs. fold away**, and **who holds which decisions**: the Designer persona keeps db relationships and indexes out of the reply and talks in experience terms; the Developer persona invites full technical depth; the Framework Owner persona brings the decisions to the owner and never decides for them. They are committed and team-tunable, seeded from the standard's [`personas/`](seed/personas), so a team can adjust how a role is treated for their product.
 - **The actor file** (`_eidos/user.md`) — personal and **gitignored**, one per person. It names the actor's persona and **calibrates** it on three axes: their **role for this product**, their **experience with the scope** (how much orientation to give), and their **technical capacity** (how much mechanism and jargon to use). Persona sets the baseline; calibration tunes it for the person. Set it with the [`eidos-whoami`](#ai) skill; it ships blank, and `eidos-install` seeds a `.gitignore` so it never lands in anyone else's checkout.
@@ -34,16 +43,16 @@ The persona changes the mode, not the principle: whoever the actor, the human au
 Eidos holds two kinds of document. They behave differently on purpose.
 
 - **Collections** are the many. A **collection** is a folder of repeated units that share a body shape; a framework can have several, and may group a collection's units one level deep. A unit is a small frontmatter contract plus a body in a [shape](#the-form-layer) — and a collection can offer more than one shape, a [flavor](#flavors). Eidos seeds two: `Specs` (grouped by `domain`, the product's units) and `Frames` (the framing docs — architecture, audience, criteria, market — that set what every unit is judged against). The collections are the framework's to define (see [Collections](#collections)).
-- **Top-level docs** — one-of-a-kind documents at the framework root that you add yourself: a Roadmap, a Vision, the generated Framework Map. They are free-form prose, deliberately loose, and point-in-time — the layer that annotates the whole product with no shape behind it (see [Top-level docs](#top-level-docs)).
+- **Top-level docs** — one-of-a-kind documents at the definition root that you add yourself: a Roadmap, a Vision, the generated Framework Map. They are free-form prose, deliberately loose, and point-in-time — the layer that annotates the whole product with no shape behind it (see [Top-level docs](#top-level-docs)).
 
 Frames drive decisions and audit scope; Specs capture the units that result; top-level docs hold whatever else the product needs said. When framing the _whole product_, reach for a Frame. When defining a _piece_ of it, reach for the right collection — a spec, by default.
 
 ## The form layer
 
-A framework is two things: **content** and **form**.
+A definition is two things: **content** and **form**. The form is its framework.
 
 - **Content** is what you write — the collections' units and any top-level docs. It is visible, Title Case, and reads like a table of contents.
-- **Form** is what governs the content's shape — the body **shapes** for a collection's items (one or more [flavors](#flavors) each), the property contract, and the response contracts (personas). It is machinery. It lives in a hidden **`_eidos/`** folder at the framework root, named the way `.git` and `.obsidian` are: present, manageable, but out of the way once set. An Eidos framework is plausibly an Obsidian vault, and `_eidos/` sits beside `.obsidian/`.
+- **Form** is the **framework**: the body **shapes** for a collection's items (one or more [flavors](#flavors) each), the property contract, and the response contracts (personas). It is machinery. It lives in a hidden **`_eidos/`** folder at the definition root, named the way `.git` and `.obsidian` are: present, manageable, but out of the way once set. An Eidos definition is plausibly an Obsidian vault, and `_eidos/` sits beside `.obsidian/`.
 
 ```txt
 _eidos/
@@ -65,15 +74,15 @@ _eidos/
   .gitignore       # ignores user.md — the one file in here not committed
 ```
 
-The framework owns its form. Eidos seeds `_eidos/` with the opinionated baseline (`eidos-install`), and from there the owner may extend it — add a property, adjust a shape, add a flavor — without leaving the standard. This is what makes Eidos adoptable without a fork: the default works out of the box, and the parts you change are yours.
+A definition owns its framework. Eidos seeds `_eidos/` with the opinionated baseline (`eidos-install`), and from there the owner may extend it — add a property, adjust a shape, add a flavor — without leaving the standard. This is what makes Eidos adoptable without a fork: the default works out of the box, and the parts you change are yours. Because a framework is form and carries no product content, one that proves itself can be handed to another team and used to start a fresh definition.
 
-Because the form lives in the framework, the skills read it from there rather than carrying their own copy. A framework that calls itself Eidos has a `_eidos/`; a skill that finds none offers to install one (see [AI](#ai)).
+Because the framework lives in the definition, the skills read it from there rather than carrying their own copy. A definition that calls itself Eidos has a `_eidos/`; a skill that finds none offers to install a framework (see [AI](#ai)).
 
 ### Shapes (`_eidos/shapes/`)
 
 A **shape** is the body template a **collection's** items share — body only (the sections in their order, with their guidance), because an item's frontmatter is generated from the [Schema](#properties), not written by hand. A shape is the **shared, ongoing form of the many**: every item in the collection follows it, and a check validates against it. A collection may offer more than one shape of its body — a [flavor](#flavors) — each its own file named `<kind>.<flavor>.md` (`spec.full.md`, `spec.micro.md`, `frame.architecture.md`). The framing docs are a collection like any other: the `Frames` collection's flavors — `frame.architecture.md`, `frame.audience.md`, `frame.criteria.md`, `frame.market.md` — are ordinary shapes, one per kind of frame.
 
-The canonical shapes Eidos ships — the opinionated baseline — live, public and browsable, in [`seed/shapes/`](seed/shapes) at the top of the standard's repo; `eidos-install` installs them into a framework's `_eidos/`. A framework may then reshape its own, add flavors, and the skills consume whatever it holds. The shape files are where the specific sections are documented; [Item body](#item-body) below gives the rules for using them.
+The canonical shapes Eidos ships — the opinionated baseline — live, public and browsable, in [`seed/shapes/`](seed/shapes) at the top of the standard's repo; `eidos-install` installs them into a definition's `_eidos/`. A framework may then reshape its own, add flavors, and the skills consume whatever it holds. The shape files are where the specific sections are documented; [Item body](#item-body) below gives the rules for using them.
 
 ### Properties
 
@@ -82,7 +91,7 @@ The property contract is a **`## Schema` section inside [`_eidos/Framework.md`](
 - **`### Eidos Core`** — the properties Eidos's own machinery uses. Managed by the standard; `eidos-migrate` rewrites this block on a version change. Don't hand-edit it.
 - **`### Custom Properties`** — everything else the framework carries. The seed pre-populates it with a few useful defaults (a lifecycle `status`, the two dates, `tags`, and — scoped to `Specs` — `domain`, `depends_on`, and `type`), but Eidos does not depend on them; keep, scope, or drop any. Yours, and preserved across migration.
 
-Each property is a row: **Name · Type · Applies To · Meaning** (the core properties are universal, so they omit Applies To). A property's type is drawn from the same small set Obsidian uses — **Text, List, Number, Checkbox, Date, Date & time** — so a framework's frontmatter renders natively in an Obsidian vault. Anything that wants more structure than one of those types almost belongs in the body (the shape), not in a property.
+Each property is a row: **Name · Type · Applies To · Meaning** (the core properties are universal, so they omit Applies To). A property's type is drawn from the same small set Obsidian uses — **Text, List, Number, Checkbox, Date, Date & time** — so a definition's frontmatter renders natively in an Obsidian vault. Anything that wants more structure than one of those types almost belongs in the body (the shape), not in a property.
 
 **Applies To scopes a property to collections.** Every custom property declares which collections it belongs to — `all`, or a list (`Specs`). Frontmatter is generated per item from the properties that apply to its collection, so a `Specs`-only property like `domain` never lands on a `Frames` item. This is how a framework keeps a property from appearing where it makes no sense.
 
@@ -95,7 +104,7 @@ Each property is a row: **Name · Type · Applies To · Meaning** (the core prop
 | `summary`     | Text | One plain line — what this item is, in a sentence, distilled from Intent. The source for the collection [`index.md`](#collection-indexes-indexmd) listing; absent, the index flags it. |
 | `flavor`      | Text | Which body [flavor](#flavors) this item follows, from its collection's declared flavors. Absent = the collection's default flavor. |
 | `owner`       | Text | Who owns the document. Non-owners are warned before editing it (the framework owner aside).                     |
-| `connects_to` | List | The items this one connects to on the framework canvas — each a link, drawn as a directed edge (this → target). The intentional map, distinct from `depends_on`. |
+| `connects_to` | List | The items this one connects to on the definition's canvas — each a link, drawn as a directed edge (this → target). The intentional map, distinct from `depends_on`. |
 
 **The seed's custom defaults** — opinionated, not part of what Eidos needs to function, so a framework may reshape, scope, or drop them:
 
@@ -113,16 +122,16 @@ Each property is a row: **Name · Type · Applies To · Meaning** (the core prop
 
 **Frontmatter is generated from the Schema.** When an item is scaffolded, its frontmatter is emitted from the properties that apply to its collection — the core, plus any custom property whose Applies To includes that collection — so a new item is born conforming. The shape never carries a frontmatter block of its own.
 
-**Validation is framework-defined.** A skill validating an item reads _that framework's_ Schema (in `Framework.md`) and checks against it — the core properties, plus the custom properties scoped to the item's collection. A missing core property is a real gap within the framework, surfaced Eidos-style: the field is added with a note on why, never the file refused (see [Rules](#rules)).
+**Validation is framework-defined.** A skill validating an item reads _that framework's_ Schema (in `Framework.md`) and checks against it — the core properties, plus the custom properties scoped to the item's collection. A missing core property is a real gap in the definition, surfaced Eidos-style: the field is added with a note on why, never the file refused (see [Rules](#rules)).
 
 ### Framework
 
-`Framework.md` is the framework's **index and config** — the one place that describes the whole framework rather than any single item. It lives in `_eidos/` because it carries machinery (the version and naming convention), but it is also the authoritative index — so a thin, visible [`README.md`](#start-here-readmemd) at the framework root is the human "start here" that points into it. `Framework.md` has two parts: a small **frontmatter** for the facts tooling parses, and a **body** that indexes the framework — its Top-Level documents, its Collections, and the property [Schema](#properties).
+`Framework.md` is the framework's **index and config** — the one place that describes the form rather than any single item. It lives in `_eidos/` because it carries machinery (the version and naming convention), but it is also the authoritative index — so a thin, visible [`README.md`](#start-here-readmemd) at the definition root is the human "start here" that points into it. `Framework.md` has two parts: a small **frontmatter** for the facts tooling parses, and a **body** that indexes the definition — its Top-Level documents, its Collections, and the property [Schema](#properties).
 
 ```markdown
 ---
 # The Eidos version this framework targets; eidos-migrate reads and bumps it.
-eidos_version: 4.2.0
+eidos_version: 4.2.1
 # How files, folders, and links are named: Title Case | TitleCase | kebab-case. Absent = Title Case.
 naming: Title Case
 ---
@@ -131,7 +140,7 @@ naming: Title Case
 
 ## Top-Level
 <!-- eidos-configure: top-level index (regenerated) -->
-- [README](../README.md) — the framework's front door.
+- [README](../README.md) — the definition's front door.
 - [Roadmap](../Roadmap.md) — where the product is headed, in plain horizons.
 
 ## Collections
@@ -182,9 +191,9 @@ The two frontmatter facts are framework-level, not per-item — every item share
 ## Directory layout
 
 ```txt
-Blueprint/               # the framework root (found by its _eidos/); name is the default, renameable
-  README.md              # the visible "start here" — what this is, and pointers into the framework
-  _eidos/                # the form layer (hidden) — shapes, personas, Schema, Framework, user, .gitignore
+Blueprint/               # the definition root (found by its _eidos/); name is the default, renameable
+  README.md              # the visible "start here" — what this is, and pointers into the definition
+  _eidos/                # the framework (hidden) — shapes, personas, Schema, Framework, user, .gitignore
   Frames/                # the framing docs — the most primary collection; declared first in the Framework
     index.md             #   generated leaf listing the frames
     Architecture.md  Audience.md  Criteria.md  Market.md
@@ -195,13 +204,13 @@ Blueprint/               # the framework root (found by its _eidos/); name is th
   Roadmap.md             # a top-level doc — one-of-a-kind, free-form, yours (optional)
 ```
 
-`Blueprint/` is the overarching root; `Blueprint` is only the default name. Nothing in an item points at the root by path, and the skills locate a framework by its `_eidos/` marker rather than the folder name — so the root may be called anything (`Abstract/`, `Product/`, the product's own name). Domains are the Specs collection's sub-folders (one level); each collection carries a generated [`index.md`](#collection-indexes-indexmd) listing its items. Relationships between items (`depends_on`) live in frontmatter so the folder choice stays low-stakes. One hierarchy on disk, many views from metadata.
+`Blueprint/` is the overarching root; `Blueprint` is only the default name. Nothing in an item points at the root by path, and the skills locate a definition by its `_eidos/` marker rather than the folder name — so the root may be called anything (`Abstract/`, `Product/`, the product's own name). Domains are the Specs collection's sub-folders (one level); each collection carries a generated [`index.md`](#collection-indexes-indexmd) listing its items. Relationships between items (`depends_on`) live in frontmatter so the folder choice stays low-stakes. One hierarchy on disk, many views from metadata.
 
 If one repository holds several products, nest them as `Blueprint/<name>/...`, each with its own `_eidos/`, top-level docs, and collections.
 
 ### Start here (`README.md`)
 
-A framework is read by people who didn't write it — a new teammate, a stakeholder, an agent. So the framework root carries a visible **`README.md`**: a short, friendly "start here" that says what the product is and points into the framework — the [top-level documents](#top-level-docs), the [collections](#collections) and their indexes, and `_eidos/Framework.md` for the full index. It is the front door; the hidden `Framework.md` is the index behind it. Keep it thin — orientation and links, not a second copy of the index — and edit it in place like a top-level doc. `eidos-install` seeds it; it is the one place a human reliably lands first.
+A definition is read by people who didn't write it — a new teammate, a stakeholder, an agent. So the definition root carries a visible **`README.md`**: a short, friendly "start here" that says what the product is and points into the definition — the [top-level documents](#top-level-docs), the [collections](#collections) and their indexes, and `_eidos/Framework.md` for the full index. It is the front door; the hidden `Framework.md` is the index behind it. Keep it thin — orientation and links, not a second copy of the index — and edit it in place like a top-level doc. `eidos-install` seeds it; it is the one place a human reliably lands first.
 
 ### Naming
 
@@ -213,27 +222,27 @@ Everything a human reads in the file tree — top-level docs, collection and sub
 | **TitleCase** | `MagicLinkSignIn.md` | `UserManagement/` | readable but space-free, for shells and scripts |
 | **kebab-case** | `magic-link-signin.md` | `user-management/` | fully lowercase and space-free; the filename _is_ the `id` |
 
-One convention governs the whole framework; pick the one your tooling wants and stay with it. The default is **Title Case** — the two space-free options are for frameworks that script over their files or would rather not see `%20` in their links.
+One convention governs the whole definition; pick the one your tooling wants and stay with it. The default is **Title Case** — the two space-free options are for definitions that script over their files or would rather not see `%20` in their links.
 
 A few things hold whichever you choose:
 
-- **The `_eidos/` form layer is always lowercase** — hidden machinery named the way `.git` is, never following the content convention.
-- **The `id` is always kebab-case** (`id: magic-link-signin`): the permanent reference, with the filename only a handle over it. In a kebab-case framework the filename and the `id` coincide; in the other two the filename renders the `title` and the `id` sits inside, so a title can be reworded without disturbing the `id`.
-- **The `domain` value matches its folder** in whatever convention the framework uses, so the property and the folder are the same string and matching needs no normalization.
+- **The `_eidos/` framework folder is always lowercase** — hidden machinery named the way `.git` is, never following the content convention.
+- **The `id` is always kebab-case** (`id: magic-link-signin`): the permanent reference, with the filename only a handle over it. In a kebab-case definition the filename and the `id` coincide; in the other two the filename renders the `title` and the `id` sits inside, so a title can be reworded without disturbing the `id`.
+- **The `domain` value matches its folder** in whatever convention the definition uses, so the property and the folder are the same string and matching needs no normalization.
 - **Fields meant for tools** (`status`, `type`, `tags`, `flavor`) are not names in the file tree, so they stay as written.
 
 Changing the convention later means renaming the files and folders — a deliberate pass, not a flag you flip — so it is settled at init.
 
 ### Referencing other items
 
-Links to other items and sections are encouraged — they read well and you can follow them, where a bare name is neither. Standard markdown links are the best format for compatibility across editors and tools. The link **text** is the human title; the link **path** is the target's filename in the framework's naming convention — so a space-free framework (TitleCase or kebab-case) carries no `%20` in its paths, and only a Title Case framework encodes spaces as `%20`. This extends to the properties that point at other items: `depends_on` holds links too, not bare ids — each item's `id` stays its permanent identity behind them.
+Links to other items and sections are encouraged — they read well and you can follow them, where a bare name is neither. Standard markdown links are the best format for compatibility across editors and tools. The link **text** is the human title; the link **path** is the target's filename in the framework's naming convention — so a space-free definition (TitleCase or kebab-case) carries no `%20` in its paths, and only a Title Case definition encodes spaces as `%20`. This extends to the properties that point at other items: `depends_on` holds links too, not bare ids — each item's `id` stays its permanent identity behind them.
 
 ## Collections
 
 A **collection** is a top-level folder of repeated units that share a body shape — `Specs/` is the default, and `Frames/` the other Eidos seeds. A framework **declares** its collections in the [Framework](#framework), each with a one-line description, so the set is explicit rather than implied by whatever folders happen to exist.
 
 - **`Specs` is the default.** Every framework has it. It holds the product's units, grouped by domain.
-- **`Frames` holds the framing docs.** Architecture, Audience, Criteria, Market — the loose, point-in-time docs that set what every item is judged against. It is an ordinary collection (its flavors are one per kind of frame), **highly encouraged but not required**: a framework may carry none, some, or add its own frame. A flat collection — frames aren't grouped.
+- **`Frames` holds the framing docs.** Architecture, Audience, Criteria, Market — the loose, point-in-time docs that set what every item is judged against. It is an ordinary collection (its flavors are one per kind of frame), **highly encouraged but not required**: a definition may carry none, some, or add its own frame. A flat collection — frames aren't grouped.
 - **A framework can add more.** A product often wants another kind of repeated unit — decisions (ADRs), personas, integrations, glossary entries. Declare it as a collection: a folder, a description, and at least one shape. The `eidos-configure` skill scaffolds it (see [AI](#ai)).
 - **Each collection owns its shape(s).** This is where Eidos relaxes "one shape per framework": the shape is per-collection, and a collection may offer more than one [flavor](#flavors) of it. What does _not_ change — within a collection, every item follows one of the collection's declared flavors, in a predictable order under set names; a soft category label (if a framework adds one) drives views, never structure.
 - **An item's collection is its top-level folder.** A spec under `Specs/` belongs to the Specs collection; an item under another collection's folder belongs to that one. That is how a check knows which shape to validate against.
@@ -253,11 +262,11 @@ Flavors are declared in the [Framework](#framework)'s Collections section — ea
 
 ## Top-level docs
 
-A **top-level doc** is a one-of-a-kind document at the framework root that you add yourself — a **Roadmap**, a **Vision**, a **Glossary**, a set of **Principles**, or the generated **Framework Map** (the canvas). They are **free-form**: no shape, no flavors, no validation. Each carries only light frontmatter (`title`, `tags`, `date_created`, `date_modified`) and reads like the rest of the framework. They are the loose layer that annotates the whole product — listed in the Framework's `## Top-Level`, and regenerable there by `eidos-configure`.
+A **top-level doc** is a one-of-a-kind document at the definition root that you add yourself — a **Roadmap**, a **Vision**, a **Glossary**, a set of **Principles**, or the generated **Framework Map** (the canvas). They are **free-form**: no shape, no flavors, no validation. Each carries only light frontmatter (`title`, `tags`, `date_created`, `date_modified`) and reads like the rest of the definition. They are the loose layer that annotates the whole product — listed in the Framework's `## Top-Level`, and regenerable there by `eidos-configure`.
 
 Top-level docs are point-in-time snapshots of intent and are expected to evolve. Record what is true now; revise when it changes.
 
-The **framing docs** that used to live here — Architecture, Audience, Criteria, Market — are now the [`Frames` collection](#collections): the same loose, point-in-time prose, but held as a collection so each follows a shared shape (its flavor) and carries the frontmatter contract. That is the one place Eidos asks for a little structure, because the framing docs are the frame everything else is judged against. A framework is encouraged to fill them, and free to add a frame of its own.
+The **framing docs** that used to live here — Architecture, Audience, Criteria, Market — are now the [`Frames` collection](#collections): the same loose, point-in-time prose, but held as a collection so each follows a shared shape (its flavor) and carries the frontmatter contract. That is the one place Eidos asks for a little structure, because the framing docs are the frame everything else is judged against. A definition is encouraged to fill them, and a framework is free to add a frame of its own.
 
 A **shape** earns its keep by being instantiated again — the Spec shape is a cookie-cutter, stamped once per item. A top-level doc is filled in **once** and edited in place, so it never needs a shared shape. There are no templates: for a Frame, author it as a collection item against its flavor; for a top-level doc you've already drafted, reach for [`eidos-format`](#ai) to **organize** what you wrote into the house style — readable headings, tables, lists, links over bare names — keeping the frontmatter in order and adding nothing of its own.
 
@@ -268,7 +277,7 @@ The body is the guided part of an item — a spec, in the common case — and th
 - **Keep the shape's order and names.** Leave a section out when it genuinely doesn't apply (no empty headings), but don't reorder them, rename them, or invent a parallel layout. A check may note a missing recommended section and offer to fill it; it never refuses the file.
 - **One shape family per collection, never per category.** Every item in a collection follows one of its declared [flavors](#flavors); a soft label drives views, not layout.
 - **Write it like a human would read it.** Shape the content to fit — add your own `###`/`####` sub-headings, tables, lists, code blocks, or small diagrams wherever they make the meaning clearer, and never flatten rich content onto a single line. A data model reads better as a table than a sentence; a sequence reads better as a numbered list. The result should read like a person wrote it, not a filled-in form.
-- **Keep acceptance criteria short and observable.** Label each `**AC1:**`, `**AC2:**`… — unique within the item for reference, not across the framework — and push supporting detail (a data model, a payload, a state table) into a table or sub-section the criterion points to, not onto the line.
+- **Keep acceptance criteria short and observable.** Label each `**AC1:**`, `**AC2:**`… — unique within the item for reference, not across the definition — and push supporting detail (a data model, a payload, a state table) into a table or sub-section the criterion points to, not onto the line.
 - **Lead with intent and what you're getting; hold the line on non-goals.** The baseline shape opens with why the unit exists and its observable outcomes, and leans hardest on what it will _not_ do. Which sections carry each — and how to fill them — are documented in the shape file, not prescribed here.
 
 ## Rules
@@ -276,10 +285,10 @@ The body is the guided part of an item — a spec, in the common case — and th
 These are the load-bearing conventions.
 
 1. **The frontmatter is the agreement; the body is guidance.** The properties at the top are checked against the framework's Schema. Body sections are recommended structure, not requirements.
-2. **The framework owns its form.** Shapes and properties live in the framework's `_eidos/`, seeded from the opinionated baseline and free to be extended. A skill reads the form from the framework, not from a copy of its own.
+2. **The definition owns its framework.** Shapes and properties live in the definition's `_eidos/`, seeded from the opinionated baseline and free to be extended. A skill reads the framework from the definition, not from a copy of its own.
 3. **Validation is framework-defined.** A check reads _that framework's_ Schema (the `## Schema` section of `Framework.md`) and enforces it — the core properties plus the custom properties scoped to the item's collection. The contract is the Schema, not a rule hardcoded in a tool.
 4. **Portability over prescription.** Recommended sections may be omitted when a doc is in progress or genuinely does not apply. A missing core property is surfaced and added with a note on why; a missing section is noted and offered. Never refuse the file.
-5. **Write it like a human would read it.** The recommended sections are a scaffold for a complete, living definition — not a form to pour text into. Reshape within and beneath them to fit the content: add your own `###`/`####` sub-headings, tables, lists, code blocks, or small diagrams wherever they make the meaning clearer, and never flatten rich content onto one line. Keep acceptance criteria short and observable; push supporting detail into a table or sub-section the criterion points to. If an item reads like filled-in boilerplate, reshape it until it reads like someone wrote it.
+5. **Write it like a human would read it.** The recommended sections are a scaffold for a complete, living item — not a form to pour text into. Reshape within and beneath them to fit the content: add your own `###`/`####` sub-headings, tables, lists, code blocks, or small diagrams wherever they make the meaning clearer, and never flatten rich content onto one line. Keep acceptance criteria short and observable; push supporting detail into a table or sub-section the criterion points to. If an item reads like filled-in boilerplate, reshape it until it reads like someone wrote it.
 6. **Reference other items with links, not bare names — in prose and in properties.** Point at another item, doc, or section with a markdown link. The same goes for frontmatter that points out, like `depends_on`. Each item's `id` is still its permanent identity, sitting behind the link.
 7. **One shape family per collection, declared as flavors.** Within a [collection](#collections) every item follows one of the collection's declared [flavors](#flavors) — a shape held in `_eidos/shapes/`, its sections in the same order under the same names, so a reader always knows where to look. What flexes is _which_ sections appear and _which_ flavor an item uses (recorded in `flavor`), never their order or names within a flavor. A flavor is a deliberate, framework-declared structural choice; a soft category label drives views, never structure — the shape is never forked per category.
 8. **Properties carry a type and a meaning.** Every property — core or custom — declares its name, its type (from the Obsidian set), which collections it applies to, and what it means. Frontmatter is generated from the Schema, so a new item is born conforming.
@@ -294,8 +303,8 @@ These are the load-bearing conventions.
 17. **`date_created` is set once; `date_modified` tracks the last change.** Both `YYYY-MM-DD`, recommended defaults the seed installs. Git holds the full edit history. The Eidos version is a framework fact, in `Framework.md`, not a per-item property.
 18. **Frames and top-level docs are point-in-time.** The framing docs (Criteria, Market, Audience) and any top-level doc capture a snapshot of intent and are expected to evolve.
 19. **The human authors; the agent facilitates.** Intent, scope, and decisions stay with the person. An agent formats, supplements, asks, and holds scope; it does not generate finished items or set direction.
-20. **Human-facing names follow the framework's naming convention.** Folders, top-level docs, and item files read like a table of contents, in the convention chosen at init — Title Case (default), TitleCase, or kebab-case — recorded as `naming` in `_eidos/Framework.md`. The hidden `_eidos/` form layer is always lowercase, the exception. The kebab-case `id`, not the filename, is the permanent reference.
-21. **The Framework is the framework's index; `README.md` is its door.** `_eidos/Framework.md` holds the framework-level facts (version, naming) in frontmatter and, in its body, the Top-Level documents and the Collections with their flavors and grouping. A thin, visible `README.md` at the framework root is the human start-here that points into it. `eidos-configure` keeps both current.
+20. **Human-facing names follow the framework's naming convention.** Folders, top-level docs, and item files read like a table of contents, in the convention chosen at init — Title Case (default), TitleCase, or kebab-case — recorded as `naming` in `_eidos/Framework.md`. The hidden `_eidos/` framework folder is always lowercase, the exception. The kebab-case `id`, not the filename, is the permanent reference.
+21. **The Framework is the framework's index; `README.md` is its door.** `_eidos/Framework.md` holds the framework-level facts (version, naming) in frontmatter and, in its body, the Top-Level documents and the Collections with their flavors and grouping. A thin, visible `README.md` at the definition root is the human start-here that points into it. `eidos-configure` keeps both current.
 22. **Read the actor before acting.** The agent reads `_eidos/user.md` — the actor's persona and calibration — and the matching contract in `_eidos/personas/`, and responds accordingly: the vocabulary, the technical depth, what it surfaces, and who it asks to decide all follow the persona (a Designer gets experience terms, not db indexes; a Developer gets full depth; the Framework Owner is brought the decisions). The human-first principle holds for every persona; only the mode changes. A blank or absent file defaults to full facilitation. The file is personal and gitignored, never shared.
 23. **Each collection has a generated index.** Content is organized into collections (`Specs` is the default); a collection may group its items one level deep (`Specs` by domain), and each carries a generated `index.md` leaf inside its folder, rebuilt by `eidos-index`. Going more than one level deep is discouraged.
 24. **Shapes are for collections; top-level docs have none.** A collection's items share a body **shape** (with flavors), in `_eidos/shapes/`, that every item follows and a check validates against — `Frames` included, its flavors one per kind of framing doc. A top-level doc is one-of-a-kind, free-form prose: no shape, no flavors, not validated, edited in place.
@@ -319,7 +328,7 @@ Each collection carries a generated **`index.md`** inside its folder — the lea
 
 - **Fully generated and mechanical.** [`eidos-index`](#ai) crawls the collection, groups by sub-folder, and rebuilds the links — each item's listing is its `summary` property, so the index is derived, not authored. The folder descriptions live in the [Framework](#framework), so the index is purely the listing — regenerated wholesale, with nothing hand-written to preserve. Re-run it whenever items are added, renamed, or moved. The skill ships a `build-index.py` that regenerates every index deterministically wherever a shell is available.
 - **Links are relative to the collection folder** (`Identity/…`, not `Specs/Identity/…`), since the index sits with its items.
-- **Each line is the item's `summary`** — navigation, not the definition. The item stays the source of truth; an item with no `summary` yet is flagged, not invented.
+- **Each line is the item's `summary`** — navigation, not the item itself. The item stays the source of truth; an item with no `summary` yet is flagged, not invented.
 - Like everything in Eidos, an index annotates and navigates; it never gates.
 
 The **canvas** is the spatial counterpart of the index — a generated Obsidian `.canvas` map produced by [`eidos-canvas`](#ai). Specs become cards embedding their Intent, `Frames` become full-file cards in their own group, sub-folders become nested groups, and each item's [`connects_to`](#properties) links are drawn as directed edges — the intentional map of how the product's pieces relate (with `depends_on` optionally overlaid in a distinct color). The generated `.canvas` is itself a [top-level doc](#top-level-docs); register it in the Framework's `## Top-Level`. Like the index, it is derived, regenerable, and never gates.
@@ -327,28 +336,28 @@ The **canvas** is the spatial counterpart of the index — a generated Obsidian 
 ## Versioning
 
 - Semantic Versioning (`MAJOR.MINOR.PATCH`). Major bumps for breaking changes, minor for backward-compatible additions, patch for clarifications.
-- This file always holds the current version — right now, 4.2.0. When a version is tagged, this file is copied as-is into `versions/` under its full semver name (e.g. `versions/v3.0.0.md`). Each release is frozen there, so any two — even non-adjacent — can be diffed to migrate items between them (see the `eidos-migrate` skill).
+- This file always holds the current version — right now, 4.2.1. When a version is tagged, this file is copied as-is into `versions/` under its full semver name (e.g. `versions/v3.0.0.md`). Each release is frozen there, so any two — even non-adjacent — can be diffed to migrate items between them (see the `eidos-migrate` skill).
 - A framework records the version it targets in its `_eidos/Framework.md`; migration reads and bumps it there.
 - See `CHANGELOG.md` for history and migrations.
 - Tools may reject if the version in this file is unsupported.
 
 ## AI
 
-_This section is for an AI assistant working in an Eidos framework. A human can stop above — the rest is operating detail._
+_This section is for an AI assistant working in an Eidos definition. A human can stop above — the rest is operating detail._
 
-Eidos gives the direction; **the skills and a seeded framework are how the work gets done.** Earlier versions promised that Eidos worked from this file alone — 3.0.0 retires that. The form a framework uses now lives in the framework itself (`_eidos/`), so doing Eidos means a human, the skills, and a `_eidos/` that has been set up. Prefer the skills: `eidos` to author and validate, `eidos-install` to scaffold, `eidos-configure` to add a collection or flavor, add or change a custom property, and keep the Framework index current, `eidos-index` to rebuild a collection's `index.md`, `eidos-whoami` to set who you are, `eidos-migrate` to upgrade versions.
+Eidos gives the direction; **the skills and a seeded definition are how the work gets done.** Earlier versions promised that Eidos worked from this file alone — 3.0.0 retires that. The framework a definition uses now lives in the definition itself (`_eidos/`), so doing Eidos means a human, the skills, and a `_eidos/` that has been set up. Prefer the skills: `eidos` to author and validate, `eidos-install` to scaffold, `eidos-configure` to add a collection or flavor, add or change a custom property, and keep the Framework index current, `eidos-index` to rebuild a collection's `index.md`, `eidos-whoami` to set who you are, `eidos-migrate` to upgrade versions.
 
 **Facilitate, don't author.** Eidos is human-first. Format and structure what the owner gives you, supplement, ask clarifying questions, and press on Out of Scope — but never invent Intent, decide direction, or hand back a finished item to rubber-stamp. When unsure, ask. An item the owner didn't think through is worse than none.
 
 **Read the actor first.** Before acting, read `_eidos/user.md` — the actor's persona and calibration (role, experience with the scope, technical capacity) — and the matching contract in `_eidos/personas/`. Respond to _that_ actor: a Designer gets experience terms and no db/index jargon; a Developer gets full technical depth; the Framework Owner is brought the decisions; a Stakeholder gets summary and risk; a Project Manager gets scope, status, and dependencies. Calibration tunes the baseline — less orientation for the experienced, less mechanism for the non-technical. A blank or absent file means full, framework-owner-style facilitation; offer to set it with `eidos-whoami`. The human-first principle holds for every persona.
 
-**Find the form in the framework.** Locate a framework by its `_eidos/` marker, not the folder name — the root may be called anything (`Blueprint` is just the default). Every operation reads that `_eidos/`: `shapes/` for the collection body shapes (one or more flavors each, `Frames` included), `personas/` for the response contracts, `Framework.md` for the version, the naming convention, the Top-Level/Collections index, and the property Schema (its `## Schema` section), and `user.md` for the actor. If a framework has no `_eidos/`, it is not yet an Eidos framework — offer to install one with `eidos-install`. Do not fall back to a hardcoded contract; the framework's form is the source of truth.
+**Find the framework in the definition.** Locate a definition by its `_eidos/` marker, not the folder name — the root may be called anything (`Blueprint` is just the default). Every operation reads that `_eidos/`: `shapes/` for the collection body shapes (one or more flavors each, `Frames` included), `personas/` for the response contracts, `Framework.md` for the version, the naming convention, the Top-Level/Collections index, and the property Schema (its `## Schema` section), and `user.md` for the actor. If a folder has no `_eidos/`, it is not yet an Eidos definition — offer to install a framework with `eidos-install`. Do not fall back to a hardcoded contract; the definition's framework is the source of truth.
 
 **Start at `README.md`, then the Framework.** The root `README.md` is the visible front door — what the product is and where to go. `_eidos/Framework.md` is the full index: the Top-Level documents and the Collections with their flavors and grouping. Each collection's `index.md` is its leaf listing — items grouped by sub-folder, links with one-line summaries. Read these to navigate instead of scraping the tree; regenerate the Framework with `eidos-configure` and the collection indexes with `eidos-index` when they go stale.
 
 **Authoring an item:**
 
-1. Read the framework's `_eidos/Framework.md` for the property Schema, the naming convention, and the collection's flavors. Determine the target collection (its top-level folder) and pick a flavor — the collection's default unless the owner chooses another — then read that flavor's shape (`_eidos/shapes/<kind>.<flavor>.md`, e.g. `spec.full.md`) for the body. Name the file for its title in that convention (Title Case by default); put a permanent kebab-case `id` inside.
+1. Read the definition's `_eidos/Framework.md` for the property Schema, the naming convention, and the collection's flavors. Determine the target collection (its top-level folder) and pick a flavor — the collection's default unless the owner chooses another — then read that flavor's shape (`_eidos/shapes/<kind>.<flavor>.md`, e.g. `spec.full.md`) for the body. Name the file for its title in that convention (Title Case by default); put a permanent kebab-case `id` inside.
 2. Generate the frontmatter from the properties that apply to the item's collection — the core, plus any custom property scoped to it; fill values from what the owner tells you; set `date_created`/`date_modified` to today, and set `flavor` when it isn't the collection's default. Don't guess a `status` or invent an `owner`.
 3. Lead with **Intent** and **Behaviors & Acceptance Criteria** — short, observable criteria labeled `**AC1:**`, `**AC2:**`… Press hard on **Out of Scope**. Capture the rest as it surfaces; omit a section that doesn't apply, but keep the shape's order and names.
 4. Where the owner is vague, ask — don't fill the gap with plausible prose. Push rich detail (a data model, a payload) into a table or sub-section rather than onto an AC line.
@@ -357,7 +366,7 @@ Eidos gives the direction; **the skills and a seeded framework are how the work 
 
 **Validating an item:** read the framework's Schema (in `Framework.md`) and check the frontmatter against it — the core properties present and well-formed (`id` kebab-case, the two dates as `YYYY-MM-DD`; a `status` off the baseline warns, never fails), plus the custom properties scoped to the item's collection. Report missing body sections as suggestions **against the item's flavor shape** — resolve its collection (top-level folder) and its `flavor` (or the collection default), so a `micro` item isn't faulted for the sections only `full` carries — flagging an absent **Out of Scope** first, and note acceptance criteria that lack `**AC{n}:**` labels. Confirm no work-tracking fields crept in and that Implementation Notes read as intent, not progress. Surface, don't block — the output is a review the human acts on, and a missing core property is added with a note on why rather than failing the file.
 
-**Linking other items:** a relative markdown link whose path is the target's filename in the framework's naming convention — `[Session Management](../Identity/Session%20Management.md)` in a Title Case framework (spaces as `%20`), `[Session Management](../Identity/SessionManagement.md)` in a TitleCase one, `[Session Management](../Identity/session-management.md)` in a kebab-case one. The link text stays the human title. Add a `#heading` anchor for a section (GitLab/GitHub lowercase-and-hyphenate the heading; an Obsidian vault uses the literal heading text). Linking properties like `depends_on` use the same link, one markdown-link string per entry — quote it in YAML, since a leading `[` starts a list:
+**Linking other items:** a relative markdown link whose path is the target's filename in the framework's naming convention — `[Session Management](../Identity/Session%20Management.md)` in a Title Case definition (spaces as `%20`), `[Session Management](../Identity/SessionManagement.md)` in a TitleCase one, `[Session Management](../Identity/session-management.md)` in a kebab-case one. The link text stays the human title. Add a `#heading` anchor for a section (GitLab/GitHub lowercase-and-hyphenate the heading; an Obsidian vault uses the literal heading text). Linking properties like `depends_on` use the same link, one markdown-link string per entry — quote it in YAML, since a leading `[` starts a list:
 
 ```yaml
 depends_on:

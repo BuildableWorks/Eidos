@@ -1,12 +1,12 @@
 ---
 name: eidos-configure
 description: >-
-  Configure an Eidos framework's structure and contract — everything held in the body of `_eidos/Framework.md`: its Collections (top-level content folders) and their Flavors (body shapes), its property Schema (the frontmatter contract every item carries), and its Top-Level document index — with the visible root `README.md` as the door to it. Use whenever someone wants to add a kind of content folder ("add a Decisions/ADR folder", "we need a Personas collection"), add or change a body flavor ("add a micro spec template", "give specs a full and a micro version", "make spec.full the default"), add, rename, or retire a custom property and backfill it across items ("add a `team` field to every spec", "we need to track a review date", "every entry should have an owner team"), or refresh the framework's Top-Level index ("update the framework index", "the Framework is out of date"). It presses the owner to decide each thing in full — a collection's name/grouping/flavors, a flavor's shape, a property's type/applies-to/meaning — never just a name, then scaffolds folders and `{kind}.{flavor}.md` shape files, writes the Framework, and reconciles the items. It does not author items (use `eidos`), build a collection's per-item `index.md` (use `eidos-index`), or touch the Eidos core properties, which move with the standard's version (use `eidos-migrate`).
+  Configure an Eidos definition's framework — the structure and contract held in the body of `_eidos/Framework.md`: its Collections (top-level content folders) and their Flavors (body shapes), its property Schema (the frontmatter contract every item carries), and its Top-Level document index — with the visible root `README.md` as the door to it. Use whenever someone wants to add a kind of content folder ("add a Decisions/ADR folder", "we need a Personas collection"), add or change a body flavor ("add a micro spec template", "give specs a full and a micro version", "make spec.full the default"), add, rename, or retire a custom property and backfill it across items ("add a `team` field to every spec", "we need to track a review date", "every entry should have an owner team"), or refresh the framework's Top-Level index ("update the framework index", "the Framework is out of date"). It presses the owner to decide each thing in full — a collection's name/grouping/flavors, a flavor's shape, a property's type/applies-to/meaning — never just a name, then scaffolds folders and `{kind}.{flavor}.md` shape files, writes the Framework, and reconciles the items. It does not author items (use `eidos`), build a collection's per-item `index.md` (use `eidos-index`), or touch the Eidos core properties, which move with the standard's version (use `eidos-migrate`).
 ---
 
 # Eidos Configure
 
-Keep `_eidos/Framework.md` working as the framework's **index and contract** — the authoritative description of the whole framework, with the visible root `README.md` as the friendly door to it. This skill owns the three indexed parts of the Framework body:
+Keep `_eidos/Framework.md` working as the framework's **index and contract** — the authoritative description of the form the definition is written in, with the visible root `README.md` as the friendly door to it. This skill owns the three indexed parts of the Framework body:
 
 - **Top-Level** — the top-level documents, `README.md` first (the visible front door and the first listed entry), then the owner's own one-of-a-kind docs (a Roadmap, a Vision, the generated Framework Map), each a link and a one-line description. The framing docs (Architecture, Audience, Criteria, Market) are **not** here — they live in the `Frames` collection.
 - **Collections** — each top-level content folder: its grouping (one level of sub-folders) and its **flavors** (body shapes, one marked default), plus a pointer to its generated `index.md` leaf.
@@ -23,7 +23,7 @@ A collection, flavor, or property nobody thought through is like an item nobody 
 - **For a property:** all four —
   - **name** — the frontmatter key. Lowercase, words joined by underscores, matching the core style (`owner`, `depends_on`). Short and stable.
   - **type** — from the set Obsidian uses: **Text, List, Number, Checkbox, Date, Date & time**. If the owner wants something richer than one of those — a structured object, an enum with behavior — that almost belongs in the body (a shape), not a property. Say so.
-  - **applies to** — which collections carry it: `all`, or a list (`Specs`, `Frames`). The property lands only on items in those collections — this is how you avoid a field that makes no sense on half the framework. Absence where it applies is a soft gap the validator notes, never refuses.
+  - **applies to** — which collections carry it: `all`, or a list (`Specs`, `Frames`). The property lands only on items in those collections — this is how you avoid a field that makes no sense on half the definition. Absence where it applies is a soft gap the validator notes, never refuses.
   - **meaning** — one line: what it holds and why. This is what stops the property from rotting into a mystery field.
 
 If the owner offers only a name, ask for the rest. Don't fill them in yourself.
@@ -32,7 +32,7 @@ If the owner offers only a name, ask for the rest. Don't fill them in yourself.
 
 - **The Framework body only.** You edit the `## Top-Level`, `## Collections`, and `### Custom Properties` (under `## Schema`) sections of `_eidos/Framework.md`, and create shape files in `_eidos/shapes/`. You do **not** build a collection's per-item `index.md` (that's `eidos-index`) or author items (`eidos`).
 - **Never touch `### Eidos Core`.** Those are the standard's properties, and they move with the version (`eidos-migrate`). If the owner wants to change a core property, that's a standards change, not a framework customization; redirect.
-- **Needs a framework.** Read `_eidos/Framework.md` from the framework root (found by its `_eidos/` marker, usually `Blueprint/_eidos/`). If there is no `_eidos/`, the framework isn't set up — offer `eidos-install` first.
+- **Needs a framework.** Read `_eidos/Framework.md` from the definition root (found by its `_eidos/` marker, usually `Blueprint/_eidos/`). If there is no `_eidos/`, no framework is installed — offer `eidos-install` first.
 - **Read the actor first.** As with every Eidos operation, read `_eidos/user.md` and tune how you facilitate to the persona (see EIDOS.md).
 - **Shapes are the owner's.** A flavor's sections are a content decision. Scaffold a starting point — usually by trimming the collection's default flavor — but let the owner shape it.
 - **Don't silently drop values.** Renaming or retiring a property touches real data in real items. Surface what's there before changing it.
@@ -40,7 +40,7 @@ If the owner offers only a name, ask for the rest. Don't fill them in yourself.
 ## Adding a collection
 
 1. **Decide** the name, description, grouping (sub-folders or flat), and at least a default flavor with the owner.
-2. **Create the folder** under the framework root, named in the framework's naming convention (read `naming` from `Framework.md`). Keep its organization to **one level of sub-folders** — deeper is discouraged.
+2. **Create the folder** under the definition root, named in the framework's naming convention (read `naming` from `Framework.md`). Keep its organization to **one level of sub-folders** — deeper is discouraged.
 3. **Create the default flavor's shape** in `_eidos/shapes/` as `<kind>.<flavor>.md` (e.g. `decision.full.md`), body-only, with the sections the owner wants and italic guidance prompts. Pattern it on the existing shapes.
 4. **Register it** under `## Collections` in `Framework.md`: a `###` heading (the collection name), the description, then plain bullets — a **Leaf** pointer to its `index.md`, the **Flavors** (one bullet each, the default marked), and the grouping (its sub-folders as bullets, each with a short description; or "ungrouped" if flat). Use bullets, never separators like `·` — someone adding a flavor should be able to copy a line:
 
@@ -98,10 +98,10 @@ The seed ships a few custom defaults that are the framework's to keep, scope, or
 
 ## Refreshing the Top-Level index
 
-1. **Enumerate the top-level documents** at the framework root — `README.md` is the **first** top-level document (the visible front door and a listed entry), then the owner's own one-of-a-kind docs (a Roadmap, a Vision, the generated Framework Map). The framing docs are collection items under `Frames/`, not top-level.
+1. **Enumerate the top-level documents** at the definition root — `README.md` is the **first** top-level document (the visible front door and a listed entry), then the owner's own one-of-a-kind docs (a Roadmap, a Vision, the generated Framework Map). The framing docs are collection items under `Frames/`, not top-level.
 2. **Rebuild the list** under `## Top-Level`, between the `<!-- eidos-configure: top-level index (regenerated) -->` marker and the next heading: one bullet per doc, `- [Title](../Title.md) — one-line description`. Lead with `README` first (`- [README](../README.md) — …`), then the owner's docs. **Keep the owner's existing descriptions**; only add a bullet (with a `<!-- TODO: describe -->`) for a doc that has none, and ask the owner to describe it. Don't invent descriptions.
 3. **Report** — the docs indexed and any still needing a description. A top-level doc that's still a stub is **in progress** — note it so the intention to complete it stays visible.
 
 ## After
 
-The Framework is a current index and contract for the framework. From here, `eidos` reads it to know an item's collection and flavors when authoring, and validates each item against the updated Schema — a custom property now counts among the fields it checks for the collections it applies to, surfaced and added with a note where an applicable item is missing it, never failing the file. `eidos-index` rebuilds each collection's `index.md` (the per-item leaf) beneath it; and `README.md` is the visible door a human lands at first.
+The Framework is a current index and contract for the definition. From here, `eidos` reads it to know an item's collection and flavors when authoring, and validates each item against the updated Schema — a custom property now counts among the fields it checks for the collections it applies to, surfaced and added with a note where an applicable item is missing it, never failing the file. `eidos-index` rebuilds each collection's `index.md` (the per-item leaf) beneath it; and `README.md` is the visible door a human lands at first.

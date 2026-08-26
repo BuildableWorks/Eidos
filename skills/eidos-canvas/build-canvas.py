@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-build-canvas.py — generate an Obsidian .canvas (JSON Canvas 1.0) from an Eidos framework.
+build-canvas.py — generate an Obsidian .canvas (JSON Canvas 1.0) from an Eidos definition.
 
-A visual map of the framework, opened in Obsidian's Canvas:
+A visual map of the definition, opened in Obsidian's Canvas:
 
   Specs (and spec-like collections)  -> text nodes embedding each item's `## Intent`
   the Frames collection               -> full-file nodes (the whole framing doc)
@@ -11,7 +11,7 @@ A visual map of the framework, opened in Obsidian's Canvas:
   `depends_on`  (with --include-dependencies) -> directed edges in a distinct color (purple)
 
 Each collection gets a distinct color (its group box and its item cards). The eidos-canvas skill
-proposes a schema from the framework, confirms it, and passes it as `--color NAME:N`; unset collections
+proposes a schema from the definition, confirms it, and passes it as `--color NAME:N`; unset collections
 fall back to a palette in order. Regenerating an existing canvas reuses its colors, so a chosen schema
 sticks. Top-level documents are NOT mapped (they frame the product; the canvas maps the collections).
 The generated `.canvas` is itself a top-level document — register it in `_eidos/Framework.md`
@@ -26,7 +26,7 @@ Usage:
                   [--include-dependencies] [--dependency-color N]
                   [--vault PATH] [--out FILE] [--list]
 
-  FRAMEWORK_ROOT          folder containing `_eidos/` (usually the framework root, e.g. Blueprint/).
+  DEFINITION_ROOT         folder containing `_eidos/` (usually the definition root, e.g. Blueprint/).
   --collection           include this collection; repeatable. Default: all declared collections.
   --color NAME:N         color a collection (Obsidian preset 1-6); repeatable. Overrides the palette
                          and any existing canvas colors.
@@ -36,7 +36,7 @@ Usage:
   --out                  output .canvas path. Default: <vault>/Framework Map.canvas.
   --list                 print the framework's declared collections, then exit.
 
-Exit codes: 0 = wrote (or --list); 1 = nothing to map / bad selection; 2 = not a framework.
+Exit codes: 0 = wrote (or --list); 1 = nothing to map / bad selection; 2 = not a definition.
 """
 
 import argparse
@@ -58,7 +58,7 @@ MAX_COLS = 4
 FRAMES_COLLECTION = "frames"
 
 # Obsidian canvas preset colors (1 red, 2 orange, 3 yellow, 4 green, 5 cyan, 6 purple).
-# Each collection gets a distinct color. The eidos-canvas skill proposes a schema from the framework,
+# Each collection gets a distinct color. The eidos-canvas skill proposes a schema from the definition,
 # confirms it with the owner, and passes it as --color NAME:N overrides; unset collections fall back
 # to this palette in order. Regenerating reuses an existing canvas's colors, so a chosen schema sticks.
 PALETTE = ["4", "5", "6", "2", "3", "1"]
@@ -361,14 +361,14 @@ def build(root, vault_root, collections, include_deps, dep_color, colors, warnin
 
 # ---- cli ------------------------------------------------------------------
 def main():
-    ap = argparse.ArgumentParser(description="Generate an Obsidian .canvas map of an Eidos framework.")
-    ap.add_argument("root", nargs="?", default=".", help="framework root (contains _eidos/)")
+    ap = argparse.ArgumentParser(description="Generate an Obsidian .canvas map of an Eidos definition.")
+    ap.add_argument("root", nargs="?", default=".", help="definition root (contains _eidos/)")
     ap.add_argument("--collection", action="append", default=[], help="include this collection (repeatable)")
     ap.add_argument("--include-dependencies", action="store_true", help="also draw depends_on edges")
     ap.add_argument("--dependency-color", default="6", help="Obsidian preset color for dependency edges (default 6=purple)")
     ap.add_argument("--color", action="append", default=[], metavar="NAME:N",
                     help="color a collection: NAME:N (Obsidian preset 1-6). Repeatable. Overrides the palette and any existing canvas colors.")
-    ap.add_argument("--vault", help="vault root for embed/file paths (default: framework root)")
+    ap.add_argument("--vault", help="vault root for embed/file paths (default: definition root)")
     ap.add_argument("--out", help="output .canvas path (default: <vault>/Framework Map.canvas)")
     ap.add_argument("--list", action="store_true", help="list declared collections, then exit")
     args = ap.parse_args()
@@ -376,7 +376,7 @@ def main():
     root = Path(args.root).resolve()
     framework_md = root / "_eidos" / "Framework.md"
     if not framework_md.is_file():
-        print(f"error: no _eidos/Framework.md under {root} — not an Eidos framework", file=sys.stderr)
+        print(f"error: no _eidos/Framework.md under {root} — not an Eidos definition", file=sys.stderr)
         return 2
 
     collections = declared_collections(framework_md)

@@ -14,7 +14,7 @@ tags: [eidos, product, architecture]
 
 ## Shape
 
-This framework defines a **small subset of YouTube**: watching videos, resuming where you left off, running a channel, and subscribing to one. It is a web and mobile client over a handful of services — a catalog of videos and channels, an upload-and-transcode pipeline, a CDN that delivers the bytes, and a per-viewer store for playback state. The recommendation feed, comments, ads, and Shorts are deliberately out of this subset.
+This definition covers a **small subset of YouTube**: watching videos, resuming where you left off, running a channel, and subscribing to one. It is a web and mobile client over a handful of services — a catalog of videos and channels, an upload-and-transcode pipeline, a CDN that delivers the bytes, and a per-viewer store for playback state. The recommendation feed, comments, ads, and Shorts are deliberately out of this subset.
 
 ## Components
 

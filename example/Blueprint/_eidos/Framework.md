@@ -1,6 +1,6 @@
 ---
 # The Eidos version this framework targets; eidos-migrate reads and bumps it.
-eidos_version: 4.2.0
+eidos_version: 4.2.1
 # How files, folders, and links are named: Title Case | TitleCase | kebab-case. Absent = Title Case.
 naming: Title Case
 ---
@@ -54,7 +54,7 @@ edits this section.
 
 ### Eidos Core
 
-_Present on every item. Managed by the standard (Eidos 4.2.0); `eidos-migrate` rewrites this block on a version change — don't hand-edit it. (`flavor` absent = the collection's default; `connects_to` absent = no canvas edges; a missing `summary` is flagged by the index.)_
+_Present on every item. Managed by the standard (Eidos 4.2.1); `eidos-migrate` rewrites this block on a version change — don't hand-edit it. (`flavor` absent = the collection's default; `connects_to` absent = no canvas edges; a missing `summary` is flagged by the index.)_
 
 | Name        | Type | Meaning                                                                                        |
 | ----------- | ---- | ---------------------------------------------------------------------------------------------- |
@@ -63,7 +63,7 @@ _Present on every item. Managed by the standard (Eidos 4.2.0); `eidos-migrate` r
 | summary     | Text | One plain line — what this item is, in a sentence, distilled from Intent. Source for the collection index.md listing; absent, the index flags it. |
 | flavor      | Text | Which body flavor this item follows, from its collection's declared flavors. Absent = the collection's default flavor. |
 | owner       | Text | Who owns the document. Non-owners are warned before editing it (the framework owner aside).      |
-| connects_to | List | Items this one connects to on the framework canvas, each a markdown link; drawn as a directed edge (this → target). The intentional map, distinct from depends_on. |
+| connects_to | List | Items this one connects to on the definition's canvas, each a markdown link; drawn as a directed edge (this → target). The intentional map, distinct from depends_on. |
 
 ### Custom Properties
 

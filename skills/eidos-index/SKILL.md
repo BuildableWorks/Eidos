@@ -1,7 +1,7 @@
 ---
 name: eidos-index
 description: >-
-  Build or refresh a collection's `index.md` in an Eidos framework — the generated leaf that lists a collection's items so a human or agent can navigate without scraping the tree. Use when someone wants to "regenerate the index", "rebuild the specs index", "update Specs/index.md", "reindex the framework", "map the framework", says an index is stale, or after items have been added, renamed, moved, or removed. It reads the framework's declared collections, walks each collection's one-level sub-folders, and rewrites its `index.md` wholesale — each item a markdown link with its one-line `summary` property, grouped by sub-folder (Specs by domain) or flat. Ships a `build-index.py` that does the whole walk deterministically where a shell is available; falls back to doing it by hand on a sandboxed host. Regenerable and never gates.
+  Build or refresh a collection's `index.md` in an Eidos definition — the generated leaf that lists a collection's items so a human or agent can navigate without scraping the tree. Use when someone wants to "regenerate the index", "rebuild the specs index", "update Specs/index.md", "reindex the definition", "map the definition", says an index is stale, or after items have been added, renamed, moved, or removed. It reads the framework's declared collections, walks each collection's one-level sub-folders, and rewrites its `index.md` wholesale — each item a markdown link with its one-line `summary` property, grouped by sub-folder (Specs by domain) or flat. Ships a `build-index.py` that does the whole walk deterministically where a shell is available; falls back to doing it by hand on a sandboxed host. Regenerable and never gates.
 ---
 
 # Eidos Index
@@ -22,12 +22,12 @@ Since 4.1.0 the one-line summary is a real frontmatter property (`summary`), aut
 The skill ships **`build-index.py`** (beside this file) — stdlib-only Python 3 that does the entire walk deterministically. **Prefer it whenever you have a shell** (Claude Code, the IDE):
 
 ```
-python3 <skill>/build-index.py <framework-root>            # rebuild every collection's index
-python3 <skill>/build-index.py <framework-root> --check    # verify only; non-zero if any index is stale
-python3 <skill>/build-index.py <framework-root> --collection Specs   # limit to one collection (repeatable)
+python3 <skill>/build-index.py <definition-root>            # rebuild every collection's index
+python3 <skill>/build-index.py <definition-root> --check    # verify only; non-zero if any index is stale
+python3 <skill>/build-index.py <definition-root> --collection Specs   # limit to one collection (repeatable)
 ```
 
-`<framework-root>` is the folder that contains `_eidos/` (often the framework root, e.g. `Blueprint/`). The script reads the declared collections from `_eidos/Framework.md`, walks each, and rewrites each `index.md` from the items' `title` + `summary`. It prints any item missing a `summary` to stderr — **those are your only authoring task**: write a `summary` on each flagged item (distill its Intent to one plain line), then re-run the script. It does **not** touch the Framework, so still do the reconciliation in step 6 by reading `_eidos/Framework.md`.
+`<definition-root>` is the folder that contains `_eidos/` (often the definition root, e.g. `Blueprint/`). The script reads the declared collections from `_eidos/Framework.md`, walks each, and rewrites each `index.md` from the items' `title` + `summary`. It prints any item missing a `summary` to stderr — **those are your only authoring task**: write a `summary` on each flagged item (distill its Intent to one plain line), then re-run the script. It does **not** touch the Framework, so still do the reconciliation in step 6 by reading `_eidos/Framework.md`.
 
 On a **sandboxed host** (Claude Desktop) where you can't run the script, do the walk by hand — the procedure below is exactly what the script does.
 
@@ -36,17 +36,17 @@ On a **sandboxed host** (Claude Desktop) where you can't run the script, do the 
 - The collections are declared in `_eidos/Framework.md` (the `## Collections` section), each with its folder.
 - Each collection's items live under `<Collection>/`, optionally in one level of sub-folders (`Specs/<Domain>/`).
 - Each collection's index is `<Collection>/index.md`.
-- This needs a set-up framework. If there's no `_eidos/`, it isn't an Eidos framework yet — offer `eidos-install`.
+- This needs an installed framework. If there's no `_eidos/`, it isn't an Eidos definition yet — offer `eidos-install`.
 
 ## Procedure (what the script does — and your fallback by hand)
 
 1. **Read the actor** (`_eidos/user.md`) and the declared collections (`_eidos/Framework.md`).
-2. **Decide which collections to re-index.** Default to all; if only some folders changed, the script's `--collection` filter (or your own scope by hand) limits the work. For a small framework, re-indexing everything is fine.
+2. **Decide which collections to re-index.** Default to all; if only some folders changed, the script's `--collection` filter (or your own scope by hand) limits the work. For a small definition, re-indexing everything is fine.
 3. **For each chosen collection, walk its folder.** Read its one-level sub-folders (the grouping) and the items in each — or the items directly in the collection folder, if it's flat. For each item read its `title`, path, and `summary`.
 4. **Take each item's `summary` verbatim.** It's one plain line already. If an item has **no** `summary`, flag it (the script writes a `⚠️ TODO` placeholder in the bullet and lists the file on stderr) — then write a `summary` on that item, distilling its Intent to one line, and regenerate. Never invent a summary into the index alone; it belongs on the item.
 5. **Rewrite `<Collection>/index.md` wholesale.** It is fully generated — no hand-written prose to preserve — so rebuild the whole file:
    - An H1 of the collection name (`# Specs`) and the marker comment `<!-- eidos-index: <Collection> (regenerated) -->`.
-   - **Grouped collection:** one `##` per sub-folder, then a bullet per item — `- [Title](<Sub-folder>/<File>.md) — summary`. Links are **relative to the collection folder** (`Identity/Magic%20Link%20Sign-In.md`, not `Specs/Identity/…`), built in the framework's naming convention (read `naming` from `_eidos/Framework.md`): encode spaces as `%20` in a Title Case framework; a TitleCase or kebab-case one has none.
+   - **Grouped collection:** one `##` per sub-folder, then a bullet per item — `- [Title](<Sub-folder>/<File>.md) — summary`. Links are **relative to the collection folder** (`Identity/Magic%20Link%20Sign-In.md`, not `Specs/Identity/…`), built in the framework's naming convention (read `naming` from `_eidos/Framework.md`): encode spaces as `%20` in a Title Case definition; a TitleCase or kebab-case one has none.
    - **Flat collection:** no `##` groupings — just the bullet list of items under the marker.
 
    ```markdown

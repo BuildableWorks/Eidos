@@ -21,7 +21,7 @@ beta: false
 
 ## Intent
 
-People watch long videos in more than one sitting, and across devices. If reopening a video always starts at zero, the viewer loses their place and drops off. This remembers where each viewer stopped and offers to pick up there. It's a **micro** spec on purpose — the smallest useful definition, written to grow into the full flavor once it earns its place.
+People watch long videos in more than one sitting, and across devices. If reopening a video always starts at zero, the viewer loses their place and drops off. This remembers where each viewer stopped and offers to pick up there. It's a **micro** spec on purpose — the smallest useful spec, written to grow into the full flavor once it earns its place.
 
 ### Assumptions
 

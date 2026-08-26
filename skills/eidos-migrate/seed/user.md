@@ -1,7 +1,7 @@
 # User
 
 Who is in the seat. This file is **personal and per-actor** — it is gitignored and never checked in, so
-each person who works in this framework keeps their own. The agent reads it before acting, to know who
+each person who works on this definition keeps their own. The agent reads it before acting, to know who
 you are and how to help.
 
 Set who you are below — `eidos-install` asks, or just edit this file. Leaving it blank is fine: the agent

@@ -1,7 +1,7 @@
 ---
 name: eidos-format
 description: >-
-  Reshape an existing rough draft — a brain-dump, rough notes, or half-formed prose — into Eidos shape, preserving the author's own words and adding nothing. Works on a collection item (a spec or a Frame) or a free-form top-level doc the owner added (a Roadmap, a Vision) — the latter has no shape to match, so it's organized into the house style rather than checked against a shape. Use when someone has already written something and wants it organized, formatted, tidied, cleaned up, or "made to conform" to the shape — e.g. "I brain-dumped a spec, format it", "organize these notes into the Eidos shape", "clean up this spec", "make this match the shape". This is a formatting and organizing pass within a single file, not authoring: it moves and shapes content that is already there. To develop new content with you, use `eidos`; to scaffold an empty framework, use `eidos-install`; to upgrade versions, use `eidos-migrate`.
+  Reshape an existing rough draft — a brain-dump, rough notes, or half-formed prose — into Eidos shape, preserving the author's own words and adding nothing. Works on a collection item (a spec or a Frame) or a free-form top-level doc the owner added (a Roadmap, a Vision) — the latter has no shape to match, so it's organized into the house style rather than checked against a shape. Use when someone has already written something and wants it organized, formatted, tidied, cleaned up, or "made to conform" to the shape — e.g. "I brain-dumped a spec, format it", "organize these notes into the Eidos shape", "clean up this spec", "make this match the shape". This is a formatting and organizing pass within a single file, not authoring: it moves and shapes content that is already there. To develop new content with you, use `eidos`; to scaffold an empty definition, use `eidos-install`; to upgrade versions, use `eidos-migrate`.
 ---
 
 # Eidos Format
@@ -28,7 +28,7 @@ Shape the content; don't pour it into a form. The recommended sections are a sca
 - Break rich content out of a single line. A data model belongs in a **table**, a sequence in a **numbered list**, an enumeration in a **bulleted list**.
 - Add your own `####` sub-headings inside a section when it has internal structure.
 - Keep acceptance criteria short and checkable. When an AC has rich detail behind it, state the AC briefly and put the detail in a table or sub-section the AC points to — never cram `AC1: create X entity with a, b, c, d, e` onto one line.
-- Turn references to other items into markdown links — `[Title](path)`, the path in the framework's naming convention (spaces become `%20` only in a Title Case framework), a `#heading` for a section — never bare `code-style` names. Converting a name into a link is formatting, not adding content, so it's squarely in scope.
+- Turn references to other items into markdown links — `[Title](path)`, the path in the framework's naming convention (spaces become `%20` only in a Title Case definition), a `#heading` for a section — never bare `code-style` names. Converting a name into a link is formatting, not adding content, so it's squarely in scope.
 
 ## What you're reshaping
 
@@ -41,12 +41,12 @@ The first shapes _toward_ a flavor; the second only _organizes_. In both you pre
 
 ## Where the form lives
 
-This skill reads the target shape from the **framework's own `_eidos/`** — it does not carry a template of its own. The file you're reshaping is in the user's project; so is the form you reshape it toward:
+This skill reads the target shape from the **definition's own `_eidos/`** — it does not carry a template of its own. The file you're reshaping is in the user's project; so is the form you reshape it toward:
 
 - **`_eidos/shapes/`** — collection body shapes, per flavor (`spec.full.md`, `spec.micro.md`, `frame.architecture.md`, …). A frame follows its `frame.*` flavor; a free-form top-level doc has no shape, and that's expected.
-- **`_eidos/Framework.md`** — the property contract (its `## Schema` section) for an item's frontmatter; the naming convention (so any link you create uses the framework's filename style — `%20` only in a Title Case framework); and the collections with their flavors, so you know which shape an item follows.
+- **`_eidos/Framework.md`** — the property contract (its `## Schema` section) for an item's frontmatter; the naming convention (so any link you create uses the framework's filename style — `%20` only in a Title Case definition); and the collections with their flavors, so you know which shape an item follows.
 
-Find `_eidos/` at the framework root in the working directory (by that marker, not the folder name — usually `Blueprint/_eidos/`). **If there is no `_eidos/`, the framework isn't set up — offer `eidos-install` before reshaping**, so you're shaping toward the framework's real form (which may include custom properties or an adjusted section set), not a guess.
+Find `_eidos/` at the definition root in the working directory (by that marker, not the folder name — usually `Blueprint/_eidos/`). **If there is no `_eidos/`, no framework is installed — offer `eidos-install` before reshaping**, so you're shaping toward the framework's real form (which may include custom properties or an adjusted section set), not a guess.
 
 ## Procedure
 
@@ -61,5 +61,5 @@ Find `_eidos/` at the framework root in the working directory (by that marker, n
 ## Scope of this skill
 
 - **In scope:** reorganizing and formatting content that already exists, within one file; light grammar and markdown cleanup; readability.
-- **Out of scope:** inventing content (use `eidos` to develop it with the user), scaffolding a new framework (`eidos-install`), version migration (`eidos-migrate`).
+- **Out of scope:** inventing content (use `eidos` to develop it with the user), scaffolding a new definition (`eidos-install`), version migration (`eidos-migrate`).
 - If a single dump clearly covers several units of the product, don't silently split it into multiple items — point it out and ask how the user wants it divided.
