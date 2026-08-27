@@ -2,7 +2,7 @@
 
 _**εἶδος** (eidos), Greek — the form or essence of a thing: the look that makes it what it is. Plato's eternal Form; Aristotle's essence behind the matter._
 
-> **[Eidos v4.3.0](EIDOS.md)** — the full standard.
+> **[Eidos v4.3.1](EIDOS.md)** — the full standard.
 
 A markdown standard for defining the essence of a thing — a product, a body of work, anything you set out to make. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished. The files live as plain `.md` next to your code. No SaaS. No lock-in. No hidden state.
 

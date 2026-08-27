@@ -6,16 +6,14 @@ description: >-
 
 # Eidos Index
 
-Keep each collection's **`index.md`** current — the leaf a human or an agent reads to find an item without scraping the tree. An index lives inside its collection's folder (`<Collection>/index.md`), lists the collection's items grouped under their one-level sub-folders (a grouped collection) or flat, and is **fully generated**: a markdown link per item with the item's one-line `summary` property. Folder descriptions live in `_eidos/Framework.md`; this skill rebuilds only the listing.
-
-This generalizes the former `eidos-domains` skill — every collection gets the same treatment, whatever it is called.
+Keep each collection's **`index.md`** current — the leaf a human or agent reads to find an item without scraping the tree. It lives inside its collection's folder, lists the items grouped by sub-folder or flat, and is **fully generated**: one markdown link per item carrying its `summary` property. Folder descriptions live in `_eidos/Framework.md`; this skill rebuilds only the listing, for every collection alike.
 
 ## How you work: regenerate, don't author
 
-Since 4.1.0 the one-line summary is a real frontmatter property (`summary`), authored once on the item and read here — so the index is **derived, not written**. Regenerating it is safe and mechanical. Two things stay the human's:
+The one-line summary is a real frontmatter property, authored once on the item and read here — so the index is **derived, not written**, and regenerating is safe and mechanical. Two things stay the human's:
 
-- **Descriptions.** A collection's description, and its sub-folder descriptions, live in `_eidos/Framework.md`, written once by the owner — the index does not carry them. If a sub-folder has no description in the Framework, note it and ask the owner; don't invent one.
-- **The summaries themselves.** A summary is the item's own `summary` property; the index never adds meaning the item doesn't carry. An item with no `summary` yet is **flagged**, not invented — the owner (or `eidos` while authoring) writes it on the item, and the next regeneration picks it up.
+- **Descriptions** live in `_eidos/Framework.md`, written once by the owner. A sub-folder without one gets noted and asked about, never invented.
+- **Summaries** are the item's own `summary`. The index never adds meaning the item doesn't carry; an item without one is **flagged**, and the next regeneration picks up whatever the owner writes.
 
 ## Run the script when you can
 

@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [4.3.1] - 2026-08-26
+
+A tooling release: **`EIDOS.md` is byte-identical to 4.3.0 but for its version line.** The standard did not move; the skills that carry it got 25% smaller, and a handful of places where they still contradicted 4.3.0 got fixed.
+
+### Changed
+
+- **Worked migrations move to [`versions/MIGRATIONS.md`](versions/MIGRATIONS.md).** `eidos-migrate` was 63% historical per-version hops and grew by one every release — 3,065 words and climbing. The eight hops now live beside the snapshots they describe, which the skill already syncs and reads on demand. The skill is 1,010 words and **no longer grows when the standard does**; `AGENTS.md` records the new release step so hops land there, never back in the SKILL.
+- **Every skill trimmed.** 12,546 → 9,364 words across the eight, without touching the doctrine each has to carry: because a sandboxed host loads a skill alone, repeating "read the actor first" or the naming convention across skills is a requirement, not duplication, and it stayed.
+
+### Fixed
+
+- **`eidos-format` named eight seed sections as universal.** Its sorting step listed Behaviors & Acceptance Criteria, Out of Scope, Dependencies, Testing, Constraints & Decisions, Assumptions, Open Questions, and `AC{n}` as the places to file content — the exact bias 4.3.0 removed from the standard. It now reads section names off the item's flavor shape and routes by meaning.
+- **`eidos` validation still hunted for seed sections**, flagging "an absent **Out of Scope**" and checking that "Implementation Notes read as intent."
+- **`eidos-install` contradicted Rule 22**, calling the framing collection "highly encouraged, not required" three commits after the standard made it required-by-declaration. It also duplicated `EIDOS.md`'s naming table, complete with the software examples 4.3.0 had neutralized upstream.
+- **A typo in `eidos-canvas`** introduced by 4.3.0's own sweep: "so the *detent* shows on the card."
+
+**Migration from 4.3.0:** set `eidos_version: 4.3.1`. Nothing else — no item, property, shape, or collection changes.
+
 ## [4.3.0] - 2026-08-26
 
 The de-biasing release. Eidos has always claimed that a collection's name and a shape's sections are the framework's, not the standard's — that a film team could run `Scenes` grouped by `Act` and never write a spec. `EIDOS.md` then taught from the software seed on 67 of its lines, the canvas generator special-cased a collection named `Frames`, and the skills told an agent to lead with Intent and flag a missing Out of Scope whatever it was looking at. An agent that reads a software vocabulary in the standard reaches for it in a framework that has none. This release makes the claim true, and ships two more seeds and a second worked example to prove it.

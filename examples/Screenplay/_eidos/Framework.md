@@ -1,6 +1,6 @@
 ---
 # The Eidos version this framework targets; eidos-migrate reads and bumps it.
-eidos_version: 4.3.0
+eidos_version: 4.3.1
 # How files, folders, and links are named: Title Case | TitleCase | kebab-case. Absent = Title Case.
 naming: Title Case
 ---
@@ -53,7 +53,7 @@ ones this framework adds. `act` and `pov` are Scenes-only; the seed's `depends_o
 
 ### Eidos Core
 
-_Present on every item. Managed by the standard (Eidos 4.3.0); `eidos-migrate` rewrites this block on a version change — don't hand-edit it._
+_Present on every item. Managed by the standard (Eidos 4.3.1); `eidos-migrate` rewrites this block on a version change — don't hand-edit it._
 
 | Name        | Type | Meaning                                                                                        |
 | ----------- | ---- | ---------------------------------------------------------------------------------------------- |

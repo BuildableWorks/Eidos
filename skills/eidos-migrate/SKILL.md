@@ -14,13 +14,16 @@ This skill is the companion to `eidos` (authoring/validation). Read `eidos` for 
 
 Migration is mechanical, but it is still the owner's definition. Propose the plan, show what will change, and **never silently drop content**. If the target version removes a field or section that holds real information, surface that information and ask where it should go (fold into another section, keep as a note, or deliberately drop) — do not delete it on the user's behalf. The custom part of a definition's framework — its custom properties, any reshaped section — is the owner's and is preserved, never overwritten.
 
-## Where the version history lives
+## What you read
 
-Migration needs the version snapshots, the changelog's migration notes, the current standard, and — when bringing a definition up to a version that has a form layer — the canonical framework seed. Find them where the standard lives:
+Committed copies live in this skill's own folder, synced from the standard by `scripts/sync-skills.sh`, so they are present on a sandboxed host too:
 
-These ship as committed copies inside this skill's own folder — `versions/`, `CHANGELOG.md`, `EIDOS.md`, and `seeds/` (every seed, each with its own shapes and personas) — kept in sync with the standard's top-level sources by `scripts/sync-skills.sh`. So they're present whether you're in Claude Code or a sandboxed host (Claude Desktop). The top-level files stay the source of truth; these are synced copies. When working inside the standard's own repo, the top-level files are right there.
+- **`versions/vX.Y.Z.md`** — a frozen snapshot of each released standard. A migration needs both endpoints.
+- **`versions/MIGRATIONS.md`** — the worked hop for each release: what moves, what stays, what needs a human decision. Read the one spanning your source and target; it is a shortcut, not a required path.
+- **`EIDOS.md`** — the current standard, and the usual target.
+- **`seeds/`** — every seed, for when a pre-v3 definition needs a form layer installed.
 
-`versions/vX.Y.Z.md` is a frozen snapshot of each released standard; `CHANGELOG.md` holds the per-version migration notes; `EIDOS.md` is the current standard and the usual target. A migration needs both endpoints. If a needed snapshot is missing, say so; never fabricate a version's contract.
+If a needed snapshot is missing, say so; never fabricate a version's contract.
 
 ## Procedure
 
@@ -32,20 +35,15 @@ These ship as committed copies inside this skill's own folder — `versions/`, `
    - **v2.x** — frontmatter has `created`/`modified` and often a per-doc `eidos_version`; body uses `## Behaviors & Acceptance Criteria` with `AC{n}` labels, merged `## Constraints & Decisions`; `status` is Title Case; **no form-layer directory**.
    - **v3.0–v4.0** — has a form-layer directory named **`.eidos/`** (`shapes/`, `Schema.md`, `Registry.md`); the version is in `Registry.md`; items carry no `eidos_version`. **v4.1** is identical but the directory is renamed **`_eidos/`** (the dot dropped so Obsidian shows it). **v4.2+** additionally renames the index file `Registry.md` → **`Framework.md`**; the `registry-owner` persona is `framework-owner`. **v4.2.1** settles the vocabulary: the `_eidos/` form layer is the *framework*, the product written with it is the *definition*. Prose only. **v4.3.0** adds a `- **Canvas:**` bullet to each collection in `Framework.md`; a definition without one still loads, and draws every collection as a plain card.
 
-3. **Diff the two snapshots.** Compare source and target and derive the net transformation across four concerns:
+3. **Diff the two snapshots.** Check `versions/MIGRATIONS.md` first — if a hop spanning your endpoints is written up, it has the shortcuts already. Then derive the net transformation across four concerns: **the form layer** (does the target keep one, and under what name), **properties** (fields added, removed, renamed, or re-valued, mapped onto the target Schema), **body shape** (sections renamed, merged, split, added, removed, and any labeling), and **structure** (root folder, collection layout, generated leaves).
 
-   - **The form layer** — whether the target keeps the form in a hidden directory (v3+) the source lacked, and what it's named: `.eidos/` in v3.0–v4.0, `_eidos/` from v4.1 (dot dropped so Obsidian shows it). Going to v3, the registry gains that directory with `shapes/`, `Schema.md`, and `Registry.md`; migrating a v3.0–v4.0 registry to v4.1+ also **renames `.eidos/` → `_eidos/`**.
-   - **Properties (frontmatter)** — fields added, removed, renamed, or with changed value sets. In v3 the contract is the Schema, so map the source's per-item fields onto the properties the target Schema declares (through 4.0 a flat `## Eidos Canonical` block in `.eidos/Schema.md`; from 4.1 a `## Schema` section inside `Registry.md`, with `### Eidos Core` plus `### Custom Properties`).
-   - **Body/shape** — sections renamed, merged, split, added, or removed; labeling conventions (`AC{n}`).
-   - **Structure/naming** — root folder name, collection layout and per-collection indexes (the top-level `Domains.md` was retired for a generated `Specs/index.md` in 4.0.0), file layout.
-
-   Because you diff the two endpoints, a field dropped and later reintroduced, or renamed twice, resolves to its correct net state automatically.
+   Diffing the endpoints means a field dropped and later reintroduced, or renamed twice, resolves to its correct net state automatically.
 
 4. **Write the migration plan.** A short, per-concern list of every transform, plus anything that needs human judgment (removed fields/sections that hold content, a custom shape that conflicts). Show it before touching files.
 
 5. **Apply, once the plan is agreed.** Order matters when the form layer is involved:
 
-   - **Install or update the form layer first.** If the target has a form dir and the registry has none, **ask which seed** (`seeds/` — software, book, research; software unless the definition is plainly something else) and install it (`shapes/` — including the `frame.*` flavors of the Frames collection — `personas/`, the index-and-contract file (`Registry.md` through 4.1, `Framework.md` from 4.2 — it carries the Schema in its `## Schema` section), `user.md`, and `.gitignore`, plus a root `README.md`) into the form dir — `Blueprint/_eidos/` for the current standard (`.eidos/` for a pre-4.1 target). If the definition already has a form dir, first **rename `.eidos/` → `_eidos/` when the target is 4.1+** (and rename its `Registry.md` → `Framework.md` when the target is 4.2+), then rewrite only the standard-managed core block to the target version (`## Eidos Canonical` in `.eidos/Schema.md` through 4.0; the `### Eidos Core` block inside the index file's `## Schema` from 4.1) and **leave the framework's custom properties untouched**; offer any new or changed canonical shapes additively, never overwriting a shape the owner has customized.
+   - **The form layer first.** If the target has one and the definition doesn't, **ask which seed** and install it whole into the form dir. If the definition already has one, rename the directory and its index file to the target's names, then rewrite **only** the standard-managed core block — leave the framework's custom properties untouched, and offer new canonical shapes additively rather than overwriting a customized one. The per-version names are in `versions/MIGRATIONS.md`.
    - **Migrate each item** (across every collection). Map frontmatter onto the target Schema's properties; drop removed fields _after_ surfacing any content they held; add newly-required fields as stubs the human fills (e.g. `date_created` where none can be derived). Restructure the body to the target flavor's shape, applying labeling; add new recommended sections only as clearly-flagged empty stubs — never invent their contents.
    - **Apply structural/naming changes** across the definition (e.g. `product/` → `Blueprint/`).
    - **Set the version.** Write the target version into the form dir's index file — `_eidos/Framework.md` for 4.2+, `_eidos/Registry.md` for 3.0–4.1 (creating it if new).
@@ -53,105 +51,3 @@ These ship as committed copies inside this skill's own folder — `versions/`, `
 6. **Validate.** Run the `eidos` validation pass against the **target** Schema and report remaining gaps as suggestions, not failures.
 
 7. **Report.** Summarize per file: what changed, what was carried over, and every place a human decision is still needed.
-
-## Worked example: 3.1.0 → 4.0.0
-
-A breaking move — the layout changes — but the per-item contract barely does. Diffing `versions/v3.1.0.md` against `versions/v4.0.0.md` yields (note: migrating straight to the current version instead folds the framing docs into the `Frames` collection — see the 4.0 → 4.1 example below — rather than into a `templates/` folder):
-
-- **Properties** — the canonical block gains one **optional** property, `flavor` (Text, no): which body flavor an item follows, absent meaning the collection's default. Rewrite `## Eidos Canonical` to the 4.0.0 seed and leave `## Custom Registry Properties` untouched. Nothing to backfill — absent already means default.
-- **Shapes, templates, flavors** — rename `.eidos/shapes/Spec.md` → `spec.full.md` (the Specs collection's default flavor) and offer to add `spec.micro.md` from the seed. Remove the `Domains.md` shape (the Domains doc is gone). **Move the top-level-doc shapes (`Architecture.md`, `Audience.md`, `Criteria.md`, `Market.md`) from `.eidos/shapes/` into a new `.eidos/templates/`** — shapes are now collection-only; top-level docs use templates. Spec sections are unchanged, so items need no body restructuring.
-- **`Domains.md` → `Specs/index.md`** (the breaking change). Move the top-level `Domains.md` into a generated `Specs/index.md` leaf inside the collection — the per-item listing, links now relative to `Specs/`. Lift the domain **descriptions** up into the Registry's Collections section (under Specs → Domains), since the leaf is purely generated. Regenerate the leaf with `eidos-index`.
-- **`Registry.md` gains a body.** Frontmatter unchanged but for the version bump to `4.0.0`. Add the body: a `## Top-Level` (a bullet per top-level doc — link + the owner's one-line description) and a `## Collections` declaring the default `Specs` collection with its flavors (`full` default, `micro` if added), its domain grouping (with the descriptions lifted from `Domains.md`), and a pointer to `Specs/index.md`.
-- **`README.md` start-here** — install the chosen seed's `README.md` → `<root>/README.md` and fill the product name; it is the visible front door into the Registry.
-- **Personas + the actor file** — install the seed's persona defaults (`personas/` → `.eidos/personas/`), its blank `user.md` → `.eidos/user.md`, and its `.gitignore` → `.eidos/.gitignore` (merge a `user.md` line into an existing `.eidos/.gitignore` rather than overwriting it). Then run `eidos-whoami` so each actor sets their persona and calibration.
-- **Specs** — untouched; bodies and frontmatter already conform, and `flavor` is optional, defaulting to `full`.
-
-The net per registry: add the optional `flavor`; rename the shape; relocate `Domains.md` → `Specs/index.md` (descriptions up to the Registry); add the Registry body, a root `README.md`, `.eidos/personas/`, and `.eidos/user.md` + `.eidos/.gitignore`. No per-item body edits. Set `eidos_version: 4.0.0` when done.
-
-## Worked example: 4.0.0 → 4.1.0
-
-A property-model rework, the framing docs promoted to a collection, and a directory rename. Diffing `versions/v4.0.0.md` against `EIDOS.md` (4.1.0) yields:
-
-- **Form-dir rename** — rename the form layer `.eidos/` → `_eidos/` (the dot dropped so Obsidian shows it and the owner can edit the Registry, shapes, and personas from the vault). Rename the directory; nothing inside it changes name. Every 4.0 registry takes this one structural step.
-- **Schema moves into `Registry.md` as a `## Schema` section** — there is no separate `Schema.md`. The old flat `## Eidos Canonical` block becomes `### Eidos Core` (`id`, `title`, `summary`, `flavor`, `owner`, `connects_to`) plus `### Custom Properties` (the registry's) — which carries the seed's shipped defaults (`status`, `date_created`, `date_modified`, `tags`, and, scoped to `Specs`, `domain`, `depends_on`, `type`) with an **Applies To** column, followed by any pre-existing custom rows (give each an Applies To of `all`). Delete the old `_eidos/Schema.md`.
-- **Property changes on every item:**
-  - **Rename** `created` → `date_created` and `modified` → `date_modified`.
-  - **Keep `type`, but move it** — it's no longer a core/required property, just a `Specs`-scoped custom default (a soft category label). Drop `type: frame` from the framing docs — their collection and flavor identify them.
-  - **Optionally add** `summary` (one line from Intent, for the index) and `connects_to` (canvas edges) — both optional, nothing to backfill.
-  - `owner` keeps its value but now means who owns the document (non-owners are warned before editing).
-- **Persona rename** — `_eidos/personas/product-owner.md` → `_eidos/personas/registry-owner.md` (the same response contract, generalized to true registry ownership).
-- **Templates → the Frames collection.** The `templates/` concept is retired: move `.eidos/templates/{Architecture,Audience,Criteria,Market}.md` → `_eidos/shapes/frame.{architecture,audience,criteria,market}.md` (they become the `Frames` collection's flavor shapes — strip the inline frontmatter, keep the body and its guidance). Delete the old `templates/`.
-- **Framing docs → collection items.** Move the registry's root `Architecture.md`, `Audience.md`, `Criteria.md`, `Market.md` into a new `Frames/` folder, and give each the collection frontmatter generated from the Schema (`id`, `flavor:` its kind, `owner`, `status`, `summary`, the two dates), preserving its prose. They are no longer top-level docs.
-- **Registry** — in `_eidos/Registry.md`, declare `Frames` **first** in `## Collections` (framing docs are the most primary), then `Specs`; give Frames its four `frame.*` flavors (flat, no domains). Remove the four framing docs from `## Top-Level`, leaving only the owner's own top-level docs (a Roadmap, a Vision, the Registry Map). Bump `eidos_version` to `4.1.0`. Regenerate each collection's `index.md` with `eidos-index`.
-
-The net per registry: rename `.eidos/` → `_eidos/`; merge `Schema.md` into `Registry.md`'s `## Schema` (Core + Custom, Applies To column); on every item rename the two date keys (and drop `type: frame` from frames); optionally add `summary`/`connects_to`; move `templates/*` → `shapes/frame.*`; move the four framing docs into a Frames-first `Frames/` collection; rename the `product-owner` persona to `registry-owner`; trim `## Top-Level` (README first). Set `eidos_version: 4.1.0` when done.
-
-## Worked example: 4.2.1 → 4.3.0
-
-Additive, and the per-definition work is one bullet per collection. 4.3.0 takes the seed's own vocabulary out of the standard and the generators: `EIDOS.md` no longer names Intent, Out of Scope, Acceptance Criteria, or Implementation Notes in its Rules (the shape files already documented all four), and `build-canvas.py` no longer treats a collection called `Frames` as full-file nodes or looks for a section called `## Intent`.
-
-- **Declare a `- **Canvas:**` bullet on every collection** in `_eidos/Framework.md`, under its `### ` heading beside **Leaf** and **Flavors**. It takes `file` (full-file nodes, for prose read whole), `card` (a text node embedding the whole item), or `card from ## Section` (a card embedding just that section). For a seed-derived definition the answers are `Frames` → `file` and `Specs` → `card from `## Intent``, which reproduce 4.2.x behavior exactly. For any collection the owner added, **ask** — the right answer depends on that shape, and there is no longer a name-based guess to fall back on.
-- **Regenerate the canvas** with `eidos-canvas` if the definition has one. An undeclared collection now draws as a plain whole-item card, so a definition that skips the declarations gets a duller map, never a broken one.
-- **Nothing else moves.** No item frontmatter, no body, no shape, no persona, no folder or file names. The removed Rules were duplicates of guidance already living in `_eidos/shapes/`, so a definition that customized its shapes keeps exactly what it wrote.
-- **`owner` leaves the core Schema.** Delete its row from `### Eidos Core`. It was never read by any tool, and the actor file (`_eidos/user.md`) already says who is at the keyboard. **Don't strip `owner:` from items** — if a definition uses it, add it back as a row in `### Custom Properties` (Text, applies-to `all`) and every item keeps validating. If nobody uses it, leave the stray keys or clear them; either is fine.
-- **Version.** Set `eidos_version: 4.3.0` in `_eidos/Framework.md`.
-
-The net per definition: one `Canvas` bullet per collection, then set `eidos_version: 4.3.0`. Nothing else — the seeds and examples this release adds are repo-side, and where a framework was originally copied from has never been recorded in a definition.
-
-## Worked example: 4.2.0 → 4.2.1
-
-The cheapest migration in the standard's history: **set `eidos_version: 4.2.1` in `_eidos/Framework.md`, and stop.** Nothing else in a definition changes.
-
-4.2.1 fixes only what the two central words mean. Through 4.2.0 the standard called a whole `Blueprint/` a "framework"; from 4.2.1 the **framework** is the `_eidos/` form layer alone — collections, shapes, flavors, personas, naming, Schema — and the product written with it is the **definition**. One framework, many definitions.
-
-- **No file or folder renames.** `_eidos/`, `Framework.md`, the shapes, the personas, and every collection folder keep their names. `Framework.md` names the framework more accurately now than it did before.
-- **No property changes.** `### Eidos Core` is byte-identical to 4.2.0; only the version note above it moves to 4.2.1. Custom properties are untouched.
-- **No persona rename.** `framework-owner` keeps its filename and its `# Framework Owner` heading — the role still holds intent, scope, and decisions. Any `user.md` naming it stays valid.
-- **Optional prose pass.** If a definition's own `README.md` or top-level docs describe themselves as "this framework," reword them to "this definition." Cosmetic, and never required.
-
-The net per definition: one line. Set `eidos_version: 4.2.1`.
-
-## Worked example: 4.1.0 → 4.2.0
-
-A pure vocabulary-and-file rename — the per-product artifact becomes a **Framework**, not a "registry." No item frontmatter or body changes; the form layer's contents are untouched but for names. Diffing `versions/v4.1.0.md` against `EIDOS.md` (4.2.0) yields:
-
-- **`_eidos/Registry.md` → `_eidos/Framework.md`.** Rename the index-and-contract file. Its body — `## Top-Level`, `## Collections`, `## Schema` (`### Eidos Core` + `### Custom Properties`) — is unchanged. Update the Top-Level regeneration marker from `<!-- eidos-registry: top-level index (regenerated) -->` to `<!-- eidos-configure: top-level index (regenerated) -->`.
-- **`_eidos/personas/registry-owner.md` → `_eidos/personas/framework-owner.md`.** Same response contract; rename the file and its `# Registry Owner` heading → `# Framework Owner`, and fix the `[Registry Owner](registry-owner.md)` link in `_eidos/personas/README.md`. Any `user.md` naming the old persona is personal and gitignored — leave it, or point the actor at `eidos-whoami`.
-- **Canvas.** If the definition has a generated "Registry Map" top-level doc, rename it "Framework Map" (the `.canvas` file and its `## Top-Level` bullet). `eidos-canvas` writes `Framework Map.canvas` from here on.
-- **Version.** Set `eidos_version: 4.2.0` in `_eidos/Framework.md`.
-
-Nothing else moves: the shapes, the Schema rows, every item's frontmatter and body, and the `_eidos/` directory name are identical to 4.1.0. Custom personas and custom properties carry across untouched. (The `eidos-registry`/`eidos-schema` → `eidos-configure` skill merge is a tooling change — nothing in a definition references a skill by name, so there's nothing per-definition to migrate for it.)
-
-The net per definition: rename `Registry.md` → `Framework.md` (and its Top-Level marker), rename the `registry-owner` persona → `framework-owner`, optionally rename the Registry Map canvas → Framework Map. Set `eidos_version: 4.2.0`.
-
-## Worked example: 3.0.0 → 3.1.0
-
-A small, additive move — nothing in a 3.0.0 registry breaks. Diffing `versions/v3.0.0.md` against `versions/v3.1.0.md` yields:
-
-- **Form layer** — the shapes and the canonical property set are unchanged; the only edit to the `## Eidos Canonical` block is the `domain` property's wording, now "matching its folder … in the registry's naming convention." Rewrite the canonical block to the 3.1.0 seed and leave `## Custom Registry Properties` untouched.
-- **`Registry.md` becomes YAML frontmatter.** The 3.0.0 bold-key lines move into frontmatter: `**Eidos Version:** 3.0.0` becomes an `eidos_version` key (bumped to `3.1.0`), and a `naming` key is added.
-- **Naming** — set `naming: Title Case`: it is the prior behavior, so this just records what the registry already does. Switch to `TitleCase` or `kebab-case` only if the owner wants space-free names — which then means renaming the files, a separate and deliberate pass.
-- **Top-level docs** — no migration. The registry may now add its own free-form top-level docs (a Roadmap, a Vision) via `eidos-format`, but nothing existing changes.
-
-The net is the small `Registry.md` conversion plus the one-line Schema reword; items and top-level docs are otherwise untouched.
-
-## Worked example: v2.x → 3.0.0
-
-This is the move that introduces the form layer. Diffing `versions/v2.1.0.md` against `EIDOS.md` (3.0.0) yields:
-
-- **Form layer** — install `Blueprint/.eidos/` from the canonical seed: `shapes/` (the body shapes, one per kind of doc), `Schema.md` (the canonical property block), and `Registry.md`. The body section set is unchanged from v2.1, so the Spec shape carries the same sections — they simply now live in `.eidos/shapes/Spec.md` instead of a standalone template.
-- **Properties** — the canonical property set is otherwise the same as v2.1, with one removal: **`eidos_version` comes off every item and top-level doc** — the version is now a registry fact in `.eidos/Registry.md`. Frontmatter is otherwise unchanged.
-- **Body** — no restructuring; v2.1 and 3.0.0 share the same baseline sections and `AC{n}` labeling.
-- **Version** — write `**Eidos Version:** 3.0.0` into `.eidos/Registry.md`.
-
-The net of v2 → v3 is small per file (drop `eidos_version`) but adds the `.eidos/` form layer once for the whole registry. Preserve any custom properties or reshaped sections — but a clean v2 registry won't have any yet.
-
-## Worked example: v1.0.0 → 2.0.0
-
-Diffing `versions/v1.0.0.md` against `versions/v2.0.0.md` yields:
-
-- **Frontmatter** — remove `last_validated`, `implements`, `serves_job`, `activity`, `supersedes`; add `created` and `modified` (`YYYY-MM-DD`); remap `status` (`proposed`/`accepted` → `Intake`, `in-progress` → `In Progress`, `shipped` → `Done`, `deprecated` → `Deprecated`).
-- **Body** — `## Behavior` → `## Behaviors & Acceptance Criteria`, label criteria `AC{n}` under `###` requirement sub-headings; merge `## Constraints` + `## Decisions` → `## Constraints & Decisions`; add `## Dependencies` and `## Testing` stubs; add an optional `### Implementation Notes` under Intent.
-- **Structure** — root `product/` → `Blueprint/`; `Domains.md` bullet list → `##` sub-headings per domain.
-
-Carry `last_validated`'s date into `modified` (and `created` if no better date exists), and surface any `supersedes`/`implements` targets for the human to record in prose `Dependencies` before dropping the fields. To go straight from v1 to v3, diff those two snapshots and combine this with the form-layer install above.

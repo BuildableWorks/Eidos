@@ -8,20 +8,20 @@ description: >-
 
 Produce a **visual map** of a definition that opens in Obsidian's Canvas view — a [JSON Canvas 1.0](https://jsoncanvas.org) `.canvas` file. It is navigation, like an index but spatial: nothing is authored, everything is derived from the items already in the definition.
 
-- **A `card` collection → text nodes that embed the item's declared section** (the software seed's `Specs` declares `## Intent`; the screenplay example's `Scenes` declares `## Logline`) — a wikilink title over an Obsidian embed (`**[[Scenes/Act I/Cold Open|Cold Open]]**` then `![[Scenes/Act I/Cold Open#Logline]]`), so the detent shows on the card and the title opens the note. Each collection gets its own color (its group box and its cards); you propose the schema up front — see the creation flow.
-- **A `file` collection → full-file nodes** (the whole document), in its own group (the seed's `Frames` declares this). Loose prose is context you want to read whole, not a single section, so it's mapped as a file node rather than an Intent embed.
-- **Directories → nested group nodes.** A collection is a group; each sub-directory (a grouped collection) is a group nested inside it; a directory nested under that becomes another nested group. Groups wrap their cards spatially.
+- **A `card` collection → text nodes that embed the item's declared section** (the software seed's `Specs` declares `## Intent`; the screenplay example's `Scenes` declares `## Logline`) — a wikilink title over an Obsidian embed (`**[[Scenes/Act I/Cold Open|Cold Open]]**` then `![[Scenes/Act I/Cold Open#Logline]]`), so the section shows on the card and the title opens the note. Each collection gets its own color, proposed up front.
+- **A `file` collection → full-file nodes** (the whole document), in its own group — every seed's framing collection declares this. Loose prose is context you read whole, not one section.
+- **Directories → nested group nodes.** A collection is a group; each sub-directory nests inside it. Groups wrap their cards spatially.
 - **`connects_to` → directed edges** (this → target), in the default edge color — the primary map of how pieces relate. A connection to something not on the canvas is flagged, not drawn.
 - **`depends_on` → edges only with `--include-dependencies`**, drawn in a distinct color (purple by default) so implementation dependencies read differently from the intentional `connects_to` map.
-- **Top-level documents are not mapped** — they frame the product; the canvas maps the collections. The generated `.canvas` is itself a top-level document (see the last step).
+- **Top-level documents are not mapped** — the canvas maps collections. The generated `.canvas` is itself a top-level document (see the last step).
 
 ## The creation flow
 
-Creating a canvas is a short conversation, not a one-shot — pick what goes on it, agree the colors, then generate:
+A short conversation, not a one-shot — pick what goes on it, agree the colors, then generate:
 
 1. **Read the actor** (`_eidos/user.md`) and list what's available — `python3 <skill>/build-canvas.py <definition-root> --list` prints the declared collections (and notes that top-level docs aren't mapped).
-2. **Ask what to map** with `AskUserQuestion` — offer the declared collections (multi-select), default to all. A canvas can be the **whole definition** or a focused slice (one collection, or a few). `Frames` is a collection like any other; include or omit it.
-3. **Propose a color schema.** Each collection gets its own color. Look at the definition — its collections, and any soft label its items carry — and propose a sensible mapping of one Obsidian preset per collection (1 red, 2 orange, 3 yellow, 4 green, 5 cyan, 6 purple); show it to the owner ("Frames = purple, Scenes = green — look good?") and adjust to taste. **Skip this when a canvas already exists** at the output path: regenerating reuses its colors, so the owner's earlier choice sticks — don't re-ask.
+2. **Ask what to map** with `AskUserQuestion` — the declared collections, multi-select, defaulting to all. A canvas can be the whole definition or a focused slice; the framing collection is one like any other, include or omit.
+3. **Propose a color schema** — one Obsidian preset per collection (1 red, 2 orange, 3 yellow, 4 green, 5 cyan, 6 purple). Show it ("Frames = purple, Scenes = green — look good?") and adjust. **Skip this when a canvas already exists** at the output path: regenerating reuses its colors, so the owner's earlier choice sticks.
 4. **Generate** — run the script with the chosen scope and `--color NAME:N` per collection.
 
 ## Run the script when you can
@@ -39,14 +39,14 @@ python3 <skill>/build-canvas.py <definition-root> --collection <Collection> --co
 
 - `<definition-root>` is the folder that contains `_eidos/` (often the definition root, e.g. `Blueprint/`).
 - With **no** `--collection` flags it maps every declared collection; with flags it maps exactly what's named.
-- `--color NAME:N` sets a collection's color (Obsidian preset `1`–`6`); pass one per collection with the schema you agreed in step 3. Without it, collections fall back to a distinct-per-collection palette — but a canvas that already exists keeps its colors, so a regenerate is consistent. The script prints the final `colors:` mapping it used.
+- `--color NAME:N` sets a collection's color (preset `1`–`6`), one per collection, from the schema you agreed. Without it they fall back to a distinct-per-collection palette; an existing canvas keeps its colors, so a regenerate stays consistent. The script prints the mapping it used.
 - `--include-dependencies` adds `depends_on` edges; `--dependency-color N` sets their Obsidian preset color (default `6` = purple). `connects_to` edges always use the default edge color.
 - `--vault` sets the root the embed/file paths are relative to (default: the definition root — an Eidos definition is plausibly the vault). `--out` sets the output path (default: `<vault>/Framework Map.canvas`).
 - It prints any **unresolved `connects_to`/`depends_on`** to stderr — a link that isn't an item on the canvas (an external id, or an item in a collection you didn't include). Safe to ignore, or add the missing collection and regenerate.
 
 ## Register the map as a top-level document
 
-The generated `.canvas` is a **top-level document** of the definition — the spatial view of the whole product. After writing it, add it to `_eidos/Framework.md` under `## Top-Level` (a link with a one-line description), the same as any top-level doc — the script prints a ready-made bullet. `eidos-configure` keeps that section current.
+The generated `.canvas` is a **top-level document** — the spatial view of the whole. After writing it, add it to `_eidos/Framework.md` under `## Top-Level`; the script prints a ready-made bullet. `eidos-configure` keeps that section current.
 
 ## On a sandboxed host
 

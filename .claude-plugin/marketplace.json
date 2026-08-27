@@ -5,7 +5,7 @@
     {
       "name": "eidos",
       "source": "./",
-      "version": "4.3.0",
+      "version": "4.3.1",
       "description": "Eidos — a human-first standard for defining the essence of a thing: a product, a body of work, anything you set out to make. One markdown file is the complete source of truth for one unit of it (its state and intent, not the work), independent of time or status, kept in version control beside the code it describes."
     }
   ]

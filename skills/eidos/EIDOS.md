@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 4.3.0
+**Version:** 4.3.1
 
 A markdown standard for defining the essence of a thing — a product, a body of work, anything you set out to make. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished.
 
@@ -74,7 +74,7 @@ The one file describing the form rather than any single item: frontmatter for th
 
 ```markdown
 ---
-eidos_version: 4.3.0
+eidos_version: 4.3.1
 naming: Title Case
 ---
 
@@ -251,7 +251,7 @@ The load-bearing conventions.
 
 Semantic Versioning: major for breaking changes, minor for backward-compatible additions, patch for clarifications.
 
-This file always holds the current version — right now, **4.3.0**. At tag time it is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. A framework records the version it targets in its `_eidos/Framework.md`; `eidos-migrate` reads and bumps it there. History and migration notes are in `CHANGELOG.md`. Tools may reject an unsupported version.
+This file always holds the current version — right now, **4.3.1**. At tag time it is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. A framework records the version it targets in its `_eidos/Framework.md`; `eidos-migrate` reads and bumps it there. History and migration notes are in `CHANGELOG.md`. Tools may reject an unsupported version.
 
 ## For an agent
 
