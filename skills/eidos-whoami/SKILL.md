@@ -1,7 +1,7 @@
 ---
 name: eidos-whoami
 description: >-
-  Set or update who you are in an Eidos definition — your persona and calibration — written to your personal `_eidos/user.md`. Use when someone wants to "set my user", "tell Eidos who I am", "I'm the designer / a developer / the framework owner", "change my role", "set up my persona", "the AI is talking over my head" or "it's explaining things I already know", or when `_eidos/user.md` is blank or absent. It offers the framework's installed personas (`_eidos/personas/`), then calibrates the chosen one on three axes — your role for this product, your experience with the scope, and your technical capacity — and writes `_eidos/user.md`. That file is personal and gitignored; the agent reads it before acting to decide how to respond (vocabulary, depth, what to surface, who decides). Companion to `eidos-install`, which scaffolds the definition; this sets the actor.
+  Set or update who you are in an Eidos definition — your persona and calibration — written to your personal `_eidos/user.md`. Use when someone wants to "set my user", "tell Eidos who I am", "I'm the designer / a developer / the framework owner", "change my role", "set up my persona", "the AI is talking over my head" or "it's explaining things I already know", or when `_eidos/user.md` is blank or absent. It offers whatever personas the framework installed (`_eidos/personas/`), then calibrates the chosen one on three axes — your role for this product, your experience with the scope, and your technical capacity — and writes `_eidos/user.md`. That file is personal and gitignored; the agent reads it before acting to decide how to respond (vocabulary, depth, what to surface, who decides). Companion to `eidos-install`, which scaffolds the definition; this sets the actor.
 ---
 
 # Eidos Whoami
@@ -12,7 +12,7 @@ Set the **actor** — who is in the seat — so the agent knows how to respond t
 
 ## Why this matters
 
-Eidos relies on the actor as a core input to how it communicates. A persona is a response contract: it sets vocabulary and technical depth, what to surface vs. fold away, and who holds which decisions. A designer is told to keep db relationships and indexes out of the reply and talk in experience terms; a developer gets full technical depth; a Framework Owner is brought the decisions to make. Without an actor, the agent defaults to full, framework-owner-style facilitation — workable, but generic. Setting it makes every later session fit you.
+Eidos relies on the actor as a core input to how it communicates. A persona is a response contract: it sets vocabulary and technical depth, what to surface vs. fold away, and who holds which decisions. One role is told to keep mechanism out of the reply and talk in the terms of the thing itself; another gets full technical depth; the Framework Owner is brought the decisions to make. Without an actor, the agent defaults to full, framework-owner-style facilitation — workable, but generic. Setting it makes every later session fit you.
 
 ## How you work
 
@@ -22,9 +22,9 @@ A short, guided interview, then a small file write. You do **not** invent the pe
 
 1. **Find the personas.** Read `_eidos/personas/` from the definition root (found by its `_eidos/` marker). If there is no `_eidos/`, no framework is installed — offer `eidos-install`. If `_eidos/` exists but has no `personas/` (an older framework), offer to install them (from the standard's `personas/`), or point to `eidos-install`/`eidos-migrate`.
 2. **Read the current `_eidos/user.md`** if it exists, so you update rather than overwrite blind.
-3. **Pick the persona.** With `AskUserQuestion`, offer the installed personas — Framework Owner, Developer, Stakeholder, Designer, Project Manager, and any the framework added — each described from its persona file. Let the actor pick one, or describe a custom role.
+3. **Pick the persona.** With `AskUserQuestion`, offer the personas actually installed in `_eidos/personas/` — **list the folder, don't assume a cast.** Every framework carries a Framework Owner; the rest differ by seed (a software framework has a Developer and a Designer, a book framework an Editor and a Reader). Describe each from its own file. Let the actor pick one, or describe a custom role.
 4. **Calibrate it** on three axes (ask, don't assume):
-   - **Role for this product** — what they own here, in their words (e.g. "lead designer; I own the experience, not the stack").
+   - **Role for this product** — what they own here, in their words (e.g. "I own the shape of it, not the execution").
    - **Experience with the scope** — new to it, familiar, or deep. Sets how much orientation the agent gives.
    - **Technical capacity** — non-technical, some, or fluent. Sets how much mechanism and jargon the agent uses, on top of the persona's default.
 5. **Write `_eidos/user.md`.** The chosen persona under `## You are: <Persona>` (a link to its persona file in `_eidos/personas/`), then a `## Calibration` block with the three axes in the actor's words. Don't fill an axis they declined — leave it for later.
@@ -43,13 +43,13 @@ A short, guided interview, then a small file write. You do **not** invent the pe
 
 Personal and per-actor — gitignored, never shared. The agent reads it before acting.
 
-## You are: Designer
+## You are: <Role>
 
-Persona: [_eidos/personas/designer.md](personas/designer.md). The agent talks to me in experience terms.
+Persona: [_eidos/personas/<role>.md](personas/<role>.md). One line on how you want to be helped.
 
 ## Calibration
 
-- **Role for this product:** Lead designer; I own the experience, not the stack.
+- **Role for this definition:** <what you own here, in your own words>.
 - **Experience with the scope:** Deep — a year on this product. (Skip the basics.)
 - **Technical capacity:** Low — explain in product/UX terms, not db/infra.
 ```

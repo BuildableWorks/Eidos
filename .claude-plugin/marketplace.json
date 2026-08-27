@@ -5,8 +5,8 @@
     {
       "name": "eidos",
       "source": "./",
-      "version": "4.2.1",
-      "description": "A human-first methodology for defining what a product is, not what work to do. One markdown file completely defines one unit of the product, true whether or not it's been built, kept in version control beside the code."
+      "version": "4.3.0",
+      "description": "Eidos — a human-first standard for defining the essence of a thing: a product, a body of work, anything you set out to make. One markdown file is the complete source of truth for one unit of it (its state and intent, not the work), independent of time or status, kept in version control beside the code it describes."
     }
   ]
 }

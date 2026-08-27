@@ -6,6 +6,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [4.3.0] - 2026-08-26
+
+The de-biasing release. Eidos has always claimed that a collection's name and a shape's sections are the framework's, not the standard's — that a film team could run `Scenes` grouped by `Act` and never write a spec. `EIDOS.md` then taught from the software seed on 67 of its lines, the canvas generator special-cased a collection named `Frames`, and the skills told an agent to lead with Intent and flag a missing Out of Scope whatever it was looking at. An agent that reads a software vocabulary in the standard reaches for it in a framework that has none. This release makes the claim true, and ships two more seeds and a second worked example to prove it.
+
+### Added
+
+- **`seeds/` — three starting frameworks, not one.** `software` (Frames · Specs by domain) is the default. `book` (Frames of premise/reader/voice/market · Chapters by part) and `research` (Frames of question/prior work/method/ethics · Investigations by strand) are complete frameworks in their own right, each with its own shapes, personas, and Schema. `eidos-install` asks which one, reading `seeds/` at runtime rather than a hardcoded list.
+- **A second worked example.** [`examples/Screenplay/`](examples/Screenplay) defines *The Salt Road*, a short film — `Scenes` grouped by `act`, a `pov` property, a canvas drawn from `## Logline`, nothing called a spec. It began as the `book` seed and was reshaped, which is what the standard has always claimed you can do and never demonstrated.
+- **`- **Canvas:**` on a collection's Framework declaration.** How a collection draws is now the framework's call, beside its Leaf and Flavors: `file`, `card`, or `card from ## Section`. `eidos-configure` asks for it when adding a collection and treats it as a real decision.
+- **Rule 14, "A shape documents its own conventions."** Section names, their order and meaning, and any labeling a shape asks for live in the shape file. The standard governs collections, shapes, flavors, and properties; it never governs a section.
+- **`owner` removed from the core Schema.** No tool ever read it, and `_eidos/user.md` already establishes who is at the keyboard, so it was a field that had to be filled and never paid for itself. A definition that wants it re-adds it as a custom property and keeps every item valid.
+- **Rule 22, "Every framework declares a framing collection."** The one collection every framework must declare, because a framework needs framing. Its name, flavors, and count are the framework's own — required as a declaration, never as a gate, so a declared-but-unwritten frame is a gap to surface rather than a failure.
+
+### Changed
+
+- **`EIDOS.md` names no collection, no shape, and no section.** Every worked example in it is now a placeholder (`<Collection>`, `<kind>.<flavor>.md`, `<Group>`), and the concrete vocabulary lives in `seeds/` and `examples/` where a reader goes looking for it deliberately. The seed's custom-property table is gone from the standard: Eidos defines no custom properties, and says so.
+- **`build-canvas.py` knows no collection by name.** The `FRAMES_COLLECTION = "frames"` constant and the hardcoded `## Intent` embed are gone; the script reads each collection's declaration. An undeclared collection draws as a plain whole-item card, since the generator cannot guess which of a shape's sections is its summary.
+- **Six Rules generalized or retired.** `domain` becomes "a collection's grouping is the collection's own"; Intent becomes "a shape names its own stable part"; Out of Scope becomes "non-goals carry the most weight"; the `AC{n}:` and Implementation Notes rules retire into the shape file and Rule 15. The Rules go 24 → 24 with different contents, and renumber from 10.
+- **Skill procedures read the shape instead of assuming it.** `eidos` authors from the flavor shape's own opening and non-goals sections; validation flags "an absent non-goals section" against that shape; the actor is read from the persona file in front of you rather than inferred from its filename. `eidos-format` and `eidos-canvas` follow.
+- **`seed/` → `seeds/software/`, `example/` → `examples/`.** `scripts/sync-skills.sh` syncs all of `seeds/` into `eidos-install` and `eidos-migrate`, and force-tracks every seed's `user.md` past its `.gitignore`.
+
+### Unchanged
+
+- **No item, folder, or property changes in a definition.** `### Eidos Core` is identical to 4.2.1 but for its version note. The retired Rules were duplicates of guidance already written in each shape file, so no guidance is lost and a customized shape keeps exactly what it says. Where a framework was originally copied from has never been recorded in a definition and still isn't.
+
+**Migration from 4.2.1:** run `eidos-migrate` — add a `- **Canvas:**` bullet to each collection in `_eidos/Framework.md` (`Frames` → `file`, `Specs` → `card from ## Intent` reproduces 4.2.x behavior exactly; for a collection you added, decide from its shape), then set `eidos_version: 4.3.0`. Regenerate the canvas if you keep one. No items change.
+
 ## [4.2.1] - 2026-08-26
 
 A vocabulary fix, and nothing else. 4.2.0 renamed the per-product artifact from a "registry" to a **Framework**, and in doing so overloaded the word: it named both the portable form layer *and* the product written in it. 4.2.1 splits them.

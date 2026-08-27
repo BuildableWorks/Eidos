@@ -18,12 +18,12 @@ This skill scaffolds collections and flavors, grows and reshapes the custom Sche
 
 A collection, flavor, or property nobody thought through is like an item nobody thought through — it reads as meaningful while no one actually knows what it holds. So you do **not** invent collections, flavors, or properties, or guess their shape. Facilitate; the owner decides.
 
-- **For a collection:** its **name** (the folder, in the framework's naming convention), a one-line **description**, how it **groups** its items (one level of sub-folders, or flat), and at least one **flavor** with a **default**.
+- **For a collection:** its **name** (the folder, in the framework's naming convention), a one-line **description**, how it **groups** its items (one level of sub-folders, or flat), at least one **flavor** with a **default**, and how it **draws** on the canvas (below).
 - **For a flavor:** its **name** (lowercase, e.g. `full`, `micro`, `api`), a one-line **description**, and its **shape** — the sections the body carries.
 - **For a property:** all four —
-  - **name** — the frontmatter key. Lowercase, words joined by underscores, matching the core style (`owner`, `depends_on`). Short and stable.
+  - **name** — the frontmatter key. Lowercase, words joined by underscores, matching the core style (`summary`, `connects_to`). Short and stable.
   - **type** — from the set Obsidian uses: **Text, List, Number, Checkbox, Date, Date & time**. If the owner wants something richer than one of those — a structured object, an enum with behavior — that almost belongs in the body (a shape), not a property. Say so.
-  - **applies to** — which collections carry it: `all`, or a list (`Specs`, `Frames`). The property lands only on items in those collections — this is how you avoid a field that makes no sense on half the definition. Absence where it applies is a soft gap the validator notes, never refuses.
+  - **applies to** — which collections carry it: `all`, or a list of collection names. The property lands only on items in those collections — this is how you avoid a field that makes no sense on half the definition. Absence where it applies is a soft gap the validator notes, never refuses.
   - **meaning** — one line: what it holds and why. This is what stops the property from rotting into a mystery field.
 
 If the owner offers only a name, ask for the rest. Don't fill them in yourself.
@@ -39,7 +39,9 @@ If the owner offers only a name, ask for the rest. Don't fill them in yourself.
 
 ## Adding a collection
 
-1. **Decide** the name, description, grouping (sub-folders or flat), and at least a default flavor with the owner.
+1. **Decide** the name, description, grouping (sub-folders or flat), at least a default flavor, and the canvas style with the owner.
+
+   The **canvas style** is a real question, not a formality — ask it rather than defaulting. Items people read *whole* (loose prose: framing docs, decisions, personas) want `file`. Items people scan by their headline want `card from ## <Section>`, naming whichever section of the shape carries the one-paragraph summary. Pick the section off the shape you just agreed; don't assume a name. A collection that declares nothing gets a plain card embedding the whole item, which is rarely what anyone wants.
 2. **Create the folder** under the definition root, named in the framework's naming convention (read `naming` from `Framework.md`). Keep its organization to **one level of sub-folders** — deeper is discouraged.
 3. **Create the default flavor's shape** in `_eidos/shapes/` as `<kind>.<flavor>.md` (e.g. `decision.full.md`), body-only, with the sections the owner wants and italic guidance prompts. Pattern it on the existing shapes.
 4. **Register it** under `## Collections` in `Framework.md`: a `###` heading (the collection name), the description, then plain bullets — a **Leaf** pointer to its `index.md`, the **Flavors** (one bullet each, the default marked), and the grouping (its sub-folders as bullets, each with a short description; or "ungrouped" if flat). Use bullets, never separators like `·` — someone adding a flavor should be able to copy a line:
@@ -52,9 +54,12 @@ If the owner offers only a name, ask for the rest. Don't fill them in yourself.
    - **Leaf:** [Decisions/index.md](../Decisions/index.md)
    - **Flavors:**
      - [decision.full.md](shapes/decision.full.md) — context, decision, consequences (default).
+   - **Canvas:** card from `## Decision`
    - Ungrouped — a flat, dated list.
    ```
-5. **`domain` is the Specs grouping property.** It's a custom property scoped (applies-to) to `Specs`; other collections group by their sub-folders, recorded in the Framework, not by a property. If the owner wants `domain` on another collection, or off Specs, that's a Schema change — handle it as a property change below; don't touch core properties.
+
+   The **Canvas** bullet takes `file`, `card`, or `card from ## <Section>`. It is the only thing telling `eidos-canvas` how this collection draws — the generator reads the declaration and knows no collection by name, so an undeclared collection falls back to a plain whole-item card.
+5. **A grouping property is optional and the collection's own.** The software seed scopes `domain` (applies-to) to `Specs`; other collections group by their sub-folders, recorded in the Framework, not by a property. If the owner wants a grouping property on a new collection, or `domain` somewhere else, that's a Schema change — handle it as a property change below; don't touch core properties.
 6. **Build the leaf and hand off.** Run `eidos-index` to create the new collection's `index.md`, and point the owner to `eidos` to author the first item. Report the folder created, the shape file added, and the Collections entry written.
 
 ## Adding a flavor to a collection
@@ -94,7 +99,7 @@ If the owner offers only a name, ask for the rest. Don't fill them in yourself.
 3. Remove the key from every item's frontmatter, once the owner has agreed to let the values go.
 4. Report the items touched and anything carried over.
 
-The seed ships a few custom defaults that are the framework's to keep, scope, or drop: `status`, the two dates, and `tags` (applies-to: all), plus `domain`, `depends_on`, and `type` (applies-to: `Specs`). Reshape or retire any of them the same way — they live in `### Custom Properties`, not `### Eidos Core`.
+Each seed ships a few custom defaults that are the framework's to keep, scope, or drop — a lifecycle, the two dates, tags, a grouping, a dependency list. Read the framework's own `### Custom Properties` rather than assuming a set, and reshape or retire any of them the same way — they live in `### Custom Properties`, not `### Eidos Core`.
 
 ## Refreshing the Top-Level index
 

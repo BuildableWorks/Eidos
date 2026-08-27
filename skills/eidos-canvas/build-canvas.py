@@ -4,9 +4,13 @@ build-canvas.py — generate an Obsidian .canvas (JSON Canvas 1.0) from an Eidos
 
 A visual map of the definition, opened in Obsidian's Canvas:
 
-  Specs (and spec-like collections)  -> text nodes embedding each item's `## Intent`
-  the Frames collection               -> full-file nodes (the whole framing doc)
-  directories (Specs by domain)       -> group nodes, nested one per directory level
+  a collection declaring `Canvas: card`   -> text nodes embedding each item
+  a collection declaring `Canvas: file`   -> full-file nodes (the whole document)
+  directories (a collection's grouping)   -> group nodes, nested one per directory level
+
+How a collection draws is the framework's call, declared in its `## Collections` entry in
+`_eidos/Framework.md` as a `- **Canvas:**` bullet — `file`, `card`, or `card from ## Section`
+to embed just that section. No collection name means anything to this script.
   `connects_to`                       -> directed edges (this -> target), the primary map
   `depends_on`  (with --include-dependencies) -> directed edges in a distinct color (purple)
 
@@ -53,9 +57,6 @@ GROUP_PAD = 40      # inner padding inside a group box
 GROUP_TOP = 70      # extra top room for the group label
 GROUP_GAP = 60      # gap between stacked siblings (item grid / sub-groups / collections)
 MAX_COLS = 4
-
-# the canonical collection whose items are framing docs, drawn as full files
-FRAMES_COLLECTION = "frames"
 
 # Obsidian canvas preset colors (1 red, 2 orange, 3 yellow, 4 green, 5 cyan, 6 purple).
 # Each collection gets a distinct color. The eidos-canvas skill proposes a schema from the definition,
@@ -127,7 +128,26 @@ def link_target(entry):
 
 
 # ---- framework parsing -----------------------------------------------------
+# A collection's canvas style, declared by the framework. Absent means a plain card
+# embedding the whole item — the neutral default, since the script knows no collection
+# by name and cannot guess which section of a shape is the summary one.
+DEFAULT_CANVAS = {"node": "card", "section": None}
+
+
+def parse_canvas(block):
+    """Read a collection's `- **Canvas:**` bullet: `file`, `card`, or `card from ## Section`."""
+    m = re.search(r"^\s*-\s*\*\*Canvas:\*\*\s*(.+?)\s*$", block, re.MULTILINE)
+    if not m:
+        return dict(DEFAULT_CANVAS)
+    value = m.group(1).strip().strip("`")
+    if re.match(r"^file\b", value, re.I):
+        return {"node": "file", "section": None}
+    sec = re.search(r"\bfrom\s+`?#*\s*(.+?)`?\s*$", value, re.I)
+    return {"node": "card", "section": sec.group(1).strip() if sec else None}
+
+
 def declared_collections(framework_md):
+    """Ordered [(name, canvas)] from the `## Collections` section of Framework.md."""
     text = framework_md.read_text(encoding="utf-8")
     m = re.search(r"^##\s+Collections\s*$", text, re.MULTILINE)
     if not m:
@@ -136,7 +156,12 @@ def declared_collections(framework_md):
     nxt = re.search(r"^##\s+\S", rest, re.MULTILINE)
     if nxt:
         rest = rest[:nxt.start()]
-    return [h.strip() for h in re.findall(r"^###\s+(.+?)\s*$", rest, re.MULTILINE)]
+    heads = list(re.finditer(r"^###\s+(.+?)\s*$", rest, re.MULTILINE))
+    out = []
+    for i, h in enumerate(heads):
+        end = heads[i + 1].start() if i + 1 < len(heads) else len(rest)
+        out.append((h.group(1).strip(), parse_canvas(rest[h.end():end])))
+    return out
 
 
 # ---- items ----------------------------------------------------------------
@@ -158,7 +183,7 @@ def item_files(folder):
     )
 
 
-def read_item(path, vault_root):
+def read_item(path, vault_root, section=None):
     text = path.read_text(encoding="utf-8")
     fm = read_frontmatter(text)
     title = fm.get("title") or path.stem
@@ -169,15 +194,19 @@ def read_item(path, vault_root):
         "depends_on": fm["depends_on"],
         "abs": path.resolve(),
         "vault": rel_forward(path, vault_root),
-        "has_intent": bool(re.search(r"^##\s+Intent\s*$", text, re.M)),
+        "section": section,
+        "has_section": bool(
+            section and re.search(r"^#{1,6}\s+%s\s*$" % re.escape(section), text, re.M)
+        ),
     }
 
 
 def item_text(it):
-    """Text-node body: a wikilink title over an embed of the item's Intent (whole note if none)."""
+    """Text-node body: a wikilink title over an embed of the collection's declared
+    section (the whole note when none is declared, or the item lacks it)."""
     ref = it["vault"][:-3] if it["vault"].endswith(".md") else it["vault"]
     title_link = f"**[[{ref}|{it['title']}]]**"
-    embed = f"![[{ref}#Intent]]" if it["has_intent"] else f"![[{ref}]]"
+    embed = f"![[{ref}#{it['section']}]]" if it["has_section"] else f"![[{ref}]]"
     return f"{title_link}\n\n{embed}"
 
 
@@ -203,7 +232,7 @@ def ceil_sqrt(n):
 
 
 # ---- recursive directory -> nested groups ---------------------------------
-def build_dir(dir_path, label, group_id, x, y, as_file, color, ctx):
+def build_dir(dir_path, label, group_id, x, y, canvas, color, ctx):
     """Lay out one directory as a group box: a grid of its item cards, then each
     sub-directory as a nested group stacked below. Returns (nodes, width, height)
     or (None, 0, 0) if the directory (recursively) has no items."""
@@ -214,7 +243,7 @@ def build_dir(dir_path, label, group_id, x, y, as_file, color, ctx):
     produced = False
 
     # direct item cards, in a grid
-    items = [read_item(p, ctx["vault"]) for p in item_files(dir_path)]
+    items = [read_item(p, ctx["vault"], canvas["section"]) for p in item_files(dir_path)]
     if items:
         cols = min(MAX_COLS, ceil_sqrt(len(items)))
         for i, it in enumerate(items):
@@ -222,7 +251,7 @@ def build_dir(dir_path, label, group_id, x, y, as_file, color, ctx):
             col, row = i % cols, i // cols
             nx = inner_x + col * (CARD_W + GAP_X)
             ny = cursor + row * (CARD_H + GAP_Y)
-            node = make_item_node(it, nx, ny, as_file, color)
+            node = make_item_node(it, nx, ny, canvas["node"] == "file", color)
             child_nodes.append(node)
             ctx["items"].append(it)
             max_right = max(max_right, nx + CARD_W)
@@ -236,7 +265,7 @@ def build_dir(dir_path, label, group_id, x, y, as_file, color, ctx):
         if produced:
             cursor += GROUP_GAP
         sub_id = f"{group_id}/{d.name}"
-        sub_nodes, sw, sh = build_dir(d, d.name, sub_id, inner_x, cursor, as_file, color, ctx)
+        sub_nodes, sw, sh = build_dir(d, d.name, sub_id, inner_x, cursor, canvas, color, ctx)
         if sub_nodes:
             child_nodes += sub_nodes
             cursor += sh
@@ -306,13 +335,12 @@ def build(root, vault_root, collections, include_deps, dep_color, colors, warnin
 
     nodes = []
     cursor_y = 0
-    for name in collections:
+    for name, canvas in collections:
         folder = root / name
         if not folder.is_dir():
             warnings.append(f"collection '{name}': folder not found ({folder})")
             continue
-        as_file = name.lower() == FRAMES_COLLECTION
-        col_nodes, _, ch = build_dir(folder, name, name, 0, cursor_y, as_file, colors.get(name), ctx)
+        col_nodes, _, ch = build_dir(folder, name, name, 0, cursor_y, canvas, colors.get(name), ctx)
         if col_nodes:
             nodes += col_nodes
             cursor_y += ch + GROUP_GAP
@@ -379,25 +407,31 @@ def main():
         print(f"error: no _eidos/Framework.md under {root} — not an Eidos definition", file=sys.stderr)
         return 2
 
-    collections = declared_collections(framework_md)
+    declared = declared_collections(framework_md)
+    names = [n for n, _ in declared]
 
     if args.list:
         print("Collections (mappable):")
-        for c in collections:
-            tag = "  (framing docs → full files)" if c.lower() == FRAMES_COLLECTION else ""
-            print(f"  - {c}{tag}")
+        for name, canvas in declared:
+            if canvas["node"] == "file":
+                tag = "  (full files)"
+            elif canvas["section"]:
+                tag = f"  (cards from ## {canvas['section']})"
+            else:
+                tag = "  (cards)"
+            print(f"  - {name}{tag}")
         print("Top-level documents are not mapped (they frame the product).")
         return 0
 
     if args.collection:
         wanted = set(args.collection)
-        selected = [c for c in collections if c in wanted]
-        for miss in sorted(wanted - set(collections)):
+        selected = [(n, c) for n, c in declared if n in wanted]
+        for miss in sorted(wanted - set(names)):
             print(f"error: collection '{miss}' not declared in Framework.md", file=sys.stderr)
-        if wanted - set(collections):
+        if wanted - set(names):
             return 1
     else:
-        selected = list(collections)
+        selected = list(declared)
     if not selected:
         print("error: no collections to map", file=sys.stderr)
         return 1
@@ -413,12 +447,13 @@ def main():
             return 1
         name, _, val = spec.rpartition(":")
         overrides[name] = val.strip()
-    bad = [n for n in overrides if n not in selected]
+    chosen = [n for n, _ in selected]
+    bad = [n for n in overrides if n not in chosen]
     for n in sorted(bad):
         print(f"error: --color names collection '{n}', which isn't being mapped", file=sys.stderr)
     if bad:
         return 1
-    colors = resolve_colors(selected, overrides, prior_collection_colors(out_file, selected))
+    colors = resolve_colors(chosen, overrides, prior_collection_colors(out_file, chosen))
 
     warnings = []
     nodes, edges, n_items = build(
@@ -433,8 +468,8 @@ def main():
     out_file.write_text(json.dumps({"nodes": nodes, "edges": edges}, indent=2) + "\n", encoding="utf-8")
 
     print(f"  ✓ wrote {out_file}")
-    print(f"    {n_items} items, {len(edges)} edges, collections: {', '.join(selected)}")
-    print(f"    colors: {', '.join(f'{c}={colors[c]}' for c in selected)}")
+    print(f"    {n_items} items, {len(edges)} edges, collections: {', '.join(chosen)}")
+    print(f"    colors: {', '.join(f'{c}={colors[c]}' for c in chosen)}")
     try:
         rel_out = out_file.relative_to(vault_root).as_posix()
     except ValueError:

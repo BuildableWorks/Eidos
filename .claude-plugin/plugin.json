@@ -1,10 +1,10 @@
 {
   "name": "eidos",
-  "version": "4.2.1",
-  "description": "Eidos — a human-first methodology for defining what a product is. One markdown file completely defines one unit of the product (its state and intent, not the work), true whether or not it's been built, kept as version-controlled markdown beside the code.",
+  "version": "4.3.0",
+  "description": "Eidos — a human-first standard for defining the essence of a thing: a product, a body of work, anything you set out to make. One markdown file is the complete source of truth for one unit of it (its state and intent, not the work), independent of time or status, kept in version control beside the code it describes.",
   "author": { "name": "Buildable" },
   "homepage": "https://github.com/BuildableWorks/Eidos",
   "repository": "https://github.com/BuildableWorks/Eidos",
   "license": "Apache-2.0",
-  "keywords": ["eidos", "framework", "specs", "product", "documentation", "product-management"]
+  "keywords": ["eidos", "standard", "specs", "framework", "documentation", "product-management"]
 }

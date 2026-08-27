@@ -2,13 +2,13 @@
 #
 # sync-skills.sh — copy the top-level canon into the skills that need it.
 #
-# The top-level files (EIDOS.md, seed/, versions/, CHANGELOG.md) are the source of
+# The top-level files (EIDOS.md, seeds/, versions/, CHANGELOG.md) are the source of
 # truth and the public review surface. A distributed skill can't reach them: Claude Desktop
 # sandboxes each skill to its own folder, and a git-marketplace install ("/plugin marketplace
 # add …") ships only what is committed. So each skill carries a COMMITTED copy of what it needs,
 # kept in sync by this script — duplication is the price of the sandbox.
 #
-# Run after changing EIDOS.md, seed/, versions/, or CHANGELOG.md, then commit the
+# Run after changing EIDOS.md, seeds/, versions/, or CHANGELOG.md, then commit the
 # updated copies. Pass --check to verify the copies are current WITHOUT writing (for CI or a
 # pre-commit hook); it exits non-zero if anything is stale.
 #
@@ -40,19 +40,23 @@ sync_one() {
 # eidos — the ruleset
 sync_one "EIDOS.md"      "skills/eidos/EIDOS.md"
 
-# eidos-install — the canonical seed it installs (personas live inside it now)
-sync_one "seed"          "skills/eidos-install/seed"
+# eidos-install — every seed it can install (each carries its own shapes and personas)
+sync_one "seeds"         "skills/eidos-install/seeds"
 
-# eidos-migrate — the seed plus the full version history, to diff and upgrade
-sync_one "seed"          "skills/eidos-migrate/seed"
+# eidos-migrate — the seeds plus the full version history, to diff and upgrade
+sync_one "seeds"         "skills/eidos-migrate/seeds"
 sync_one "versions"      "skills/eidos-migrate/versions"
 sync_one "CHANGELOG.md"  "skills/eidos-migrate/CHANGELOG.md"
 sync_one "EIDOS.md"      "skills/eidos-migrate/EIDOS.md"
 
-# The seed's .gitignore ignores user.md; the shipped blank template must still travel with the
-# committed skill copies, so keep those two tracked past the ignore.
+# Each seed's .gitignore ignores the user.md beside it; the shipped blank template must still travel
+# with the committed skill copies, so keep every one of them tracked past the ignore.
 if [ "$check" -eq 0 ]; then
-  git add -f skills/eidos-install/seed/user.md skills/eidos-migrate/seed/user.md 2>/dev/null || true
+  for skill in eidos-install eidos-migrate; do
+    for seed in skills/$skill/seeds/*/user.md; do
+      [ -f "$seed" ] && git add -f "$seed" 2>/dev/null || true
+    done
+  done
 fi
 
 if [ "$check" -eq 1 ]; then
