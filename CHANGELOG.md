@@ -2,9 +2,28 @@
 
 All notable changes to the Eidos standard are documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). The current version of the standard always lives in `EIDOS.md`; when a version is tagged, that `EIDOS.md` is copied into `versions/` under its full semver name.
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+**Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry names the standard it ships, so **Standard: unchanged** means your definitions need nothing. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
 ## [Unreleased]
+
+## [4.3.2] - 2026-08-26 — Standard: 4.3.2
+
+Splits the plugin's version from the standard's.
+
+They were one number, so a skill fix forced a standard release: 4.3.1 shipped a `versions/v4.3.1.md` snapshot that differed from 4.3.0 by exactly two version lines, and told every definition to bump an `eidos_version` for a change that touched none of them. Skills, seeds, and examples move far more often than `EIDOS.md` does, and the numbers should reflect that.
+
+### Changed
+
+- **`EIDOS.md`'s version is the standard's**, and moves only when the text of that file moves. It is what a definition records as `eidos_version`, what `versions/` snapshots, and what `eidos-migrate` migrates between.
+- **`.claude-plugin/plugin.json`'s version is the plugin's**, and moves on every shipped release. It is what `/plugin install` and update checks see. `marketplace.json` must match it or updates no-op.
+- **This changelog tracks plugin releases**, each naming the standard it carries.
+- **`AGENTS.md` splits the release ritual in two.** A plugin-only release bumps two manifests and adds an entry here — no snapshot, no seed edit, no `eidos_version` change in anyone's definition.
+
+They start on the same number and will drift. That is the point.
+
+**Migration from 4.3.1:** set `eidos_version: 4.3.2` if you want to be current. The standard's only change is the Versioning prose above — nothing a definition contains depends on it, so staying on 4.3.1 is equally valid. This is the last release where a prose-only change to `EIDOS.md` costs you a bump; from here the plugin moves without it.
 
 ## [4.3.1] - 2026-08-26
 

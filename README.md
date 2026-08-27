@@ -2,7 +2,7 @@
 
 _**εἶδος** (eidos), Greek — the form or essence of a thing: the look that makes it what it is. Plato's eternal Form; Aristotle's essence behind the matter._
 
-> **[Eidos v4.3.1](EIDOS.md)** — the full standard.
+> **[Eidos v4.3.2](EIDOS.md)** — the full standard.
 
 A markdown standard for defining the essence of a thing — a product, a body of work, anything you set out to make. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished. The files live as plain `.md` next to your code. No SaaS. No lock-in. No hidden state.
 
@@ -160,7 +160,12 @@ A seed is a starting point, not a cage: a framework may reshape or override any 
 
 ## Versioning
 
-The standard is versioned with [Semantic Versioning](https://semver.org/). The current version is in [`EIDOS.md`](EIDOS.md); history and migrations are in [`CHANGELOG.md`](CHANGELOG.md). Each release is preserved in [`versions/`](versions/) under its full semver name — `EIDOS.md` copied in as-is when the version is tagged.
+Two things version separately, both with [Semantic Versioning](https://semver.org/).
+
+- **The standard** — the version in [`EIDOS.md`](EIDOS.md), and the one a definition records as `eidos_version`. It moves only when the text of the standard moves. Each release is frozen in [`versions/`](versions/) under its full semver name, with the worked upgrade path in [`MIGRATIONS.md`](versions/MIGRATIONS.md).
+- **The plugin** — the version in `.claude-plugin/plugin.json`, and what `/plugin install` and update checks see. It moves on every shipped release, including ones that only touch a skill, a seed, or an example.
+
+They started on the same number and will drift, because the tooling changes far more often than the standard does. [`CHANGELOG.md`](CHANGELOG.md) tracks plugin releases and records which standard each one ships — so a release note that says *Standard: unchanged* means your definitions need nothing.
 
 ## License
 

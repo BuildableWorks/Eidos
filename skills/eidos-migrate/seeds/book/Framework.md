@@ -1,6 +1,6 @@
 ---
 # The Eidos version this framework targets; eidos-migrate reads and bumps it.
-eidos_version: 4.3.1
+eidos_version: 4.3.2
 # How files, folders, and links are named: Title Case | TitleCase | kebab-case. Absent = Title Case.
 naming: Title Case
 ---
@@ -63,7 +63,7 @@ vault. The `eidos-configure` skill edits this section.
 
 ### Eidos Core
 
-_Present on every item. Managed by the standard (Eidos 4.3.1); `eidos-migrate` rewrites this block on a version change — don't hand-edit it. (`flavor` absent = the collection's default; `connects_to` absent = no canvas edges; a missing `summary` is flagged by the index.)_
+_Present on every item. Managed by the standard (Eidos 4.3.2); `eidos-migrate` rewrites this block on a version change — don't hand-edit it. (`flavor` absent = the collection's default; `connects_to` absent = no canvas edges; a missing `summary` is flagged by the index.)_
 
 | Name        | Type | Meaning                                                                                        |
 | ----------- | ---- | ---------------------------------------------------------------------------------------------- |

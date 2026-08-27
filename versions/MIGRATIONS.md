@@ -6,6 +6,14 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
+## 4.3.1 → 4.3.2
+
+**Set `eidos_version: 4.3.2`, or don't.**
+
+The only change to the standard is its Versioning section, which now says that the plugin versions separately from the standard. Nothing a definition contains depends on it, so a definition left on 4.3.1 is not stale in any way that matters.
+
+From here the two version lines diverge: a release that fixes a skill bumps the plugin and leaves `EIDOS.md` — and your `eidos_version` — alone.
+
 ## 4.3.0 → 4.3.1
 
 **Set `eidos_version: 4.3.1`.** That is the whole migration.
