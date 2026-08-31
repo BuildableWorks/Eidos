@@ -21,8 +21,9 @@ The root `README.md` is the friendly door to it. Kept current with `eidos-config
 
 ### Frames
 
-The framing docs — one per frame — that set what every other item is judged against. Highly encouraged,
-not required; each follows the flavor of its kind.
+The framing docs — one per frame — that set what every other item is judged against. This framework's
+framing collection; each follows the flavor of its kind, and one left unwritten is a gap to surface,
+not a failure.
 
 - **Leaf:** [Frames/index.md](../Frames/index.md)
 - **Flavors:**

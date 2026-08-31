@@ -8,6 +8,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [4.4.0] - 2026-08-31 — Standard: unchanged (4.3.2)
+
+Install stops being the skill that copies files by hand.
+
+`eidos-index` and `eidos-canvas` each ship a script with a by-hand fallback; install, the most mechanical of the three, shipped only prose — and prose is what an agent improvises against. A real install run spent most of its cost on the copy: three whole seed frameworks read to quote a dozen lines, then a tarball moved between machines as base64 retyped through a shell heredoc, which arrived with a failed checksum and cost the entire round trip. None of that is judgment. All of it is now one call.
+
+### Added
+
+- **`eidos-install` ships an [`install-seed.py`](skills/eidos-install/install-seed.py)**, the sibling of `eidos-index`'s `build-index.py` and `eidos-canvas`'s `build-canvas.py`. Install is the most mechanical of the three: given the seed, the root, the naming convention, and the starting groups, every file it writes is derivable. The script copies the seed into `_eidos/`, moves the README to the definition root, sets `naming`, renames each collection into the convention (heading, folder, and links), scaffolds each collection folder with an empty `index.md`, drops a blank item per framing flavor, and records the groups in the Framework. It writes no prose. `--list` prints every seed's collections, flavors, and grouping in one call, which is also all step 2 needs to offer them. The prose steps stay as the sandboxed-host fallback.
+
+### Changed
+
+- **`eidos-install` step 5 says the seed and the definition may be on different machines.** The seed travels with the skill; the repo may only be reachable across a device bridge. The step now names the transfer: send the seed files with the file-delivery tool and write them to their final paths in one call, never re-typed as contents, base64, or a tarball through a shell heredoc, and never staged as an archive inside the repo. `eidos-migrate` carries the same line where it installs a seed into a definition that has no form layer.
+- **`eidos-install` step 2 reads less.** Offering the seeds needs each `Framework.md`'s `## Collections` section, not the whole file: three complete frameworks read to quote a dozen lines.
+
+### Fixed
+
+- **Every seed called its framing collection "highly encouraged, not required."** 4.3.1 fixed that line in `eidos-install` and left it standing in the three seeds and the `Blueprint` example, which is where an installed definition actually reads it — and where `install-seed.py --list` now quotes it from. Rule 22 has made framing required as a declaration since 4.3.0: each seed's `Frames` now says it is that framework's framing collection, and that a frame left unwritten is a gap to surface, not a failure.
+
+- **`eidos-configure`'s description was 340 characters over the 1024-char ceiling**, so `scripts/package-plugin.sh` refused to build the zip: the Claude Desktop upload path has been broken since 4.3.1, while the git-marketplace install everyone uses never checked. Trimmed to 998 by dropping the procedural clause the skill body already carries in full. Every trigger phrase stays.
+
+**Migration from 4.3.2:** none. The standard is untouched, so every definition stays valid at `eidos_version: 4.3.2`. A definition installed before this release carries the old `Frames` description in its own `_eidos/Framework.md`; it is prose, and yours to reword or leave.
+
 ## [4.3.2] - 2026-08-26 — Standard: 4.3.2
 
 Splits the plugin's version from the standard's.

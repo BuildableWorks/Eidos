@@ -30,8 +30,8 @@ the canvas, and its grouping, and points at its generated `index.md` leaf.
 ### Frames
 
 The framing docs that set what every chapter is judged against — what the book argues, who it is for,
-how it sounds, and where it sits. Highly encouraged, not required; each frame follows the flavor of
-its kind.
+how it sounds, and where it sits. This framework's framing collection; each frame follows the flavor
+of its kind, and one left unwritten is a gap to surface, not a failure.
 
 - **Leaf:** [Frames/index.md](../Frames/index.md)
 - **Flavors:**

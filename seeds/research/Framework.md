@@ -31,8 +31,8 @@ it draws on the canvas, and its grouping, and points at its generated `index.md`
 ### Frames
 
 The framing docs that set what every investigation is judged against — what is being asked, what is
-already known, what would count as knowing, and who is affected. Highly encouraged, not required;
-each frame follows the flavor of its kind.
+already known, what would count as knowing, and who is affected. This framework's framing collection;
+each frame follows the flavor of its kind, and one left unwritten is a gap to surface, not a failure.
 
 - **Leaf:** [Frames/index.md](../Frames/index.md)
 - **Flavors:**

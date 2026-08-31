@@ -34,13 +34,28 @@ seeds/<seed>/
   README.md           # the {{Product}} template — installs to <root>/README.md, the visible "start here"
 ```
 
-**Read the seeds at runtime, don't hardcode that table.** List `seeds/` and read each `Framework.md`'s `## Collections`, so a seed added after this file was written still gets offered. Take the version from the chosen seed's `Framework.md`; don't guess it.
+**Read the seeds at runtime, don't hardcode that table.** `install-seed.py --list` prints every seed's version, collections, flavors, and grouping in one call, so a seed added after this file was written still gets offered. By hand, read only each `Framework.md`'s `## Collections` section: its flavors and grouping lines are everything the offer needs, and a whole `Framework.md` per seed is three files read to quote twelve lines. Take the version from the chosen seed's `Framework.md`; don't guess it. The shapes wait until step 6, and are read from the installed copy.
+
+## Run the script when you can
+
+The skill ships **`install-seed.py`** (beside this file), stdlib-only Python 3 that performs steps 5 and 6 from the four answers the owner gives you. **Prefer it whenever you have a shell** (Claude Code, the IDE):
+
+```
+python3 <skill>/install-seed.py --list      # every seed: version, collections, flavors, grouping
+python3 <skill>/install-seed.py <seed> <root> --naming "<convention>" --group "<Group>" --product "<Name>"
+```
+
+It copies the seed into `<root>/_eidos/`, moves the seed README out to `<root>/README.md`, sets `naming`, renames each collection into the chosen convention (heading, folder, and the links that reach it), creates every collection folder with an empty `index.md`, scaffolds one blank item per framing flavor (frontmatter from the Schema, body from that flavor's shape with its guidance kept), and writes a bullet per starting group under the grouped collection. `--group` is repeatable and optional; `--dry-run` prints every write and touches nothing.
+
+It deliberately writes **no prose**. The README's one-liner, each group's description, and every scaffolded item's `summary` and body remain the owner's, and the script's closing report names them as what is still open.
+
+On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand: steps 5 and 6 are exactly what the script does.
 
 ## Procedure
 
 1. **Confirm it's a fresh start.** Look for an `_eidos/` folder anywhere in the tree — that marker, not a folder name, is what makes a definition. If one exists, stop: point the user to `eidos` to author, or `eidos-migrate` if it's on an older version.
 
-2. **Choose the seed.** List `seeds/` and offer them with `AskUserQuestion`, describing each from its own `Framework.md` — its collections, their flavors, and how they group. Ask what the owner is actually defining, not which seed they want: "a product being built," "a book or course," "a research question" pick themselves.
+2. **Choose the seed.** List `seeds/` and offer them with `AskUserQuestion`, describing each from its declared collections, their flavors, and how they group. `install-seed.py --list` prints that for every seed at once; by hand, read only the `## Collections` section of each seed's `Framework.md`. Ask what the owner is actually defining, not which seed they want: "a product being built," "a book or course," "a research question" pick themselves.
 
    Say plainly that a seed is a **starting point, not a commitment**: everything in it is reshapeable later with `eidos-configure`, so one that is merely *close* is a fine choice. If none fit, take the nearest and name the parts they will likely rename. `software` is the default when the owner has no view and the repo is code — don't default silently on a repo that isn't.
 
@@ -55,6 +70,8 @@ seeds/<seed>/
    - `README.md` → `<root>/README.md`, the visible "start here"; you fill its name and one-liner in step 6.
 
    Take every file from the **one** seed. Don't mix shapes from one with personas from another — a seed's personas are written against its own collections.
+
+   **The seed and the definition may be on different machines.** The seed ships inside this skill; the definition lives in the user's repo, which on some hosts is reachable only across a device bridge. One filesystem, and a copy (or the script) is the whole job. Across a bridge, **send the seed files with the file-delivery tool and write them to their final paths in a single commit call.** Never re-type a file's contents, base64, or a tarball through a shell heredoc: transcription is lossy, a failed checksum costs the entire round trip, and a staged archive is litter inside someone's repo that you then need permission to delete.
 
    This is the definition's own framework — the thing every other skill reads from here on. Leave it as the baseline; the owner can extend it later (`eidos-configure` for a custom property, a collection, or a flavor).
 

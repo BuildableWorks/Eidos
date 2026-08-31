@@ -30,8 +30,8 @@ and points at its generated `index.md` leaf.
 ### Frames
 
 The framing docs that set what every other item is judged against — the product's architecture,
-audience, criteria, and market. Highly encouraged, not required; each frame follows the flavor of its
-kind.
+audience, criteria, and market. This framework's framing collection; each frame follows the flavor of
+its kind, and one left unwritten is a gap to surface, not a failure.
 
 - **Leaf:** [Frames/index.md](../Frames/index.md)
 - **Flavors:**
