@@ -1,6 +1,6 @@
 # {{Product}}
 
-> **Start here.** This is the Eidos definition for **{{Product}}** — the source of truth for what this
+> **Start here.** This is the Eidos folder for **{{Product}}** — the source of truth for what this
 > programme asks and what would count as an answer, true whether or not a single study has run.
 
 {{One line: the question this programme exists to answer.}}
@@ -20,4 +20,4 @@ notebook, a protocol, or a task list. Write the question and the falsifier befor
 them true after — an investigation that comes back `Inconclusive` or `Abandoned` stays here, because
 the question and the attempt are both part of what the programme knows.
 
-_An Eidos definition. Its framework lives in [`_eidos/`](_eidos/); see [`_eidos/Framework.md`](_eidos/Framework.md) for the full index._
+_An Eidos folder. Its framework lives in [`_eidos/`](_eidos/); see [`_eidos/Framework.md`](_eidos/Framework.md) for the full index._

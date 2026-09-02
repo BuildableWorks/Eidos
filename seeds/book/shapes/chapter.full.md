@@ -2,7 +2,7 @@
 The Chapter shape — the body of a chapter, and the documentation of each section. A chapter's
 frontmatter is generated from the framework's Schema (in Framework.md), so it is not written here.
 Keep the sections that apply and delete the rest, but leave the order and headings as they are — a
-reader should know what to expect from any chapter in this definition. The italic prompts are
+reader should know what to expect from any chapter in this folder. The italic prompts are
 guidance; delete them as you fill each section in.
 -->
 

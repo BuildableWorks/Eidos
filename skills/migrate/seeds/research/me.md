@@ -1,7 +1,7 @@
 # Me
 
 Who is in the seat. This file is **personal and per-actor** — it is gitignored and never checked in, so
-each person who works on this definition keeps their own. The agent reads it before acting, to know who
+each person who works on this folder keeps their own. The agent reads it before acting, to know who
 you are and how to help.
 
 Set who you are below — `install` asks, or just edit this file. Leaving it blank is fine: the agent

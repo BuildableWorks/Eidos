@@ -1,14 +1,14 @@
 ---
 name: canvas
 description: >-
-  Generate an Obsidian-compatible visual map of an Eidos definition — a JSON Canvas 1.0 `.canvas` file. Each collection draws the way its framework declares: a card node embedding one section of each item, or a full-file node; each collection is its own group; directories (a grouped collection) become nested group nodes; and an item's `connects_to` links are drawn as directed edges — the intentional map of how pieces relate. Use when someone wants to "see the definition as a canvas", "map the specs visually", "make an Obsidian canvas of the product", "show how things connect", "visualize the blueprint", or open the definition in Obsidian's Canvas view. The user picks which collections to include; dependencies (`depends_on`) are off by default but can be added in a distinct color. Top-level documents are not mapped. The generated `.canvas` is itself a top-level document. Where a shell exists it runs `build-canvas.py`; on a sandboxed host it emits the JSON by hand. Regenerable and never gates.
+  Generate an Obsidian-compatible visual map of an Eidos folder — a JSON Canvas 1.0 `.canvas` file. Each collection draws the way its framework declares: a card node embedding one section of each blueprint, or a full-file node; each collection is its own group; directories (a grouped collection) become nested group nodes; and a blueprint's `connects_to` links are drawn as directed edges — the intentional map of how pieces relate. Use when someone wants to "see the blueprints as a canvas", "map the specs visually", "make an Obsidian canvas of the product", "show how things connect", "visualize the blueprint", or open the blueprints in Obsidian's Canvas view. The user picks which collections to include; dependencies (`depends_on`) are off by default but can be added in a distinct color. Top-level documents are not mapped. The generated `.canvas` is itself a top-level document. Where a shell exists it runs `build-canvas.py`; on a sandboxed host it emits the JSON by hand. Regenerable and never gates.
 ---
 
 # Eidos Canvas
 
-Produce a **visual map** of a definition that opens in Obsidian's Canvas view — a [JSON Canvas 1.0](https://jsoncanvas.org) `.canvas` file. It is navigation, like an index but spatial: nothing is authored, everything is derived from the items already in the definition.
+Produce a **visual map** of an Eidos folder that opens in Obsidian's Canvas view — a [JSON Canvas 1.0](https://jsoncanvas.org) `.canvas` file. It is navigation, like an index but spatial: nothing is authored, everything is derived from the blueprints already in the folder.
 
-- **A `card` collection → text nodes that embed the item's declared section** (the software seed's `Specs` declares `## Intent`; the screenplay example's `Scenes` declares `## Logline`) — a wikilink title over an Obsidian embed (`**[[Scenes/Act I/Cold Open|Cold Open]]**` then `![[Scenes/Act I/Cold Open#Logline]]`), so the section shows on the card and the title opens the note. Each collection gets its own color, proposed up front.
+- **A `card` collection → text nodes that embed the blueprint's declared section** (the software seed's `Specs` declares `## Intent`; the screenplay example's `Scenes` declares `## Logline`) — a wikilink title over an Obsidian embed (`**[[Scenes/Act I/Cold Open|Cold Open]]**` then `![[Scenes/Act I/Cold Open#Logline]]`), so the section shows on the card and the title opens the note. Each collection gets its own color, proposed up front.
 - **A `file` collection → full-file nodes** (the whole document), in its own group — every seed's framing collection declares this. Loose prose is context you read whole, not one section.
 - **Directories → nested group nodes.** A collection is a group; each sub-directory nests inside it. Groups wrap their cards spatially.
 - **`connects_to` → directed edges** (this → target), in the default edge color — the primary map of how pieces relate. A connection to something not on the canvas is flagged, not drawn.
@@ -19,8 +19,8 @@ Produce a **visual map** of a definition that opens in Obsidian's Canvas view �
 
 A short conversation, not a one-shot — pick what goes on it, agree the colors, then generate:
 
-1. **Read the actor** (`_eidos/me.md`) and list what's available — `python3 <skill>/build-canvas.py <definition-root> --list` prints the declared collections (and notes that top-level docs aren't mapped).
-2. **Ask what to map** with `AskUserQuestion` — the declared collections, multi-select, defaulting to all. A canvas can be the whole definition or a focused slice; the framing collection is one like any other, include or omit.
+1. **Read the actor** (`_eidos/me.md`) and list what's available — `python3 <skill>/build-canvas.py <root> --list` prints the declared collections (and notes that top-level docs aren't mapped).
+2. **Ask what to map** with `AskUserQuestion` — the declared collections, multi-select, defaulting to all. A canvas can be the whole folder or a focused slice; the framing collection is one like any other, include or omit.
 3. **Propose a color schema** — one Obsidian preset per collection (1 red, 2 orange, 3 yellow, 4 green, 5 cyan, 6 purple). Show it ("Frames = purple, Scenes = green — look good?") and adjust. **Skip this when a canvas already exists** at the output path: regenerating reuses its colors, so the owner's earlier choice sticks.
 4. **Generate** — run the script with the chosen scope and `--color NAME:N` per collection.
 
@@ -29,20 +29,20 @@ A short conversation, not a one-shot — pick what goes on it, agree the colors,
 The skill ships **`build-canvas.py`** (beside this file) — stdlib-only Python 3, the same shape as `index/build-index.py`. **Prefer it whenever you have a shell** (Claude Code, the IDE):
 
 ```
-python3 <skill>/build-canvas.py <definition-root>                         # map all collections
-python3 <skill>/build-canvas.py <definition-root> --list                  # show mappable collections
-python3 <skill>/build-canvas.py <definition-root> --collection <Collection>      # one collection (repeatable)
-python3 <skill>/build-canvas.py <definition-root> --include-dependencies  # also draw depends_on edges (purple)
-python3 <skill>/build-canvas.py <definition-root> --color <Framing>:6 --color <Collection>:4   # the agreed color schema
-python3 <skill>/build-canvas.py <definition-root> --collection <Collection> --collection <Framing>
+python3 <skill>/build-canvas.py <root>                         # map all collections
+python3 <skill>/build-canvas.py <root> --list                  # show mappable collections
+python3 <skill>/build-canvas.py <root> --collection <Collection>      # one collection (repeatable)
+python3 <skill>/build-canvas.py <root> --include-dependencies  # also draw depends_on edges (purple)
+python3 <skill>/build-canvas.py <root> --color <Framing>:6 --color <Collection>:4   # the agreed color schema
+python3 <skill>/build-canvas.py <root> --collection <Collection> --collection <Framing>
 ```
 
-- `<definition-root>` is the folder that contains `_eidos/` (often the definition root, e.g. `Blueprint/`).
+- `<root>` is the folder that contains `_eidos/` (often the root, e.g. `Blueprints/`).
 - With **no** `--collection` flags it maps every declared collection; with flags it maps exactly what's named.
 - `--color NAME:N` sets a collection's color (preset `1`–`6`), one per collection, from the schema you agreed. Without it they fall back to a distinct-per-collection palette; an existing canvas keeps its colors, so a regenerate stays consistent. The script prints the mapping it used.
 - `--include-dependencies` adds `depends_on` edges; `--dependency-color N` sets their Obsidian preset color (default `6` = purple). `connects_to` edges always use the default edge color.
-- `--vault` sets the root the embed/file paths are relative to (default: the definition root — an Eidos definition is plausibly the vault). `--out` sets the output path; by default the canvas is named "Framework Map" in the framework's naming convention (`framework-map.canvas` under the default kebab-case).
-- It prints any **unresolved `connects_to`/`depends_on`** to stderr — a link that isn't an item on the canvas (an external id, or an item in a collection you didn't include). Safe to ignore, or add the missing collection and regenerate.
+- `--vault` sets the root the embed/file paths are relative to (default: the root — an Eidos folder is plausibly the vault). `--out` sets the output path; by default the canvas is named "Framework Map" in the framework's naming convention (`framework-map.canvas` under the default kebab-case).
+- It prints any **unresolved `connects_to`/`depends_on`** to stderr — a link that isn't a blueprint on the canvas (an external id, or a blueprint in a collection you didn't include). Safe to ignore, or add the missing collection and regenerate.
 
 ## Register the map as a top-level document
 
@@ -68,12 +68,12 @@ Where you can't run the script (Claude Desktop), emit the `.canvas` JSON by hand
 ```
 
 - **Edges**: one `conn:` edge per `connects_to` (uncolored); one `dep:` edge per `depends_on` **only when `--include-dependencies` is requested** (dependency color). The example above shows both to illustrate the shape — omit the `dep:` edge unless dependencies were asked for.
-- **A `card` collection's items are `text` nodes** whose text is a wikilink title over `![[<vault-path-without-.md>#<declared section>]]` (or `![[<vault-path>]]` when no section is declared, or the note lacks it). **A `file` collection's items are `file` nodes** — `{ "type": "file", "file": "<vault-path.md>" }`. Paths are vault-relative with literal spaces.
+- **A `card` collection's blueprints are `text` nodes** whose text is a wikilink title over `![[<vault-path-without-.md>#<declared section>]]` (or `![[<vault-path>]]` when no section is declared, or the note lacks it). **A `file` collection's blueprints are `file` nodes** — `{ "type": "file", "file": "<vault-path.md>" }`. Paths are vault-relative with literal spaces.
 - **Group membership is spatial and nests** — a node (card or sub-group) belongs to the group whose box contains it; there is no parent field. Lay each directory as a grid of its cards, then its sub-directories as nested group boxes below.
-- **Colors** are the preset strings `"1"`–`"6"` (1 red, 2 orange, 3 yellow, 4 green, 5 cyan, 6 purple). Each collection's group box **and** its item cards take that collection's agreed color; `connects_to` edges are uncolored; `depends_on` edges (if included) take the dependency color.
-- **Node ids** are the item `id` (so `connects_to`/`depends_on` resolve to them); group ids are `group:<path>`.
+- **Colors** are the preset strings `"1"`–`"6"` (1 red, 2 orange, 3 yellow, 4 green, 5 cyan, 6 purple). Each collection's group box **and** its blueprint cards take that collection's agreed color; `connects_to` edges are uncolored; `depends_on` edges (if included) take the dependency color.
+- **Node ids** are the blueprint `id` (so `connects_to`/`depends_on` resolve to them); group ids are `group:<path>`.
 
 ## Notes
 
-- Regenerable: re-run after items change to refresh the map. It never gates — a canvas annotates and navigates, it doesn't validate. Hand-layout tweaks in Obsidian are overwritten on regeneration, so treat the file as generated.
+- Regenerable: re-run after blueprints change to refresh the map. It never gates — a canvas annotates and navigates, it doesn't validate. Hand-layout tweaks in Obsidian are overwritten on regeneration, so treat the file as generated.
 - This is a sibling of `index` (the textual leaf listing) — same walk, different rendering. The property/shape form lives in `_eidos/` and is handled by the other skills.

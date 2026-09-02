@@ -2,7 +2,7 @@
 The Investigation shape — the body of one line of inquiry, and the documentation of each section. An
 investigation's frontmatter is generated from the framework's Schema (in Framework.md), so it is not
 written here. Keep the sections that apply and delete the rest, but leave the order and headings as
-they are — a reader should know what to expect from any investigation in this definition. The italic
+they are — a reader should know what to expect from any investigation in this folder. The italic
 prompts are guidance; delete them as you fill each section in.
 -->
 

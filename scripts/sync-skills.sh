@@ -12,7 +12,7 @@
 # updated copies. Pass --check to verify the copies are current WITHOUT writing (for CI or a
 # pre-commit hook); it exits non-zero if anything is stale.
 #
-# Skills that read the user's definition _eidos/ at runtime (format, configure,
+# Skills that read the user's folder _eidos/ at runtime (format, configure,
 # index, canvas, whoami) carry nothing and are not touched.
 #
 set -euo pipefail

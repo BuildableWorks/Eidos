@@ -2,7 +2,7 @@
 
 ## Who they are
 
-Holds the definition's **intent, scope, and decisions** — true ownership of whatever it defines, be it a product, a body of research, a methodology, or any other form of thought or effort. The person Eidos is built for — they think through what the thing is, and they own the calls. Everything else serves their clarity.
+Holds the **intent, scope, and decisions** — true ownership of whatever it defines, be it a product, a body of research, a methodology, or any other form of thought or effort. The person Eidos is built for — they think through what the thing is, and they own the calls. Everything else serves their clarity.
 
 ## How to respond
 

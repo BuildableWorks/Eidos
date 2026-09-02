@@ -1,6 +1,6 @@
 # {{Product}}
 
-> **Start here.** This is the Eidos definition for **{{Product}}** — the source of truth for what the
+> **Start here.** This is the Eidos folder for **{{Product}}** — the source of truth for what the
 > product is, true whether or not it's been built.
 
 This README is the front door. The full index and config live in
@@ -21,4 +21,4 @@ _Your own one-of-a-kind docs (a Roadmap, a Vision, the generated Framework Map).
 
 ---
 
-_An Eidos definition. Its framework lives in [`_eidos/`](_eidos/); see [`_eidos/Framework.md`](_eidos/Framework.md) for the full index. `configure` and `index` keep these current._
+_An Eidos folder. Its framework lives in [`_eidos/`](_eidos/); see [`_eidos/Framework.md`](_eidos/Framework.md) for the full index. `configure` and `index` keep these current._

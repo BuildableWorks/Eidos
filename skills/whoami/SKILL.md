@@ -1,14 +1,14 @@
 ---
 name: whoami
 description: >-
-  Set or update who you are in an Eidos definition — your role and calibration — written to your personal `_eidos/me.md`. Use when someone wants to "set my user", "tell Eidos who I am", "I'm the designer / a developer / the framework owner", "change my role", "set up who I am", "the AI is talking over my head" or "it's explaining things I already know", or when `_eidos/me.md` is blank or absent. It offers whatever roles the framework installed (`_eidos/roles/`), then calibrates the chosen one on three axes — your role for this product, your experience with the scope, and your technical capacity — and writes `_eidos/me.md`. That file is personal and gitignored; the agent reads it before acting to decide how to respond (vocabulary, depth, what to surface, who decides). Companion to `install`, which scaffolds the definition; this sets the actor.
+  Set or update who you are in an Eidos folder — your role and calibration — written to your personal `_eidos/me.md`. Use when someone wants to "set my user", "tell Eidos who I am", "I'm the designer / a developer / the framework owner", "change my role", "set up who I am", "the AI is talking over my head" or "it's explaining things I already know", or when `_eidos/me.md` is blank or absent. It offers whatever roles the framework installed (`_eidos/roles/`), then calibrates the chosen one on three axes — your role for this product, your experience with the scope, and your technical capacity — and writes `_eidos/me.md`. That file is personal and gitignored; the agent reads it before acting to decide how to respond (vocabulary, depth, what to surface, who decides). Companion to `install`, which scaffolds the folder; this sets the actor.
 ---
 
 # Eidos Whoami
 
-Set the **actor** — who is in the seat — so the agent knows how to respond to _you_. Writes your personal `_eidos/me.md`: a **role** (the baseline response contract) plus a **calibration** (how it adjusts for you). Companion to `install`: that one scaffolds the definition, this one is about the person.
+Set the **actor** — who is in the seat — so the agent knows how to respond to _you_. Writes your personal `_eidos/me.md`: a **role** (the baseline response contract) plus a **calibration** (how it adjusts for you). Companion to `install`: that one scaffolds the folder, this one is about the person.
 
-`_eidos/me.md` is **personal and gitignored** — each person who works on the definition runs this for themselves, and no one's role lands in anyone else's checkout.
+`_eidos/me.md` is **personal and gitignored** — each person who works on the folder runs this for themselves, and no one's role lands in anyone else's checkout.
 
 ## Why this matters
 
@@ -20,11 +20,11 @@ A short guided interview, then a small file write. You do **not** invent role co
 
 ## Procedure
 
-1. **Find the roles.** Read `_eidos/roles/` from the definition root, found by its `_eidos/` marker. No `_eidos/` means no framework installed — offer `install`. An `_eidos/` with no `roles/` is an older framework — offer to install a seed's, or point to `migrate`.
+1. **Find the roles.** Read `_eidos/roles/` from the root, found by its `_eidos/` marker. No `_eidos/` means no framework installed — offer `install`. An `_eidos/` with no `roles/` is an older framework — offer to install a seed's, or point to `migrate`.
 2. **Read the current `_eidos/me.md`** if it exists, so you update rather than overwrite blind.
 3. **Pick the role.** With `AskUserQuestion`, offer the roles actually installed in `_eidos/roles/` — **list the folder, don't assume a cast.** Every framework carries a Framework Owner; the rest differ by seed (a software framework has a Developer and a Designer, a book framework an Editor and a Reader). Describe each from its own file. Let the actor pick one, or describe a custom role.
 4. **Calibrate it** on three axes (ask, don't assume):
-   - **Ownership** — what they own on this definition, in their own words.
+   - **Ownership** — what they own on this folder, in their own words.
    - **Experience with the scope** — new, familiar, or deep. Sets how much orientation to give.
    - **Technical capacity** — non-technical, some, or fluent. Sets how much mechanism and jargon, on top of the role's default.
 5. **Write `_eidos/me.md`.** The chosen role under `## You are: <Role>` (a link to its role file in `_eidos/roles/`), then a `## Calibration` block with the three axes in the actor's words. Don't fill an axis they declined — leave it for later.
@@ -32,8 +32,8 @@ A short guided interview, then a small file write. You do **not** invent role co
 
 ## Boundaries
 
-- **Personal file only.** You write `_eidos/me.md` — not items (`eidos`), not the framework index (`configure`), not the role files themselves (a team decision).
-- **Never commit it.** `me.md` is gitignored by the definition's `.gitignore`. If it somehow isn't ignored, say so — it shouldn't be shared.
+- **Personal file only.** You write `_eidos/me.md` — not blueprints (`eidos`), not the framework index (`configure`), not the role files themselves (a team decision).
+- **Never commit it.** `me.md` is gitignored by the root's `.gitignore`. If it somehow isn't ignored, say so — it shouldn't be shared.
 - **A blank actor is valid.** If the actor would rather not say, leave `me.md` blank; the agent defaults to full facilitation and can ask again later.
 
 ## Example `_eidos/me.md`
@@ -49,7 +49,7 @@ Role: [_eidos/roles/<role>.md](roles/<role>.md). One line on how you want to be 
 
 ## Calibration
 
-- **Ownership:** <what you own on this definition, in your own words>.
+- **Ownership:** <what you own on this folder, in your own words>.
 - **Experience with the scope:** Deep — a year on this product. (Skip the basics.)
 - **Technical capacity:** Low — explain in product/UX terms, not db/infra.
 ```

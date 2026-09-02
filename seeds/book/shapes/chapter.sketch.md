@@ -1,5 +1,5 @@
 <!--
-The Chapter shape, sketch flavor — the smallest useful chapter definition, meant to grow into
+The Chapter shape, sketch flavor — the smallest useful chapter blueprint, meant to grow into
 `chapter.full` once it earns it. A chapter's frontmatter is generated from the framework's Schema (in
 Framework.md), so it is not written here. Keep the order and headings as they are; delete the italic
 prompts as you fill each section in.

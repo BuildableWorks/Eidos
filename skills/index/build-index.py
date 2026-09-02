@@ -130,7 +130,7 @@ def collect(folder):
 
 def main():
     ap = argparse.ArgumentParser(description="Regenerate Eidos collection index.md files.")
-    ap.add_argument("root", nargs="?", default=".", help="definition root (contains _eidos/)")
+    ap.add_argument("root", nargs="?", default=".", help="root (contains _eidos/)")
     ap.add_argument("--collection", action="append", default=[], help="limit to this collection (repeatable)")
     ap.add_argument("--check", action="store_true", help="verify only; non-zero if stale")
     args = ap.parse_args()
@@ -138,7 +138,7 @@ def main():
     root = Path(args.root).resolve()
     framework_md = root / "_eidos" / "Framework.md"
     if not framework_md.is_file():
-        print(f"error: no _eidos/Framework.md under {root} — not an Eidos definition", file=sys.stderr)
+        print(f"error: no _eidos/Framework.md under {root} — not an Eidos folder", file=sys.stderr)
         return 2
 
     collections = declared_collections(framework_md)
@@ -173,10 +173,10 @@ def main():
                 print(f"  ✗ stale: {index_path}")
                 stale = 1
             else:
-                print(f"  ✓ current: {name} ({n_items} items)")
+                print(f"  ✓ current: {name} ({n_items} blueprints)")
         else:
             index_path.write_text(content, encoding="utf-8")
-            print(f"  ✓ {name}: {n_items} items → {index_path}")
+            print(f"  ✓ {name}: {n_items} blueprints → {index_path}")
 
     if all_warnings:
         print("\nitems needing a summary (the agent should write one):", file=sys.stderr)

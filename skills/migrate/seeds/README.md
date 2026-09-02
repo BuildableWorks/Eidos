@@ -1,6 +1,6 @@
 # Seeds
 
-The starting **frameworks** Eidos ships. A seed is a complete form layer — collections, body shapes and their flavors, roles, and a property Schema — that [`install`](../skills/install) copies into a new definition's `_eidos/`. Pick the one nearest what you're defining; reshape it from there with `configure`.
+The starting **frameworks** Eidos ships. A seed is a complete form layer — collections, body shapes and their flavors, roles, and a property Schema — that [`install`](../skills/install) copies into a new root's `_eidos/`. Pick the one nearest what you're defining; reshape it from there with `configure`.
 
 | Seed | For | Collections |
 | --- | --- | --- |

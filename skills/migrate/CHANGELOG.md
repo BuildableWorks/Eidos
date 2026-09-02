@@ -4,9 +4,30 @@ All notable changes to the Eidos standard are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-**Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your definitions need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
+**Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your Eidos folders need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
 ## [Unreleased]
+
+## [4.5.1] - 2026-09-02 — Standard: 4.4.1
+
+**One word doing the work of two.** The unit of an Eidos folder is a **blueprint**, not an "item", and **definition** leaves the vocabulary with nothing in its place. Prose only: no property, folder, or filename ever carried either word, so every folder already in a repo is conformant as it stands.
+
+"Definition" had two problems and they compounded. The standard leans on the verb everywhere — a blueprint "defines one unit completely" — so *the definition* read just as naturally as the file as it did the folder full of them, and the vocabulary entry had to open with "The whole thing being defined" to pull it back. A term that needs a disambiguating gloss is not carrying its weight. The everyday sense made it worse: people hear "a definition" and picture a dictionary entry two lines long, not a folder tree. And it was the only abstraction in a vocabulary of concrete nouns — framework, collection, shape, frame, seed all have a picture; the biggest container, the one that most needs one, did not.
+
+Blueprint takes the unit slot, where the granularity is right: one drawing of one thing, complete on its own, and indifferent to whether the thing is built yet. Architects keep blueprints of buildings that have stood for a century — as-built drawings — which is exactly what Eidos claims for a unit: as true of something planned as of something long finished. It also pairs. Framework and blueprint are both construction nouns, so the form/thing split lands without explanation, and the folder holding it all turns out to need no name of its own.
+
+Migration is one line, `eidos_version: 4.4.1`, plus an optional cosmetic refresh of the seed prose inside `_eidos/`. The hop is in `versions/MIGRATIONS.md`.
+
+### Changed
+
+- **`item` → `blueprint`,** through `EIDOS.md`, the three seeds, and all nine skills. Same thing it always was: one markdown file in a collection, defining one unit completely, a frontmatter contract plus a body shape. Nothing a script or an agent parses uses the word — `id`, `title`, `summary`, `flavor`, and `connects_to` are untouched — so no folder changes shape.
+- **The two-word pitch is now framework and blueprint.** Rule 2 becomes "The folder owns its framework", `## Writing a definition` becomes `## Writing`, and "Item bodies" becomes "Blueprint bodies". Where the standard has to name the whole folder it says "an Eidos folder" or "the root", both of which it was already using.
+- **The default root name is `Blueprints/`,** plural, because it holds many. This is only the default `install` offers: the root may still be named anything, nothing points at it by path, and **an existing `Blueprint/` keeps working with no rename.**
+- **The book seed calls a chapter's plan its blueprint** rather than its "definition" — in the seed README and in the sketch flavor's header. The word was already doing the new job there.
+
+### Removed
+
+- **The term `definition`.** Retired from the vocabulary table and from every skill, seed, and script that used it as a term. It survives in two places where it is ordinary English and means what it says: `AGENTS.md` calling `EIDOS.md` the authoritative definition of the format, and the research seed's prior-work frame listing a definition among the things a literature can disagree on. Historical changelog entries and the earlier hops in `versions/MIGRATIONS.md` keep the words those releases shipped.
 
 ## [4.5.0] - 2026-09-02 — Standard: 4.4.0
 

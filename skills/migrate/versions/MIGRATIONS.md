@@ -6,6 +6,27 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
+## 4.4.0 → 4.4.1
+
+**A vocabulary release. Set `eidos_version: 4.4.1`; nothing on disk has to move.**
+
+Three changes, all in the text of the standard:
+
+- **`item` is now `blueprint`.** The same thing it always was: one markdown file in a collection, defining one unit completely. No property, folder, or filename ever carried the word, so nothing an agent or a script reads changes.
+- **`definition` is retired, with no replacement.** It named the whole folder, but it collided with what a blueprint does (a blueprint *defines* a unit), and the everyday sense of the word is a dictionary entry rather than a folder tree. Eidos now turns on two words, framework and blueprint. Where the standard needs to name the folder it says "an Eidos folder" or "the root".
+- **The default root name is `Blueprints/`,** plural, since it holds many. Only the default `install` offers. The root may still be named anything and nothing points at it by path.
+
+### Per folder
+
+1. **Set `eidos_version: 4.4.1`** in `_eidos/Framework.md`, and update the version note in its `## Schema` block. That is the whole required migration.
+2. **Optionally refresh the seed prose in `_eidos/`.** `Framework.md`'s intro lines, the shape files, and `roles/*.md` say "item" and "definition" where the standard now says "blueprint". Purely cosmetic — nothing reads those words — so it is worth doing only where no one has edited the text since `install` wrote it.
+3. **Leave a hand-edited role or shape alone** unless the owner asks for it. Their words are theirs.
+4. **Renaming the root is optional.** An existing `Blueprint/` works exactly as it did; rename it only if the owner wants the plural, and then it is a plain folder rename with nothing pointing at it to fix.
+
+**Nothing else moves.** No property, no body section, no filename, no collection.
+
+Earlier hops on this page still say "item" and "definition" — they describe what those releases did, in the words those releases used.
+
 ## 4.3.2 → 4.4.0
 
 **Rename two things inside `_eidos/`, write the definition's naming convention down, then set `eidos_version: 4.4.0`.**

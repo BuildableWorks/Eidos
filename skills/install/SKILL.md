@@ -1,16 +1,16 @@
 ---
 name: install
 description: >-
-  Stand up a new Eidos definition in a repo that doesn't have one yet. Use when someone wants to set up Eidos, initialize a product/Blueprint, scaffold a framework, "start documenting our product", or says there's no Eidos here yet. It offers the seed frameworks Eidos ships (software, book, research), installs the chosen one into `_eidos/`, and scaffolds a `Blueprint/` around it, following the current `EIDOS.md` — no copying an example and deleting its contents. Trigger on "set up eidos", "init the blueprint", "scaffold our product docs", "we have no specs yet, get us started". For a definition that already exists, use `eidos` (author/validate) or `migrate` (version upgrade) instead.
+  Stand up a new Eidos folder in a repo that doesn't have one yet. Use when someone wants to set up Eidos, initialize a product's blueprints, scaffold a framework, "start documenting our product", or says there's no Eidos here yet. It offers the seed frameworks Eidos ships (software, book, research), installs the chosen one into `_eidos/`, and scaffolds a `Blueprints/` around it, following the current `EIDOS.md` — no copying an example and deleting its contents. Trigger on "set up eidos", "init the blueprint", "scaffold our product docs", "we have no specs yet, get us started". For an Eidos folder that already exists, use `eidos` (author/validate) or `migrate` (version upgrade) instead.
 ---
 
 # Eidos Install
 
-Create a fresh Eidos definition: pick a seed framework, install it, scaffold that seed's collections around it. Start from well-formed structure, **not** by copying a worked example and editing over it. Companion to `eidos` — install makes the empty frame, `eidos` helps fill it.
+Create a fresh Eidos folder: pick a seed framework, install it, scaffold that seed's collections around it. Start from well-formed structure, **not** by copying a worked example and editing over it. Companion to `eidos` — install makes the empty frame, `eidos` helps fill it.
 
 ## How you work: facilitate, don't author
 
-Scaffold the structure and bring in the blank shapes. Do **not** invent content — intent, scope, and decisions are the owner's. Ask for the few things you need (the seed, the root folder name, the first groups), create the files, hand off to `eidos`. A definition full of AI-guessed prose is worse than an empty, honest one.
+Scaffold the structure and bring in the blank shapes. Do **not** invent content — intent, scope, and decisions are the owner's. Ask for the few things you need (the seed, the root folder name, the first groups), create the files, hand off to `eidos`. An Eidos folder full of AI-guessed prose is worse than an empty, honest one.
 
 ## Where the seeds live
 
@@ -45,25 +45,25 @@ python3 <skill>/install-seed.py --list      # every seed: version, collections, 
 python3 <skill>/install-seed.py <seed> <root> --naming "<convention>" --group "<Group>" --product "<Name>"
 ```
 
-It copies the seed into `<root>/_eidos/`, moves the seed README out to `<root>/README.md`, sets `naming`, renames each collection into the chosen convention (heading, folder, and the links that reach it), creates every collection folder with an empty `index.md`, scaffolds one blank item per framing flavor (frontmatter from the Schema, body from that flavor's shape with its guidance kept), and writes a bullet per starting group under the grouped collection. `--group` is repeatable and optional; `--dry-run` prints every write and touches nothing.
+It copies the seed into `<root>/_eidos/`, moves the seed README out to `<root>/README.md`, sets `naming`, renames each collection into the chosen convention (heading, folder, and the links that reach it), creates every collection folder with an empty `index.md`, scaffolds one blank blueprint per framing flavor (frontmatter from the Schema, body from that flavor's shape with its guidance kept), and writes a bullet per starting group under the grouped collection. `--group` is repeatable and optional; `--dry-run` prints every write and touches nothing.
 
-It deliberately writes **no prose**. The README's one-liner, each group's description, and every scaffolded item's `summary` and body remain the owner's, and the script's closing report names them as what is still open.
+It deliberately writes **no prose**. The README's one-liner, each group's description, and every scaffolded blueprint's `summary` and body remain the owner's, and the script's closing report names them as what is still open.
 
 On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand: steps 5 and 6 are exactly what the script does.
 
 ## Procedure
 
-1. **Confirm it's a fresh start.** Look for an `_eidos/` folder anywhere in the tree — that marker, not a folder name, is what makes a definition. If one exists, stop: point the user to `eidos` to author, or `migrate` if it's on an older version.
+1. **Confirm it's a fresh start.** Look for an `_eidos/` folder anywhere in the tree — that marker, not a folder name, is what makes an Eidos folder. If one exists, stop: point the user to `eidos` to author, or `migrate` if it's on an older version.
 
 2. **Choose the seed.** List `seeds/` and offer them with `AskUserQuestion`, describing each from its declared collections, their flavors, and how they group. `install-seed.py --list` prints that for every seed at once; by hand, read only the `## Collections` section of each seed's `Framework.md`. Ask what the owner is actually defining, not which seed they want: "a product being built," "a book or course," "a research question" pick themselves.
 
    Say plainly that a seed is a **starting point, not a commitment**: everything in it is reshapeable later with `configure`, so one that is merely *close* is a fine choice. If none fit, take the nearest and name the parts they will likely rename. `software` is the default when the owner has no view and the repo is code — don't default silently on a repo that isn't.
 
-3. **Name the root.** Default `Blueprint/`; offer to rename. Low-stakes — nothing points at it by path — so any name works. Several definitions in one repo nest as `Blueprint/<name>/`, each with its own `_eidos/`.
+3. **Name the root.** Default `Blueprints/`; offer to rename. Low-stakes — nothing points at it by path — so any name works. Several Eidos folders in one repo nest as `Blueprints/<name>/`, each with its own `_eidos/`.
 
-4. **Choose the naming convention.** Offer the three with `AskUserQuestion` — **kebab-case** (default; lowercase and space-free, no `%20` in links, the filename *is* the `id`), **TitleCase** (space-free and capitalized), **Title Case** (reads like prose, `%20` in every link) — and record it as `naming` in `Framework.md`'s frontmatter. EIDOS.md has the worked table. It governs the whole definition and changing it later means renaming files, so settle it now; the default is the safe answer.
+4. **Choose the naming convention.** Offer the three with `AskUserQuestion` — **kebab-case** (default; lowercase and space-free, no `%20` in links, the filename *is* the `id`), **TitleCase** (space-free and capitalized), **Title Case** (reads like prose, `%20` in every link) — and record it as `naming` in `Framework.md`'s frontmatter. EIDOS.md has the worked table. It governs the whole folder and changing it later means renaming files, so settle it now; the default is the safe answer.
 
-5. **Install the chosen framework.** Copy `seeds/<chosen>/` into the root as a hidden `_eidos/` — everything except `README.md`, which goes to the definition root:
+5. **Install the chosen framework.** Copy `seeds/<chosen>/` into the root as a hidden `_eidos/` — everything except `README.md`, which goes to the root:
 
    - `shapes/`, `roles/`, `me.md`, `.gitignore` → straight into `<root>/_eidos/`.
    - `Framework.md` → `<root>/_eidos/Framework.md`, then set its `naming` to the convention from step 4 (seeds ship `kebab-case`). It carries the index **and** the property Schema — there is no separate Schema file.
@@ -71,18 +71,18 @@ On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand
 
    Take every file from the **one** seed. Don't mix shapes from one with roles from another — a seed's roles are written against its own collections.
 
-   **The seed and the definition may be on different machines.** The seed ships inside this skill; the definition lives in the user's repo, which on some hosts is reachable only across a device bridge. One filesystem, and a copy (or the script) is the whole job. Across a bridge, **send the seed files with the file-delivery tool and write them to their final paths in a single commit call.** Never re-type a file's contents, base64, or a tarball through a shell heredoc: transcription is lossy, a failed checksum costs the entire round trip, and a staged archive is litter inside someone's repo that you then need permission to delete.
+   **The seed and the folder may be on different machines.** The seed ships inside this skill; the folder lives in the user's repo, which on some hosts is reachable only across a device bridge. One filesystem, and a copy (or the script) is the whole job. Across a bridge, **send the seed files with the file-delivery tool and write them to their final paths in a single commit call.** Never re-type a file's contents, base64, or a tarball through a shell heredoc: transcription is lossy, a failed checksum costs the entire round trip, and a staged archive is litter inside someone's repo that you then need permission to delete.
 
-   This is the definition's own framework — the thing every other skill reads from here on. Leave it as the baseline; the owner can extend it later (`configure` for a custom property, a collection, or a flavor).
+   This is the root's own framework — the thing every other skill reads from here on. Leave it as the baseline; the owner can extend it later (`configure` for a custom property, a collection, or a flavor).
 
 6. **Scaffold the seed's collections.** Read them from the `Framework.md` you just installed — never assume `Specs` and `Frames` — and create a folder for each, named in the chosen convention:
 
-   - **the framing collection** (`Frames` in every seed Eidos ships) — every framework declares one, so it always gets scaffolded: its folder and an empty `index.md`. Offer one blank item per flavor the seed declares, reading the flavors off `Framework.md`, each with frontmatter from the Schema and its body from that flavor's shape, guidance block kept. A frame scaffolded but unfilled is fine; it's in progress.
+   - **the framing collection** (`Frames` in every seed Eidos ships) — every framework declares one, so it always gets scaffolded: its folder and an empty `index.md`. Offer one blank blueprint per flavor the seed declares, reading the flavors off `Framework.md`, each with frontmatter from the Schema and its body from that flavor's shape, guidance block kept. A frame scaffolded but unfilled is fine; it's in progress.
    - **the grouped collection** — the one the owner will write many of: its folder, a sub-folder per starting group they name, and an empty `index.md`. Groups are optional; skipping them gives a flat collection.
-   - **`README.md`** at the definition root: fill its name and a one-line "what this is." Keep it thin.
+   - **`README.md`** at the root: fill its name and a one-line "what this is." Keep it thin.
    - **the Framework's index** — `## Collections` already declares the seed's collections; add a bullet per starting group under the grouped collection's grouping line (**Domains**, **Parts**, **Strands** — whatever that seed calls it). Leave `## Top-Level` empty; top-level docs are the owner's, added later.
 
-   Don't write item prose here — that's `eidos`. Don't invent top-level docs; if the owner wants one, point them at `format`. Install lays the frame.
+   Don't write blueprint prose here — that's `eidos`. Don't invent top-level docs; if the owner wants one, point them at `format`. Install lays the frame.
 
 7. **Set the actor.** Run [`whoami`](../whoami) to pick a role and calibrate it into `_eidos/me.md`. Blank is fine — an unset actor means full facilitation, and they can run it later. Personal and gitignored, the one piece not committed.
 
@@ -90,4 +90,4 @@ On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand
 
 ## After init
 
-The definition is plain markdown — commit it alongside the code, `_eidos/` and all, except the personal `me.md` the seeded `.gitignore` keeps out. From here: `eidos` authors and validates, `configure` adds a collection, flavor, or property, `index` rebuilds the leaves, `whoami` sets the actor, `migrate` moves versions.
+The folder is plain markdown — commit it alongside the code, `_eidos/` and all, except the personal `me.md` the seeded `.gitignore` keeps out. From here: `eidos` authors and validates, `configure` adds a collection, flavor, or property, `index` rebuilds the leaves, `whoami` sets the actor, `migrate` moves versions.

@@ -2,7 +2,7 @@
 
 ## Who they are
 
-Builds the product from its items. Reads an item to answer "what am I building, exactly?" and to find the edges, the dependencies, and the things still undecided.
+Builds the product from its blueprints. Reads a blueprint to answer "what am I building, exactly?" and to find the edges, the dependencies, and the things still undecided.
 
 ## How to respond
 

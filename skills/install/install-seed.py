@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-install-seed.py — install a seed framework into a new Eidos definition.
+install-seed.py — install a seed framework into a new Eidos folder.
 
 Once the owner has answered the four questions install asks — which seed, which
 root folder, which naming convention, which starting groups — the rest of the install
@@ -10,7 +10,7 @@ collection declares, and record the groups in the Framework. This script does ex
 that and stops. It writes no prose: intent, scope, and description are the owner's.
 
 It also solves a transfer problem. The seed ships inside the skill, which may sit on a
-different machine than the definition; a script the host runs beside the repo copies
+different machine than the folder; a script the host runs beside the repo copies
 the bytes with no round trip and no re-typing.
 
 Runs anywhere Python 3 (stdlib only) and a shell are available — i.e. Claude Code /
@@ -23,7 +23,7 @@ Usage:
                             [--seeds SEEDS] [--date YYYY-MM-DD] [--dry-run]
 
   SEED        the seed to install — a folder name under SEEDS (e.g. `software`).
-  ROOT        the definition root to create (e.g. `Blueprint`). It must not already
+  ROOT        the root to create (e.g. `Blueprints`). It must not already
               hold an `_eidos/`; an existing one is a migrate, not an install.
   --list      print every seed's version, collections, flavors, and grouping; exit.
   --naming    kebab-case (default) | TitleCase | Title Case. Governs every human-facing
@@ -251,7 +251,7 @@ def install(args):
 
     root = Path(args.root).resolve()
     if (root / "_eidos").exists():
-        print(f"error: {root}/_eidos already exists — that's a definition; use migrate", file=sys.stderr)
+        print(f"error: {root}/_eidos already exists — that's an Eidos folder; use migrate", file=sys.stderr)
         return 2
 
     naming = args.naming
@@ -263,7 +263,7 @@ def install(args):
     props = parse_schema(text)
     fs = Fs(args.dry_run)
 
-    # 1. the framework itself. The seed's own README is the definition's visible door,
+    # 1. the framework itself. The seed's own README is the root's visible door,
     #    so it moves to the root; roles/README.md and the rest travel as they are.
     fs.copytree(seed, root / "_eidos")
     if (root / "_eidos" / "README.md").exists() or args.dry_run:
@@ -333,15 +333,15 @@ def install(args):
         print(f"  blank frames: {', '.join(scaffolded)}")
         print("  next: run index's build-index.py to list them in the leaf")
     print("  still yours: the README's one-liner, each group's description in Framework.md,"
-          " and every scaffolded item's summary and body.")
+          " and every scaffolded blueprint's summary and body.")
     return 0
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Install an Eidos seed framework into a new definition.")
+    ap = argparse.ArgumentParser(description="Install an Eidos seed framework into a new folder.")
     here = Path(__file__).resolve().parent
     ap.add_argument("seed", nargs="?", help="seed to install (folder under --seeds)")
-    ap.add_argument("root", nargs="?", help="definition root to create (e.g. Blueprint)")
+    ap.add_argument("root", nargs="?", help="root to create (e.g. Blueprints)")
     ap.add_argument("--list", action="store_true", help="list the available seeds and exit")
     ap.add_argument("--naming", choices=NAMINGS, default="kebab-case", help="naming convention")
     ap.add_argument("--group", action="append", default=[], help="starting group (repeatable)")
