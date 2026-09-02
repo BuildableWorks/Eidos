@@ -12,8 +12,8 @@
 # updated copies. Pass --check to verify the copies are current WITHOUT writing (for CI or a
 # pre-commit hook); it exits non-zero if anything is stale.
 #
-# Skills that read the user's definition _eidos/ at runtime (eidos-format, eidos-configure,
-# eidos-index, eidos-canvas, eidos-whoami) carry nothing and are not touched.
+# Skills that read the user's definition _eidos/ at runtime (format, configure,
+# index, canvas, whoami) carry nothing and are not touched.
 #
 set -euo pipefail
 cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -40,19 +40,19 @@ sync_one() {
 # eidos — the ruleset
 sync_one "EIDOS.md"      "skills/eidos/EIDOS.md"
 
-# eidos-install — every seed it can install (each carries its own shapes and personas)
-sync_one "seeds"         "skills/eidos-install/seeds"
+# install — every seed it can install (each carries its own shapes and personas)
+sync_one "seeds"         "skills/install/seeds"
 
-# eidos-migrate — the seeds plus the full version history, to diff and upgrade
-sync_one "seeds"         "skills/eidos-migrate/seeds"
-sync_one "versions"      "skills/eidos-migrate/versions"
-sync_one "CHANGELOG.md"  "skills/eidos-migrate/CHANGELOG.md"
-sync_one "EIDOS.md"      "skills/eidos-migrate/EIDOS.md"
+# migrate — the seeds plus the full version history, to diff and upgrade
+sync_one "seeds"         "skills/migrate/seeds"
+sync_one "versions"      "skills/migrate/versions"
+sync_one "CHANGELOG.md"  "skills/migrate/CHANGELOG.md"
+sync_one "EIDOS.md"      "skills/migrate/EIDOS.md"
 
 # Each seed's .gitignore ignores the user.md beside it; the shipped blank template must still travel
 # with the committed skill copies, so keep every one of them tracked past the ignore.
 if [ "$check" -eq 0 ]; then
-  for skill in eidos-install eidos-migrate; do
+  for skill in install migrate; do
     for seed in skills/$skill/seeds/*/user.md; do
       [ -f "$seed" ] && git add -f "$seed" 2>/dev/null || true
     done
@@ -67,5 +67,5 @@ if [ "$check" -eq 1 ]; then
     exit 1
   fi
 else
-  echo "✓ synced the canon into eidos, eidos-install, and eidos-migrate"
+  echo "✓ synced the canon into eidos, install, and migrate"
 fi

@@ -54,7 +54,7 @@ _Explicit non-goals — the section the standard leans on hardest, because this 
 
 ## Dependencies
 
-_Anything this needs to build or run: services, libraries, teams, data, other specs. The `depends_on` property at the top is the spec-only subset of this, as links. Reference other specs as markdown links — `[Session Management](../Identity/Session%20Management.md)` — never bare names._
+_Anything this needs to build or run: services, libraries, teams, data, other specs. The `depends_on` property at the top is the spec-only subset of this, as links. Reference other specs as markdown links — `[Session Management](../identity/session-management.md)` — never bare names._
 
 ## Testing
 

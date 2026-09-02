@@ -16,7 +16,7 @@ out="dist/eidos-plugin.zip"
 
 # Claude Desktop rejects a plugin whose skill description exceeds 1024 characters, so
 # catch it here — before zipping — rather than at upload. Also flags a missing name or
-# description. python3 is already a plugin dependency (the eidos-install/eidos-index/eidos-canvas scripts).
+# description. python3 is already a plugin dependency (the install/index/canvas scripts).
 echo "1/3  validating skill manifests…"
 python3 - <<'PY'
 import glob, re, sys

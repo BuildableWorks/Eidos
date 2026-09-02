@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 4.3.2
+**Version:** 4.4.0
 
 A markdown standard for defining the essence of a thing — a product, a body of work, anything you set out to make. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished.
 
@@ -24,7 +24,7 @@ Every term the standard uses, in the order they build on each other.
 | **top-level doc** | A one-of-a-kind document at the definition root — a Roadmap, a Vision, the generated canvas. Free-form: no shape, no flavors, no validation. |
 | **persona** | A response contract for one role, saying how an agent talks to that kind of person. |
 | **actor** | Who is in the seat right now: their persona, plus a personal calibration. |
-| **seed** | A starting framework the standard ships. `eidos-install` copies one into a new definition. |
+| **seed** | A starting framework the standard ships. `install` copies one into a new definition. |
 
 An item captures **state and intent, not work**. A task describes work and dies when the work ships; an item describes the thing and stays accurate across its whole life — drafted, built, deprecated.
 
@@ -43,7 +43,7 @@ Blueprint/               # the definition root — `Blueprint` is only the defau
     index.md             #   generated leaf
     <Group>/             #   one level of sub-folders, at most
       <Title>.md         #     one item per file
-  Roadmap.md             # a top-level doc — optional, yours
+  roadmap.md             # a top-level doc — optional, yours
 ```
 
 Several definitions in one repository nest as `Blueprint/<name>/…`, each with its own `_eidos/`.
@@ -74,14 +74,14 @@ The one file describing the form rather than any single item: frontmatter for th
 
 ```markdown
 ---
-eidos_version: 4.3.2
-naming: Title Case
+eidos_version: 4.4.0
+naming: kebab-case
 ---
 
 # Framework
 
 ## Top-Level
-<!-- eidos-configure: top-level index (regenerated) -->
+<!-- configure: top-level index (regenerated) -->
 - [README](../README.md) — the definition's front door.
 
 ## Collections
@@ -119,12 +119,12 @@ One line on what this collection holds.
 | <name> | Text | <Collection> | Scoped to one collection.      |
 ```
 
-- **`eidos_version`** — the version this framework targets. `eidos-migrate` reads and bumps it.
-- **`naming`** — `Title Case` (default), `TitleCase`, or `kebab-case`. See [Naming](#naming).
+- **`eidos_version`** — the version this framework targets. `migrate` reads and bumps it.
+- **`naming`** — `kebab-case` (default), `TitleCase`, or `Title Case`. See [Naming](#naming).
 - **`## Top-Level`** — the top-level docs, `README` first. Framing docs are not here; they are a collection.
 - **`## Collections`** — one `###` each: its **Leaf**, its **Flavors** (default marked), its **Canvas**, and its grouping.
-- **`- **Canvas:**`** — how `eidos-canvas` draws the collection: `file` (a full-file node, for prose read whole), `card` (a node embedding the item), or `card from ## Section` (a node embedding that section). Absent means a plain card — the generator knows no collection by name and cannot guess which section is the summary.
-- **`## Schema`** — `### Eidos Core` (the standard's, rewritten by `eidos-migrate`) and `### Custom Properties` (the framework's).
+- **`- **Canvas:**`** — how `canvas` draws the collection: `file` (a full-file node, for prose read whole), `card` (a node embedding the item), or `card from ## Section` (a node embedding that section). Absent means a plain card — the generator knows no collection by name and cannot guess which section is the summary.
+- **`## Schema`** — `### Eidos Core` (the standard's, rewritten by `migrate`) and `### Custom Properties` (the framework's).
 
 ### Shapes and flavors
 
@@ -148,14 +148,14 @@ Each property is a row: **Name · Type · Applies To · Meaning**. A type comes 
 | `flavor` | Text | Which flavor this item follows. Absent = the collection's default. |
 | `connects_to` | List | Items this one connects to on the canvas, each a link, drawn as a directed edge. |
 
-**Eidos defines no custom properties.** A lifecycle `status`, dates, a grouping, a dependency list — all are a framework's own choice. Each [seed](seeds) makes its own set. Add one with `eidos-configure`, which presses for all four of Name, Type, Applies To, and Meaning, then backfills the items it applies to.
+**Eidos defines no custom properties.** A lifecycle `status`, dates, a grouping, a dependency list — all are a framework's own choice. Each [seed](seeds) makes its own set. Add one with `configure`, which presses for all four of Name, Type, Applies To, and Meaning, then backfills the items it applies to.
 
 ### Personas and the actor
 
 Not every human on a definition plays the same part — one holds the intent, another builds or drafts from it, another reviews it, another answers for it. The agent responds to each differently, from two files:
 
 - **`_eidos/personas/<role>.md`** — one response contract per role: vocabulary and technical depth, what to surface versus fold away, and who holds which decisions. Which roles exist is the framework's call; each [seed](seeds) ships a set written against its own collections. Committed and team-tunable.
-- **`_eidos/user.md`** — personal and gitignored, one per person. Names the actor's persona and calibrates it on three axes: **role**, **experience with the scope**, and **technical capacity**. Set it with `eidos-whoami`. Blank is fine.
+- **`_eidos/user.md`** — personal and gitignored, one per person. Names the actor's persona and calibrates it on three axes: **role**, **experience with the scope**, and **technical capacity**. Set it with `whoami`. Blank is fine.
 
 One persona is common to every seed: the **Framework Owner**, who holds the intent, the scope, and the decisions. The rest of the cast depends on the work.
 
@@ -171,19 +171,21 @@ Everything a human reads in the tree — top-level docs, collection and sub-fold
 
 | Convention | An item file | A grouping folder | For |
 | --- | --- | --- | --- |
-| **Title Case** (default) | `Item Title Here.md` | `Group Name/` | the most readable tree |
-| **TitleCase** | `ItemTitleHere.md` | `GroupName/` | space-free, for shells and scripts |
-| **kebab-case** | `item-title-here.md` | `group-name/` | space-free and lowercase; the filename *is* the `id` |
+| **kebab-case** (default) | `item-title-here.md` | `group-name/` | readable everywhere: no escaping, no `%20`, and the filename *is* the `id` |
+| **TitleCase** | `ItemTitleHere.md` | `GroupName/` | space-free, capitalized |
+| **Title Case** | `Item Title Here.md` | `Group Name/` | a tree that reads like prose, at the cost of `%20` in every link |
 
-One convention governs the whole definition, and changing it later means renaming files, so it is settled at init. Whichever you pick: `_eidos/` is always lowercase; the `id` is always kebab-case; a grouping property's value matches its folder exactly; and fields meant for tools are not names in the tree.
+An absent `naming` key means `kebab-case`.
+
+One convention governs the whole definition, and changing it later means renaming files, so it is settled at init. Whichever you pick: `_eidos/` is always lowercase; `README.md` keeps the name every tool already looks for; the `id` is always kebab-case; a grouping property's value matches its folder exactly; and fields meant for tools are not names in the tree.
 
 ### Linking
 
-Point at another item, doc, or section with a standard markdown link: the text is the human title, the path is the target's filename in the framework's convention (so only a Title Case definition carries `%20`). Add a `#heading` anchor for a section. Properties that point outward hold links too, not bare ids — quote them in YAML, since a leading `[` starts a list:
+Point at another item, doc, or section with a standard markdown link: the text is the human title, the path is the target's filename in the framework's convention (only a Title Case definition carries `%20`). Add a `#heading` anchor for a section. Properties that point outward hold links too, not bare ids — quote them in YAML, since a leading `[` starts a list:
 
 ```yaml
 depends_on:
-  - "[Some Item](../<Group>/Some%20Item.md)"
+  - "[Some Item](../some-group/some-item.md)"
 ```
 
 If a target has no item yet, name it plainly rather than fabricating a link.
@@ -198,25 +200,25 @@ The sections themselves are documented in the shape file, not here.
 
 Both are loose, point-in-time prose: record what is true now, revise when it changes. They differ in one way. A **frame** is a collection item — it follows a shape, carries the frontmatter contract, and is validated. A **top-level doc** is one-of-a-kind, filled in once and edited in place, so it needs no shared shape and gets none. A shape earns its keep by being stamped again; a document written once doesn't need a cookie-cutter.
 
-For a top-level doc you've already drafted, `eidos-format` organizes it into the house style without adding anything of its own.
+For a top-level doc you've already drafted, `format` organizes it into the house style without adding anything of its own.
 
 ## Generated leaves
 
 Two derived views. Both are regenerated wholesale, annotate rather than gate, and have nothing hand-written to preserve.
 
-**The index.** Each collection carries a generated `index.md` in its folder, listing its items — grouped under their sub-folders when it has them, flat when it doesn't. Each line is the item's `summary`, verbatim; an item with none is flagged, never invented. Links are relative to the collection folder. Rebuilt by `eidos-index`.
+**The index.** Each collection carries a generated `index.md` in its folder, listing its items — grouped under their sub-folders when it has them, flat when it doesn't. Each line is the item's `summary`, verbatim; an item with none is flagged, never invented. Links are relative to the collection folder. Rebuilt by `index`.
 
 ```markdown
 # <Collection>
 
-<!-- eidos-index: <Collection> (regenerated) -->
+<!-- index: <Collection> (regenerated) -->
 
 ## <Group>
 - [<Title>](<Group>/<Title>.md) — the item's one-line `summary`, verbatim.
 - [<Title>](<Group>/<Title>.md) — one bullet per item, in file order.
 ```
 
-**The canvas.** The spatial counterpart: an Obsidian `.canvas` map from `eidos-canvas`. Each collection draws the way it declares itself, is its own group, and nests a group per sub-folder; each item's `connects_to` links become directed edges (with `depends_on` optionally overlaid in another color). The generated `.canvas` is itself a top-level doc — register it in `## Top-Level`.
+**The canvas.** The spatial counterpart: an Obsidian `.canvas` map from `canvas`. Each collection draws the way it declares itself, is its own group, and nests a group per sub-folder; each item's `connects_to` links become directed edges (with `depends_on` optionally overlaid in another color). The generated `.canvas` is itself a top-level doc — register it in `## Top-Level`.
 
 ## Rules
 
@@ -240,18 +242,18 @@ The load-bearing conventions.
 16. **`date_created` is set once; `date_modified` tracks the last change.** Git holds the full history. The Eidos version is a framework fact, in `Framework.md`, not a per-item property.
 17. **Point-in-time documents evolve.** A top-level doc, and any collection a framework marks as loose prose, captures a snapshot of intent and is expected to change.
 18. **The human authors; the agent facilitates.** Intent, scope, and decisions stay with the person. An agent formats, supplements, asks, and holds scope; it does not generate finished items or set direction. An item the owner did not think through is worse than none.
-19. **Human-facing names follow the framework's naming convention.** The hidden `_eidos/` is the exception, always lowercase. The kebab-case `id`, not the filename, is the permanent reference.
-20. **`Framework.md` is the framework's index; `README.md` is its door.** `eidos-configure` keeps both current.
+19. **Human-facing names follow the framework's naming convention** — `kebab-case` unless the framework says otherwise. The hidden `_eidos/` and the root `README.md` are the exceptions, keeping the names every tool already looks for. The kebab-case `id`, not the filename, is the permanent reference.
+20. **`Framework.md` is the framework's index; `README.md` is its door.** `configure` keeps both current.
 21. **Read the actor before acting.** Read `_eidos/user.md` and the matching contract in `_eidos/personas/`, and respond as that persona defines. The human-first principle holds for every persona; only the mode changes. A blank or absent file defaults to full facilitation.
 22. **Every framework declares a framing collection.** Its name, its flavors, and how many it carries are the framework's own — a framework needs framing, not a particular set of frames. Required as a **declaration**: a framework that declares none is incomplete and a check says so. Never a gate: a declared frame left unwritten is a gap to surface, not a failure.
-23. **Each collection has a generated index.** Rebuilt by `eidos-index`. Grouping more than one level deep is discouraged.
+23. **Each collection has a generated index.** Rebuilt by `index`. Grouping more than one level deep is discouraged.
 24. **Shapes are for collections; top-level docs have none.** A top-level doc is free-form prose: no shape, no flavors, not validated, edited in place.
 
 ## Versioning
 
 Semantic Versioning: major for breaking changes, minor for backward-compatible additions, patch for clarifications.
 
-This file holds the version of **the standard** — right now, **4.3.2** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its `_eidos/Framework.md`; `eidos-migrate` reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
+This file holds the version of **the standard** — right now, **4.4.0** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its `_eidos/Framework.md`; `migrate` reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
 
 **The plugin that ships this standard versions separately.** Skills, seeds, and examples change far more often than the standard does, so a release that fixes a skill bumps the plugin and leaves this file — and every definition's `eidos_version` — untouched. When you need to know what a definition conforms to, read this version; the plugin's is in `.claude-plugin/plugin.json`, and `CHANGELOG.md` records which standard each plugin release carried.
 
@@ -259,9 +261,9 @@ This file holds the version of **the standard** — right now, **4.3.2** — and
 
 _Operating detail. A human can stop above._
 
-**Prefer the skills.** `eidos` authors and validates, `eidos-install` scaffolds, `eidos-configure` adds a collection, flavor, or property and keeps the Framework current, `eidos-index` rebuilds a collection's leaf, `eidos-canvas` draws the map, `eidos-whoami` sets the actor, `eidos-migrate` upgrades versions.
+**Prefer the skills.** `eidos` authors and validates, `iterate` questions a rough idea into shape before any of that, `install` scaffolds, `configure` adds a collection, flavor, or property and keeps the Framework current, `index` rebuilds a collection's leaf, `canvas` draws the map, `whoami` sets the actor, `migrate` upgrades versions.
 
-**Find the framework in the definition.** Locate a definition by its `_eidos/` marker, not its folder name. Every operation reads that `_eidos/`. If a folder has none, offer `eidos-install`. Never fall back to a hardcoded contract, and never assume a collection or section name — read what the framework declares.
+**Find the framework in the definition.** Locate a definition by its `_eidos/` marker, not its folder name. Every operation reads that `_eidos/`. If a folder has none, offer `install`. Never fall back to a hardcoded contract, and never assume a collection or section name — read what the framework declares.
 
 **Read the actor first.** `_eidos/user.md`, then the persona file it names. Respond as that file defines the role — read it, don't infer from its filename. A framework defines its own cast.
 

@@ -1,0 +1,156 @@
+{
+  "nodes": [
+    {
+      "id": "group:frames",
+      "type": "group",
+      "x": 0,
+      "y": 0,
+      "width": 760,
+      "height": 590,
+      "label": "frames",
+      "color": "6"
+    },
+    {
+      "id": "audience",
+      "x": 40,
+      "y": 70,
+      "width": 320,
+      "height": 220,
+      "type": "file",
+      "file": "frames/audience.md",
+      "color": "6"
+    },
+    {
+      "id": "market",
+      "x": 400,
+      "y": 70,
+      "width": 320,
+      "height": 220,
+      "type": "file",
+      "file": "frames/market.md",
+      "color": "6"
+    },
+    {
+      "id": "premise",
+      "x": 40,
+      "y": 330,
+      "width": 320,
+      "height": 220,
+      "type": "file",
+      "file": "frames/premise.md",
+      "color": "6"
+    },
+    {
+      "id": "voice",
+      "x": 400,
+      "y": 330,
+      "width": 320,
+      "height": 220,
+      "type": "file",
+      "file": "frames/voice.md",
+      "color": "6"
+    },
+    {
+      "id": "group:scenes",
+      "type": "group",
+      "x": 0,
+      "y": 650,
+      "width": 840,
+      "height": 830,
+      "label": "scenes",
+      "color": "4"
+    },
+    {
+      "id": "group:scenes/act-i",
+      "type": "group",
+      "x": 40,
+      "y": 720,
+      "width": 760,
+      "height": 330,
+      "label": "act-i",
+      "color": "4"
+    },
+    {
+      "id": "cold-open",
+      "x": 80,
+      "y": 790,
+      "width": 320,
+      "height": 220,
+      "type": "text",
+      "text": "**[[scenes/act-i/cold-open|Cold Open]]**\n\n![[scenes/act-i/cold-open#Logline]]",
+      "color": "4"
+    },
+    {
+      "id": "the-commission",
+      "x": 440,
+      "y": 790,
+      "width": 320,
+      "height": 220,
+      "type": "text",
+      "text": "**[[scenes/act-i/the-commission|The Commission]]**\n\n![[scenes/act-i/the-commission#Logline]]",
+      "color": "4"
+    },
+    {
+      "id": "group:scenes/act-ii",
+      "type": "group",
+      "x": 40,
+      "y": 1110,
+      "width": 760,
+      "height": 330,
+      "label": "act-ii",
+      "color": "4"
+    },
+    {
+      "id": "the-crossing",
+      "x": 80,
+      "y": 1180,
+      "width": 320,
+      "height": 220,
+      "type": "text",
+      "text": "**[[scenes/act-ii/the-crossing|The Crossing]]**\n\n![[scenes/act-ii/the-crossing#Logline]]",
+      "color": "4"
+    },
+    {
+      "id": "what-she-says",
+      "x": 440,
+      "y": 1180,
+      "width": 320,
+      "height": 220,
+      "type": "text",
+      "text": "**[[scenes/act-ii/what-she-says|What She Says]]**\n\n![[scenes/act-ii/what-she-says#Logline]]",
+      "color": "4"
+    }
+  ],
+  "edges": [
+    {
+      "id": "conn:premise->voice",
+      "fromNode": "premise",
+      "toNode": "voice",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "conn:cold-open->the-commission",
+      "fromNode": "cold-open",
+      "toNode": "the-commission",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "conn:the-commission->cold-open",
+      "fromNode": "the-commission",
+      "toNode": "cold-open",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "conn:the-commission->the-crossing",
+      "fromNode": "the-commission",
+      "toNode": "the-crossing",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "conn:the-crossing->what-she-says",
+      "fromNode": "the-crossing",
+      "toNode": "what-she-says",
+      "toEnd": "arrow"
+    }
+  ]
+}

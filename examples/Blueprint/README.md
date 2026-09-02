@@ -14,12 +14,12 @@ the definition stays small enough to read in a sitting against a product you alr
 
 ## Top-level documents
 
-- [Roadmap](Roadmap.md) — where it's headed, in plain horizons (a custom top-level doc).
+- [Roadmap](roadmap.md) — where it's headed, in plain horizons (a custom top-level doc).
 
 ## Collections
 
-- **[Frames](Frames/index.md)** — the framing docs: Architecture, Audience, Criteria, Market.
-- **[Specs](Specs/index.md)** — the product's units, grouped by the Playback and Channels domains.
+- **[frames](frames/index.md)** — the framing docs: architecture, audience, criteria, market.
+- **[specs](specs/index.md)** — the product's units, grouped by the `playback` and `channels` domains.
 
 ---
 

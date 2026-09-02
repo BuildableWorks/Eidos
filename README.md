@@ -2,7 +2,7 @@
 
 _**εἶδος** (eidos), Greek — the form or essence of a thing: the look that makes it what it is. Plato's eternal Form; Aristotle's essence behind the matter._
 
-> **[Eidos v4.3.2](EIDOS.md)** — the full standard.
+> **[Eidos v4.4.0](EIDOS.md)** — the full standard.
 
 A markdown standard for defining the essence of a thing — a product, a body of work, anything you set out to make. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished. The files live as plain `.md` next to your code. No SaaS. No lock-in. No hidden state.
 
@@ -28,7 +28,7 @@ Blueprint/                 # the definition — the root may be named anything
     personas/              #   how the agent should talk to each role
     Framework.md           #   the index + config: version, naming, collections, Schema
     user.md                #   who's in the seat (personal, gitignored)
-  Roadmap.md               # a top-level doc — your own, free-form (optional)
+  roadmap.md               # a top-level doc — your own, free-form (optional)
   <Framing>/               # the framing collection — every framework declares one
   <Collection>/            # the units, grouped one level deep
     index.md               #   generated index of the collection
@@ -56,27 +56,28 @@ Pick the nearest seed and reshape it; none of them is privileged, and a framewor
 ## Quick start
 
 1. **Get the skills.** Optional but recommended — see [Installing the skills](#installing-the-skills).
-2. **Initialize.** Run `eidos-install`. It asks what you're defining, offers the seeds, and scaffolds a definition around the one you pick. Everything in a seed is reshapeable later, so "close enough" is the right answer.
+2. **Initialize.** Run `install`. It asks what you're defining, offers the seeds, and scaffolds a definition around the one you pick. Everything in a seed is reshapeable later, so "close enough" is the right answer.
 3. **Fill the frames first.** Loose, point-in-time prose — fill what's known and leave the rest. They set what every other item is judged against, which is why every framework has to declare them.
-4. **Author the units.** One file per unit, named for its title in the convention you chose. Frontmatter is generated from the Schema; the body follows your collection's shape. Lead with what the shape opens on, and press hardest on its non-goals section — that's where scope is actually held. The `eidos` skill facilitates; it does not author for you.
+4. **Author the units.** One file per unit, named for its title in the convention you chose (kebab-case by default). Frontmatter is generated from the Schema; the body follows your collection's shape. Lead with what the shape opens on, and press hardest on its non-goals section — that's where scope is actually held. The `eidos` skill facilitates; it does not author for you.
 5. **Commit it.** The definition is the source of truth, `_eidos/` and all (except the personal `user.md`, which the seeded `.gitignore` keeps out). Review it in PRs alongside the code. Eidos relies on git history, so don't gitignore any of it.
 
 The full rules are in **[EIDOS.md](EIDOS.md)**. See **[`examples/`](examples/)** for two filled-in definitions — a subset of YouTube, and a short film — to pattern-match against.
 
 ## Installing the skills
 
-Eidos ships as a **Claude plugin** bundling eight skills:
+Eidos ships as a **Claude plugin** bundling nine skills:
 
 - **`eidos`** — author + validate
-- **`eidos-format`** — reshape a rough draft into Eidos shape (a collection item, or a free-form top-level doc)
-- **`eidos-install`** — scaffold a new definition (pick a seed; installs it into `_eidos/`)
-- **`eidos-configure`** — add a collection or a flavor, add/rename/retire a custom property and backfill every item, and keep the Framework's Top-Level index current
-- **`eidos-index`** — regenerate each collection's `index.md` listing
-- **`eidos-canvas`** — generate an Obsidian `.canvas` map of chosen collections, with `connects_to` links as edges
-- **`eidos-whoami`** — set who you are: pick a persona and calibrate it (role, experience, technical capacity)
-- **`eidos-migrate`** — move a definition to a new version of the standard
+- **`iterate`** — question one rough idea until it holds still: which shape it takes, what it's for, how it fits the rest. Writes nothing; hands the understanding to `eidos`
+- **`format`** — reshape a rough draft into Eidos shape (a collection item, or a free-form top-level doc)
+- **`install`** — scaffold a new definition (pick a seed; installs it into `_eidos/`)
+- **`configure`** — add a collection or a flavor, add/rename/retire a custom property and backfill every item, and keep the Framework's Top-Level index current
+- **`index`** — regenerate each collection's `index.md` listing
+- **`canvas`** — generate an Obsidian `.canvas` map of chosen collections, with `connects_to` links as edges
+- **`whoami`** — set who you are: pick a persona and calibrate it (role, experience, technical capacity)
+- **`migrate`** — move a definition to a new version of the standard
 
-Most skills read your definition's framework at runtime and need nothing of the standard: `eidos-format`, `eidos-configure`, `eidos-index`, `eidos-canvas`, and `eidos-whoami`. The other three carry a **committed copy** of just what they need — `eidos` (the `EIDOS.md` ruleset), `eidos-install` (the canonical [`seeds/`](seeds)), and `eidos-migrate` (the version history) — so each skill is self-contained wherever it's installed. `scripts/sync-skills.sh` keeps those copies in sync with the top-level sources.
+Most skills read your definition's framework at runtime and need nothing of the standard: `iterate`, `format`, `configure`, `index`, `canvas`, and `whoami`. The other three carry a **committed copy** of just what they need — `eidos` (the `EIDOS.md` ruleset), `install` (the canonical [`seeds/`](seeds)), and `migrate` (the version history) — so each skill is self-contained wherever it's installed. `scripts/sync-skills.sh` keeps those copies in sync with the top-level sources.
 
 ### Why the skills carry copies of the standard
 
@@ -87,7 +88,7 @@ The top-level copies are the **source of truth** and the public review surface: 
 - **Claude Desktop sandboxes each skill to its own folder** — it can't read sibling files at the plugin root.
 - **A git-marketplace install ships only what's committed** — anything gitignored never arrives.
 
-So a skill that needs part of the standard has to _carry_ it, committed, to keep working after it's installed — and only the three that need it do (`eidos`, `eidos-install`, `eidos-migrate`). [`scripts/sync-skills.sh`](scripts/sync-skills.sh) regenerates those copies from the top-level sources, and `sync-skills.sh --check` fails if one has drifted, so a copy can never quietly fall out of step with the source. The trade was chosen on purpose: gitignoring the copies breaks Desktop installs, and dropping the top-level copies would cost the single, reviewable home for the standard — so we keep both, and let the script hold them together.
+So a skill that needs part of the standard has to _carry_ it, committed, to keep working after it's installed — and only the three that need it do (`eidos`, `install`, `migrate`). [`scripts/sync-skills.sh`](scripts/sync-skills.sh) regenerates those copies from the top-level sources, and `sync-skills.sh --check` fails if one has drifted, so a copy can never quietly fall out of step with the source. The trade was chosen on purpose: gitignoring the copies breaks Desktop installs, and dropping the top-level copies would cost the single, reviewable home for the standard — so we keep both, and let the script hold them together.
 
 ### In Claude Code
 
@@ -136,13 +137,13 @@ For ongoing iteration, push to a **private** git repo and share the URL — `/pl
 
 ### Raw, in another Claude Code project
 
-A skill is just a folder with a `SKILL.md`. Drop the folder at `<repo>/.claude/skills/<name>/` (one project) or `~/.claude/skills/<name>/` (everywhere); a project copy wins over a global one. Each folder is self-contained — the runtime skills read your definition's `_eidos/`, and `eidos`/`eidos-install`/`eidos-migrate` carry their committed copies of the standard — so the folder works as-is.
+A skill is just a folder with a `SKILL.md`. Drop the folder at `<repo>/.claude/skills/<name>/` (one project) or `~/.claude/skills/<name>/` (everywhere); a project copy wins over a global one. Each folder is self-contained — the runtime skills read your definition's `_eidos/`, and `eidos`/`install`/`migrate` carry their committed copies of the standard — so the folder works as-is.
 
 **Adding your own skill:** create `skills/<your-skill>/SKILL.md` — it ships with the plugin automatically.
 
 ## Canonical Seeds
 
-The **[`seeds/`](seeds)** folder holds the starting frameworks Eidos ships. `eidos-install` offers them and copies the chosen one into a definition's `_eidos/`. What each covers:
+The **[`seeds/`](seeds)** folder holds the starting frameworks Eidos ships. `install` offers them and copies the chosen one into a definition's `_eidos/`. What each covers:
 
 - **[`software/`](seeds/software)** — a product, service, or system being built. The default, and the one most people start from.
 - **[`book/`](seeds/book)** — a book, long-form argument, or course.
