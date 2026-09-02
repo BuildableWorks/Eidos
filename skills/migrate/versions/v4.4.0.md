@@ -58,7 +58,7 @@ _eidos/
     <kind>.<flavor-1>.md   #   a collection's default flavor
     <kind>.<flavor-2>.md   #   a second flavor of the same kind
     frame.<kind>.md        #   the framing collection's flavors, one per kind of frame
-  roles/                # response contracts, committed and team-tunable
+  roles/                   # response contracts, committed and team-tunable
     framework-owner.md     #   the one every seed carries
     <role>.md              #   the rest are the framework's own
   Framework.md             # index + config: version, naming, Top-Level, Collections, Schema
@@ -261,7 +261,7 @@ This file holds the version of **the standard** — right now, **4.4.0** — and
 
 _Operating detail. A human can stop above._
 
-**Prefer the skills.** `eidos` authors and validates, `iterate` questions a rough idea into shape before any of that, `install` scaffolds, `configure` adds a collection, flavor, or property and keeps the Framework current, `index` rebuilds a collection's leaf, `canvas` draws the map, `whoami` sets the actor, `migrate` upgrades versions.
+**Prefer the skills.** `eidos` authors and validates, `iterate` questions a rough idea into shape before any of that, `format` reshapes a draft already written, `install` scaffolds, `configure` adds a collection, flavor, or property and keeps the Framework current, `index` rebuilds a collection's leaf, `canvas` draws the map, `whoami` sets the actor, `migrate` upgrades versions.
 
 **Find the framework in the definition.** Locate a definition by its `_eidos/` marker, not its folder name. Every operation reads that `_eidos/`. If a folder has none, offer `install`. Check the framework's `eidos_version` against the standard you carry once per session: a gap is worth one line and an offer of `migrate`, never a block, and the framework in front of you is the operative contract either way. Never fall back to a hardcoded contract, and never assume a collection or section name — read what the framework declares.
 

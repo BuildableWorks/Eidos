@@ -25,7 +25,7 @@ Blueprint/                 # the definition — the root may be named anything
   README.md                # the human "start here"
   _eidos/                  # the framework (hidden) — the form this definition is written in
     shapes/                #   body shapes, one file per flavor
-    roles/              #   how the agent should talk to each role
+    roles/                 #   how the agent should talk to each role
     Framework.md           #   the index + config: version, naming, collections, Schema
     me.md                  #   who's in the seat (personal, gitignored)
   roadmap.md               # a top-level doc — your own, free-form (optional)

@@ -27,7 +27,7 @@ Every seed carries the same pieces, in the same layout:
 ```
 seeds/<seed>/
   shapes/             # collection body shapes, one file per flavor (<kind>.<flavor>.md)
-  roles/           # response contracts, one per role (installs to _eidos/roles/)
+  roles/              # response contracts, one per role (installs to _eidos/roles/)
   Framework.md        # version + naming (frontmatter); body indexes Top-Level, Collections, and the property Schema
   me.md               # blank actor frame (installs to _eidos/me.md — personal, gitignored)
   .gitignore          # installs to _eidos/.gitignore (ignores me.md beside it)

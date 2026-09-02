@@ -13,7 +13,7 @@ Every seed carries the same pieces, so the skills work identically across them:
 ```txt
 <seed>/
   shapes/       # body shapes, one file per flavor (<kind>.<flavor>.md)
-  roles/     # response contracts, one per role
+  roles/        # response contracts, one per role
   Framework.md  # version, naming, Top-Level, Collections, and the property Schema
   me.md         # blank actor frame (installs gitignored)
   .gitignore    # keeps me.md out of version control

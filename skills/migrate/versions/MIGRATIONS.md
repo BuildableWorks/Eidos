@@ -8,9 +8,23 @@ Each entry says what moves, what stays, and what needs a human decision.
 
 ## 4.3.2 → 4.4.0
 
-**Write the definition's naming convention down, rename two things inside `_eidos/`, then set `eidos_version: 4.4.0`.**
+**Rename two things inside `_eidos/`, write the definition's naming convention down, then set `eidos_version: 4.4.0`.**
 
-4.4.0 changes one default: `kebab-case` is now what the standard recommends and what an absent `naming` key means. Through 4.3.2 an absent key meant `Title Case`. A definition that already carries the key is unaffected — the key is authoritative in both versions and only the fallback moved — so this is the whole migration for almost everyone: bump the version and stop.
+### The two renames — every definition
+
+Mechanical, and nothing outside `_eidos/` moves.
+
+- **`_eidos/personas/` → `_eidos/roles/`.** Same files, same contents, same filenames inside (`framework-owner.md` and the rest keep their names). "Persona" was borrowed from UX, where a persona is an archetype of a *customer*, which is what a framing doc about the audience holds, not what these files hold. These are response contracts for the person at the keyboard, and the standard was already reaching for "role" to explain them.
+- **`_eidos/user.md` → `_eidos/me.md`.** Same file, same contents. "User" in a product definition means the product's users; this file is you. The concept is still the **actor**; only the filename changed.
+- **Update the two pointers.** `_eidos/.gitignore` ignores `me.md` instead of `user.md` (still the one `_eidos/` file not committed), and `me.md`'s own link to its role file now points at `_eidos/roles/`.
+- **In `me.md`, the first calibration axis is renamed** from "Role for this definition" to **Ownership**. It always asked what you own here, and with the contracts now called roles the old label read as "your role's role". Rewrite the label; keep the answer.
+- **A definition that never had `personas/` or a `user.md` skips this.** Both are optional in practice: a framework with no roles installed, and an actor who never recorded themselves, both still work.
+
+Custom roles a team wrote are theirs and travel as they are. If a framework had renamed or added role files, the folder move touches none of it.
+
+### The naming default — only if `naming` is absent
+
+4.4.0 changes one default: `kebab-case` is now what the standard recommends and what an absent `naming` key means. Through 4.3.2 an absent key meant `Title Case`. **A definition that already carries the key needs nothing here** — the key is authoritative in both versions and only the fallback moved.
 
 For a definition with **no** `naming` key, settle it rather than letting the default decide:
 
@@ -18,22 +32,12 @@ For a definition with **no** `naming` key, settle it rather than letting the def
 - **Confirm it with the owner, then write it into `_eidos/Framework.md`.** State what the files say and what you are about to record. Recording what the definition already does is not a change to it.
 - **Adopting kebab-case is a separate, deliberate pass,** never bundled into the version bump — it renames every collection folder, sub-folder, and item file, rewrites every link, and lowercases each grouping property's value to match its folder (`domain: Channels` → `domain: channels`). Do it when the owner wants it.
 
-Two smaller notes:
+### Two smaller notes
 
 - **The canvas's default filename follows the convention** — `framework-map.canvas` under kebab-case, `FrameworkMap.canvas` under TitleCase, `Framework Map.canvas` under Title Case. `canvas` only picks the name when you don't pass `--out`, so an existing canvas keeps its name until you regenerate without one; if it does get renamed, update its bullet in `## Top-Level`.
 - **`README.md` is now named as an exception** beside `_eidos/`: it keeps the name every tool already looks for, whatever the convention. Nothing to change — this writes down what every definition was already doing.
 
-Two renames in the form layer come with this version, both mechanical. Nothing outside `_eidos/` moves.
-
-- **`_eidos/personas/` → `_eidos/roles/`.** Same files, same contents, same filenames inside (`framework-owner.md` and the rest keep their names). "Persona" was borrowed from UX, where a persona is an archetype of a *customer*, which is what a framing doc about the audience holds, not what these files hold. These are response contracts for the person at the keyboard, and the standard was already reaching for "role" to explain them.
-- **`_eidos/user.md` → `_eidos/me.md`.** Same file, same contents. "User" in a product definition means the product's users; this file is you. The concept is still the **actor**; only the filename changed.
-- **Update the two pointers.** `_eidos/.gitignore` ignores `me.md` instead of `user.md` (still the one `_eidos/` file not committed), and `me.md`'s own link to its role file now points at `_eidos/roles/`.
-- **In `me.md`, the first calibration axis is renamed** from "Role for this definition" to **Ownership**. It always asked what you own here, and with the contracts now called roles the old label read as "your role's role". Rewrite the label; keep the answer.
-- **A definition that never had `personas/` or a `user.md` needs nothing.** Both are optional in practice: a framework with no roles installed, and an actor who never recorded themselves, both still work.
-
-Custom roles a team wrote are theirs and travel as they are. If a framework had renamed or added role files, the folder move touches none of it.
-
-**Nothing else moves.** No shape, no role, no property in the Schema, no body section.
+**Nothing else moves.** No shape, no role file's contents, no property in the Schema, no body section.
 
 ## 4.3.1 → 4.3.2
 
