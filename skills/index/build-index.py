@@ -138,7 +138,7 @@ def main():
     root = Path(args.root).resolve()
     framework_md = root / "_eidos" / "Framework.md"
     if not framework_md.is_file():
-        print(f"error: no _eidos/Framework.md under {root} — not an Eidos folder", file=sys.stderr)
+        print(f"error: no _eidos/Framework.md under {root} — not a root", file=sys.stderr)
         return 2
 
     collections = declared_collections(framework_md)

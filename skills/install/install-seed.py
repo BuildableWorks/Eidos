@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-install-seed.py — install a seed framework into a new Eidos folder.
+install-seed.py — install a seed framework into a new root.
 
 Once the owner has answered the four questions install asks — which seed, which
 root folder, which naming convention, which starting groups — the rest of the install
@@ -251,7 +251,7 @@ def install(args):
 
     root = Path(args.root).resolve()
     if (root / "_eidos").exists():
-        print(f"error: {root}/_eidos already exists — that's an Eidos folder; use migrate", file=sys.stderr)
+        print(f"error: {root}/_eidos already exists — that's a root; use migrate", file=sys.stderr)
         return 2
 
     naming = args.naming

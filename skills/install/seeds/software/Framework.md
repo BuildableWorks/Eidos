@@ -1,6 +1,6 @@
 ---
 # The Eidos version this framework targets; migrate reads and bumps it.
-eidos_version: 4.4.1
+eidos_version: 4.4.2
 # How files, folders, and links are named: kebab-case | TitleCase | Title Case. Absent = kebab-case.
 naming: kebab-case
 ---
@@ -17,7 +17,7 @@ visible `README.md` at the root is the friendly door to it; keep it current with
 <!-- configure: top-level index (regenerated) -->
 - [README](../README.md) — the root's front door: what this is, and pointers in.
 <!-- One bullet per top-level document. README is the door and comes first; add your own below (a
-     Roadmap, a Vision, the generated Framework Map canvas), each a link and a one-line description.
+     Roadmap, a Vision, the generated Blueprint Map canvas), each a link and a one-line description.
      The framing docs live in the Frames collection, not here. configure refreshes this list. -->
 
 ## Collections
@@ -63,7 +63,7 @@ vault. The `configure` skill edits this section.
 
 ### Eidos Core
 
-_Present on every blueprint. Managed by the standard (Eidos 4.4.1); `migrate` rewrites this block on a version change — don't hand-edit it. (`flavor` absent = the collection's default; `connects_to` absent = no canvas edges; a missing `summary` is flagged by the index.)_
+_Present on every blueprint. Managed by the standard (Eidos 4.4.2); `migrate` rewrites this block on a version change — don't hand-edit it. (`flavor` absent = the collection's default; `connects_to` absent = no canvas edges; a missing `summary` is flagged by the index.)_
 
 | Name        | Type | Meaning                                                                                        |
 | ----------- | ---- | ---------------------------------------------------------------------------------------------- |

@@ -1,16 +1,16 @@
 ---
 name: install
 description: >-
-  Stand up a new Eidos folder in a repo that doesn't have one yet. Use when someone wants to set up Eidos, initialize a product's blueprints, scaffold a framework, "start documenting our product", or says there's no Eidos here yet. It offers the seed frameworks Eidos ships (software, book, research), installs the chosen one into `_eidos/`, and scaffolds a `Blueprints/` around it, following the current `EIDOS.md` — no copying an example and deleting its contents. Trigger on "set up eidos", "init the blueprint", "scaffold our product docs", "we have no specs yet, get us started". For an Eidos folder that already exists, use `eidos` (author/validate) or `migrate` (version upgrade) instead.
+  Stand up a new root in a repo that doesn't have one yet. Use when someone wants to set up Eidos, initialize a product's blueprints, scaffold a framework, "start documenting our product", or says there's no Eidos here yet. It offers the seed frameworks Eidos ships (software, book, research), installs the chosen one into `_eidos/`, and scaffolds a `Blueprints/` around it, following the current `EIDOS.md` — no copying an example and deleting its contents. Trigger on "set up eidos", "init the blueprint", "scaffold our product docs", "we have no specs yet, get us started". For a root that already exists, use `eidos` (author/validate) or `migrate` (version upgrade) instead.
 ---
 
 # Eidos Install
 
-Create a fresh Eidos folder: pick a seed framework, install it, scaffold that seed's collections around it. Start from well-formed structure, **not** by copying a worked example and editing over it. Companion to `eidos` — install makes the empty frame, `eidos` helps fill it.
+Create a fresh root: pick a seed framework, install it, scaffold that seed's collections around it. Start from well-formed structure, **not** by copying a worked example and editing over it. Companion to `eidos` — install makes the empty frame, `eidos` helps fill it.
 
 ## How you work: facilitate, don't author
 
-Scaffold the structure and bring in the blank shapes. Do **not** invent content — intent, scope, and decisions are the owner's. Ask for the few things you need (the seed, the root folder name, the first groups), create the files, hand off to `eidos`. An Eidos folder full of AI-guessed prose is worse than an empty, honest one.
+Scaffold the structure and bring in the blank shapes. Do **not** invent content — intent, scope, and decisions are the owner's. Ask for the few things you need (the seed, the root folder name, the first groups), create the files, hand off to `eidos`. A root full of AI-guessed prose is worse than an empty, honest one.
 
 ## Where the seeds live
 
@@ -53,13 +53,13 @@ On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand
 
 ## Procedure
 
-1. **Confirm it's a fresh start.** Look for an `_eidos/` folder anywhere in the tree — that marker, not a folder name, is what makes an Eidos folder. If one exists, stop: point the user to `eidos` to author, or `migrate` if it's on an older version.
+1. **Confirm it's a fresh start.** Look for an `_eidos/` folder anywhere in the tree — that marker, not a folder name, is what makes a root. If one exists, stop: point the user to `eidos` to author, or `migrate` if it's on an older version.
 
 2. **Choose the seed.** List `seeds/` and offer them with `AskUserQuestion`, describing each from its declared collections, their flavors, and how they group. `install-seed.py --list` prints that for every seed at once; by hand, read only the `## Collections` section of each seed's `Framework.md`. Ask what the owner is actually defining, not which seed they want: "a product being built," "a book or course," "a research question" pick themselves.
 
    Say plainly that a seed is a **starting point, not a commitment**: everything in it is reshapeable later with `configure`, so one that is merely *close* is a fine choice. If none fit, take the nearest and name the parts they will likely rename. `software` is the default when the owner has no view and the repo is code — don't default silently on a repo that isn't.
 
-3. **Name the root.** Default `Blueprints/`; offer to rename. Low-stakes — nothing points at it by path — so any name works. Several Eidos folders in one repo nest as `Blueprints/<name>/`, each with its own `_eidos/`.
+3. **Name the root.** Default `Blueprints/`; offer to rename. Low-stakes — nothing points at it by path — so any name works. Several roots in one repo nest as `Blueprints/<name>/`, each with its own `_eidos/`.
 
 4. **Choose the naming convention.** Offer the three with `AskUserQuestion` — **kebab-case** (default; lowercase and space-free, no `%20` in links, the filename *is* the `id`), **TitleCase** (space-free and capitalized), **Title Case** (reads like prose, `%20` in every link) — and record it as `naming` in `Framework.md`'s frontmatter. EIDOS.md has the worked table. It governs the whole folder and changing it later means renaming files, so settle it now; the default is the safe answer.
 
@@ -71,7 +71,7 @@ On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand
 
    Take every file from the **one** seed. Don't mix shapes from one with roles from another — a seed's roles are written against its own collections.
 
-   **The seed and the folder may be on different machines.** The seed ships inside this skill; the folder lives in the user's repo, which on some hosts is reachable only across a device bridge. One filesystem, and a copy (or the script) is the whole job. Across a bridge, **send the seed files with the file-delivery tool and write them to their final paths in a single commit call.** Never re-type a file's contents, base64, or a tarball through a shell heredoc: transcription is lossy, a failed checksum costs the entire round trip, and a staged archive is litter inside someone's repo that you then need permission to delete.
+   **The seed and the root may be on different machines.** The seed ships inside this skill; the root lives in the user's repo, which on some hosts is reachable only across a device bridge. One filesystem, and a copy (or the script) is the whole job. Across a bridge, **send the seed files with the file-delivery tool and write them to their final paths in a single commit call.** Never re-type a file's contents, base64, or a tarball through a shell heredoc: transcription is lossy, a failed checksum costs the entire round trip, and a staged archive is litter inside someone's repo that you then need permission to delete.
 
    This is the root's own framework — the thing every other skill reads from here on. Leave it as the baseline; the owner can extend it later (`configure` for a custom property, a collection, or a flavor).
 

@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 4.4.1
+**Version:** 4.4.2
 
 A markdown standard for defining the essence of a thing — a product, a body of work, anything you set out to make. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished.
 
@@ -12,24 +12,25 @@ Every term the standard uses, in the order they build on each other.
 
 | Term | What it is |
 | --- | --- |
-| **framework** | The *form* everything is written in — its collections, shapes, flavors, roles, naming convention, and Schema. Lives in the hidden `_eidos/` at the root. Portable: one framework governs any number of Eidos folders. |
+| **root** | The one folder Eidos lives in, holding the framework, the collections, and any top-level docs. Found by the hidden `_eidos/` inside it, never by its name. |
+| **framework** | The *form* a root is written in — its collections, shapes, flavors, roles, naming convention, and Schema. Lives in the root's hidden `_eidos/`. Portable: the same framework governs any number of roots. |
 | **collection** | A top-level folder of repeated blueprints that share a body shape. A framework declares each one, and may group a collection's blueprints in one level of sub-folders. |
 | **blueprint** | One markdown file in a collection, defining one unit completely. Frontmatter (a contract) plus a body (a shape). |
-| **frame** | A blueprint in the **framing collection** — the loose, point-in-time documents saying what the whole thing is, against which every other blueprint is judged. Every framework declares a framing collection. |
-| **shape** | The body template a collection's blueprints follow: sections, in order, under set names, each with its guidance. Body only; frontmatter is generated. |
-| **flavor** | One of a collection's shapes. A collection has one shape *family* with one or more flavors, one marked default — a light flavor a blueprint can grow out of, or a deliberate variant. |
+| **frame** | A blueprint describing the whole thing rather than one unit of it. Frames set what every other blueprint is judged against, and are revised whenever that judgment changes. Every framework declares a framing collection. |
+| **shape** | One body template: the sections a blueprint carries, in order, under set names, each with its guidance. Body only; frontmatter is generated. One file per shape, in `_eidos/shapes/`. |
+| **flavor** | A collection's shapes are variants of one family, and each variant is a flavor (`<kind>.<flavor>`). A collection declares one or more and marks one default — typically a light flavor a blueprint can grow out of, beside a fuller one. |
 | **property** | One frontmatter field: a name, a type, which collections it applies to, and a meaning. |
 | **Schema** | The framework's whole property contract: the core properties Eidos requires, plus whatever the framework adds. |
 | **top-level doc** | A one-of-a-kind document at the root — a Roadmap, a Vision, the generated canvas. Free-form: no shape, no flavors, no validation. |
 | **role** | A response contract for one kind of person, saying how an agent talks to them. |
 | **actor** | Who is in the seat right now: their role, plus a personal calibration. |
-| **seed** | A starting framework the standard ships. `install` copies one into a new Eidos folder. |
+| **seed** | A starting framework the standard ships. `install` copies one into a new root. |
 
 A blueprint captures **state and intent, not work**. A task describes work and dies when the work ships; a blueprint describes the thing and stays accurate across its whole life — drafted, built, deprecated.
 
 ## Layout
 
-An Eidos folder is found by the hidden `_eidos/` inside it. The root may be named anything; nothing points at it by path.
+The root is found by the hidden `_eidos/` inside it. It may be named anything; nothing points at it by path.
 
 ```txt
 Blueprints/              # the root — `Blueprints` is only the default name
@@ -65,7 +66,7 @@ _eidos/
   .gitignore               # ignores me.md — the one file here not committed
 ```
 
-The skills read the framework from the folder they are working in, never from a copy of their own. A folder with no `_eidos/` is not an Eidos folder.
+The skills read the framework from the root they are working in, never from a copy of their own. A folder with no `_eidos/` is not a root.
 
 ### `Framework.md`
 
@@ -73,7 +74,7 @@ The one file describing the form rather than any single blueprint: frontmatter f
 
 ```markdown
 ---
-eidos_version: 4.4.1
+eidos_version: 4.4.2
 naming: kebab-case
 ---
 
@@ -142,7 +143,7 @@ Each property is a row: **Name · Type · Applies To · Meaning**. A type comes 
 | Name | Type | Meaning |
 | --- | --- | --- |
 | `id` | Text | Stable, unique, kebab-case identity. Assigned once, never renamed. References point at it. |
-| `title` | Text | Human-readable name. |
+| `title` | Text | Human-readable name. Rename it freely; `id` is what holds still. |
 | `summary` | Text | One plain line: what this blueprint is. The source for the collection's [`index.md`](#generated-leaves) listing; absent, the index flags it. |
 | `flavor` | Text | Which flavor this blueprint follows. Absent = the collection's default. |
 | `connects_to` | List | Blueprints this one connects to on the canvas, each a link, drawn as a directed edge. |
@@ -151,7 +152,7 @@ Each property is a row: **Name · Type · Applies To · Meaning**. A type comes 
 
 ### Roles and the actor
 
-Not every human working in an Eidos folder plays the same part — one holds the intent, another builds or drafts from it, another reviews it, another answers for it. The agent responds to each differently, from two files:
+Not everyone who works on the same root plays the same part — one holds the intent, another builds or drafts from it, another reviews it, another answers for it. The agent responds to each differently, from two files:
 
 - **`_eidos/roles/<role>.md`** — one response contract per role: vocabulary and technical depth, what to surface versus fold away, and who holds which decisions. Which roles exist is the framework's call; each [seed](seeds) ships a set written against its own collections. Committed and team-tunable.
 - **`_eidos/me.md`** — personal and gitignored, one per person. Names the actor's role and calibrates it on three axes: **ownership**, **experience with the scope**, and **technical capacity**. Set it with `whoami`. Blank is fine.
@@ -197,7 +198,7 @@ The sections themselves are documented in the shape file, not here.
 
 ### Frames and top-level docs
 
-Both are loose, point-in-time prose: record what is true now, revise when it changes. They differ in one way. A **frame** is a blueprint — it follows a shape, carries the frontmatter contract, and is validated. A **top-level doc** is one-of-a-kind, filled in once and edited in place, so it needs no shared shape and gets none. A shape earns its keep by being stamped again; a document written once doesn't need a cookie-cutter.
+Both are loose prose: record what is true now, revise when it changes. They differ in one way. A **frame** is a blueprint — it follows a shape, carries the frontmatter contract, and is validated. A **top-level doc** is one-of-a-kind, filled in once and edited in place, so it needs no shared shape and gets none. A shape earns its keep by being stamped again; a document written once doesn't need a cookie-cutter.
 
 For a top-level doc you've already drafted, `format` organizes it into the house style without adding anything of its own.
 
@@ -224,7 +225,7 @@ Two derived views. Both are regenerated wholesale, annotate rather than gate, an
 The load-bearing conventions.
 
 1. **The frontmatter is the agreement; the body is guidance.** Properties are checked against the framework's Schema. Body sections are recommended structure, not requirements.
-2. **The folder owns its framework.** Shapes and properties live in the root's `_eidos/`. A skill reads the framework from the folder it is working in, not from a copy of its own.
+2. **The root owns its framework.** Shapes and properties live in the root's `_eidos/`. A skill reads the framework from the root it is working in, not from a copy of its own.
 3. **Validation is framework-defined.** A check reads *that framework's* Schema and enforces it — the core properties plus the custom ones scoped to the blueprint's collection. The contract is the Schema, not a rule hardcoded in a tool.
 4. **Portability over prescription.** A missing core property is surfaced and added with a note on why; a missing section is noted and offered. Never refuse the file.
 5. **Write it like a human would read it.** The sections are a scaffold for a living blueprint, not a form to pour text into. If a blueprint reads like filled-in boilerplate, reshape it until it reads like someone wrote it.
@@ -233,26 +234,21 @@ The load-bearing conventions.
 8. **Properties carry a type and a meaning.** Every property declares its name, its type, which collections it applies to, and what it means. Frontmatter is generated from the Schema, so a new blueprint is born conforming.
 9. **Soft labels are views, not structure.** A category label a framework adds drives views and filtering, never structure. An off-list value is valid. `flavor` carries the structural choice.
 10. **A collection's grouping is the collection's own.** It may group its blueprints one level deep and may declare a property naming that grouping; the value then matches the folder, and an unknown value warns rather than blocks. The standard never names a grouping for it.
-11. **`id` is permanent.** Stable, unique, kebab-case, assigned once, never renamed. Rename `title` freely.
-12. **A shape names its own stable part.** Every shape has a part that holds still and a part that moves, and says which is which. If the stable part changes substantially, ask whether this is a different blueprint.
-13. **Non-goals carry the most weight.** Where a shape declares a section for what a blueprint deliberately will *not* do, that section is its strongest — it is where scope management actually happens. Still not a hard gate.
-14. **A shape documents its own conventions.** Section names, their order and meaning, and any labeling a shape asks for live in the shape file. This standard governs collections, shapes, flavors, and properties; it never governs a section.
-15. **No work-tracking fields.** No `sprint`, `estimate`, or `assignee` — the moment you add them, a blueprint becomes a task and rots. Bridge to a tracker with a link. The same holds in the body: a section describing how you mean to build a thing captures intent, never how far along it is.
-16. **`date_created` is set once; `date_modified` tracks the last change.** Git holds the full history. The Eidos version is a framework fact, in `Framework.md`, not a per-blueprint property.
-17. **Point-in-time documents evolve.** A top-level doc, and any collection a framework marks as loose prose, captures a snapshot of intent and is expected to change.
-18. **The human authors; the agent facilitates.** Intent, scope, and decisions stay with the person. An agent formats, supplements, asks, and holds scope; it does not generate finished blueprints or set direction. A blueprint the owner did not think through is worse than none.
-19. **Human-facing names follow the framework's naming convention** — `kebab-case` unless the framework says otherwise. The hidden `_eidos/` and the root `README.md` are the exceptions, keeping the names every tool already looks for. The kebab-case `id`, not the filename, is the permanent reference.
-20. **`Framework.md` is the framework's index; `README.md` is its door.** `configure` keeps both current.
-21. **Read the actor before acting.** Read `_eidos/me.md` and the matching contract in `_eidos/roles/`, and respond as that role defines. The human-first principle holds for every role; only the mode changes. A blank or absent file defaults to full facilitation.
-22. **Every framework declares a framing collection.** Its name, its flavors, and how many it carries are the framework's own — a framework needs framing, not a particular set of frames. Required as a **declaration**: a framework that declares none is incomplete and a check says so. Never a gate: a declared frame left unwritten is a gap to surface, not a failure.
-23. **Each collection has a generated index.** Rebuilt by `index`. Grouping more than one level deep is discouraged.
-24. **Shapes are for collections; top-level docs have none.** A top-level doc is free-form prose: no shape, no flavors, not validated, edited in place.
+11. **A shape names its own stable part.** Every shape has a part that holds still and a part that moves, and says which is which. If the stable part changes substantially, ask whether this is a different blueprint.
+12. **Non-goals carry the most weight.** Where a shape declares a section for what a blueprint deliberately will *not* do, that section is its strongest — it is where scope management actually happens. Still not a hard gate.
+13. **A shape documents its own conventions.** Section names, their order and meaning, and any labeling a shape asks for live in the shape file. This standard governs collections, shapes, flavors, and properties; it never governs a section.
+14. **No work-tracking fields.** No `sprint`, `estimate`, or `assignee` — the moment you add them, a blueprint becomes a task and rots. Bridge to a tracker with a link. The same holds in the body: a section describing how you mean to build a thing captures intent, never how far along it is.
+15. **The Eidos version is a framework fact.** It lives in `Framework.md`, never as a per-blueprint property. Git holds the history; a framework that wants date properties declares them like any other.
+16. **Loose prose is revised in place.** A top-level doc, and any collection a framework marks as loose prose, records what is true now and is expected to change. That is revision, not work status.
+17. **The human authors; the agent facilitates.** Intent, scope, and decisions stay with the person. An agent formats, supplements, asks, and holds scope; it does not generate finished blueprints or set direction. A blueprint the owner did not think through is worse than none.
+18. **Read the actor before acting.** Read `_eidos/me.md` and the matching contract in `_eidos/roles/`, and respond as that role defines. The human-first principle holds for every role; only the mode changes. A blank or absent file defaults to full facilitation.
+19. **Every framework declares a framing collection.** Its name, its flavors, and how many it carries are the framework's own — a framework needs framing, not a particular set of frames. Required as a **declaration**: a framework that declares none is incomplete and a check says so. Never a gate: a declared frame left unwritten is a gap to surface, not a failure.
 
 ## Versioning
 
 Semantic Versioning: major for breaking changes, minor for backward-compatible additions, patch for clarifications.
 
-This file holds the version of **the standard** — right now, **4.4.1** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its `_eidos/Framework.md`; `migrate` reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
+This file holds the version of **the standard** — right now, **4.4.2** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its `_eidos/Framework.md`; `migrate` reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
 
 **The plugin that ships this standard versions separately.** The skills and seeds change far more often than the standard does, so a release that fixes a skill bumps the plugin and leaves this file — and every framework's `eidos_version` — untouched. When you need to know what a framework conforms to, read this version; the plugin's is in `.claude-plugin/plugin.json`, and `CHANGELOG.md` records which standard each plugin release carried.
 
@@ -262,7 +258,7 @@ _Operating detail. A human can stop above._
 
 **Prefer the skills.** `eidos` authors and validates, `iterate` questions a rough idea into shape before any of that, `format` reshapes a draft already written, `install` scaffolds, `configure` adds a collection, flavor, or property and keeps the Framework current, `index` rebuilds a collection's leaf, `canvas` draws the map, `whoami` sets the actor, `migrate` upgrades versions.
 
-**Find the framework in the folder.** Locate the root by its `_eidos/` marker, not its name. Every operation reads that `_eidos/`. If a folder has none, offer `install`. Check the framework's `eidos_version` against the standard you carry once per session: a gap is worth one line and an offer of `migrate`, never a block, and the framework in front of you is the operative contract either way. Never fall back to a hardcoded contract, and never assume a collection or section name — read what the framework declares.
+**Find the framework in the root.** Locate the root by its `_eidos/` marker, not its name. Every operation reads that `_eidos/`. If a folder has none, offer `install`. Check the framework's `eidos_version` against the standard you carry once per session: a gap is worth one line and an offer of `migrate`, never a block, and the framework in front of you is the operative contract either way. Never fall back to a hardcoded contract, and never assume a collection or section name — read what the framework declares.
 
 **Read the actor first.** `_eidos/me.md`, then the role file it names. Respond as that file defines the role — read it, don't infer from its filename. A framework defines its own cast.
 

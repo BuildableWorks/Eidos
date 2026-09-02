@@ -1,7 +1,7 @@
 ---
 name: index
 description: >-
-  Build or refresh a collection's `index.md` in an Eidos folder — the generated leaf that lists a collection's blueprints so a human or agent can navigate without scraping the tree. Use when someone wants to "regenerate the index", "rebuild the specs index", "update Specs/index.md", "reindex the blueprints", "map the blueprints", says an index is stale, or after blueprints have been added, renamed, moved, or removed. It reads the framework's declared collections, walks each collection's one-level sub-folders, and rewrites its `index.md` wholesale — each blueprint a markdown link with its one-line `summary` property, grouped by sub-folder (a grouped collection) or flat. Ships a `build-index.py` that does the whole walk deterministically where a shell is available; falls back to doing it by hand on a sandboxed host. Regenerable and never gates.
+  Build or refresh a collection's `index.md` in a root — the generated leaf that lists a collection's blueprints so a human or agent can navigate without scraping the tree. Use when someone wants to "regenerate the index", "rebuild the specs index", "update Specs/index.md", "reindex the blueprints", "map the blueprints", says an index is stale, or after blueprints have been added, renamed, moved, or removed. It reads the framework's declared collections, walks each collection's one-level sub-folders, and rewrites its `index.md` wholesale — each blueprint a markdown link with its one-line `summary` property, grouped by sub-folder (a grouped collection) or flat. Ships a `build-index.py` that does the whole walk deterministically where a shell is available; falls back to doing it by hand on a sandboxed host. Regenerable and never gates.
 ---
 
 # Eidos Index
@@ -34,7 +34,7 @@ On a **sandboxed host** (Claude Desktop) where you can't run the script, do the 
 - The collections are declared in `_eidos/Framework.md` (the `## Collections` section), each with its folder.
 - Each collection's blueprints live under `<Collection>/`, optionally in one level of sub-folders (`<Collection>/<Group>/`).
 - Each collection's index is `<Collection>/index.md`.
-- This needs an installed framework. If there's no `_eidos/`, it isn't an Eidos folder yet — offer `install`.
+- This needs an installed framework. If there's no `_eidos/`, it isn't a root yet — offer `install`.
 
 ## Procedure (what the script does — and your fallback by hand)
 

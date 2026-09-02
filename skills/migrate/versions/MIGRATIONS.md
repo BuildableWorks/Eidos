@@ -6,6 +6,25 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
+## 4.4.1 → 4.4.2
+
+**A clarity pass over the glossary and the Rules. Set `eidos_version: 4.4.2`; nothing on disk has to move.**
+
+- **`root` is now a declared term** — the one folder Eidos lives in, found by its `_eidos/` and never by its name. 4.4.1 retired "definition" and left the concept unnamed, so the standard fell back on "an Eidos folder" in about a hundred places. The word was already doing the work; it is now in the vocabulary, and the prose uses it consistently.
+- **`shape` and `flavor` stop defining each other.** A shape is one body template, one file in `_eidos/shapes/`. A collection's shapes are variants of one family, and each variant is a flavor. Neither concept moved; the table just stopped looping.
+- **`frame` no longer reads as "expires".** It said "loose, point-in-time", which sits badly beside a standard whose whole claim is that a blueprint is independent of time or status. A frame is what the whole thing is, taken whole rather than unit by unit, revised when that judgment changes. Nothing about how frames work has moved.
+- **The Rules go 24 → 19 and renumber.** Five restated a section above them and were dropped, not relaxed: `id` permanence lives in the Schema table, naming in `## Naming`, `Framework.md` and `README.md` in their own sections, the generated index under `## Generated leaves`, and "top-level docs have no shape" in both the vocabulary and `## Frames and top-level docs`. **If you cite Eidos rules by number anywhere, re-check them** — that is the one thing in this release that can go stale.
+- **The old Rule 16 named two properties the standard does not define.** It mandated how `date_created` and `date_modified` behave, while the Schema section says Eidos defines no custom properties and that dates are a framework's own choice. It keeps the half that binds (the Eidos version is a framework fact, in `Framework.md`) and leaves dates to whichever framework declares them. **A framework already using those properties changes nothing** — it now simply owns them outright.
+- **The canvas is the Blueprint Map.** It draws blueprints and their `connects_to` edges; the framework is the one thing it never draws. `canvas` writes `blueprint-map.canvas` (or `BlueprintMap.canvas` / `Blueprint Map.canvas`) from here on, and only when you don't pass `--out` — so **an existing `framework-map.canvas` keeps its name until you regenerate without one.** If you do let it rename, update its bullet in `## Top-Level`.
+
+### Per root
+
+1. **Set `eidos_version: 4.4.2`** in `_eidos/Framework.md`, and update the version note in its `## Schema` block. That is the whole required migration.
+2. **Optionally regenerate the canvas** to take the new name, and fix its `## Top-Level` bullet if you do.
+3. **Optionally refresh the seed prose in `_eidos/`,** which still says "Framework Map" where the standard now says "Blueprint Map". Cosmetic: nothing reads those words.
+
+**Nothing else moves.** No property, no body section, no filename, no collection.
+
 ## 4.4.0 → 4.4.1
 
 **A vocabulary release. Set `eidos_version: 4.4.1`; nothing on disk has to move.**

@@ -1,7 +1,7 @@
 ---
 name: whoami
 description: >-
-  Set or update who you are in an Eidos folder — your role and calibration — written to your personal `_eidos/me.md`. Use when someone wants to "set my user", "tell Eidos who I am", "I'm the designer / a developer / the framework owner", "change my role", "set up who I am", "the AI is talking over my head" or "it's explaining things I already know", or when `_eidos/me.md` is blank or absent. It offers whatever roles the framework installed (`_eidos/roles/`), then calibrates the chosen one on three axes — your role for this product, your experience with the scope, and your technical capacity — and writes `_eidos/me.md`. That file is personal and gitignored; the agent reads it before acting to decide how to respond (vocabulary, depth, what to surface, who decides). Companion to `install`, which scaffolds the folder; this sets the actor.
+  Set or update who you are in a root — your role and calibration — written to your personal `_eidos/me.md`. Use when someone wants to "set my user", "tell Eidos who I am", "I'm the designer / a developer / the framework owner", "change my role", "set up who I am", "the AI is talking over my head" or "it's explaining things I already know", or when `_eidos/me.md` is blank or absent. It offers whatever roles the framework installed (`_eidos/roles/`), then calibrates the chosen one on three axes — your role for this product, your experience with the scope, and your technical capacity — and writes `_eidos/me.md`. That file is personal and gitignored; the agent reads it before acting to decide how to respond (vocabulary, depth, what to surface, who decides). Companion to `install`, which scaffolds the folder; this sets the actor.
 ---
 
 # Eidos Whoami

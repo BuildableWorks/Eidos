@@ -2,7 +2,7 @@
 
 _**εἶδος** (eidos), Greek — the form or essence of a thing: the look that makes it what it is. Plato's eternal Form; Aristotle's essence behind the matter._
 
-> **[Eidos v4.4.1](EIDOS.md)** — the full standard.
+> **[Eidos v4.4.2](EIDOS.md)** — the full standard.
 
 A markdown standard for defining the essence of a thing — a product, a body of work, anything you set out to make. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished. The files live as plain `.md` next to your code. No SaaS. No lock-in. No hidden state.
 
@@ -18,7 +18,7 @@ Product knowledge rots in tickets, wikis, and people's heads. Eidos keeps the au
 
 Eidos turns on two words. A **framework** is the *form*: the collections, shapes, roles, naming convention, and property Schema that govern how you write. A **blueprint** is the *thing*: one file defining one unit completely, a frontmatter contract plus a body. One framework governs any number of blueprints, and it is the portable piece — the part one team can hand to another.
 
-It all lives in one folder you drop into any repo:
+It all lives in one folder — the **root** — that you drop into any repo:
 
 ```txt
 Blueprints/                # the root — may be named anything
@@ -38,8 +38,8 @@ Blueprints/                # the root — may be named anything
 - **Framework** — the form layer, found by its hidden `_eidos/` folder, and the piece you can publish or hand to another team. [`Framework.md`](seeds/software/Framework.md) is its index and config; a visible `README.md` is the door into it.
 - **Collections** — folders of repeated blueprints. Every framework declares a **framing collection** first (the loose docs saying what the whole thing is), then at least one collection of blueprints. A blueprint is a **frontmatter** contract plus a **body**.
 - **Shapes & flavors** — a **shape** is the body template a collection's blueprints follow; a collection can offer more than one — **flavors** — with one default. Start in the flavor that fits and grow into a fuller one later.
-- **Schema** — the frontmatter contract every blueprint carries: six core properties Eidos requires, plus whatever the framework adds.
-- **Top-level docs** — one-of-a-kind documents at the root: a Roadmap, a Vision, the generated Framework Map. Free-form, no shape, no validation.
+- **Schema** — the frontmatter contract every blueprint carries: five core properties Eidos requires, plus whatever the framework adds.
+- **Top-level docs** — one-of-a-kind documents at the root: a Roadmap, a Vision, the generated Blueprint Map. Free-form, no shape, no validation.
 - **Roles & the actor** — [`roles/`](seeds) say how the agent talks to each kind of person; the personal, gitignored `me.md` says who _you_ are, so the same blueprints answer each reader differently.
 
 **Nothing above is named by the standard.** `EIDOS.md` defines collections, shapes, flavors, and properties — never what any of them is called. That is the framework's, and the [seeds](seeds) show the same machinery answering to three different vocabularies:
@@ -56,8 +56,8 @@ Pick the nearest seed and reshape it; none of them is privileged, and a framewor
 ## Quick start
 
 1. **Get the skills.** Optional but recommended — see [Installing the skills](#installing-the-skills).
-2. **Initialize.** Run `install`. It asks what you're defining, offers the seeds, and scaffolds an Eidos folder around the one you pick. Everything in a seed is reshapeable later, so "close enough" is the right answer.
-3. **Fill the frames first.** Loose, point-in-time prose — fill what's known and leave the rest. They set what every other blueprint is judged against, which is why every framework has to declare them.
+2. **Initialize.** Run `install`. It asks what you're defining, offers the seeds, and scaffolds a root around the one you pick. Everything in a seed is reshapeable later, so "close enough" is the right answer.
+3. **Fill the frames first.** Loose prose — fill what's known and leave the rest. They set what every other blueprint is judged against, which is why every framework has to declare them.
 4. **Author the blueprints.** One file per blueprint, named for its title in the convention you chose (kebab-case by default). Frontmatter is generated from the Schema; the body follows your collection's shape. Lead with what the shape opens on, and press hardest on its non-goals section — that's where scope is actually held. The `eidos` skill facilitates; it does not author for you.
 5. **Commit it.** The folder is the source of truth, `_eidos/` and all (except the personal `me.md`, which the seeded `.gitignore` keeps out). Review it in PRs alongside the code. Eidos relies on git history, so don't gitignore any of it.
 
@@ -70,12 +70,12 @@ Eidos ships as a **Claude plugin** bundling nine skills:
 - **`eidos`** — author + validate
 - **`iterate`** — question one rough idea until it holds still: which shape it takes, what it's for, how it fits the rest. Writes nothing; hands the understanding to `eidos`
 - **`format`** — reshape a rough draft into Eidos shape (a collection blueprint, or a free-form top-level doc)
-- **`install`** — scaffold a new Eidos folder (pick a seed; installs it into `_eidos/`)
+- **`install`** — scaffold a new root (pick a seed; installs it into `_eidos/`)
 - **`configure`** — add a collection or a flavor, add/rename/retire a custom property and backfill every blueprint, and keep the Framework's Top-Level index current
 - **`index`** — regenerate each collection's `index.md` listing
 - **`canvas`** — generate an Obsidian `.canvas` map of chosen collections, with `connects_to` links as edges
 - **`whoami`** — set who you are: pick a role and calibrate it (ownership, experience, technical capacity)
-- **`migrate`** — move an Eidos folder to a new version of the standard
+- **`migrate`** — move a root to a new version of the standard
 
 Most skills read the framework at runtime and need nothing of the standard: `iterate`, `format`, `configure`, `index`, `canvas`, and `whoami`. The other three carry a **committed copy** of just what they need — `eidos` (the `EIDOS.md` ruleset), `install` (the canonical [`seeds/`](seeds)), and `migrate` (the version history) — so each skill is self-contained wherever it's installed. `scripts/sync-skills.sh` keeps those copies in sync with the top-level sources.
 
@@ -111,7 +111,7 @@ claude --plugin-dir /path/to/eidos
 /plugin install eidos@eidos
 ```
 
-No build step: each skill carries the committed copies it needs and reads the framework from the folder's own `_eidos/` — all committed, so it behaves the same wherever it's installed.
+No build step: each skill carries the committed copies it needs and reads the framework from the root's own `_eidos/` — all committed, so it behaves the same wherever it's installed.
 
 ### Claude Desktop / Web
 
@@ -171,10 +171,10 @@ A seed is a starting point, not a cage: a framework may reshape or override any 
 
 Two things version separately, both with [Semantic Versioning](https://semver.org/).
 
-- **The standard** — the version in [`EIDOS.md`](EIDOS.md), and the one an Eidos folder records as `eidos_version`. It moves only when the text of the standard moves. Each release is frozen in [`versions/`](versions/) under its full semver name, with the worked upgrade path in [`MIGRATIONS.md`](versions/MIGRATIONS.md).
+- **The standard** — the version in [`EIDOS.md`](EIDOS.md), and the one a root records as `eidos_version`. It moves only when the text of the standard moves. Each release is frozen in [`versions/`](versions/) under its full semver name, with the worked upgrade path in [`MIGRATIONS.md`](versions/MIGRATIONS.md).
 - **The plugin** — the version in `.claude-plugin/plugin.json`, and what `/plugin install` and update checks see. It moves on every shipped release, including ones that only touch a skill or a seed.
 
-Every shipped release is tagged `vX.Y.Z` on the **plugin** version; the standard's releases are files in [`versions/`](versions/) rather than tags. They started on the same number and will drift, because the tooling changes far more often than the standard does. [`CHANGELOG.md`](CHANGELOG.md) tracks plugin releases and records which standard each one ships — so a release note that says *Standard: unchanged* means your Eidos folders need nothing.
+Every shipped release is tagged `vX.Y.Z` on the **plugin** version; the standard's releases are files in [`versions/`](versions/) rather than tags. They started on the same number and will drift, because the tooling changes far more often than the standard does. [`CHANGELOG.md`](CHANGELOG.md) tracks plugin releases and records which standard each one ships — so a release note that says *Standard: unchanged* means your roots need nothing.
 
 ## License
 

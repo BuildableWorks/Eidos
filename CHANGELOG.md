@@ -8,6 +8,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [4.5.2] - 2026-09-02 — Standard: 4.4.2
+
+**An audit of the glossary, and the repairs it turned up.** 4.5.1 renamed the unit and retired a term; reading the result cold showed what that left behind, plus a few things that had been wrong for longer. All prose: no property, folder, or filename moves, and the only behavior change is the name the canvas gives itself.
+
+Retiring "definition" was right, but the concept it named did not disappear — the standard just stopped having a word for it, and fell back on "an Eidos folder" about a hundred times across the docs and skills. An undeclared phrase used that often is a term whether or not it is in the table. **`root`** is now declared, which also fixes the vocabulary's other problem: the table used to open on `framework`, "the form *everything* is written in", with nothing named for it to be the form *of*. Now `root` comes first and `framework` has an antecedent.
+
+The Rules had quietly become a summary of the document. Twenty-four "load-bearing conventions", of which five restated a section that had already said it, so a reader could not tell which rules carried information they did not already have. Those five fold back into the sections that carried them and the list renumbers. Nothing is relaxed, and if you cite Eidos rules by number, that is the one thing here worth re-checking.
+
+### Changed
+
+- **`root` is a declared term** — the one folder Eidos lives in, holding the framework, the collections, and any top-level docs, found by its hidden `_eidos/` and never by its name. It leads the vocabulary table, and the prose across `EIDOS.md`, the seeds, and all nine skills now uses it instead of "an Eidos folder", "the folder", and "the definition root" interchangeably.
+- **`shape` and `flavor` stop defining each other.** Shape was "the body template a collection's blueprints follow" and flavor was "one of a collection's shapes", so a reader could not tell whether a collection has one shape or several. A shape is now one body template, one file in `_eidos/shapes/`; a collection's shapes are variants of one family, and each variant is a flavor. The concepts are untouched.
+- **`frame` no longer contradicts the thesis.** The vocabulary described frames as "loose, point-in-time" two rows after the standard claims a blueprint is "independent of time or status" — and a frame is a blueprint. What that phrase meant is that a frame is judgment about the whole rather than a description of one unit, revised when the judgment changes, so it now says that. Rule 16 (was 17) drops the phrase to match.
+- **The Rules go 24 → 19, and renumber.** Dropped as restatements: `id` permanence (in the Schema table, which now also notes that `title` renames freely), human-facing naming (`## Naming`), `Framework.md` is the index and `README.md` the door (their own sections), each collection has a generated index (`## Generated leaves`), and shapes are for collections (the vocabulary and `## Frames and top-level docs`).
+- **The generated canvas is the Blueprint Map.** It draws blueprints and their `connects_to` edges; the framework is the one thing it never draws, which made "Framework Map" exactly backwards after the rename. `build-canvas.py` defaults to `blueprint-map.canvas` (or `BlueprintMap.canvas` / `Blueprint Map.canvas`) and, as before, only picks the name when `--out` is absent — so **an existing `framework-map.canvas` keeps its name until it is regenerated without one.**
+
+### Fixed
+
+- **Rule 15 (was 16) mandated behavior for properties the standard does not define.** It fixed how `date_created` and `date_modified` behave, three sections after the Schema says "Eidos defines no custom properties" and names dates as a framework's own choice. It keeps the half that binds — the Eidos version is a framework fact, in `Framework.md`, never a per-blueprint property — and leaves dates to the framework declaring them. Nothing changes for a framework already carrying them.
+- **`README.md` claimed six core properties.** There are five: `id`, `title`, `summary`, `flavor`, `connects_to`. Wrong since the core set last changed, and unrelated to this release.
+
 ## [4.5.1] - 2026-09-02 — Standard: 4.4.1
 
 **One word doing the work of two.** The unit of an Eidos folder is a **blueprint**, not an "item", and **definition** leaves the vocabulary with nothing in its place. Prose only: no property, folder, or filename ever carried either word, so every folder already in a repo is conformant as it stands.

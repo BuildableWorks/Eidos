@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-build-canvas.py — generate an Obsidian .canvas (JSON Canvas 1.0) from an Eidos folder.
+build-canvas.py — generate an Obsidian .canvas (JSON Canvas 1.0) from a root.
 
 A visual map of the folder, opened in Obsidian's Canvas:
 
@@ -37,11 +37,11 @@ Usage:
   --include-dependencies also draw `depends_on` edges (off by default).
   --dependency-color N   Obsidian preset color for dependency edges (default 6 = purple).
   --vault                vault root that embed/file paths are relative to. Default: FRAMEWORK_ROOT.
-  --out                  output .canvas path. Default: <vault>/ plus "Framework Map" written in the
-                         framework's naming convention (kebab-case by default: framework-map.canvas).
+  --out                  output .canvas path. Default: <vault>/ plus "Blueprint Map" written in the
+                         framework's naming convention (kebab-case by default: blueprint-map.canvas).
   --list                 print the framework's declared collections, then exit.
 
-Exit codes: 0 = wrote (or --list); 1 = nothing to map / bad selection; 2 = not an Eidos folder.
+Exit codes: 0 = wrote (or --list); 1 = nothing to map / bad selection; 2 = not a root.
 """
 
 import argparse
@@ -155,10 +155,10 @@ def canvas_filename(framework_md):
     m = re.search(r"^naming:\s*(.+?)\s*$", framework_md.read_text(encoding="utf-8"), re.MULTILINE)
     naming = m.group(1) if m else "kebab-case"
     if naming == "TitleCase":
-        return "FrameworkMap.canvas"
+        return "BlueprintMap.canvas"
     if naming == "Title Case":
-        return "Framework Map.canvas"
-    return "framework-map.canvas"
+        return "Blueprint Map.canvas"
+    return "blueprint-map.canvas"
 
 
 def declared_collections(framework_md):
@@ -404,7 +404,7 @@ def build(root, vault_root, collections, include_deps, dep_color, colors, warnin
 
 # ---- cli ------------------------------------------------------------------
 def main():
-    ap = argparse.ArgumentParser(description="Generate an Obsidian .canvas map of an Eidos folder.")
+    ap = argparse.ArgumentParser(description="Generate an Obsidian .canvas map of a root.")
     ap.add_argument("root", nargs="?", default=".", help="root (contains _eidos/)")
     ap.add_argument("--collection", action="append", default=[], help="include this collection (repeatable)")
     ap.add_argument("--include-dependencies", action="store_true", help="also draw depends_on edges")
@@ -412,14 +412,14 @@ def main():
     ap.add_argument("--color", action="append", default=[], metavar="NAME:N",
                     help="color a collection: NAME:N (Obsidian preset 1-6). Repeatable. Overrides the palette and any existing canvas colors.")
     ap.add_argument("--vault", help="vault root for embed/file paths (default: root)")
-    ap.add_argument("--out", help="output .canvas path (default: <vault>/ + 'Framework Map' in the framework's convention)")
+    ap.add_argument("--out", help="output .canvas path (default: <vault>/ + 'Blueprint Map' in the framework's convention)")
     ap.add_argument("--list", action="store_true", help="list declared collections, then exit")
     args = ap.parse_args()
 
     root = Path(args.root).resolve()
     framework_md = root / "_eidos" / "Framework.md"
     if not framework_md.is_file():
-        print(f"error: no _eidos/Framework.md under {root} — not an Eidos folder", file=sys.stderr)
+        print(f"error: no _eidos/Framework.md under {root} — not a root", file=sys.stderr)
         return 2
 
     declared = declared_collections(framework_md)
