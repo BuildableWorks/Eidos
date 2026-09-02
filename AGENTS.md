@@ -27,4 +27,13 @@ Read the relevant skill (and `EIDOS.md`) before creating, scaffolding, migrating
 
 A skill fix bumps the plugin and nothing else — no snapshot, no seed edit, no `eidos_version` change in anyone's definition.
 
+**Tag every shipped release `vX.Y.Z`, on the plugin version, lightweight, on the release's final commit.** Match the existing tags: `git tag v4.5.0 && git push origin v4.5.0`, no `-a`. When a release spans several commits, tag the finished state, not the first commit whose subject happens to say "Release" — the tag has to name a tree someone could actually install.
+
+**Settled, don't re-litigate: the tags stay, and there is no second `standard/vX.Y.Z` namespace.** The two version lines already have two different release artifacts, and they are not interchangeable:
+
+- **The standard's** artifact is a **file** — `versions/vX.Y.Z.md`. It answers "what did the contract say?", and you can read it without checking anything out. A tag would be strictly worse at this.
+- **The plugin's** artifact is a **tree** — the `vX.Y.Z` tag. It answers "what did the skills and seeds look like when someone installed this?", which no snapshot carries. It is also what makes `git diff v4.4.0..v4.5.0` possible, what a GitHub Release attaches to, and what makes the `gitCommitSha` in a user's `installed_plugins.json` legible.
+
+**Tags are not how an install detects an update**, so never reach for one to fix an update problem. Claude Code clones the repo as a marketplace, tracks its **default branch**, and compares the `version` in `.claude-plugin/marketplace.json` against the installed version in `~/.claude/plugins/installed_plugins.json`. A release that forgets that field is a silent no-op for every existing install, which is why the plugin version has to move in **both** manifests on every release.
+
 **When the standard's version moves,** copy the current `EIDOS.md` into `versions/` under its full semver name (e.g. `versions/v3.0.0.md`) — snapshot at tag time, from the live file, so there's nothing historical to dig up. Add the hop to `versions/MIGRATIONS.md` (newest first): what moves, what stays, what needs a human decision. A plugin-only release does none of this. Worked hops live there, never in `migrate/SKILL.md`, so the skill stays a fixed size as the standard grows. `EIDOS.md` itself stays the current version. Migrate existing items with the `migrate` skill. After changing `EIDOS.md`, `seeds/`, `versions/`, or `CHANGELOG.md`, run `scripts/sync-skills.sh` and commit the updated skill copies — they are committed (not gitignored), so a git-marketplace install works on sandboxed hosts like Claude Desktop. `scripts/sync-skills.sh --check` verifies they're current; `scripts/package-plugin.sh` refreshes them before zipping.

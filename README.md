@@ -113,27 +113,35 @@ claude --plugin-dir /path/to/eidos
 
 No build step: each skill carries the committed copies it needs and reads a definition's framework from its own `_eidos/` — all committed, so it behaves the same wherever it's installed.
 
-### In Claude Desktop (and web / Cowork)
+### Claude Desktop / Web
 
-Desktop runs each skill **scoped to its own folder** — it can't reach sibling files at the plugin root. That's fine: every skill is self-contained (the three that need the standard carry committed copies of it), so the same marketplace install above works here. If you'd rather upload a file than add a git marketplace, build the zip:
+On any paid plan (Pro, Max, Team, Enterprise), add the repository as a marketplace and install from it — that way `/plugin` updates reach you like any other release:
+
+**Customize → Plugins → +** → _add marketplace from repository_ → `https://github.com/BuildableWorks/Eidos` → install **eidos** ([docs](https://support.claude.com/en/articles/13837440-use-plugins-in-claude)).
+
+This works because each skill is **self-contained**: Desktop scopes a skill to its own folder and it can't reach sibling files at the plugin root, so the three skills that need the standard carry committed copies of it.
+
+If you can't reach the repo — an air-gapped machine, or a private fork you'd rather not wire up — build a zip and upload that instead, accepting that it won't auto-update:
 
 ```
 ./scripts/package-plugin.sh        # → dist/eidos-plugin.zip
 ```
 
-Then, on any paid plan (Pro, Max, Team, Enterprise): **Customize → Plugins → +** → _upload a custom plugin file_ → pick `dist/eidos-plugin.zip` ([docs](https://support.claude.com/en/articles/13837440-use-plugins-in-claude)). The skills then work in chat on Desktop, the web, and Cowork. (Eidos has no hooks or sub-agents, which would otherwise run only in Cowork.)
+**Customize → Plugins → +** → _upload a custom plugin file_ → pick `dist/eidos-plugin.zip`.
+
+Either way the skills work in chat on Desktop, the web, and Cowork. (Eidos has no hooks or sub-agents, which would otherwise run only in Cowork.)
 
 ### Sharing it with someone else
 
-Hand a colleague the self-contained zip the package script builds — it works in both Claude Code and Desktop:
+Point them at the repo — it is a marketplace, so they get updates with it: `/plugin marketplace add BuildableWorks/Eidos` in Code, or _add marketplace from repository_ in Desktop. A **private** fork works the same way for a team that isn't ready to publish.
+
+When a repo isn't an option, hand them the self-contained zip instead:
 
 ```
 ./scripts/package-plugin.sh        # → dist/eidos-plugin.zip
 ```
 
-They install it with **Customize → Plugins → +** → _upload a custom plugin file_ (Desktop), or `claude --plugin-dir dist/eidos-plugin.zip` (Code). It's well under Desktop's 50 MB cap.
-
-For ongoing iteration, push to a **private** git repo and share the URL — `/plugin marketplace add <url>` (Code).
+They install it with **Customize → Plugins → +** → _upload a custom plugin file_ (Desktop), or `claude --plugin-dir dist/eidos-plugin.zip` (Code). It's well under Desktop's 50 MB cap, but it's a snapshot: a zip install won't see later releases.
 
 ### Raw, in another Claude Code project
 
@@ -166,7 +174,7 @@ Two things version separately, both with [Semantic Versioning](https://semver.or
 - **The standard** — the version in [`EIDOS.md`](EIDOS.md), and the one a definition records as `eidos_version`. It moves only when the text of the standard moves. Each release is frozen in [`versions/`](versions/) under its full semver name, with the worked upgrade path in [`MIGRATIONS.md`](versions/MIGRATIONS.md).
 - **The plugin** — the version in `.claude-plugin/plugin.json`, and what `/plugin install` and update checks see. It moves on every shipped release, including ones that only touch a skill or a seed.
 
-They started on the same number and will drift, because the tooling changes far more often than the standard does. [`CHANGELOG.md`](CHANGELOG.md) tracks plugin releases and records which standard each one ships — so a release note that says *Standard: unchanged* means your definitions need nothing.
+Every shipped release is tagged `vX.Y.Z` on the **plugin** version; the standard's releases are files in [`versions/`](versions/) rather than tags. They started on the same number and will drift, because the tooling changes far more often than the standard does. [`CHANGELOG.md`](CHANGELOG.md) tracks plugin releases and records which standard each one ships — so a release note that says *Standard: unchanged* means your definitions need nothing.
 
 ## License
 
