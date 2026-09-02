@@ -1,0 +1,12 @@
+# Roles
+
+Default **roles** for this framework — who is in the seat, and how the agent should respond to them. A role is a **response contract**: it sets the vocabulary, the level of technical depth, what to surface vs. fold away, and who holds which decisions. The agent reads it **before acting** (see the Eidos standard's `EIDOS.md`, "The actor").
+
+These are the book seed's baseline, browsable here and installed into a definition's `_eidos/roles/` by `install` (committed, so a team can tune how a role is treated for their book). Each person who works on the definition picks one in their personal, gitignored `_eidos/me.md` and **calibrates** it — what they own on this definition, their experience with the scope, and their technical capacity — with the `whoami` skill. Role sets the baseline; calibration tunes it per person.
+
+- [Framework Owner](framework-owner.md) — holds intent, scope, and decisions.
+- [Editor](editor.md) — reads for structure and what the book promises.
+- [Collaborator](collaborator.md) — drafts alongside the owner.
+- [Reader](reader.md) — reacts to the book, doesn't build it.
+
+A role is a baseline, not a cage: an actor can write a custom role in their `me.md`, and a framework can add or reshape role files here. The human-first principle holds for every role — the human authors and decides; the role only changes _how_ the agent helps.

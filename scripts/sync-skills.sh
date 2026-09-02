@@ -40,7 +40,7 @@ sync_one() {
 # eidos — the ruleset
 sync_one "EIDOS.md"      "skills/eidos/EIDOS.md"
 
-# install — every seed it can install (each carries its own shapes and personas)
+# install — every seed it can install (each carries its own shapes and roles)
 sync_one "seeds"         "skills/install/seeds"
 
 # migrate — the seeds plus the full version history, to diff and upgrade
@@ -49,11 +49,11 @@ sync_one "versions"      "skills/migrate/versions"
 sync_one "CHANGELOG.md"  "skills/migrate/CHANGELOG.md"
 sync_one "EIDOS.md"      "skills/migrate/EIDOS.md"
 
-# Each seed's .gitignore ignores the user.md beside it; the shipped blank template must still travel
+# Each seed's .gitignore ignores the me.md beside it; the shipped blank template must still travel
 # with the committed skill copies, so keep every one of them tracked past the ignore.
 if [ "$check" -eq 0 ]; then
   for skill in install migrate; do
-    for seed in skills/$skill/seeds/*/user.md; do
+    for seed in skills/$skill/seeds/*/me.md; do
       [ -f "$seed" ] && git add -f "$seed" 2>/dev/null || true
     done
   done

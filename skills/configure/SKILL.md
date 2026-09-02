@@ -1,7 +1,7 @@
 ---
 name: configure
 description: >-
-  Configure an Eidos definition's framework — the structure and contract in `_eidos/Framework.md`: its Collections (top-level content folders) and their Flavors (body shapes), its property Schema (the frontmatter contract every item carries), and its Top-Level document index. Use whenever someone wants to add a kind of content folder ("add a Decisions/ADR folder", "we need a Personas collection"), add or change a body flavor ("add a micro spec template", "make spec.full the default"), add, rename, or retire a custom property and backfill it across items ("add a `team` field to every spec", "every entry should have an owner team"), or refresh the Top-Level index ("update the framework index", "the Framework is out of date"). It scaffolds the folders and shape files and reconciles the items. It does not author items (use `eidos`), build a collection's per-item `index.md` (use `index`), or touch the Eidos core properties, which move with the standard's version (use `migrate`).
+  Configure an Eidos definition's framework — the structure and contract in `_eidos/Framework.md`: its Collections (top-level content folders) and their Flavors (body shapes), its property Schema (the frontmatter contract every item carries), and its Top-Level document index. Use whenever someone wants to add a kind of content folder ("add a Decisions/ADR folder", "we need a Roles collection"), add or change a body flavor ("add a micro spec template", "make spec.full the default"), add, rename, or retire a custom property and backfill it across items ("add a `team` field to every spec", "every entry should have an owner team"), or refresh the Top-Level index ("update the framework index", "the Framework is out of date"). It scaffolds the folders and shape files and reconciles the items. It does not author items (use `eidos`), build a collection's per-item `index.md` (use `index`), or touch the Eidos core properties, which move with the standard's version (use `migrate`).
 ---
 
 # Eidos Configure
@@ -31,7 +31,7 @@ A collection, flavor, or property nobody thought through reads as meaningful whi
 - **The Framework body only.** You edit its `## Top-Level`, `## Collections`, and `### Custom Properties` sections, and create shape files in `_eidos/shapes/`. Not per-item `index.md` files (`index`), not items (`eidos`).
 - **Never touch `### Eidos Core`.** Those move with the standard's version (`migrate`). A core property change is a standards change; redirect.
 - **Needs a framework.** Read `_eidos/Framework.md` from the definition root, found by its `_eidos/` marker. No `_eidos/` means no framework installed — offer `install` first.
-- **Read the actor first.** `_eidos/user.md`, and tune how you facilitate to the persona.
+- **Read the actor first.** `_eidos/me.md`, and tune how you facilitate to the role.
 - **Shapes are the owner's.** A flavor's sections are a content decision. Scaffold a starting point — usually by trimming the collection's default flavor — but let the owner shape it.
 - **Don't silently drop values.** Renaming or retiring a property touches real data in real items. Surface what's there before changing it.
 

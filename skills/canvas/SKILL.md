@@ -19,7 +19,7 @@ Produce a **visual map** of a definition that opens in Obsidian's Canvas view �
 
 A short conversation, not a one-shot — pick what goes on it, agree the colors, then generate:
 
-1. **Read the actor** (`_eidos/user.md`) and list what's available — `python3 <skill>/build-canvas.py <definition-root> --list` prints the declared collections (and notes that top-level docs aren't mapped).
+1. **Read the actor** (`_eidos/me.md`) and list what's available — `python3 <skill>/build-canvas.py <definition-root> --list` prints the declared collections (and notes that top-level docs aren't mapped).
 2. **Ask what to map** with `AskUserQuestion` — the declared collections, multi-select, defaulting to all. A canvas can be the whole definition or a focused slice; the framing collection is one like any other, include or omit.
 3. **Propose a color schema** — one Obsidian preset per collection (1 red, 2 orange, 3 yellow, 4 green, 5 cyan, 6 purple). Show it ("Frames = purple, Scenes = green — look good?") and adjust. **Skip this when a canvas already exists** at the output path: regenerating reuses its colors, so the owner's earlier choice sticks.
 4. **Generate** — run the script with the chosen scope and `--color NAME:N` per collection.

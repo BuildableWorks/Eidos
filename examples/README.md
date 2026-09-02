@@ -10,7 +10,7 @@ the essence, and every skill works the same way across both.
 | [`Screenplay/`](Screenplay) | **The Salt Road**, a short film about a cartographer who can no longer read her own maps | `book`, reshaped | `frames` · `scenes` by act |
 
 For what the pieces _are_ — framework and definition, top-level docs, collections, shapes, flavors,
-Schema, personas — see the [root README](../README.md) and [`EIDOS.md`](../EIDOS.md). This file just
+Schema, roles — see the [root README](../README.md) and [`EIDOS.md`](../EIDOS.md). This file just
 walks the two.
 
 To start your own definition, run the `install` skill and pick a [seed](../seeds) — don't copy
@@ -26,7 +26,7 @@ points at it by path, so a definition may call its root anything.
 ```
 Blueprint/                 # the definition
   README.md                # the definition's own "start here" front door
-  _eidos/                  # the framework (hidden): shapes, personas, Framework (index + config + Schema), user, .gitignore
+  _eidos/                  # the framework (hidden): shapes, roles, Framework (index + config + Schema), me, .gitignore
   roadmap.md               # a custom top-level doc — free-form, no shape
   frames/                  # the framing collection
     index.md               #   generated index of the collection
@@ -47,7 +47,7 @@ What to notice:
 - The **specs collection** holds the units, grouped into the **`playback`** and **`channels`** domains, listed in the generated [`specs/index.md`](Blueprint/specs/index.md).
 - It offers two **flavors** — `spec.full` (default) and `spec.micro`. [Resume Playback](Blueprint/specs/playback/resume-playback.md) carries `flavor: micro`, so it's checked against the lighter shape.
 - [`_eidos/Framework.md`](Blueprint/_eidos/Framework.md), in its `## Schema` section (`### Custom Properties`), adds one **custom property**, `beta` — a framework extending the baseline without forking the standard.
-- [`_eidos/personas/`](Blueprint/_eidos/personas) holds the **response contracts**, and [`_eidos/user.md`](Blueprint/_eidos/user.md) names the **actor** (here a technically-fluent Framework Owner). `user.md` is normally gitignored; it's committed here only to show its shape.
+- [`_eidos/roles/`](Blueprint/_eidos/roles) holds the **response contracts**, and [`_eidos/me.md`](Blueprint/_eidos/me.md) names the **actor** (here a technically-fluent Framework Owner). `me.md` is normally gitignored; it's committed here only to show its shape.
 
 ---
 
@@ -59,7 +59,7 @@ indexes, and maps identically.
 ```
 Screenplay/                # the definition — a custom root name
   README.md
-  _eidos/                  # the framework: scene + frame shapes, two personas, Framework, user, .gitignore
+  _eidos/                  # the framework: scene + frame shapes, two roles, Framework, me, .gitignore
   framework-map.canvas     # a generated top-level doc — the canvas
   frames/
     index.md

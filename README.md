@@ -16,7 +16,7 @@ Product knowledge rots in tickets, wikis, and people's heads. Eidos keeps the au
 
 ## How it works
 
-Eidos turns on two words. A **framework** is the *form*: the collections, shapes, personas, naming convention, and property Schema that govern how you write. A **definition** is the *thing*: the frames, items, and docs a team writes with a framework. One framework, many definitions — the framework is the portable piece, the part one team can hand to another.
+Eidos turns on two words. A **framework** is the *form*: the collections, shapes, roles, naming convention, and property Schema that govern how you write. A **definition** is the *thing*: the frames, items, and docs a team writes with a framework. One framework, many definitions — the framework is the portable piece, the part one team can hand to another.
 
 A definition is one folder you drop into any repo:
 
@@ -25,9 +25,9 @@ Blueprint/                 # the definition — the root may be named anything
   README.md                # the human "start here"
   _eidos/                  # the framework (hidden) — the form this definition is written in
     shapes/                #   body shapes, one file per flavor
-    personas/              #   how the agent should talk to each role
+    roles/              #   how the agent should talk to each role
     Framework.md           #   the index + config: version, naming, collections, Schema
-    user.md                #   who's in the seat (personal, gitignored)
+    me.md                  #   who's in the seat (personal, gitignored)
   roadmap.md               # a top-level doc — your own, free-form (optional)
   <Framing>/               # the framing collection — every framework declares one
   <Collection>/            # the units, grouped one level deep
@@ -40,7 +40,7 @@ Blueprint/                 # the definition — the root may be named anything
 - **Shapes & flavors** — a **shape** is the body template a collection's units follow; a collection can offer more than one — **flavors** — with one default. Start in the flavor that fits and grow into a fuller one later.
 - **Schema** — the frontmatter contract every unit carries: six core properties Eidos requires, plus whatever the framework adds.
 - **Top-level docs** — one-of-a-kind documents at the root: a Roadmap, a Vision, the generated Framework Map. Free-form, no shape, no validation.
-- **Personas & the actor** — [`personas/`](seeds) say how the agent talks to each kind of person; the personal, gitignored `user.md` says who _you_ are, so the same definition answers each reader differently.
+- **Roles & the actor** — [`roles/`](seeds) say how the agent talks to each kind of person; the personal, gitignored `me.md` says who _you_ are, so the same definition answers each reader differently.
 
 **Nothing above is named by the standard.** `EIDOS.md` defines collections, shapes, flavors, and properties — never what any of them is called. That is the framework's, and the [seeds](seeds) show the same machinery answering to three different vocabularies:
 
@@ -59,7 +59,7 @@ Pick the nearest seed and reshape it; none of them is privileged, and a framewor
 2. **Initialize.** Run `install`. It asks what you're defining, offers the seeds, and scaffolds a definition around the one you pick. Everything in a seed is reshapeable later, so "close enough" is the right answer.
 3. **Fill the frames first.** Loose, point-in-time prose — fill what's known and leave the rest. They set what every other item is judged against, which is why every framework has to declare them.
 4. **Author the units.** One file per unit, named for its title in the convention you chose (kebab-case by default). Frontmatter is generated from the Schema; the body follows your collection's shape. Lead with what the shape opens on, and press hardest on its non-goals section — that's where scope is actually held. The `eidos` skill facilitates; it does not author for you.
-5. **Commit it.** The definition is the source of truth, `_eidos/` and all (except the personal `user.md`, which the seeded `.gitignore` keeps out). Review it in PRs alongside the code. Eidos relies on git history, so don't gitignore any of it.
+5. **Commit it.** The definition is the source of truth, `_eidos/` and all (except the personal `me.md`, which the seeded `.gitignore` keeps out). Review it in PRs alongside the code. Eidos relies on git history, so don't gitignore any of it.
 
 The full rules are in **[EIDOS.md](EIDOS.md)**. See **[`examples/`](examples/)** for two filled-in definitions — a subset of YouTube, and a short film — to pattern-match against.
 
@@ -74,7 +74,7 @@ Eidos ships as a **Claude plugin** bundling nine skills:
 - **`configure`** — add a collection or a flavor, add/rename/retire a custom property and backfill every item, and keep the Framework's Top-Level index current
 - **`index`** — regenerate each collection's `index.md` listing
 - **`canvas`** — generate an Obsidian `.canvas` map of chosen collections, with `connects_to` links as edges
-- **`whoami`** — set who you are: pick a persona and calibrate it (role, experience, technical capacity)
+- **`whoami`** — set who you are: pick a role and calibrate it (ownership, experience, technical capacity)
 - **`migrate`** — move a definition to a new version of the standard
 
 Most skills read your definition's framework at runtime and need nothing of the standard: `iterate`, `format`, `configure`, `index`, `canvas`, and `whoami`. The other three carry a **committed copy** of just what they need — `eidos` (the `EIDOS.md` ruleset), `install` (the canonical [`seeds/`](seeds)), and `migrate` (the version history) — so each skill is self-contained wherever it's installed. `scripts/sync-skills.sh` keeps those copies in sync with the top-level sources.
@@ -152,12 +152,12 @@ The **[`seeds/`](seeds)** folder holds the starting frameworks Eidos ships. `ins
 Their collections and flavors are compared [above](#how-it-works). Every seed carries the same pieces, laid out exactly as they land in a fresh definition:
 
 - **`shapes/`** — one file per flavor: the body template a collection's items follow.
-- **`personas/`** — the response contracts, one per role. Each seed's are written against its own collections: `software` has a Developer and a Designer, `book` an Editor and a Reader, `research` an adversarial Reviewer and a non-technical Sponsor.
+- **`roles/`** — the response contracts, one per role. Each seed's are written against its own collections: `software` has a Developer and a Designer, `book` an Editor and a Reader, `research` an adversarial Reviewer and a non-technical Sponsor.
 - **`Framework.md`** — the index and config: version, naming convention, Top-Level documents, Collections (with flavors, canvas style, and grouping), and the property **Schema**.
-- **`user.md`** and **`.gitignore`** — the blank per-actor file, and the dotfile that keeps it out of version control.
+- **`me.md`** and **`.gitignore`** — the blank per-actor file, and the dotfile that keeps it out of version control.
 - **`README.md`** — the `{{Product}}` front-door template that installs to the definition's root.
 
-A seed is a starting point, not a cage: a framework may reshape or override any of it — add a property, adjust a shape, add a flavor, retune a persona — without forking the standard. And a seed is exactly the kind of artifact you'd hand to another team: form, no content.
+A seed is a starting point, not a cage: a framework may reshape or override any of it — add a property, adjust a shape, add a flavor, retune a role — without forking the standard. And a seed is exactly the kind of artifact you'd hand to another team: form, no content.
 
 ## Versioning
 

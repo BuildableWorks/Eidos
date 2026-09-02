@@ -264,7 +264,7 @@ def install(args):
     fs = Fs(args.dry_run)
 
     # 1. the framework itself. The seed's own README is the definition's visible door,
-    #    so it moves to the root; personas/README.md and the rest travel as they are.
+    #    so it moves to the root; roles/README.md and the rest travel as they are.
     fs.copytree(seed, root / "_eidos")
     if (root / "_eidos" / "README.md").exists() or args.dry_run:
         fs.remove(root / "_eidos" / "README.md")

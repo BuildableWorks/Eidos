@@ -38,7 +38,7 @@ On a **sandboxed host** (Claude Desktop) where you can't run the script, do the 
 
 ## Procedure (what the script does — and your fallback by hand)
 
-1. **Read the actor** (`_eidos/user.md`) and the declared collections (`_eidos/Framework.md`).
+1. **Read the actor** (`_eidos/me.md`) and the declared collections (`_eidos/Framework.md`).
 2. **Decide which collections to re-index.** Default to all; if only some folders changed, the script's `--collection` filter (or your own scope by hand) limits the work. For a small definition, re-indexing everything is fine.
 3. **For each chosen collection, walk its folder.** Read its one-level sub-folders (the grouping) and the items in each — or the items directly in the collection folder, if it's flat. For each item read its `title`, path, and `summary`.
 4. **Take each item's `summary` verbatim.** It's one plain line already. If an item has **no** `summary`, flag it (the script writes a `⚠️ TODO` placeholder in the bullet and lists the file on stderr) — then write a `summary` on that item, distilling its Intent to one line, and regenerate. Never invent a summary into the index alone; it belongs on the item.

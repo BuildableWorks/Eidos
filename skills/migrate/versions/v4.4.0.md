@@ -13,7 +13,7 @@ Every term the standard uses, in the order they build on each other.
 | Term | What it is |
 | --- | --- |
 | **definition** | The whole thing being defined: one folder, holding collections of items and any top-level docs. What a team writes. |
-| **framework** | The *form* a definition is written in — its collections, shapes, flavors, personas, naming convention, and Schema. Lives in the definition's hidden `_eidos/`. Portable: one framework, many definitions. |
+| **framework** | The *form* a definition is written in — its collections, shapes, flavors, roles, naming convention, and Schema. Lives in the definition's hidden `_eidos/`. Portable: one framework, many definitions. |
 | **collection** | A top-level folder of repeated items that share a body shape. A framework declares each one, and may group a collection's items in one level of sub-folders. |
 | **item** | One markdown file in a collection, defining one unit completely. Frontmatter (a contract) plus a body (a shape). |
 | **frame** | An item in the **framing collection** — the loose, point-in-time documents saying what the whole definition is, against which every other item is judged. Every framework declares a framing collection. |
@@ -22,8 +22,8 @@ Every term the standard uses, in the order they build on each other.
 | **property** | One frontmatter field: a name, a type, which collections it applies to, and a meaning. |
 | **Schema** | The framework's whole property contract: the core properties Eidos requires, plus whatever the framework adds. |
 | **top-level doc** | A one-of-a-kind document at the definition root — a Roadmap, a Vision, the generated canvas. Free-form: no shape, no flavors, no validation. |
-| **persona** | A response contract for one role, saying how an agent talks to that kind of person. |
-| **actor** | Who is in the seat right now: their persona, plus a personal calibration. |
+| **role** | A response contract for one kind of person, saying how an agent talks to them. |
+| **actor** | Who is in the seat right now: their role, plus a personal calibration. |
 | **seed** | A starting framework the standard ships. `install` copies one into a new definition. |
 
 An item captures **state and intent, not work**. A task describes work and dies when the work ships; an item describes the thing and stays accurate across its whole life — drafted, built, deprecated.
@@ -58,12 +58,12 @@ _eidos/
     <kind>.<flavor-1>.md   #   a collection's default flavor
     <kind>.<flavor-2>.md   #   a second flavor of the same kind
     frame.<kind>.md        #   the framing collection's flavors, one per kind of frame
-  personas/                # response contracts, committed and team-tunable
+  roles/                # response contracts, committed and team-tunable
     framework-owner.md     #   the one every seed carries
     <role>.md              #   the rest are the framework's own
   Framework.md             # index + config: version, naming, Top-Level, Collections, Schema
-  user.md                  # the actor (personal, gitignored)
-  .gitignore               # ignores user.md — the one file here not committed
+  me.md                    # the actor (personal, gitignored)
+  .gitignore               # ignores me.md — the one file here not committed
 ```
 
 The skills read the framework from the definition, never from a copy of their own. A folder with no `_eidos/` is not an Eidos definition.
@@ -150,14 +150,14 @@ Each property is a row: **Name · Type · Applies To · Meaning**. A type comes 
 
 **Eidos defines no custom properties.** A lifecycle `status`, dates, a grouping, a dependency list — all are a framework's own choice. Each [seed](seeds) makes its own set. Add one with `configure`, which presses for all four of Name, Type, Applies To, and Meaning, then backfills the items it applies to.
 
-### Personas and the actor
+### Roles and the actor
 
 Not every human on a definition plays the same part — one holds the intent, another builds or drafts from it, another reviews it, another answers for it. The agent responds to each differently, from two files:
 
-- **`_eidos/personas/<role>.md`** — one response contract per role: vocabulary and technical depth, what to surface versus fold away, and who holds which decisions. Which roles exist is the framework's call; each [seed](seeds) ships a set written against its own collections. Committed and team-tunable.
-- **`_eidos/user.md`** — personal and gitignored, one per person. Names the actor's persona and calibrates it on three axes: **role**, **experience with the scope**, and **technical capacity**. Set it with `whoami`. Blank is fine.
+- **`_eidos/roles/<role>.md`** — one response contract per role: vocabulary and technical depth, what to surface versus fold away, and who holds which decisions. Which roles exist is the framework's call; each [seed](seeds) ships a set written against its own collections. Committed and team-tunable.
+- **`_eidos/me.md`** — personal and gitignored, one per person. Names the actor's role and calibrates it on three axes: **ownership**, **experience with the scope**, and **technical capacity**. Set it with `whoami`. Blank is fine.
 
-One persona is common to every seed: the **Framework Owner**, who holds the intent, the scope, and the decisions. The rest of the cast depends on the work.
+One role is common to every seed: the **Framework Owner**, who holds the intent, the scope, and the decisions. The rest of the cast depends on the work.
 
 ## Writing a definition
 
@@ -244,7 +244,7 @@ The load-bearing conventions.
 18. **The human authors; the agent facilitates.** Intent, scope, and decisions stay with the person. An agent formats, supplements, asks, and holds scope; it does not generate finished items or set direction. An item the owner did not think through is worse than none.
 19. **Human-facing names follow the framework's naming convention** — `kebab-case` unless the framework says otherwise. The hidden `_eidos/` and the root `README.md` are the exceptions, keeping the names every tool already looks for. The kebab-case `id`, not the filename, is the permanent reference.
 20. **`Framework.md` is the framework's index; `README.md` is its door.** `configure` keeps both current.
-21. **Read the actor before acting.** Read `_eidos/user.md` and the matching contract in `_eidos/personas/`, and respond as that persona defines. The human-first principle holds for every persona; only the mode changes. A blank or absent file defaults to full facilitation.
+21. **Read the actor before acting.** Read `_eidos/me.md` and the matching contract in `_eidos/roles/`, and respond as that role defines. The human-first principle holds for every role; only the mode changes. A blank or absent file defaults to full facilitation.
 22. **Every framework declares a framing collection.** Its name, its flavors, and how many it carries are the framework's own — a framework needs framing, not a particular set of frames. Required as a **declaration**: a framework that declares none is incomplete and a check says so. Never a gate: a declared frame left unwritten is a gap to surface, not a failure.
 23. **Each collection has a generated index.** Rebuilt by `index`. Grouping more than one level deep is discouraged.
 24. **Shapes are for collections; top-level docs have none.** A top-level doc is free-form prose: no shape, no flavors, not validated, edited in place.
@@ -263,9 +263,9 @@ _Operating detail. A human can stop above._
 
 **Prefer the skills.** `eidos` authors and validates, `iterate` questions a rough idea into shape before any of that, `install` scaffolds, `configure` adds a collection, flavor, or property and keeps the Framework current, `index` rebuilds a collection's leaf, `canvas` draws the map, `whoami` sets the actor, `migrate` upgrades versions.
 
-**Find the framework in the definition.** Locate a definition by its `_eidos/` marker, not its folder name. Every operation reads that `_eidos/`. If a folder has none, offer `install`. Never fall back to a hardcoded contract, and never assume a collection or section name — read what the framework declares.
+**Find the framework in the definition.** Locate a definition by its `_eidos/` marker, not its folder name. Every operation reads that `_eidos/`. If a folder has none, offer `install`. Check the framework's `eidos_version` against the standard you carry once per session: a gap is worth one line and an offer of `migrate`, never a block, and the framework in front of you is the operative contract either way. Never fall back to a hardcoded contract, and never assume a collection or section name — read what the framework declares.
 
-**Read the actor first.** `_eidos/user.md`, then the persona file it names. Respond as that file defines the role — read it, don't infer from its filename. A framework defines its own cast.
+**Read the actor first.** `_eidos/me.md`, then the role file it names. Respond as that file defines the role — read it, don't infer from its filename. A framework defines its own cast.
 
 **Navigate by the leaves.** `README.md` for orientation, `_eidos/Framework.md` for the full index, each collection's `index.md` for its items. Read these instead of scraping the tree; regenerate them when stale.
 

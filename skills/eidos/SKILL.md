@@ -6,7 +6,7 @@ description: >-
 
 # Eidos
 
-Eidos is a standard with two halves: a **framework** is the form (collections, shapes, personas, Schema), and a **definition** is the thing written with it. A framework organizes a definition into **collections** of **items**, each item a living markdown document that defines one unit completely: "this is what you're getting," with no ambiguity — true whether or not the thing has been built. It captures **state and intent, not work**. Every item conforms to its collection's body **shape**; what those collections are called and what their items hold is the framework's — this skill authors any of them, reading the framework to see which exist.
+Eidos is a standard with two halves: a **framework** is the form (collections, shapes, roles, Schema), and a **definition** is the thing written with it. A framework organizes a definition into **collections** of **items**, each item a living markdown document that defines one unit completely: "this is what you're getting," with no ambiguity — true whether or not the thing has been built. It captures **state and intent, not work**. Every item conforms to its collection's body **shape**; what those collections are called and what their items hold is the framework's — this skill authors any of them, reading the framework to see which exist.
 
 This skill is the **how**: how to facilitate authoring and validation with a person. The **what** — the rules, the layout, the form-layer model, the property and body conventions — is the standard, and it lives in **EIDOS.md**. Read EIDOS.md for anything the rules decide; don't restate it here.
 
@@ -18,16 +18,29 @@ Eidos is human-first. The owner holds the intent, the scope, and the decisions; 
 
 **Don't:** invent an item's purpose, behavior, or direction; generate a whole item from a one-line prompt (ask first — and when the idea is still rough, `iterate` is the pass that settles it before any of this); resolve open questions for the user; bury the owner in AI-written prose. Less, owned, beats more, unread. When unsure, **ask** rather than write — a good session ends with the human standing behind every line.
 
-**Read the actor first.** Before acting, read `_eidos/user.md` for the actor's persona and calibration, then open that persona's own contract in `_eidos/personas/<persona>.md` and **follow it** — the contract defines the vocabulary, the technical depth, what to surface vs. fold away, and who holds decisions for this actor. Don't assume a fixed cast of roles or paraphrase from a persona's name: a framework defines its own (a film framework might have `director`, `producer`, `actor`), so read the persona that's actually there. Calibration (role, experience with the scope, technical capacity) tunes the baseline. A blank or absent `user.md` means default to full, framework-owner-style facilitation — offer to set it with `whoami`. The human-first principle holds for every persona.
+**Read the actor first.** Before acting, read `_eidos/me.md` for the actor's role and calibration, then open that role's own contract in `_eidos/roles/<role>.md` and **follow it** — the contract defines the vocabulary, the technical depth, what to surface vs. fold away, and who holds decisions for this actor. Don't assume a fixed cast of roles or paraphrase from a role's name: a framework defines its own (a film framework might have `director`, `producer`, `actor`), so read the role that's actually there. Calibration (role, experience with the scope, technical capacity) tunes the baseline. A blank or absent `me.md` means default to full, framework-owner-style facilitation — offer to set it with `whoami`. The human-first principle holds for every role.
 
 ## What to read
 
 Two sources — and neither is this file:
 
 - **EIDOS.md — the ruleset.** Read it for any question of _what is correct_: the vocabulary, the layout, the property and body rules, the Rules, and a `## For an agent` operating guide. A committed copy ships in this skill's own folder, synced by `scripts/sync-skills.sh`, so it's there on a sandboxed host too.
-- **The definition's `_eidos/` — the operative framework.** Found by that marker, not by a folder name: `shapes/` (one file per flavor), `personas/` (the response contracts), `Framework.md` (version and naming in frontmatter; Top-Level, Collections, and the property **Schema** in its body), `user.md` (the actor). This is the **live** contract — a framework may have been extended, so always read it, never a copy of your own. **No `_eidos/` means no framework is installed — stop and offer `install`.**
+- **The definition's `_eidos/` — the operative framework.** Found by that marker, not by a folder name: `shapes/` (one file per flavor), `roles/` (the response contracts), `Framework.md` (version and naming in frontmatter; Top-Level, Collections, and the property **Schema** in its body), `me.md` (the actor). This is the **live** contract — a framework may have been extended, so always read it, never a copy of your own. **No `_eidos/` means no framework is installed — stop and offer `install`.**
 
 `references/example-spec.md` is one complete, well-formed item to pattern-match against — a spec, because the example had to be *something*. Match its craft, not its section names; yours come from the shape.
+
+## Check the version once, up front
+
+The definition records the standard it targets as `eidos_version` in `_eidos/Framework.md`; the standard you carry records its own in the `**Version:**` header of this skill's `EIDOS.md`. Compare them **once per session**, before the first operation, and never again — a check that fires on every item is nagging, not helping.
+
+| What you find | What to do |
+| --- | --- |
+| The two match | Nothing. Say nothing and get on with it. |
+| The definition is **older** | Name both versions in one line and offer `migrate`. Then carry on. |
+| The definition is **newer** | The plugin is behind the definition, not the other way round. Say so, don't offer to migrate — that would be a downgrade — and be careful with anything the framework declares that you don't recognize. |
+| No `eidos_version` at all | Pre-3.0, or hand-made. Offer `migrate` to establish one. |
+
+**A version gap never blocks the work.** The framework in front of you is the operative contract whatever version it claims, so read it and proceed; an offer the owner declines is the end of it for this session. Mention a gap once, at the point it could matter, and if a specific rule you're about to apply is one the versions actually disagree about, say which — a bare "you're on 4.2.1" tells the owner nothing about whether it costs them anything.
 
 ## Doing the work
 

@@ -27,10 +27,10 @@ Every seed carries the same pieces, in the same layout:
 ```
 seeds/<seed>/
   shapes/             # collection body shapes, one file per flavor (<kind>.<flavor>.md)
-  personas/           # response contracts, one per role (installs to _eidos/personas/)
+  roles/           # response contracts, one per role (installs to _eidos/roles/)
   Framework.md        # version + naming (frontmatter); body indexes Top-Level, Collections, and the property Schema
-  user.md             # blank actor frame (installs to _eidos/user.md — personal, gitignored)
-  .gitignore          # installs to _eidos/.gitignore (ignores user.md beside it)
+  me.md               # blank actor frame (installs to _eidos/me.md — personal, gitignored)
+  .gitignore          # installs to _eidos/.gitignore (ignores me.md beside it)
   README.md           # the {{Product}} template — installs to <root>/README.md, the visible "start here"
 ```
 
@@ -65,11 +65,11 @@ On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand
 
 5. **Install the chosen framework.** Copy `seeds/<chosen>/` into the root as a hidden `_eidos/` — everything except `README.md`, which goes to the definition root:
 
-   - `shapes/`, `personas/`, `user.md`, `.gitignore` → straight into `<root>/_eidos/`.
+   - `shapes/`, `roles/`, `me.md`, `.gitignore` → straight into `<root>/_eidos/`.
    - `Framework.md` → `<root>/_eidos/Framework.md`, then set its `naming` to the convention from step 4 (seeds ship `kebab-case`). It carries the index **and** the property Schema — there is no separate Schema file.
    - `README.md` → `<root>/README.md`, the visible "start here"; you fill its name and one-liner in step 6.
 
-   Take every file from the **one** seed. Don't mix shapes from one with personas from another — a seed's personas are written against its own collections.
+   Take every file from the **one** seed. Don't mix shapes from one with roles from another — a seed's roles are written against its own collections.
 
    **The seed and the definition may be on different machines.** The seed ships inside this skill; the definition lives in the user's repo, which on some hosts is reachable only across a device bridge. One filesystem, and a copy (or the script) is the whole job. Across a bridge, **send the seed files with the file-delivery tool and write them to their final paths in a single commit call.** Never re-type a file's contents, base64, or a tarball through a shell heredoc: transcription is lossy, a failed checksum costs the entire round trip, and a staged archive is litter inside someone's repo that you then need permission to delete.
 
@@ -84,10 +84,10 @@ On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand
 
    Don't write item prose here — that's `eidos`. Don't invent top-level docs; if the owner wants one, point them at `format`. Install lays the frame.
 
-7. **Set the actor.** Run [`whoami`](../whoami) to pick a persona and calibrate it into `_eidos/user.md`. Blank is fine — an unset actor means full facilitation, and they can run it later. Personal and gitignored, the one piece not committed.
+7. **Set the actor.** Run [`whoami`](../whoami) to pick a role and calibrate it into `_eidos/me.md`. Blank is fine — an unset actor means full facilitation, and they can run it later. Personal and gitignored, the one piece not committed.
 
 8. **Hand off.** Report which seed was installed, what landed in `_eidos/`, the `README.md` front door, and the collections scaffolded — then point to `eidos` to start authoring. Don't fill anything in yourself.
 
 ## After init
 
-The definition is plain markdown — commit it alongside the code, `_eidos/` and all, except the personal `user.md` the seeded `.gitignore` keeps out. From here: `eidos` authors and validates, `configure` adds a collection, flavor, or property, `index` rebuilds the leaves, `whoami` sets the actor, `migrate` moves versions.
+The definition is plain markdown — commit it alongside the code, `_eidos/` and all, except the personal `me.md` the seeded `.gitignore` keeps out. From here: `eidos` authors and validates, `configure` adds a collection, flavor, or property, `index` rebuilds the leaves, `whoami` sets the actor, `migrate` moves versions.

@@ -14,7 +14,7 @@ Companion to `eidos` (authors and validates) and `format` (reshapes a draft alre
 
 ## Before you ask anything
 
-**Read the actor.** `_eidos/user.md` for the persona and calibration, then that persona's own contract in `_eidos/personas/<persona>.md`, and follow it — it sets the vocabulary, the depth, what to surface, and who holds decisions. Read the contract itself; don't infer a role from its filename. A blank or absent `user.md` means default to full facilitation; offer `whoami`.
+**Read the actor.** `_eidos/me.md` for the role and calibration, then that role's own contract in `_eidos/roles/<role>.md`, and follow it — it sets the vocabulary, the depth, what to surface, and who holds decisions. Read the contract itself; don't infer a role from its filename. A blank or absent `me.md` means default to full facilitation; offer `whoami`.
 
 **Read the framework.** `_eidos/Framework.md` for the collections, their flavors, their grouping, and the Schema. No `_eidos/` means no framework — stop and offer `install`.
 
