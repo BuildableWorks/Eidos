@@ -16,7 +16,7 @@ For a definition with **no** `naming` key, settle it rather than letting the def
 
 - **Read the convention off the files.** The tree already answers the question. A collection folder or item filename containing a space means `Title Case`; space-free and capitalized (`WatchAVideo.md`) means `TitleCase`; lowercase and hyphenated (`watch-a-video.md`) means `kebab-case`. Check a couple of collections rather than one file, and if they disagree, that is a real inconsistency to surface, not something to average.
 - **Confirm it with the owner, then write it into `_eidos/Framework.md`.** State what the files say and what you are about to record. Recording what the definition already does is not a change to it.
-- **Adopting kebab-case is a separate, deliberate pass,** never bundled into the version bump — it renames every collection folder, sub-folder, and item file, rewrites every link, and lowercases each grouping property's value to match its folder (`domain: Channels` → `domain: channels`). Do it when the owner wants it. Both example definitions in `examples/` were converted this release if you want a worked diff to read.
+- **Adopting kebab-case is a separate, deliberate pass,** never bundled into the version bump — it renames every collection folder, sub-folder, and item file, rewrites every link, and lowercases each grouping property's value to match its folder (`domain: Channels` → `domain: channels`). Do it when the owner wants it.
 
 Two smaller notes:
 

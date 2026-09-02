@@ -61,7 +61,7 @@ Pick the nearest seed and reshape it; none of them is privileged, and a framewor
 4. **Author the units.** One file per unit, named for its title in the convention you chose (kebab-case by default). Frontmatter is generated from the Schema; the body follows your collection's shape. Lead with what the shape opens on, and press hardest on its non-goals section — that's where scope is actually held. The `eidos` skill facilitates; it does not author for you.
 5. **Commit it.** The definition is the source of truth, `_eidos/` and all (except the personal `me.md`, which the seeded `.gitignore` keeps out). Review it in PRs alongside the code. Eidos relies on git history, so don't gitignore any of it.
 
-The full rules are in **[EIDOS.md](EIDOS.md)**. See **[`examples/`](examples/)** for two filled-in definitions — a subset of YouTube, and a short film — to pattern-match against.
+The full rules are in **[EIDOS.md](EIDOS.md)**.
 
 ## Installing the skills
 
@@ -164,7 +164,7 @@ A seed is a starting point, not a cage: a framework may reshape or override any 
 Two things version separately, both with [Semantic Versioning](https://semver.org/).
 
 - **The standard** — the version in [`EIDOS.md`](EIDOS.md), and the one a definition records as `eidos_version`. It moves only when the text of the standard moves. Each release is frozen in [`versions/`](versions/) under its full semver name, with the worked upgrade path in [`MIGRATIONS.md`](versions/MIGRATIONS.md).
-- **The plugin** — the version in `.claude-plugin/plugin.json`, and what `/plugin install` and update checks see. It moves on every shipped release, including ones that only touch a skill, a seed, or an example.
+- **The plugin** — the version in `.claude-plugin/plugin.json`, and what `/plugin install` and update checks see. It moves on every shipped release, including ones that only touch a skill or a seed.
 
 They started on the same number and will drift, because the tooling changes far more often than the standard does. [`CHANGELOG.md`](CHANGELOG.md) tracks plugin releases and records which standard each one ships — so a release note that says *Standard: unchanged* means your definitions need nothing.
 

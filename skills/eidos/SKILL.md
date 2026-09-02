@@ -27,8 +27,6 @@ Two sources — and neither is this file:
 - **EIDOS.md — the ruleset.** Read it for any question of _what is correct_: the vocabulary, the layout, the property and body rules, the Rules, and a `## For an agent` operating guide. A committed copy ships in this skill's own folder, synced by `scripts/sync-skills.sh`, so it's there on a sandboxed host too.
 - **The definition's `_eidos/` — the operative framework.** Found by that marker, not by a folder name: `shapes/` (one file per flavor), `roles/` (the response contracts), `Framework.md` (version and naming in frontmatter; Top-Level, Collections, and the property **Schema** in its body), `me.md` (the actor). This is the **live** contract — a framework may have been extended, so always read it, never a copy of your own. **No `_eidos/` means no framework is installed — stop and offer `install`.**
 
-`references/example-spec.md` is one complete, well-formed item to pattern-match against — a spec, because the example had to be *something*. Match its craft, not its section names; yours come from the shape.
-
 ## Check the version once, up front
 
 The definition records the standard it targets as `eidos_version` in `_eidos/Framework.md`; the standard you carry records its own in the `**Version:**` header of this skill's `EIDOS.md`. Compare them **once per session**, before the first operation, and never again — a check that fires on every item is nagging, not helping.

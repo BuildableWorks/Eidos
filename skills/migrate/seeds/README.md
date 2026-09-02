@@ -22,4 +22,4 @@ Every seed carries the same pieces, so the skills work identically across them:
 
 **Three seeds, one standard.** `software` is the default and the one the standard teaches from, but nothing in Eidos knows a collection by name: `book` calls its units `Chapters` and groups them by `part`, `research` calls them `Investigations` and groups them by `strand`, and both work the same way the software seed does. A seed is a starting point, not a cage — and it's the same kind of artifact you'd publish for someone else to start from.
 
-**None of these fit?** Start from the nearest and reshape it, or scaffold your own collections with `configure`. See [`examples/`](../examples) for two filled-in definitions to pattern-match against.
+**None of these fit?** Start from the nearest and reshape it, or scaffold your own collections with `configure`.

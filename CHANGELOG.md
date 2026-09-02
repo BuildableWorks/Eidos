@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [4.5.0] - 2026-09-02 — Standard: 4.4.0
 
-**Shorter names, all round.** `some-spec-feature.md` is what a definition names its files unless it says otherwise, the skills drop their `eidos-` prefix, the actor layer stops borrowing words that already meant something else, and a ninth skill lands to question an idea before anyone writes it down.
+**Shorter names, all round.** `some-spec-feature.md` is what a definition names its files unless it says otherwise, the skills drop their `eidos-` prefix, the actor layer stops borrowing words that already meant something else, a ninth skill lands to question an idea before anyone writes it down, and two piles of worked example content leave the repo.
 
 kebab-case first. Naming has been a choice since 3.1.0, with Title Case as the default because the file tree is a table of contents and `Magic Link Sign-In.md` reads like one. It does, right up until something has to point at it: every link then carries `%20`, every path needs quoting in a shell, and every tool that touches the tree has one more escaping rule to get right. kebab-case gives up the spaces and gets all of that back, and the filename becomes the `id` rather than a second rendering of the title. Title Case and TitleCase stay exactly as they are, one line in `Framework.md` and a rename pass away.
 
@@ -31,11 +31,14 @@ Then the actor layer, where two names were borrowed words. A **persona**, in the
 - **The default naming convention is `kebab-case`**, and an absent `naming` key means `kebab-case` rather than `Title Case`. A definition that carries the key is untouched: the key is authoritative in both versions and only the fallback moved. A definition that doesn't should have its convention read off its own files and written down — `versions/MIGRATIONS.md` has the hop, including how to detect it. Both seeds and `install-seed.py` default to kebab-case; `eidos-install` offers it first.
 - **`README.md` is named as an exception**, beside `_eidos/`, in the Naming section and in Rule 19. It keeps the name every tool already looks for, whatever the convention — which every definition was already doing, unwritten.
 - **The canvas names itself in the convention.** `build-canvas.py` reads `naming` and defaults its output to `framework-map.canvas`, `FrameworkMap.canvas`, or `Framework Map.canvas`. The canvas is a top-level document, so its own name follows the same rule as everything else a human reads in the tree; `--out` still overrides.
-- **Both example definitions are kebab-case.** `examples/Blueprint` and `examples/Screenplay` were converted whole — folders, item files, links, canvas, and each grouping property's value (`domain: Channels` → `domain: channels`) — so the worked examples show the default, and the diff is there to read for anyone doing the same conversion.
+
+### Removed
+
+- **The `examples/` folder.** `Blueprint` (a subset of YouTube) and `Screenplay` (*The Salt Road*) are gone from the repo; worked, filled-in definitions belong on an instructional site, not in the standard's own tree, where they were a second copy of everything to keep in step with every release. `seeds/` still ships three complete frameworks, which is the part someone actually installs. `EIDOS.md`, `README.md`, and `seeds/README.md` no longer point at them.
+- **`skills/eidos/references/example-spec.md`.** A whole worked spec loaded on every authoring session, to be pattern-matched for "craft, not section names" — a distinction that does not survive contact with a concrete file. The shape in the definition's own `_eidos/shapes/` already says what the body is, and one seed-flavored example sitting next to it mostly biased the output toward that seed's sections. Less context read, less pull toward the software vocabulary.
 
 ### Fixed
 
-- **The example definitions' actor files were never actually committed.** `examples/README.md` and both files claimed they were checked in "only to show their shape", but the seeded `.gitignore` they carry ignores that filename, so a clone got neither. Both are now force-added, which is what the prose said all along.
 - **`install-seed.py` wrote group names that could not match their folders.** `--group "Prior Work"` created `prior-work/` but recorded `**Prior Work**` in the Framework's grouping bullet, so an item's grouping property could match the declaration or the folder but never both. The bullets are now written in the framework's convention, like everything else. Invisible while Title Case was the default and the two happened to agree; not invisible now.
 
 ## [4.4.0] - 2026-08-31 — Standard: unchanged (4.3.2)

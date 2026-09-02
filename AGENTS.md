@@ -22,8 +22,8 @@ Read the relevant skill (and `EIDOS.md`) before creating, scaffolding, migrating
 
 **Two versions, bumped separately.** Know which one a change touches before you bump anything.
 
-- **The plugin version** (`.claude-plugin/plugin.json` **and** `.claude-plugin/marketplace.json` — both, or updates no-op) moves on **every** shipped release, including skill-only, seed-only, and example-only ones. Add a `CHANGELOG.md` entry naming the plugin version and, on its first line, which standard it ships.
-- **The standard version** (`EIDOS.md`'s `**Version:**` header, its Versioning section, and the `eidos_version` in its sample Framework block) moves **only when the text of `EIDOS.md` moves**. When it does, also update: the badge at the top of `README.md`; both version spots in **every** seed (`seeds/*/Framework.md` — the `eidos_version` frontmatter **and** the version note in its `## Schema` block) and both example definitions (`examples/*/_eidos/Framework.md`).
+- **The plugin version** (`.claude-plugin/plugin.json` **and** `.claude-plugin/marketplace.json` — both, or updates no-op) moves on **every** shipped release, including skill-only and seed-only ones. Add a `CHANGELOG.md` entry naming the plugin version and, on its first line, which standard it ships.
+- **The standard version** (`EIDOS.md`'s `**Version:**` header, its Versioning section, and the `eidos_version` in its sample Framework block) moves **only when the text of `EIDOS.md` moves**. When it does, also update: the badge at the top of `README.md`, and both version spots in **every** seed (`seeds/*/Framework.md` — the `eidos_version` frontmatter **and** the version note in its `## Schema` block).
 
 A skill fix bumps the plugin and nothing else — no snapshot, no seed edit, no `eidos_version` change in anyone's definition.
 
