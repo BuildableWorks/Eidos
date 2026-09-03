@@ -6,6 +6,21 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
+## 4.4.2 → 4.4.3
+
+**One word: a framework is the *structure*, not the *form*. Set `eidos_version: 4.4.3`; nothing on disk has to move.**
+
+- **`framework` is now "the structure a root is written in".** The concept has not moved an inch: the same collections, shapes, flavors, roles, naming convention, and Schema, in the same hidden `_eidos/`. Only the word for it changed, because "form" and "shape" are near-synonyms in ordinary English and `shape` is a term four rows down the same table. A reader who met "the form everything is written in" had no way to know it did not mean the body templates.
+- **"The form layer" is "the structure layer"** wherever the prose names it, including the fingerprints `migrate` reads to identify a source version. The directory it names is still `_eidos/` (v4.1+) or `.eidos/` (v3.0-v4.0).
+- **`EIDOS.md`'s opening line drops "structures".** It described the file as "the terms, the structures, and the rules"; with `framework` now claiming the singular, that plural echoed a term it did not mean. It reads "the terms, the layout, and the rules", naming the section it always meant.
+- **The Greek keeps its word.** `README.md` still glosses εἶδος as "the form or essence of a thing", and Plato's Form stays capitalized. That line is etymology, not vocabulary.
+
+### Per root
+
+1. **Set `eidos_version: 4.4.3`** in `_eidos/Framework.md`, and update the version note in its `## Schema` block. That is the whole migration.
+
+**Nothing else moves.** No property, no body section, no filename, no collection. There is no seed prose to refresh either, because nothing `install` writes into a root ever carried the word.
+
 ## 4.4.1 → 4.4.2
 
 **A clarity pass over the glossary and the Rules. Set `eidos_version: 4.4.2`; nothing on disk has to move.**

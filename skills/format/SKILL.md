@@ -39,7 +39,7 @@ Two kinds of file land here, and they're reshaped differently:
 
 In both you preserve the author's words and add nothing.
 
-This skill carries no template of its own — it reads the shape, the Schema, and the naming convention from the root's own `_eidos/`, found by that marker rather than a folder name. **No `_eidos/` means no framework is installed — offer `install` before reshaping**, so you shape toward the framework's real form rather than a guess.
+This skill carries no template of its own — it reads the shape, the Schema, and the naming convention from the root's own `_eidos/`, found by that marker rather than a folder name. **No `_eidos/` means no framework is installed — offer `install` before reshaping**, so you shape toward the framework's real structure rather than a guess.
 
 ## Procedure
 

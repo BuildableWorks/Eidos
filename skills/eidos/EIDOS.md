@@ -1,10 +1,10 @@
 # Eidos
 
-**Version:** 4.4.2
+**Version:** 4.4.3
 
 A markdown standard for defining the essence of a thing — a product, a body of work, anything you set out to make. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished.
 
-This file is the contract: the terms, the structures, and the rules. It names no collection, no shape, and no section — those belong to a framework, not to the standard. For worked frameworks see [`seeds/`](seeds). Doing the work takes a person, this contract, and the [skills](#for-an-agent).
+This file is the contract: the terms, the layout, and the rules. It names no collection, no shape, and no section — those belong to a framework, not to the standard. For worked frameworks see [`seeds/`](seeds). Doing the work takes a person, this contract, and the [skills](#for-an-agent).
 
 ## Vocabulary
 
@@ -13,7 +13,7 @@ Every term the standard uses, in the order they build on each other.
 | Term | What it is |
 | --- | --- |
 | **root** | The one folder Eidos lives in, holding the framework, the collections, and any top-level docs. Found by the hidden `_eidos/` inside it, never by its name. |
-| **framework** | The *form* a root is written in — its collections, shapes, flavors, roles, naming convention, and Schema. Lives in the root's hidden `_eidos/`. Portable: the same framework governs any number of roots. |
+| **framework** | The *structure* a root is written in — its collections, shapes, flavors, roles, naming convention, and Schema. Lives in the root's hidden `_eidos/`. Portable: the same framework governs any number of roots. |
 | **collection** | A top-level folder of repeated blueprints that share a body shape. A framework declares each one, and may group a collection's blueprints in one level of sub-folders. |
 | **blueprint** | One markdown file in a collection, defining one unit completely. Frontmatter (a contract) plus a body (a shape). |
 | **frame** | A blueprint describing the whole thing rather than one unit of it. Frames set what every other blueprint is judged against, and are revised whenever that judgment changes. Every framework declares a framing collection. |
@@ -70,11 +70,11 @@ The skills read the framework from the root they are working in, never from a co
 
 ### `Framework.md`
 
-The one file describing the form rather than any single blueprint: frontmatter for the facts tooling parses, and a body indexing what it governs.
+The one file describing the structure rather than any single blueprint: frontmatter for the facts tooling parses, and a body indexing what it governs.
 
 ```markdown
 ---
-eidos_version: 4.4.2
+eidos_version: 4.4.3
 naming: kebab-case
 ---
 
@@ -248,7 +248,7 @@ The load-bearing conventions.
 
 Semantic Versioning: major for breaking changes, minor for backward-compatible additions, patch for clarifications.
 
-This file holds the version of **the standard** — right now, **4.4.2** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its `_eidos/Framework.md`; `migrate` reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
+This file holds the version of **the standard** — right now, **4.4.3** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its `_eidos/Framework.md`; `migrate` reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
 
 **The plugin that ships this standard versions separately.** The skills and seeds change far more often than the standard does, so a release that fixes a skill bumps the plugin and leaves this file — and every framework's `eidos_version` — untouched. When you need to know what a framework conforms to, read this version; the plugin's is in `.claude-plugin/plugin.json`, and `CHANGELOG.md` records which standard each plugin release carried.
 

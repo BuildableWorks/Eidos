@@ -2,7 +2,7 @@
 
 _**εἶδος** (eidos), Greek — the form or essence of a thing: the look that makes it what it is. Plato's eternal Form; Aristotle's essence behind the matter._
 
-> **[Eidos v4.4.2](EIDOS.md)** — the full standard.
+> **[Eidos v4.4.3](EIDOS.md)** — the full standard.
 
 A markdown standard for defining the essence of a thing — a product, a body of work, anything you set out to make. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished. The files live as plain `.md` next to your code. No SaaS. No lock-in. No hidden state.
 
@@ -16,14 +16,14 @@ Product knowledge rots in tickets, wikis, and people's heads. Eidos keeps the au
 
 ## How it works
 
-Eidos turns on two words. A **framework** is the *form*: the collections, shapes, roles, naming convention, and property Schema that govern how you write. A **blueprint** is the *thing*: one file defining one unit completely, a frontmatter contract plus a body. One framework governs any number of blueprints, and it is the portable piece — the part one team can hand to another.
+Eidos turns on two words. A **framework** is the *structure*: the collections, shapes, roles, naming convention, and property Schema that govern how you write. A **blueprint** is the *thing*: one file defining one unit completely, a frontmatter contract plus a body. One framework governs any number of blueprints, and it is the portable piece — the part one team can hand to another.
 
 It all lives in one folder — the **root** — that you drop into any repo:
 
 ```txt
 Blueprints/                # the root — may be named anything
   README.md                # the human "start here"
-  _eidos/                  # the framework (hidden) — the form everything here is written in
+  _eidos/                  # the framework (hidden) — the structure everything here is written in
     shapes/                #   body shapes, one file per flavor
     roles/                 #   how the agent should talk to each role
     Framework.md           #   the index + config: version, naming, collections, Schema
@@ -35,7 +35,7 @@ Blueprints/                # the root — may be named anything
     <Group>/<Title>.md     #   one blueprint per file
 ```
 
-- **Framework** — the form layer, found by its hidden `_eidos/` folder, and the piece you can publish or hand to another team. [`Framework.md`](seeds/software/Framework.md) is its index and config; a visible `README.md` is the door into it.
+- **Framework** — the structure layer, found by its hidden `_eidos/` folder, and the piece you can publish or hand to another team. [`Framework.md`](seeds/software/Framework.md) is its index and config; a visible `README.md` is the door into it.
 - **Collections** — folders of repeated blueprints. Every framework declares a **framing collection** first (the loose docs saying what the whole thing is), then at least one collection of blueprints. A blueprint is a **frontmatter** contract plus a **body**.
 - **Shapes & flavors** — a **shape** is the body template a collection's blueprints follow; a collection can offer more than one — **flavors** — with one default. Start in the flavor that fits and grow into a fuller one later.
 - **Schema** — the frontmatter contract every blueprint carries: five core properties Eidos requires, plus whatever the framework adds.
@@ -165,7 +165,7 @@ Their collections and flavors are compared [above](#how-it-works). Every seed ca
 - **`me.md`** and **`.gitignore`** — the blank per-actor file, and the dotfile that keeps it out of version control.
 - **`README.md`** — the `{{Product}}` front-door template that installs to the root.
 
-A seed is a starting point, not a cage: a framework may reshape or override any of it — add a property, adjust a shape, add a flavor, retune a role — without forking the standard. And a seed is exactly the kind of artifact you'd hand to another team: form, no content.
+A seed is a starting point, not a cage: a framework may reshape or override any of it — add a property, adjust a shape, add a flavor, retune a role — without forking the standard. And a seed is exactly the kind of artifact you'd hand to another team: structure, no content.
 
 ## Versioning
 

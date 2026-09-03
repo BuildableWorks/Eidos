@@ -6,9 +6,9 @@ description: >-
 
 # Eidos
 
-Eidos is a standard with two halves: a **framework** is the form (collections, shapes, roles, Schema), and a **blueprint** is the thing written with it. A framework organizes a root into **collections** of **blueprints**, each blueprint a living markdown document that defines one unit completely: "this is what you're getting," with no ambiguity — true whether or not the thing has been built. It captures **state and intent, not work**. Every blueprint conforms to its collection's body **shape**; what those collections are called and what their blueprints hold is the framework's — this skill authors any of them, reading the framework to see which exist.
+Eidos is a standard with two halves: a **framework** is the structure (collections, shapes, roles, Schema), and a **blueprint** is the thing written with it. A framework organizes a root into **collections** of **blueprints**, each blueprint a living markdown document that defines one unit completely: "this is what you're getting," with no ambiguity — true whether or not the thing has been built. It captures **state and intent, not work**. Every blueprint conforms to its collection's body **shape**; what those collections are called and what their blueprints hold is the framework's — this skill authors any of them, reading the framework to see which exist.
 
-This skill is the **how**: how to facilitate authoring and validation with a person. The **what** — the rules, the layout, the form-layer model, the property and body conventions — is the standard, and it lives in **EIDOS.md**. Read EIDOS.md for anything the rules decide; don't restate it here.
+This skill is the **how**: how to facilitate authoring and validation with a person. The **what** — the rules, the layout, the structure-layer model, the property and body conventions — is the standard, and it lives in **EIDOS.md**. Read EIDOS.md for anything the rules decide; don't restate it here.
 
 ## How you work: facilitate, don't author
 

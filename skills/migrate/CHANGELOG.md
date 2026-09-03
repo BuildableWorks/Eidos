@@ -8,6 +8,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [4.5.3] - 2026-09-02 — Standard: 4.4.3
+
+**A framework is the *structure*, not the *form*.** The concept is untouched: the same collections, shapes, flavors, roles, naming convention, and Schema, in the same hidden `_eidos/`. Only the word changes. Prose everywhere, no property, folder, or filename moves, and every root already in a repo conforms as it stands.
+
+"Form" arrived in 3.0.0 with the form layer and was never audited against the vocabulary that grew around it. The problem is that `shape` is a term in the same table, four rows below `framework`, and in ordinary English form and shape are the same word. So the entry meant to introduce the whole structure layer ("the *form* a root is written in") read as though it were talking about body templates, and the phrase "the form layer" left a reader no way to tell which half of the framework it named. **`structure`** collides with nothing: it is what a framework actually is, and it says so without borrowing from a neighbour.
+
+The one word this does not touch is the Greek. `README.md` still opens on εἶδος as "the form or essence of a thing", and Plato's Form keeps its capital. That line is etymology, and it is where the sense of "form" the standard means is legitimately at home.
+
+### Changed
+
+- **`framework` is "the structure a root is written in".** The vocabulary table, `Framework.md`'s description of itself, and the two-word framing in `README.md` ("a framework is the *structure*, a blueprint is the *thing*") all move off "form".
+- **"The form layer" is now "the structure layer,"** in `README.md`, `seeds/README.md`, and five skills, including the fingerprints `migrate` reads to identify a source version. The directory it names is unchanged.
+- **`migrate`'s four migration concerns renumber one word.** They were the form layer, properties, body shape, and **structure** (root folder, collection layout, generated leaves). With the first now called the structure layer, the fourth is **layout**, which is what it always listed.
+- **`EIDOS.md`'s opening line drops "structures".** It called the file "the terms, the structures, and the rules"; with `framework` claiming the singular, the plural echoed a term it did not mean. It now says "the terms, the layout, and the rules", naming the section it always meant.
+
 ## [4.5.2] - 2026-09-02 — Standard: 4.4.2
 
 **An audit of the glossary, and the repairs it turned up.** 4.5.1 renamed the unit and retired a term; reading the result cold showed what that left behind, plus a few things that had been wrong for longer. All prose: no property, folder, or filename moves, and the only behavior change is the name the canvas gives itself.

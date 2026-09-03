@@ -6,7 +6,7 @@ description: >-
 
 # Eidos Configure
 
-Keep `_eidos/Framework.md` working as the framework's **index and contract** — the authoritative description of the form everything is written in, with the visible root `README.md` as the friendly door to it. This skill owns the three indexed parts of the Framework body:
+Keep `_eidos/Framework.md` working as the framework's **index and contract** — the authoritative description of the structure everything is written in, with the visible root `README.md` as the friendly door to it. This skill owns the three indexed parts of the Framework body:
 
 - **Top-Level** — the top-level documents, `README.md` first (the visible front door and the first listed entry), then the owner's own one-of-a-kind docs (a Roadmap, a Vision, the generated Blueprint Map), each a link and a one-line description. The framing docs are **not** here — they are a collection.
 - **Collections** — each top-level content folder: its grouping (one level of sub-folders) and its **flavors** (body shapes, one marked default), plus a pointer to its generated `index.md` leaf.

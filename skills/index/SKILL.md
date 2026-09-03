@@ -65,4 +65,4 @@ On a **sandboxed host** (Claude Desktop) where you can't run the script, do the 
 
 - Regenerable and idempotent: running it again yields the same file (plus any new blueprints). It never gates — an index annotates and navigates, it doesn't validate. The script's `--check` mode verifies an index is current without writing — useful in CI or a pre-commit hook.
 - More than one level of sub-folders under a collection is discouraged (see EIDOS.md). If you find deeper nesting, index the first level and flag the rest for the owner.
-- This is the leaf half of Eidos navigation; the top index is `_eidos/Framework.md` (Top-Level documents + Collections), kept by `configure`, with the visible root `README.md` as its door. The property/shape form lives in `_eidos/` and is handled by the other skills.
+- This is the leaf half of Eidos navigation; the top index is `_eidos/Framework.md` (Top-Level documents + Collections), kept by `configure`, with the visible root `README.md` as its door. The property/shape structure lives in `_eidos/` and is handled by the other skills.

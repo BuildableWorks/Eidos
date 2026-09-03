@@ -1,6 +1,6 @@
 ---
 # The Eidos version this framework targets; migrate reads and bumps it.
-eidos_version: 4.4.2
+eidos_version: 4.4.3
 # How files, folders, and links are named: kebab-case | TitleCase | Title Case. Absent = kebab-case.
 naming: kebab-case
 ---
@@ -63,7 +63,7 @@ vault. The `configure` skill edits this section.
 
 ### Eidos Core
 
-_Present on every blueprint. Managed by the standard (Eidos 4.4.2); `migrate` rewrites this block on a version change — don't hand-edit it. (`flavor` absent = the collection's default; `connects_to` absent = no canvas edges; a missing `summary` is flagged by the index.)_
+_Present on every blueprint. Managed by the standard (Eidos 4.4.3); `migrate` rewrites this block on a version change — don't hand-edit it. (`flavor` absent = the collection's default; `connects_to` absent = no canvas edges; a missing `summary` is flagged by the index.)_
 
 | Name        | Type | Meaning                                                                                        |
 | ----------- | ---- | ---------------------------------------------------------------------------------------------- |

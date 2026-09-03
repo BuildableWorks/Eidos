@@ -76,4 +76,4 @@ Where you can't run the script (Claude Desktop), emit the `.canvas` JSON by hand
 ## Notes
 
 - Regenerable: re-run after blueprints change to refresh the map. It never gates — a canvas annotates and navigates, it doesn't validate. Hand-layout tweaks in Obsidian are overwritten on regeneration, so treat the file as generated.
-- This is a sibling of `index` (the textual leaf listing) — same walk, different rendering. The property/shape form lives in `_eidos/` and is handled by the other skills.
+- This is a sibling of `index` (the textual leaf listing) — same walk, different rendering. The property/shape structure lives in `_eidos/` and is handled by the other skills.
