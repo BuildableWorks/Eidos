@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [4.6.0] - 2026-09-15 — Standard: 4.5.0
+
 **The standard moves to 4.5.0: the framework document has a second form, `Framework.yaml`, and a YAML root keeps its index inside it.** Additive: every root already in a repo conforms as it stands, and the migration is a one-line `eidos_version` bump. `versions/v4.5.0.md` is the snapshot and `versions/MIGRATIONS.md` the hop.
 
 ### Added
