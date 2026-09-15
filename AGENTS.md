@@ -2,7 +2,7 @@
 
 This repository is the home of the **Eidos** standard. `EIDOS.md` is the authoritative definition of the format; everything else supports it.
 
-**Use the skills.** Nine live in the top-level [`skills/`](skills) and ship as a Claude plugin:
+**Use the skills.** Eight live in the top-level [`skills/`](skills) and ship as a Claude plugin:
 
 - **`eidos`** — author + validate
 - **`iterate`** — question one rough idea into a shape, an intent, and its place; writes nothing
@@ -10,17 +10,18 @@ This repository is the home of the **Eidos** standard. `EIDOS.md` is the authori
 - **`install`** — scaffold a new folder
 - **`configure`** — add a collection or flavor, add/rename/retire a custom property, and keep the Framework index current
 - **`index`** — rebuild each collection's `index.md` listing
-- **`canvas`** — generate an Obsidian `.canvas` map of chosen collections (`connects_to` links as edges)
 - **`whoami`** — set who you are (role + calibration)
 - **`migrate`** — move a root to a new version
 
 Read the relevant skill (and `EIDOS.md`) before creating, scaffolding, migrating, or reviewing any blueprint or top-level doc.
 
+**The `eidos` CLI is not in this repository.** It is The Virtual Panda's product (npm package `eidosmd`, source at [gitlab.com/the-virtual-panda/eidosmd](https://gitlab.com/the-virtual-panda/eidosmd) beside the eidosmd.com site) and implements the mechanical half of the standard: `init`, `new`, `check`, `index`, `list`, `show`, `framework`, `whoami`, `browser`, and `instructions`. It vendors `EIDOS.md` and `seeds/` from a checkout of this repository with its own sync script, so a release of the standard here is followed by a sync and a release there. This repository owns the standard, the seeds, and the plugin; a change to how the tool behaves belongs over there, and a change to what conforms belongs here.
+
 **The framework lives in the folder.** A v4 folder owns its framework — shapes, roles, and property contract — in a hidden `_eidos/` (`shapes/` — collection body shapes, one or more flavors each, including the `Frames` collection's `frame.*` flavors; `roles/` — the response contracts per role; `Framework.md` — the framework's index of top-level docs and collections **and** the property Schema, in a `## Schema` section; and the personal `me.md`). The framing docs (Architecture, Audience, Criteria, Market) are the `Frames` collection, not templates — Eidos v4.1 retired the `templates/` concept, promoting them to a collection whose flavors are their shapes. The canonical defaults live, public and front-facing, at the top level in [`seeds/`](seeds) — `software`, `book`, and `research`, each a complete framework with its own shapes and roles; `install` offers them and installs the chosen one into a root's `_eidos/`, and the other skills read the framework from the root they're working in, not from a copy of their own. A root's `_eidos/` is committed, never gitignored — except the personal `_eidos/me.md`, which the seeded `.gitignore` keeps out. A framework also records its naming convention (`kebab-case` by default, or `TitleCase` or `Title Case`) in `Framework.md`, and the skills locate a root by its `_eidos/` marker — so the root folder may be named anything (`Blueprints` is just the default).
 
 **Eidos is human-first: facilitate, don't author.** The Framework Owner holds the intent, the scope, and the decisions. Format, supplement, ask clarifying questions, and press on scope; do not generate finished blueprints or set direction.
 
-**Two versions, bumped separately.** Know which one a change touches before you bump anything.
+**Two versions here, bumped separately.** Know which one a change touches before you bump anything. (The CLI has a third, in its own repository, and names the standard it carries.)
 
 - **The plugin version** (`.claude-plugin/plugin.json` **and** `.claude-plugin/marketplace.json` — both, or updates no-op) moves on **every** shipped release, including skill-only and seed-only ones. Add a `CHANGELOG.md` entry naming the plugin version and, on its first line, which standard it ships.
 - **The standard version** (`EIDOS.md`'s `**Version:**` header, its Versioning section, and the `eidos_version` in its sample Framework block) moves **only when the text of `EIDOS.md` moves**. When it does, also update: the badge at the top of `README.md`, and both version spots in **every** seed (`seeds/*/Framework.md` — the `eidos_version` frontmatter **and** the version note in its `## Schema` block).

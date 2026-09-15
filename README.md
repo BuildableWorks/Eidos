@@ -2,7 +2,7 @@
 
 _**εἶδος** (eidos), Greek — the form or essence of a thing: the look that makes it what it is. Plato's eternal Form; Aristotle's essence behind the matter._
 
-> **[Eidos v4.4.3](EIDOS.md)** — the full standard.
+> **[Eidos v4.5.1](EIDOS.md)** — the full standard.
 
 A markdown standard for defining the essence of a thing — a product, a body of work, anything you set out to make. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished. The files live as plain `.md` next to your code. No SaaS. No lock-in. No hidden state.
 
@@ -55,17 +55,32 @@ Pick the nearest seed and reshape it; none of them is privileged, and a framewor
 
 ## Quick start
 
-1. **Get the skills.** Optional but recommended — see [Installing the skills](#installing-the-skills).
-2. **Initialize.** Run `install`. It asks what you're defining, offers the seeds, and scaffolds a root around the one you pick. Everything in a seed is reshapeable later, so "close enough" is the right answer.
+1. **Get the tooling.** Optional but recommended: the [CLI](#the-cli) for a shell and any agent, the [skills](#installing-the-skills) for Claude.
+2. **Initialize.** Run `eidos init` (or the `install` skill, which asks what you're defining and offers the seeds). It scaffolds a root around the seed you pick. Everything in a seed is reshapeable later, so "close enough" is the right answer.
 3. **Fill the frames first.** Loose prose — fill what's known and leave the rest. They set what every other blueprint is judged against, which is why every framework has to declare them.
 4. **Author the blueprints.** One file per blueprint, named for its title in the convention you chose (kebab-case by default). Frontmatter is generated from the Schema; the body follows your collection's shape. Lead with what the shape opens on, and press hardest on its non-goals section — that's where scope is actually held. The `eidos` skill facilitates; it does not author for you.
 5. **Commit it.** The folder is the source of truth, `_eidos/` and all (except the personal `me.md`, which the seeded `.gitignore` keeps out). Review it in PRs alongside the code. Eidos relies on git history, so don't gitignore any of it.
 
 The full rules are in **[EIDOS.md](EIDOS.md)**.
 
+## The CLI
+
+The mechanical half of Eidos as one command, `eidos`, published on npm as **[`eidosmd`](https://www.npmjs.com/package/eidosmd)** and maintained by [The Virtual Panda](https://gitlab.com/the-virtual-panda/eidosmd) alongside [eidosmd.com](https://eidosmd.com). It scaffolds a root from a seed, generates blueprints that are born conforming, validates a root against its own framework, regenerates the indexes, opens the root in a local browser page, and prints the workflow an agent should follow, so any agent with a shell can work in a root without a plugin.
+
+```bash
+npm install -g eidosmd
+eidos init --group Identity --product "Care Connect"
+eidos new specs "Session Management" --group identity
+eidos check
+eidos index
+eidos instructions overview      # the agent workflow; `eidos agents --write` puts a pointer in AGENTS.md
+```
+
+[eidosmd.com/docs/cli](https://eidosmd.com/docs/cli) documents every command. The CLI carries its own copy of `EIDOS.md` and the seeds, synced from this repository, and versions separately from both the plugin and the standard: `eidos --version` names the standard it ships.
+
 ## Installing the skills
 
-Eidos ships as a **Claude plugin** bundling nine skills:
+Eidos ships as a **Claude plugin** bundling eight skills:
 
 - **`eidos`** — author + validate
 - **`iterate`** — question one rough idea until it holds still: which shape it takes, what it's for, how it fits the rest. Writes nothing; hands the understanding to `eidos`
@@ -73,11 +88,10 @@ Eidos ships as a **Claude plugin** bundling nine skills:
 - **`install`** — scaffold a new root (pick a seed; installs it into `_eidos/`)
 - **`configure`** — add a collection or a flavor, add/rename/retire a custom property and backfill every blueprint, and keep the Framework's Top-Level index current
 - **`index`** — regenerate each collection's `index.md` listing
-- **`canvas`** — generate an Obsidian `.canvas` map of chosen collections, with `connects_to` links as edges
 - **`whoami`** — set who you are: pick a role and calibrate it (ownership, experience, technical capacity)
 - **`migrate`** — move a root to a new version of the standard
 
-Most skills read the framework at runtime and need nothing of the standard: `iterate`, `format`, `configure`, `index`, `canvas`, and `whoami`. The other three carry a **committed copy** of just what they need — `eidos` (the `EIDOS.md` ruleset), `install` (the canonical [`seeds/`](seeds)), and `migrate` (the version history) — so each skill is self-contained wherever it's installed. `scripts/sync-skills.sh` keeps those copies in sync with the top-level sources.
+Most skills read the framework at runtime and need nothing of the standard: `iterate`, `format`, `configure`, `index`, and `whoami`. The other three carry a **committed copy** of just what they need — `eidos` (the `EIDOS.md` ruleset), `install` (the canonical [`seeds/`](seeds)), and `migrate` (the version history) — so each skill is self-contained wherever it's installed. `scripts/sync-skills.sh` keeps those copies in sync with the top-level sources.
 
 ### Why the skills carry copies of the standard
 
@@ -169,10 +183,11 @@ A seed is a starting point, not a cage: a framework may reshape or override any 
 
 ## Versioning
 
-Two things version separately, both with [Semantic Versioning](https://semver.org/).
+Three things version separately, all with [Semantic Versioning](https://semver.org/).
 
 - **The standard** — the version in [`EIDOS.md`](EIDOS.md), and the one a root records as `eidos_version`. It moves only when the text of the standard moves. Each release is frozen in [`versions/`](versions/) under its full semver name, with the worked upgrade path in [`MIGRATIONS.md`](versions/MIGRATIONS.md).
 - **The plugin** — the version in `.claude-plugin/plugin.json`, and what `/plugin install` and update checks see. It moves on every shipped release, including ones that only touch a skill or a seed.
+- **The CLI** — versioned in [its own repository](https://gitlab.com/the-virtual-panda/eidosmd) and published to npm as `eidosmd`. Each release names the standard it ships.
 
 Every shipped release is tagged `vX.Y.Z` on the **plugin** version; the standard's releases are files in [`versions/`](versions/) rather than tags. They started on the same number and will drift, because the tooling changes far more often than the standard does. [`CHANGELOG.md`](CHANGELOG.md) tracks plugin releases and records which standard each one ships — so a release note that says *Standard: unchanged* means your roots need nothing.
 

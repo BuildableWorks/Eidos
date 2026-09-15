@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 4.4.3
+**Version:** 4.5.1
 
 A markdown standard for defining the essence of a thing — a product, a body of work, anything you set out to make. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished.
 
@@ -37,10 +37,10 @@ Blueprints/              # the root — `Blueprints` is only the default name
   README.md              # the visible "start here"
   _eidos/                # the framework (below)
   <Framing>/             # the framing collection — declared first
-    index.md             #   generated leaf
+    index.md             #   generated leaf (a markdown framework; a YAML or JSON one keeps it inside the document)
     <Frame>.md           #   one per kind of frame, flat
   <Collection>/          # a collection of blueprints; declare as many as the work needs
-    index.md             #   generated leaf
+    index.md             #   generated leaf, likewise
     <Group>/             #   one level of sub-folders, at most
       <Title>.md         #     one blueprint per file
   roadmap.md             # a top-level doc — optional, yours
@@ -61,7 +61,8 @@ _eidos/
   roles/                   # response contracts, committed and team-tunable
     framework-owner.md     #   the one every seed carries
     <role>.md              #   the rest are the framework's own
-  Framework.md             # index + config: version, naming, Top-Level, Collections, Schema
+  Framework.yaml           # the framework document: version, naming, Top-Level, Collections, Schema, index
+                           #   (or Framework.md, the same as markdown with per-collection index.md files; or Framework.json)
   me.md                    # the actor (personal, gitignored)
   .gitignore               # ignores me.md — the one file here not committed
 ```
@@ -70,11 +71,11 @@ The skills read the framework from the root they are working in, never from a co
 
 ### `Framework.md`
 
-The one file describing the structure rather than any single blueprint: frontmatter for the facts tooling parses, and a body indexing what it governs.
+The framework document: the one file describing the structure rather than any single blueprint. This is its markdown form, frontmatter for the facts tooling parses and a body indexing what it governs; the recommended form is the same document as YAML, in [`Framework.yaml` and `Framework.json`](#frameworkyaml-and-frameworkjson). The fields are the same in each.
 
 ```markdown
 ---
-eidos_version: 4.4.3
+eidos_version: 4.5.1
 naming: kebab-case
 ---
 
@@ -123,8 +124,53 @@ One line on what this collection holds.
 - **`naming`** — `kebab-case` (default), `TitleCase`, or `Title Case`. See [Naming](#naming).
 - **`## Top-Level`** — the top-level docs, `README` first. Framing docs are not here; they are a collection.
 - **`## Collections`** — one `###` each: its **Leaf**, its **Flavors** (default marked), its **Canvas**, and its grouping.
-- **`- **Canvas:**`** — how `canvas` draws the collection: `file` (a full-file node, for prose read whole), `card` (a node embedding the blueprint), or `card from ## Section` (a node embedding that section). Absent means a plain card — the generator knows no collection by name and cannot guess which section is the summary.
+- **`- **Canvas:**`** — how a canvas generator draws the collection: `file` (a full-file node, for prose read whole), `card` (a node embedding the blueprint), or `card from ## Section` (a node embedding that section). Absent means a plain card — a generator knows no collection by name and cannot guess which section is the summary.
 - **`## Schema`** — `### Eidos Core` (the standard's, rewritten by `migrate`) and `### Custom Properties` (the framework's).
+
+### `Framework.yaml` and `Framework.json`
+
+The framework document may be data instead of markdown: `Framework.yaml` (or `.yml`) or `Framework.json` in place of `Framework.md`, and exactly one of the three. It is the same framework, field for field, in the snake_case the frontmatter already uses. **YAML is the recommended form:** the same syntax as the frontmatter beside it, comments wherever the owner wants them, and one document with everything in it, because a structured document carries the one thing the markdown form keeps elsewhere, the generated index, under `index` (see [Generated leaves](#generated-leaves)). Markdown remains fully supported and is the form to choose for a root read in a vault, where a `.yaml` file does not render. JSON is for a root that tools write more than people do.
+
+```yaml
+eidos_version: 4.5.1
+naming: kebab-case            # absent = kebab-case
+top_level:                    # the top-level docs, README first
+  - title: README
+    path: ../README.md
+    description: the front door.
+collections:                  # the first is the framing collection
+  - name: <Framing>
+    description: The framing docs.
+    canvas: file
+    flavors:
+      - name: <kind>
+        shape: shapes/frame.<kind>.md
+        description: one flavor per kind of frame
+        default: true
+  - name: <Collection>
+    description: One line on what this collection holds.
+    canvas: { mode: card, section: <Section> }
+    flavors:
+      - { name: <flavor-1>, shape: shapes/<kind>.<flavor-1>.md, description: the fuller shape, default: true }
+      - { name: <flavor-2>, shape: shapes/<kind>.<flavor-2>.md, description: a lighter one to grow out of }
+    grouping:
+      label: <Grouping>
+      property: <name>          # the custom property carrying the group, if one does
+      groups:
+        - { name: <Group>, description: one line on what falls under it }
+schema:
+  core: []                    # absent = the standard's core for this eidos_version
+  custom:
+    - { name: <name>, type: Text, applies_to: all, meaning: Whatever this framework needs. }
+    - { name: <name>, type: Text, applies_to: [<Collection>], meaning: Scoped to one collection. }
+index:                        # generated, regenerated wholesale by `index`; never hand-edited
+  <Collection>:
+    - { id: <id>, title: <Title>, summary: <the summary>, path: <Group>/<Title>.md, group: <Group> }
+```
+
+- Every path is relative to `_eidos/`, as the markdown form's links are. An index entry's `path` is relative to its collection folder, as an `index.md` link is.
+- `canvas` is `file`, `card`, or `{ mode: card, section: <Section> }`. `default` marks a collection's default flavor; absent on all of them, the first is. `applies_to` is `all` or a list of collections. There is no **Leaf**: a structured root's index is inside the document.
+- A tool reads whichever document is present and treats the framework the same. Converting a markdown root means writing the same fields as data, removing `Framework.md` and each collection's `index.md`, and regenerating the index; the markdown form's prose has no field to land in and stays behind.
 
 ### Shapes and flavors
 
@@ -163,7 +209,7 @@ One role is common to every seed: the **Framework Owner**, who holds the intent,
 
 ### `README.md`
 
-A visible front door at the root: what the thing is, and pointers into it — the top-level docs, the collections and their indexes, and `_eidos/Framework.md` for the full index. Thin, orientation and links, edited in place.
+A visible front door at the root: what the thing is, and pointers into it — the top-level docs, the collections and their indexes, and the framework document for the full index. Thin, orientation and links, edited in place.
 
 ### Naming
 
@@ -208,6 +254,8 @@ Two derived views. Both are regenerated wholesale, annotate rather than gate, an
 
 **The index.** Each collection carries a generated `index.md` in its folder, listing its blueprints — grouped under their sub-folders when it has them, flat when it doesn't. Each line is the blueprint's `summary`, verbatim; a blueprint with none is flagged, never invented. Links are relative to the collection folder. Rebuilt by `index`.
 
+In a root whose framework document is YAML or JSON there are no `index.md` files: every collection's index lives inside the framework document under `index`, one list per collection, each entry the blueprint's `id`, `title`, `summary` (null when absent, never invented), `path` relative to the collection folder, and `group` when it has one, in the order the markdown index would list them. The same `index` rebuilds it wholesale, rewriting that key and nothing else in the document.
+
 ```markdown
 # <Collection>
 
@@ -218,7 +266,7 @@ Two derived views. Both are regenerated wholesale, annotate rather than gate, an
 - [<Title>](<Group>/<Title>.md) — one bullet per blueprint, in file order.
 ```
 
-**The canvas.** The spatial counterpart: an Obsidian `.canvas` map from `canvas`. Each collection draws the way it declares itself, is its own group, and nests a group per sub-folder; each blueprint's `connects_to` links become directed edges (with `depends_on` optionally overlaid in another color). The generated `.canvas` is itself a top-level doc — register it in `## Top-Level`.
+**The canvas.** The spatial counterpart: an Obsidian `.canvas` map. Each collection draws the way it declares itself, is its own group, and nests a group per sub-folder; each blueprint's `connects_to` links become directed edges (with `depends_on` optionally overlaid in another color). The generated `.canvas` is itself a top-level doc — register it in `## Top-Level`. The standard ships no generator; the declarations are there for whichever tool draws one.
 
 ## Rules
 
@@ -238,7 +286,7 @@ The load-bearing conventions.
 12. **Non-goals carry the most weight.** Where a shape declares a section for what a blueprint deliberately will *not* do, that section is its strongest — it is where scope management actually happens. Still not a hard gate.
 13. **A shape documents its own conventions.** Section names, their order and meaning, and any labeling a shape asks for live in the shape file. This standard governs collections, shapes, flavors, and properties; it never governs a section.
 14. **No work-tracking fields.** No `sprint`, `estimate`, or `assignee` — the moment you add them, a blueprint becomes a task and rots. Bridge to a tracker with a link. The same holds in the body: a section describing how you mean to build a thing captures intent, never how far along it is.
-15. **The Eidos version is a framework fact.** It lives in `Framework.md`, never as a per-blueprint property. Git holds the history; a framework that wants date properties declares them like any other.
+15. **The Eidos version is a framework fact.** It lives in the framework document, never as a per-blueprint property. Git holds the history; a framework that wants date properties declares them like any other.
 16. **Loose prose is revised in place.** A top-level doc, and any collection a framework marks as loose prose, records what is true now and is expected to change. That is revision, not work status.
 17. **The human authors; the agent facilitates.** Intent, scope, and decisions stay with the person. An agent formats, supplements, asks, and holds scope; it does not generate finished blueprints or set direction. A blueprint the owner did not think through is worse than none.
 18. **Read the actor before acting.** Read `_eidos/me.md` and the matching contract in `_eidos/roles/`, and respond as that role defines. The human-first principle holds for every role; only the mode changes. A blank or absent file defaults to full facilitation.
@@ -248,7 +296,7 @@ The load-bearing conventions.
 
 Semantic Versioning: major for breaking changes, minor for backward-compatible additions, patch for clarifications.
 
-This file holds the version of **the standard** — right now, **4.4.3** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its `_eidos/Framework.md`; `migrate` reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
+This file holds the version of **the standard** — right now, **4.5.1** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its framework document; `migrate` reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
 
 **The plugin that ships this standard versions separately.** The skills and seeds change far more often than the standard does, so a release that fixes a skill bumps the plugin and leaves this file — and every framework's `eidos_version` — untouched. When you need to know what a framework conforms to, read this version; the plugin's is in `.claude-plugin/plugin.json`, and `CHANGELOG.md` records which standard each plugin release carried.
 
@@ -256,17 +304,17 @@ This file holds the version of **the standard** — right now, **4.4.3** — and
 
 _Operating detail. A human can stop above._
 
-**Prefer the skills.** `eidos` authors and validates, `iterate` questions a rough idea into shape before any of that, `format` reshapes a draft already written, `install` scaffolds, `configure` adds a collection, flavor, or property and keeps the Framework current, `index` rebuilds a collection's leaf, `canvas` draws the map, `whoami` sets the actor, `migrate` upgrades versions.
+**Prefer the tooling.** The `eidos` command does the mechanical part: `init` scaffolds a root, `new` generates a conforming blueprint, `check` validates, `index` rebuilds the indexes, and `eidos instructions` prints the workflow. The skills carry the judgment: `eidos` authors and validates with the owner, `iterate` questions a rough idea into shape before any of that, `format` reshapes a draft already written, `install` scaffolds, `configure` adds a collection, flavor, or property and keeps the framework current, `index` rebuilds a collection's leaf, `whoami` sets the actor, `migrate` upgrades versions.
 
 **Find the framework in the root.** Locate the root by its `_eidos/` marker, not its name. Every operation reads that `_eidos/`. If a folder has none, offer `install`. Check the framework's `eidos_version` against the standard you carry once per session: a gap is worth one line and an offer of `migrate`, never a block, and the framework in front of you is the operative contract either way. Never fall back to a hardcoded contract, and never assume a collection or section name — read what the framework declares.
 
 **Read the actor first.** `_eidos/me.md`, then the role file it names. Respond as that file defines the role — read it, don't infer from its filename. A framework defines its own cast.
 
-**Navigate by the leaves.** `README.md` for orientation, `_eidos/Framework.md` for the full index, each collection's `index.md` for its blueprints. Read these instead of scraping the tree; regenerate them when stale.
+**Navigate by the leaves.** `README.md` for orientation, the framework document (`_eidos/Framework.md`, `.yaml`, or `.json`) for the full index, each collection's `index.md` for its blueprints (or the document's `index`, in a structured root). Read these instead of scraping the tree; regenerate them when stale.
 
 **Authoring a blueprint:**
 
-1. From `Framework.md`, take the Schema, the naming convention, and the target collection's flavors. Pick a flavor (the default unless the owner chooses another) and read its shape for the body. Name the file for its title in the convention; put a permanent kebab-case `id` inside.
+1. From the framework document, take the Schema, the naming convention, and the target collection's flavors. Pick a flavor (the default unless the owner chooses another) and read its shape for the body. Name the file for its title in the convention; put a permanent kebab-case `id` inside.
 2. Generate frontmatter from the properties that apply to that collection. Fill values from what the owner tells you; leave a property blank rather than guessing it.
 3. Lead with the shape's opening sections and press hardest on its non-goals section. Read those names off the shape rather than assuming them, and follow whatever labeling it asks for. Omit a section that doesn't apply; keep the order and names of the ones that do.
 4. Where the owner is vague, ask. Don't fill the gap with plausible prose.

@@ -25,7 +25,7 @@ Eidos is human-first. The owner holds the intent, the scope, and the decisions; 
 Two sources — and neither is this file:
 
 - **EIDOS.md — the ruleset.** Read it for any question of _what is correct_: the vocabulary, the layout, the property and body rules, the Rules, and a `## For an agent` operating guide. A committed copy ships in this skill's own folder, synced by `scripts/sync-skills.sh`, so it's there on a sandboxed host too.
-- **The root's `_eidos/` — the operative framework.** Found by that marker, not by a folder name: `shapes/` (one file per flavor), `roles/` (the response contracts), `Framework.md` (version and naming in frontmatter; Top-Level, Collections, and the property **Schema** in its body), `me.md` (the actor). This is the **live** contract — a framework may have been extended, so always read it, never a copy of your own. **No `_eidos/` means no framework is installed — stop and offer `install`.**
+- **The root's `_eidos/` — the operative framework.** Found by that marker, not by a folder name: `shapes/` (one file per flavor), `roles/` (the response contracts), `Framework.md` (version and naming in frontmatter; Top-Level, Collections, and the property **Schema** in its body; since 4.5.0 it may instead be `Framework.yaml` or `Framework.json`, the same fields as data, with the index inside), `me.md` (the actor). Where the `eidos` CLI is installed, `eidos framework --json` reads whichever is present. This is the **live** contract — a framework may have been extended, so always read it, never a copy of your own. **No `_eidos/` means no framework is installed — stop and offer `install`.**
 
 ## Check the version once, up front
 

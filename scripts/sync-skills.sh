@@ -6,14 +6,16 @@
 # truth and the public review surface. A distributed skill can't reach them: Claude Desktop
 # sandboxes each skill to its own folder, and a git-marketplace install ("/plugin marketplace
 # add …") ships only what is committed. So each skill carries a COMMITTED copy of what it needs,
-# kept in sync by this script — duplication is the price of the sandbox.
+# kept in sync by this script — duplication is the price of the sandbox. (The `eidos` CLI,
+# maintained separately by The Virtual Panda, vendors the same canon with its own sync script
+# pointed at a checkout of this repository.)
 #
 # Run after changing EIDOS.md, seeds/, versions/, or CHANGELOG.md, then commit the
 # updated copies. Pass --check to verify the copies are current WITHOUT writing (for CI or a
 # pre-commit hook); it exits non-zero if anything is stale.
 #
 # Skills that read the user's folder _eidos/ at runtime (format, configure,
-# index, canvas, whoami) carry nothing and are not touched.
+# index, whoami) carry nothing and are not touched.
 #
 set -euo pipefail
 cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -22,9 +24,9 @@ check=0
 [ "${1:-}" = "--check" ] && check=1
 stale=0
 
-# sync_one <src> <dest>
+# sync_one <src> <dest> [label]
 sync_one() {
-  local src="$1" dest="$2"
+  local src="$1" dest="$2" label="${3:-$1}"
   if [ "$check" -eq 1 ]; then
     if ! diff -rq "$src" "$dest" >/dev/null 2>&1; then
       echo "  ✗ stale: $dest"
@@ -33,7 +35,7 @@ sync_one() {
   else
     rm -rf "$dest"
     cp -R "$src" "$dest"
-    echo "  $src → $dest"
+    echo "  $label → $dest"
   fi
 }
 

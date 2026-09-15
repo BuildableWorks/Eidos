@@ -8,6 +8,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+**The standard moves to 4.5.1: the framework document may be YAML or JSON, a structured root keeps its index inside it, and YAML is the recommended form.** Additive: every root already in a repo conforms as it stands, and the migration is a one-line `eidos_version` bump. `versions/v4.5.0.md` and `versions/v4.5.1.md` are the snapshots and `versions/MIGRATIONS.md` the hops.
+
+### Added
+
+- **The `eidos` CLI**, the mechanical half of the skills as one command (`init`, `new`, `check`, `index`, `list`, `show`, `framework`, `roles`, `whoami`, `browser`, and `instructions`, which prints the agent workflow so any agent with a shell can work in a root without a plugin). It is The Virtual Panda's product, published to npm as `eidosmd` from [its own repository](https://gitlab.com/the-virtual-panda/eidosmd), where it vendors this repository's `EIDOS.md` and seeds. `README.md` and `AGENTS.md` point at it; `EIDOS.md` names it in "prefer the tooling".
+
+### Changed
+
+- **`Framework.yaml` and `Framework.json` join `Framework.md`** as forms of the framework document: the same fields in snake_case, exactly one per root, documented field by field in `EIDOS.md`. Markdown stays the recommended form. Under a structured document every collection's index lives inside it under `index`, one list per collection, regenerated wholesale by `eidos index`, which rewrites that key and nothing else; there are no `index.md` files in such a root. `eidos init --format yaml|json` creates one, and `eidos framework --as yaml|json` prints an existing root's framework in that form for conversion.
+- **YAML is the recommended form of the framework document** (4.5.1). 4.5.0 recommended markdown; on reflection the form people hand-edit should be the one with the frontmatter's syntax, comments, and everything in one document. Markdown stays fully supported for a root read in a vault, JSON for a root tools write. The seeds and the CLI target 4.5.1, and `eidos init` writes `Framework.yaml` by default.
+- **"Prefer the skills" becomes "prefer the tooling"** in `EIDOS.md`: the `eidos` command does the mechanical part, the skills carry the judgment. The canvas is now described as declared rather than generated, since no generator ships.
+- **The seeds and the CLI target 4.5.1.** All three seeds record `eidos_version: 4.5.1`; the CLI's `check` reports a root on an older version once, as a warning.
+
+### Removed
+
+- **The `canvas` skill.** It generated an Obsidian `.canvas` map of chosen collections and was not being used; the plugin now bundles eight skills. The standard is untouched: a collection's `- **Canvas:**` bullet and a blueprint's `connects_to` still declare how a map would draw, so any tool can generate one, and a `.canvas` already in a root remains a top-level doc.
+
 ## [4.5.3] - 2026-09-02 — Standard: 4.4.3
 
 **A framework is the *structure*, not the *form*.** The concept is untouched: the same collections, shapes, flavors, roles, naming convention, and Schema, in the same hidden `_eidos/`. Only the word changes. Prose everywhere, no property, folder, or filename moves, and every root already in a repo conforms as it stands.

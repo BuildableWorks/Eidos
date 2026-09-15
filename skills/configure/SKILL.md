@@ -28,7 +28,7 @@ A collection, flavor, or property nobody thought through reads as meaningful whi
 
 ## Boundaries
 
-- **The Framework body only.** You edit its `## Top-Level`, `## Collections`, and `### Custom Properties` sections, and create shape files in `_eidos/shapes/`. Not per-blueprint `index.md` files (`index`), not blueprints (`eidos`).
+- **The Framework body only.** You edit its `## Top-Level`, `## Collections`, and `### Custom Properties` sections, and create shape files in `_eidos/shapes/`. Not per-blueprint `index.md` files (`index`), not blueprints (`eidos`). In a root whose framework document is `Framework.yaml` or `Framework.json` (Eidos 4.5.0+), the same declarations are the `top_level`, `collections`, and `schema.custom` fields, documented in EIDOS.md; edit those, and never the generated `index` key.
 - **Never touch `### Eidos Core`.** Those move with the standard's version (`migrate`). A core property change is a standards change; redirect.
 - **Needs a framework.** Read `_eidos/Framework.md` from the root, found by its `_eidos/` marker. No `_eidos/` means no framework installed — offer `install` first.
 - **Read the actor first.** `_eidos/me.md`, and tune how you facilitate to the role.
@@ -56,7 +56,7 @@ A collection, flavor, or property nobody thought through reads as meaningful whi
    - Ungrouped — a flat, dated list.
    ```
 
-   The **Canvas** bullet is the only thing telling `canvas` how this collection draws — it knows no collection by name.
+   The **Canvas** bullet is the only thing telling a canvas generator how this collection draws — it knows no collection by name.
 5. **A grouping property is optional and the collection's own.** Most collections group by sub-folder alone, recorded in the Framework. If the owner wants a property carrying the grouping, that's a Schema change — handle it as a property change below.
 6. **Build the leaf and hand off.** Run `index` for the new `index.md`, point the owner to `eidos` for the first blueprint, and report the folder, shape file, and Collections entry.
 

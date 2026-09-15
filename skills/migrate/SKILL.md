@@ -29,7 +29,7 @@ If a needed snapshot is missing, say so; never fabricate a version's contract.
 
 1. **Establish the target.** Default to the current `EIDOS.md`. If migrating to a non-current version, use its `versions/` snapshot.
 
-2. **Establish the source.** Check for the structure-layer directory — `_eidos/` (v4.1+) or `.eidos/` (v3.0–v4.0) — and read its index file — `Framework.md` (v4.2+) or `Registry.md` (v3.0–v4.1) — where a v3+ folder declares its version. If there is neither (pre-v3), detect the source from the file shape and confirm with the user. Fingerprints:
+2. **Establish the source.** Check for the structure-layer directory — `_eidos/` (v4.1+) or `.eidos/` (v3.0–v4.0) — and read its index file — `Framework.md` (v4.2+; since 4.5.0 possibly `Framework.yaml` or `Framework.json`, the same fields as data) or `Registry.md` (v3.0–v4.1) — where a v3+ folder declares its version. If there is neither (pre-v3), detect the source from the file shape and confirm with the user. Fingerprints:
 
    - **v1.x** — frontmatter has `last_validated`, `implements`, `serves_job`, `activity`, or `supersedes`; body uses `## Behavior`, separate `## Constraints` and `## Decisions`; `status` is lowercase (`proposed`, `in-progress`, …); root folder is `product/`.
    - **v2.x** — frontmatter has `created`/`modified` and often a per-doc `eidos_version`; body uses `## Behaviors & Acceptance Criteria` with `AC{n}` labels, merged `## Constraints & Decisions`; `status` is Title Case; **no structure-layer directory**.

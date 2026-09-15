@@ -17,6 +17,8 @@ The one-line summary is a real frontmatter property, authored once on the bluepr
 
 ## Run the script when you can
 
+A root whose framework document is `Framework.yaml` or `Framework.json` (Eidos 4.5.0+) has no `index.md` files: its indexes live inside that document under `index`, and only `eidos index` (the CLI) regenerates them. Everything below is for a markdown framework.
+
 The skill ships **`build-index.py`** (beside this file) — stdlib-only Python 3 that does the entire walk deterministically. **Prefer it whenever you have a shell** (Claude Code, the IDE):
 
 ```
