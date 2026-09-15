@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-**The standard moves to 4.5.1: the framework document may be YAML or JSON, a structured root keeps its index inside it, and YAML is the recommended form.** Additive: every root already in a repo conforms as it stands, and the migration is a one-line `eidos_version` bump. `versions/v4.5.0.md` and `versions/v4.5.1.md` are the snapshots and `versions/MIGRATIONS.md` the hops.
+**The standard moves to 4.5.0: the framework document has a second form, `Framework.yaml`, and a YAML root keeps its index inside it.** Additive: every root already in a repo conforms as it stands, and the migration is a one-line `eidos_version` bump. `versions/v4.5.0.md` is the snapshot and `versions/MIGRATIONS.md` the hop.
 
 ### Added
 
@@ -16,10 +16,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
-- **`Framework.yaml` and `Framework.json` join `Framework.md`** as forms of the framework document: the same fields in snake_case, exactly one per root, documented field by field in `EIDOS.md`. Markdown stays the recommended form. Under a structured document every collection's index lives inside it under `index`, one list per collection, regenerated wholesale by `eidos index`, which rewrites that key and nothing else; there are no `index.md` files in such a root. `eidos init --format yaml|json` creates one, and `eidos framework --as yaml|json` prints an existing root's framework in that form for conversion.
-- **YAML is the recommended form of the framework document** (4.5.1). 4.5.0 recommended markdown; on reflection the form people hand-edit should be the one with the frontmatter's syntax, comments, and everything in one document. Markdown stays fully supported for a root read in a vault, JSON for a root tools write. The seeds and the CLI target 4.5.1, and `eidos init` writes `Framework.yaml` by default.
+- **`Framework.yaml` joins `Framework.md`** as a form of the framework document: the same fields in snake_case, comments allowed, exactly one per root, documented field by field in `EIDOS.md`. Two forms with a reason each: markdown for people (it renders in a vault and reads as prose), YAML for a root that scripts and agents read, and the form the `eidos` CLI works in. Under a YAML document every collection's index lives inside it under `index`, one list per collection, regenerated wholesale by `eidos index`, which rewrites that key and nothing else; there are no `index.md` files in such a root. `eidos init` writes `Framework.yaml`, and `eidos convert` moves a markdown root to it.
 - **"Prefer the skills" becomes "prefer the tooling"** in `EIDOS.md`: the `eidos` command does the mechanical part, the skills carry the judgment. The canvas is now described as declared rather than generated, since no generator ships.
-- **The seeds and the CLI target 4.5.1.** All three seeds record `eidos_version: 4.5.1`; the CLI's `check` reports a root on an older version once, as a warning.
+- **The seeds and the CLI target 4.5.0.** All three seeds record `eidos_version: 4.5.0`; the CLI's `check` reports a root on an older version once, as a warning.
 
 ### Removed
 

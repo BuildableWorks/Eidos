@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 4.5.1
+**Version:** 4.5.0
 
 A markdown standard for defining the essence of a thing — a product, a body of work, anything you set out to make. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished.
 
@@ -37,7 +37,7 @@ Blueprints/              # the root — `Blueprints` is only the default name
   README.md              # the visible "start here"
   _eidos/                # the framework (below)
   <Framing>/             # the framing collection — declared first
-    index.md             #   generated leaf (a markdown framework; a YAML or JSON one keeps it inside the document)
+    index.md             #   generated leaf (a markdown framework; a YAML one keeps it inside the document)
     <Frame>.md           #   one per kind of frame, flat
   <Collection>/          # a collection of blueprints; declare as many as the work needs
     index.md             #   generated leaf, likewise
@@ -61,8 +61,8 @@ _eidos/
   roles/                   # response contracts, committed and team-tunable
     framework-owner.md     #   the one every seed carries
     <role>.md              #   the rest are the framework's own
-  Framework.yaml           # the framework document: version, naming, Top-Level, Collections, Schema, index
-                           #   (or Framework.md, the same as markdown with per-collection index.md files; or Framework.json)
+  Framework.md             # the framework document, for people: version, naming, Top-Level, Collections, Schema
+                           #   (or Framework.yaml, the same as data with the index inside it, for scripts and agents)
   me.md                    # the actor (personal, gitignored)
   .gitignore               # ignores me.md — the one file here not committed
 ```
@@ -71,11 +71,11 @@ The skills read the framework from the root they are working in, never from a co
 
 ### `Framework.md`
 
-The framework document: the one file describing the structure rather than any single blueprint. This is its markdown form, frontmatter for the facts tooling parses and a body indexing what it governs; the recommended form is the same document as YAML, in [`Framework.yaml` and `Framework.json`](#frameworkyaml-and-frameworkjson). The fields are the same in each.
+The framework document: the one file describing the structure rather than any single blueprint. It has two forms, the same fields in each, and a root keeps exactly one. This is the markdown form, for people: frontmatter for the facts tooling parses and a body indexing what it governs, readable in a vault and edited in place. The other is [`Framework.yaml`](#frameworkyaml), for scripts and agents.
 
 ```markdown
 ---
-eidos_version: 4.5.1
+eidos_version: 4.5.0
 naming: kebab-case
 ---
 
@@ -127,12 +127,12 @@ One line on what this collection holds.
 - **`- **Canvas:**`** — how a canvas generator draws the collection: `file` (a full-file node, for prose read whole), `card` (a node embedding the blueprint), or `card from ## Section` (a node embedding that section). Absent means a plain card — a generator knows no collection by name and cannot guess which section is the summary.
 - **`## Schema`** — `### Eidos Core` (the standard's, rewritten by `migrate`) and `### Custom Properties` (the framework's).
 
-### `Framework.yaml` and `Framework.json`
+### `Framework.yaml`
 
-The framework document may be data instead of markdown: `Framework.yaml` (or `.yml`) or `Framework.json` in place of `Framework.md`, and exactly one of the three. It is the same framework, field for field, in the snake_case the frontmatter already uses. **YAML is the recommended form:** the same syntax as the frontmatter beside it, comments wherever the owner wants them, and one document with everything in it, because a structured document carries the one thing the markdown form keeps elsewhere, the generated index, under `index` (see [Generated leaves](#generated-leaves)). Markdown remains fully supported and is the form to choose for a root read in a vault, where a `.yaml` file does not render. JSON is for a root that tools write more than people do.
+The framework document may be data instead of markdown: `Framework.yaml` (or `.yml`) in place of `Framework.md`. It is the same framework, field for field, in the snake_case the frontmatter already uses, with comments wherever the owner wants them. Choose it when scripts and agents are the main readers: it parses without a markdown convention, and it carries the one thing the markdown form keeps elsewhere, the generated index, under `index` (see [Generated leaves](#generated-leaves)), so a YAML root is one document with everything in it. Choose markdown when people are: it renders in a vault and reads as prose. The markdown form's prose has no field to land in and stays behind when a root converts.
 
 ```yaml
-eidos_version: 4.5.1
+eidos_version: 4.5.0
 naming: kebab-case            # absent = kebab-case
 top_level:                    # the top-level docs, README first
   - title: README
@@ -170,7 +170,7 @@ index:                        # generated, regenerated wholesale by `index`; nev
 
 - Every path is relative to `_eidos/`, as the markdown form's links are. An index entry's `path` is relative to its collection folder, as an `index.md` link is.
 - `canvas` is `file`, `card`, or `{ mode: card, section: <Section> }`. `default` marks a collection's default flavor; absent on all of them, the first is. `applies_to` is `all` or a list of collections. There is no **Leaf**: a structured root's index is inside the document.
-- A tool reads whichever document is present and treats the framework the same. Converting a markdown root means writing the same fields as data, removing `Framework.md` and each collection's `index.md`, and regenerating the index; the markdown form's prose has no field to land in and stays behind.
+- A tool reads whichever document is present and treats the framework the same. Converting a markdown root means writing the same fields as data, removing `Framework.md` and each collection's `index.md`, and regenerating the index.
 
 ### Shapes and flavors
 
@@ -254,7 +254,7 @@ Two derived views. Both are regenerated wholesale, annotate rather than gate, an
 
 **The index.** Each collection carries a generated `index.md` in its folder, listing its blueprints — grouped under their sub-folders when it has them, flat when it doesn't. Each line is the blueprint's `summary`, verbatim; a blueprint with none is flagged, never invented. Links are relative to the collection folder. Rebuilt by `index`.
 
-In a root whose framework document is YAML or JSON there are no `index.md` files: every collection's index lives inside the framework document under `index`, one list per collection, each entry the blueprint's `id`, `title`, `summary` (null when absent, never invented), `path` relative to the collection folder, and `group` when it has one, in the order the markdown index would list them. The same `index` rebuilds it wholesale, rewriting that key and nothing else in the document.
+In a root whose framework document is YAML there are no `index.md` files: every collection's index lives inside the framework document under `index`, one list per collection, each entry the blueprint's `id`, `title`, `summary` (null when absent, never invented), `path` relative to the collection folder, and `group` when it has one, in the order the markdown index would list them. The same `index` rebuilds it wholesale, rewriting that key and nothing else in the document.
 
 ```markdown
 # <Collection>
@@ -296,7 +296,7 @@ The load-bearing conventions.
 
 Semantic Versioning: major for breaking changes, minor for backward-compatible additions, patch for clarifications.
 
-This file holds the version of **the standard** — right now, **4.5.1** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its framework document; `migrate` reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
+This file holds the version of **the standard** — right now, **4.5.0** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its framework document; `migrate` reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
 
 **The plugin that ships this standard versions separately.** The skills and seeds change far more often than the standard does, so a release that fixes a skill bumps the plugin and leaves this file — and every framework's `eidos_version` — untouched. When you need to know what a framework conforms to, read this version; the plugin's is in `.claude-plugin/plugin.json`, and `CHANGELOG.md` records which standard each plugin release carried.
 
@@ -310,7 +310,7 @@ _Operating detail. A human can stop above._
 
 **Read the actor first.** `_eidos/me.md`, then the role file it names. Respond as that file defines the role — read it, don't infer from its filename. A framework defines its own cast.
 
-**Navigate by the leaves.** `README.md` for orientation, the framework document (`_eidos/Framework.md`, `.yaml`, or `.json`) for the full index, each collection's `index.md` for its blueprints (or the document's `index`, in a structured root). Read these instead of scraping the tree; regenerate them when stale.
+**Navigate by the leaves.** `README.md` for orientation, the framework document (`_eidos/Framework.md` or `.yaml`) for the full index, each collection's `index.md` for its blueprints (or the document's `index`, in a YAML root). Read these instead of scraping the tree; regenerate them when stale.
 
 **Authoring a blueprint:**
 

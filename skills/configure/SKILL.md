@@ -28,7 +28,7 @@ A collection, flavor, or property nobody thought through reads as meaningful whi
 
 ## Boundaries
 
-- **The Framework body only.** You edit its `## Top-Level`, `## Collections`, and `### Custom Properties` sections, and create shape files in `_eidos/shapes/`. Not per-blueprint `index.md` files (`index`), not blueprints (`eidos`). In a root whose framework document is `Framework.yaml` or `Framework.json` (Eidos 4.5.0+), the same declarations are the `top_level`, `collections`, and `schema.custom` fields, documented in EIDOS.md; edit those, and never the generated `index` key.
+- **The Framework body only.** You edit its `## Top-Level`, `## Collections`, and `### Custom Properties` sections, and create shape files in `_eidos/shapes/`. Not per-blueprint `index.md` files (`index`), not blueprints (`eidos`). In a root whose framework document is `Framework.yaml` (Eidos 4.5.0+), the same declarations are the `top_level`, `collections`, and `schema.custom` fields, documented in EIDOS.md; edit those, and never the generated `index` key.
 - **Never touch `### Eidos Core`.** Those move with the standard's version (`migrate`). A core property change is a standards change; redirect.
 - **Needs a framework.** Read `_eidos/Framework.md` from the root, found by its `_eidos/` marker. No `_eidos/` means no framework installed — offer `install` first.
 - **Read the actor first.** `_eidos/me.md`, and tune how you facilitate to the role.

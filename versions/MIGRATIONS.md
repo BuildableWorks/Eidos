@@ -6,33 +6,19 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
-## 4.5.0 → 4.5.1
-
-**YAML is the recommended form of the framework document. Set `eidos_version: 4.5.1`; nothing on disk has to move.**
-
-- 4.5.0 introduced `Framework.yaml` and `Framework.json` and recommended markdown. 4.5.1 recommends YAML: the same syntax as the frontmatter beside it, comments wherever the owner wants them, and one document with everything in it, index included. Markdown remains fully supported and is the form to choose for a root read in a vault; JSON is for a root that tools write more than people do. The `eidos` CLI's `init` writes `Framework.yaml` by default from this release.
-- No field, property, section, or filename changes. A markdown root conforms exactly as it did.
-
-### Per root
-
-1. **Set `eidos_version: 4.5.1`** in the framework document. That is the whole migration.
-2. **Optional: move to YAML.** `eidos framework --as yaml > _eidos/Framework.yaml`, then delete `Framework.md` and each collection's `index.md`, and run `eidos index`. The markdown form's prose has no field to land in and is left behind; keep anything that matters in the root's `README.md`.
-
-**Nothing else moves.**
-
 ## 4.4.3 → 4.5.0
 
-**The framework document may be YAML or JSON, and a structured root keeps its index inside it. Set `eidos_version: 4.5.0`; nothing on disk has to move.**
+**The framework document has a second form, `Framework.yaml`, for scripts and agents; a YAML root keeps its index inside it. Set `eidos_version: 4.5.0`; nothing on disk has to move.**
 
-- **`Framework.yaml` (or `.yml`) and `Framework.json` join `Framework.md`** as forms of the framework document: the same fields, in the snake_case the frontmatter already uses, and exactly one of the three per root. Markdown stays the recommended form. The field reference is in `EIDOS.md` under "`Framework.yaml` and `Framework.json`".
-- **A structured root has no `index.md` files.** Its indexes live inside the framework document under `index`, one list per collection (`id`, `title`, `summary`, `path`, `group`), regenerated wholesale by `index`, which rewrites that key and nothing else. A markdown root keeps a per-collection `index.md` exactly as before.
+- **`Framework.yaml` (or `.yml`) joins `Framework.md`** as a form of the framework document: the same fields in the snake_case the frontmatter uses, comments allowed, exactly one of the two per root. Markdown is the form for people (it renders in a vault); YAML is the form for a root that scripts and agents read, and the one the `eidos` CLI works in. The field reference is in `EIDOS.md` under "`Framework.yaml`".
+- **A YAML root has no `index.md` files.** Its indexes live inside the framework document under `index`, one list per collection (`id`, `title`, `summary`, `path`, `group`), regenerated wholesale by `eidos index`, which rewrites that key and nothing else. A markdown root keeps a per-collection `index.md` exactly as before, rebuilt by the `index` skill's `build-index.py`.
 - **The canvas is declared, not shipped.** The standard no longer ships a canvas generator; a collection's `- **Canvas:**` bullet and a blueprint's `connects_to` still say how one would draw. The `canvas` skill left the plugin.
 - **"Prefer the skills" is "prefer the tooling".** The `eidos` command carries the mechanical part (`init`, `new`, `check`, `index`, `instructions`); the skills carry the judgment. The Rules are unchanged in number and meaning; Rule 15 says "the framework document" where it said `Framework.md`.
 
 ### Per root
 
 1. **Set `eidos_version: 4.5.0`** in the framework document, and update the version note in its `## Schema` block. That is the whole migration.
-2. **Optional: move to a structured document.** `eidos framework --as yaml > _eidos/Framework.yaml` (or `--as json`), then delete `Framework.md` and each collection's `index.md`, and run `eidos index`. The markdown form's prose (section intros, HTML comments) has no field to land in and is left behind; keep anything that matters in the root's `README.md`.
+2. **Optional: move to YAML** to work in the CLI. `eidos convert` writes `Framework.yaml` with the index inside it and removes `Framework.md` and each collection's `index.md`. The markdown form's prose (section intros, HTML comments) has no field to land in and is left behind; keep anything that matters in the root's `README.md`.
 
 **Nothing else moves.** No property, no body section, no filename, no collection.
 
