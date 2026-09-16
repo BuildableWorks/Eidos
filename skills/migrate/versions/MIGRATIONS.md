@@ -6,6 +6,27 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
+## 4.5.0 → 4.6.0
+
+**What a root defines is a `product`; a framework declares its Vocabulary, the root's own terms, beside its Schema; the root can be snapshotted as a version, on purpose and only when asked; and `_eidos/` is open to tools. Set `eidos_version: 4.6.0` and add the two sections empty; nothing else moves.**
+
+- **`product` is a declared term**, first in the table: what a root defines, of any kind. The standard had said "the thing" everywhere. Prose only; no file, folder, or property carried the word, and a root's own `README.md` template already said `{{Product}}`. Seed prose installed into a root (`_eidos/Framework.md` intros, `_eidos/roles/framework-owner.md`) still says "the thing" in a few places until refreshed; cosmetic, nothing reads those words.
+
+- **`## Vocabulary` joins the framework document** after `## Schema` (a `vocabulary` key in `Framework.yaml`). One row per term: **Term** (the word as prose uses it, or a link to the blueprint that defines the concept in full), **Means** (one line), **Not** (the near-misses, each with why it is a different thing). The Schema is the contract for properties; this is the contract for words. Eidos declares none of a framework's terms, so every seed ships the table empty, and a root without the section loads and simply declares no terms.
+- **Two terms join the standard's own table**, `term` and `Vocabulary`, and the `framework` entry lists Vocabulary among what a framework holds. The framework document's one-line description everywhere (`EIDOS.md`, `README.md`, the seeds) now ends "Schema, Vocabulary".
+- **Rule 20 is appended, and nothing renumbers.** A declared term is the word: blueprints use it, a near-miss is flagged with the declared term beside it, never refused and never swapped in silently. Rules 1 through 19 are as they were.
+- **`## Versions` joins the framework document** after `## Vocabulary` (a `versions` key in `Framework.yaml`): snapshots of the root, taken on purpose, newest first, one row each: **Version** (the root's own number, not the thing's release version), **Commit** (a sha in the repository the root lives in; the snapshot, nothing copied), **Tag** (optional; `blueprints/<version>` when wanted). Rule 15 now says the root's version is a framework fact like the Eidos version, and never a blueprint property. **Unused until selected:** the section arrives empty and stays empty unless a team asks for a fixed point; no skill proposes one and no check faults its absence. A root that already tagged snapshots under another name keeps them; whether to record them as rows is the owner's call, with `configure`, and nothing is migrated automatically.
+- **`_eidos/plugins/<name>/` is reserved for tools**, one folder each, named for the tool; the standard reads none of it, and a tool touches only its own. **A Schema row may carry a tool's fields** past the standard's four: a column headed with the tool's name in markdown, a key named for the tool in YAML. Neither needs anything on the way up. A root that already has a tool's folder somewhere else in `_eidos/` may move it under `plugins/` when that tool supports the location; that is the tool's release, not this migration.
+- **A Glossary top-level doc stays a top-level doc.** A root that kept one keeps it, unchanged. The entries in it that carry a distinction are candidates for rows, moved one at a time with `configure`, which presses for the Not; nothing is migrated out of prose automatically, and a glossary that is definitions without near-misses may be fine where it is.
+
+### Per root
+
+1. **Set `eidos_version: 4.6.0`** in the framework document, and update the version note in its `## Schema` block.
+2. **Add `## Vocabulary` and `## Versions` empty** after `## Schema` in `Framework.md`, in that order: each a heading and its three-column header (`Term | Means | Not`, `Version | Commit | Tag`) and nothing else; the seeds carry an intro paragraph for each worth copying. A YAML root adds nothing, since an absent `vocabulary` or `versions` key means none. `migrate` adds both empty and never fills them.
+3. **Optional: declare terms** with `configure`, starting from the collisions the owner already knows about, and, only if a team wants fixed points, **record versions** for the commits already worth naming, the owner supplying the sha and the number for each.
+
+**Nothing else moves.** No property, no body section, no filename, no collection. Anything already under `_eidos/plugins/`, and any extra column a tool has on a Schema row, is carried across as is.
+
 ## 4.4.3 → 4.5.0
 
 **The framework document has a second form, `Framework.yaml`, for scripts and agents; a YAML root keeps its index inside it. Set `eidos_version: 4.5.0`; nothing on disk has to move.**

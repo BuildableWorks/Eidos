@@ -1,6 +1,6 @@
 ---
 # The Eidos version this framework targets; migrate reads and bumps it.
-eidos_version: 4.5.0
+eidos_version: 4.6.0
 # How files, folders, and links are named: kebab-case | TitleCase | Title Case. Absent = kebab-case.
 naming: kebab-case
 ---
@@ -8,9 +8,9 @@ naming: kebab-case
 # Framework
 
 The framework's index and config, in one place: the version and naming convention above, and below the
-Top-Level documents, the Collections (with their flavors and grouping), and the property Schema. The
-visible `README.md` at the root is the friendly door to it; keep it current with the
-`configure` skill.
+Top-Level documents, the Collections (with their flavors and grouping), the property Schema, the
+Vocabulary, and the Versions. The visible `README.md` at the root is the friendly door to it; keep
+it current with the `configure` skill.
 
 ## Top-Level
 
@@ -23,7 +23,7 @@ visible `README.md` at the root is the friendly door to it; keep it current with
 ## Collections
 
 A collection is a top-level folder of repeated blueprints that share a body shape. `Frames` holds the
-framing docs — the most primary thing the folder says about itself — and `Specs` the product's
+framing docs — what the root says first about the product — and `Specs` the product's
 units. Add more with `configure`. Each lists its flavors (the default marked) and its grouping,
 and points at its generated `index.md` leaf.
 
@@ -63,7 +63,7 @@ vault. The `configure` skill edits this section.
 
 ### Eidos Core
 
-_Present on every blueprint. Managed by the standard (Eidos 4.5.0); `migrate` rewrites this block on a version change — don't hand-edit it. (`flavor` absent = the collection's default; `connects_to` absent = no canvas edges; a missing `summary` is flagged by the index.)_
+_Present on every blueprint. Managed by the standard (Eidos 4.6.0); `migrate` rewrites this block on a version change — don't hand-edit it. (`flavor` absent = the collection's default; `connects_to` absent = no canvas edges; a missing `summary` is flagged by the index.)_
 
 | Name        | Type | Meaning                                                                                        |
 | ----------- | ---- | ---------------------------------------------------------------------------------------------- |
@@ -86,3 +86,33 @@ _Yours to shape with the `configure` skill. The seed ships a few useful defaults
 | domain        | Text | Specs      | The grouping, matching the blueprint's sub-folder under its collection in the naming convention. An unknown value warns, never fails. |
 | depends_on    | List | Specs      | Blueprints this one needs, each a markdown link. An implementation dependency, not a canvas edge. |
 | type          | Text | Specs      | Open, soft category label — drives views and filtering, never structure. e.g. feature, capability, integration. |
+
+## Vocabulary
+
+The term contract — the words this root uses on purpose, so a distinction made once is not lost later.
+One row per term: what it **means**, and what it is **not** (the near-misses, each with why it is a
+different thing). A term whose blueprint defines it in full links to that blueprint from its Term cell.
+Eidos declares none of these; the table starts empty and grows a row when a word begins to carry a
+distinction worth keeping. The `configure` skill edits this section and presses for all three of Term,
+Means, and Not.
+
+| Term | Means | Not |
+| ---- | ----- | --- |
+
+_(no terms yet — add a row when a word starts to carry a distinction worth keeping)_
+
+## Versions
+
+Snapshots of this root, taken on purpose. Not the product's release version, and not Eidos's (that is
+`eidos_version` above): a fixed point a team can hold the definition against later, when the product
+has gone a different direction, a stakeholder wants to iterate from what was agreed, or a handover
+needs a signed-off state. Working alone you will likely never take one; git history is enough. One row
+per snapshot, newest first: the root's own number, the commit that *is* the snapshot (nothing is copied;
+`git show <commit>:<path>` reads a blueprint as it was then), and the tag if one was made, named
+`blueprints/<version>` so it never collides with the product's own tags. No skill asks whether to
+version; the `configure` skill records one when you ask, and asks whether to tag it.
+
+| Version | Commit | Tag |
+| ------- | ------ | --- |
+
+_(none — and that is the normal state; add a row only when a team needs a fixed point to hold the definition against)_

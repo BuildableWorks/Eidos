@@ -1,6 +1,6 @@
 # Seeds
 
-The starting **frameworks** Eidos ships. A seed is a complete structure layer — collections, body shapes and their flavors, roles, and a property Schema — that [`install`](../skills/install) copies into a new root's `_eidos/`. Pick the one nearest what you're defining; reshape it from there with `configure`.
+The starting **frameworks** Eidos ships. A seed is a complete structure layer — collections, body shapes and their flavors, roles, a property Schema, and an empty Vocabulary and Versions — that [`install`](../skills/install) copies into a new root's `_eidos/`. Pick the one nearest what you're defining; reshape it from there with `configure`.
 
 | Seed | For | Collections |
 | --- | --- | --- |
@@ -14,7 +14,7 @@ Every seed carries the same pieces, so the skills work identically across them:
 <seed>/
   shapes/       # body shapes, one file per flavor (<kind>.<flavor>.md)
   roles/        # response contracts, one per role
-  Framework.md  # version, naming, Top-Level, Collections, and the property Schema
+  Framework.md  # version, naming, Top-Level, Collections, the property Schema, the Vocabulary, and the Versions
   me.md         # blank actor frame (installs gitignored)
   .gitignore    # keeps me.md out of version control
   README.md     # the {{Product}} front-door template

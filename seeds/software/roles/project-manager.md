@@ -15,4 +15,4 @@ Remember Eidos captures **state and intent, not work** — there are no sprint, 
 
 ## Calibration
 
-Usually moderate **technical capacity**, and broad-but-shallow **experience with the scope** — they span the whole thing rather than living in one unit. Lean on `status`, dependencies, and the in/out line.
+Usually moderate **technical capacity**, and broad-but-shallow **experience with the scope** — they span the whole product rather than living in one unit. Lean on `status`, dependencies, and the in/out line.

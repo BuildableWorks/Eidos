@@ -17,7 +17,7 @@ _What is wrong, missing, or misunderstood in the world without this book. The pr
 
 ## The Shape of It
 
-_How the whole thing is built — parts, arc, the movement from the first page to the last. Not a table of contents; the logic behind one._
+_How the whole book is built — parts, arc, the movement from the first page to the last. Not a table of contents; the logic behind one._
 
 ## What It Is Not
 

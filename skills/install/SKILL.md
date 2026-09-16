@@ -28,7 +28,7 @@ Every seed carries the same pieces, in the same layout:
 seeds/<seed>/
   shapes/             # collection body shapes, one file per flavor (<kind>.<flavor>.md)
   roles/              # response contracts, one per role (installs to _eidos/roles/)
-  Framework.md        # version + naming (frontmatter); body indexes Top-Level, Collections, and the property Schema
+  Framework.md        # version + naming (frontmatter); body indexes Top-Level, Collections, the property Schema, the Vocabulary, and the Versions
   me.md               # blank actor frame (installs to _eidos/me.md — personal, gitignored)
   .gitignore          # installs to _eidos/.gitignore (ignores me.md beside it)
   README.md           # the {{Product}} template — installs to <root>/README.md, the visible "start here"
@@ -66,21 +66,21 @@ On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand
 5. **Install the chosen framework.** Copy `seeds/<chosen>/` into the root as a hidden `_eidos/` — everything except `README.md`, which goes to the root:
 
    - `shapes/`, `roles/`, `me.md`, `.gitignore` → straight into `<root>/_eidos/`.
-   - `Framework.md` → `<root>/_eidos/Framework.md`, then set its `naming` to the convention from step 4 (seeds ship `kebab-case`). It carries the index **and** the property Schema — there is no separate Schema file.
+   - `Framework.md` → `<root>/_eidos/Framework.md`, then set its `naming` to the convention from step 4 (seeds ship `kebab-case`). It carries the index, the property Schema, the Vocabulary, **and** the Versions — there is no separate Schema, glossary, or release file.
    - `README.md` → `<root>/README.md`, the visible "start here"; you fill its name and one-liner in step 6.
 
    Take every file from the **one** seed. Don't mix shapes from one with roles from another — a seed's roles are written against its own collections.
 
    **The seed and the root may be on different machines.** The seed ships inside this skill; the root lives in the user's repo, which on some hosts is reachable only across a device bridge. One filesystem, and a copy (or the script) is the whole job. Across a bridge, **send the seed files with the file-delivery tool and write them to their final paths in a single commit call.** Never re-type a file's contents, base64, or a tarball through a shell heredoc: transcription is lossy, a failed checksum costs the entire round trip, and a staged archive is litter inside someone's repo that you then need permission to delete.
 
-   This is the root's own framework — the thing every other skill reads from here on. Leave it as the baseline; the owner can extend it later (`configure` for a custom property, a collection, or a flavor).
+   This is the root's own framework — what every other skill reads from here on. Leave it as the baseline; the owner can extend it later (`configure` for a custom property, a collection, a flavor, or a term), and a tool that keeps something in the framework makes its own `_eidos/plugins/<name>/` when first used. No seed ships one.
 
 6. **Scaffold the seed's collections.** Read them from the `Framework.md` you just installed — never assume `Specs` and `Frames` — and create a folder for each, named in the chosen convention:
 
    - **the framing collection** (`Frames` in every seed Eidos ships) — every framework declares one, so it always gets scaffolded: its folder and an empty `index.md`. Offer one blank blueprint per flavor the seed declares, reading the flavors off `Framework.md`, each with frontmatter from the Schema and its body from that flavor's shape, guidance block kept. A frame scaffolded but unfilled is fine; it's in progress.
    - **the grouped collection** — the one the owner will write many of: its folder, a sub-folder per starting group they name, and an empty `index.md`. Groups are optional; skipping them gives a flat collection.
    - **`README.md`** at the root: fill its name and a one-line "what this is." Keep it thin.
-   - **the Framework's index** — `## Collections` already declares the seed's collections; add a bullet per starting group under the grouped collection's grouping line (**Domains**, **Parts**, **Strands** — whatever that seed calls it). Leave `## Top-Level` empty; top-level docs are the owner's, added later.
+   - **the Framework's index** — `## Collections` already declares the seed's collections; add a bullet per starting group under the grouped collection's grouping line (**Domains**, **Parts**, **Strands** — whatever that seed calls it). Leave `## Top-Level`, `## Vocabulary`, and `## Versions` empty; top-level docs and terms are the owner's, added later, and a version is taken only when a team asks for one.
 
    Don't write blueprint prose here — that's `eidos`. Don't invent top-level docs; if the owner wants one, point them at `format`. Install lays the frame.
 

@@ -16,7 +16,7 @@ Companion to `eidos` (authors and validates) and `format` (reshapes a draft alre
 
 **Read the actor.** `_eidos/me.md` for the role and calibration, then that role's own contract in `_eidos/roles/<role>.md`, and follow it — it sets the vocabulary, the depth, what to surface, and who holds decisions. Read the contract itself; don't infer a role from its filename. A blank or absent `me.md` means default to full facilitation; offer `whoami`.
 
-**Read the framework.** `_eidos/Framework.md` for the collections, their flavors, their grouping, and the Schema. No `_eidos/` means no framework — stop and offer `install`.
+**Read the framework.** `_eidos/Framework.md` for the collections, their flavors, their grouping, the Schema, and the Vocabulary. Ask in the root's own terms; where the owner uses a near-miss a row names, ask which they mean, since the answer is often the distinction the idea turns on. No `_eidos/` means no framework — stop and offer `install`.
 
 **Read the neighbors.** The target collection's `index.md`, and any blueprint the idea sounds adjacent to. Questions asked against what already exists are worth ten asked in a vacuum: you can ask whether this is really separate from something already written, and the owner can see it is.
 
@@ -63,6 +63,7 @@ A blueprint in isolation is a wish. Place it against everything else.
 - **Concrete beats open.** "Does this cover the offline case?" gets a real answer; "what are the edge cases?" gets silence.
 - **Never answer your own question.** Proposing an option for the owner to accept or reject is facilitation. Recording your own guess as their answer is authoring, and it is the one failure this skill exists to prevent.
 - **"I don't know" is a result.** Write it down as an open question and move on. A blueprint may ship carrying open questions; what it may not carry is a gap nobody noticed.
+- **Notice the words.** When the owner keeps reaching for a word no Vocabulary row declares, or uses two words for what sounds like one thing, say so and ask whether it is one thing or two. Don't define it here; carry it to the recap as a candidate term for `configure`.
 - **Play back what you heard.** Every few rounds, restate the idea in two or three sentences and let the owner correct it. The corrections are the real content.
 - **Don't run the shape as a form.** The shape tells you what to find out, not what to recite. Nobody wants to be walked down a checklist.
 
@@ -74,6 +75,6 @@ Stop at the first of these:
 - **Two rounds add nothing.** If questions stop producing new information, the idea is as understood as it's going to get today. Say so rather than grinding.
 - **The owner is out of answers.** Stop and list what's still open. Half an idea, honestly marked, beats a whole one invented.
 
-Then close with a short recap — the placement (collection and flavor), the intent, the non-goals, the connections, and the open questions — and offer to author it with `eidos`. Hand over the recap; don't make the next skill re-ask what you already asked.
+Then close with a short recap — the placement (collection and flavor), the intent, the non-goals, the connections, the open questions, and any candidate terms for `configure` — and offer to author it with `eidos`. Hand over the recap; don't make the next skill re-ask what you already asked.
 
 If the session ends without a blueprint, that is a fine outcome. Learning that an idea is two ideas, or already covered, or not worth doing, is the cheapest thing this skill can produce.
