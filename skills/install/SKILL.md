@@ -61,12 +61,12 @@ On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand
 
 3. **Name the root.** Default `Blueprints/`; offer to rename. Low-stakes — nothing points at it by path — so any name works. Several roots in one repo nest as `Blueprints/<name>/`, each with its own `_eidos/`.
 
-4. **Choose the naming convention.** Offer the three with `AskUserQuestion` — **kebab-case** (default; lowercase and space-free, no `%20` in links, the filename *is* the `id`), **TitleCase** (space-free and capitalized), **Title Case** (reads like prose, `%20` in every link) — and record it as `naming` in `Framework.md`'s frontmatter. EIDOS.md has the worked table. It governs the whole folder and changing it later means renaming files, so settle it now; the default is the safe answer.
+4. **Choose the naming convention.** Offer the three with `AskUserQuestion` — **kebab-case** (default; lowercase and space-free, no `%20` in links), **TitleCase** (space-free and capitalized), **Title Case** (reads like prose, `%20` in every link) — and record it as `naming` in `Framework.md`'s frontmatter. EIDOS.md has the worked table. It governs the whole folder and changing it later means renaming files, so settle it now; the default is the safe answer.
 
 5. **Install the chosen framework.** Copy `seeds/<chosen>/` into the root as a hidden `_eidos/` — everything except `README.md`, which goes to the root:
 
    - `shapes/`, `roles/`, `me.md`, `.gitignore` → straight into `<root>/_eidos/`.
-   - `Framework.md` → `<root>/_eidos/Framework.md`, then set its `naming` to the convention from step 4 (seeds ship `kebab-case`). It carries the index, the property Schema, the Vocabulary, **and** the Versions — there is no separate Schema, glossary, or release file.
+   - `Framework.md` → `<root>/_eidos/Framework.md`, then set its `naming` to the convention from step 4 (seeds ship `kebab-case`). It carries the index, the property Schema (core and custom; no seed ships a tool's block), the Vocabulary, **and** the Versions — there is no separate Schema, glossary, or release file.
    - `README.md` → `<root>/README.md`, the visible "start here"; you fill its name and one-liner in step 6.
 
    Take every file from the **one** seed. Don't mix shapes from one with roles from another — a seed's roles are written against its own collections.

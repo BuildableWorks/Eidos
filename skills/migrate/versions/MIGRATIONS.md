@@ -6,6 +6,23 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
+## 4.6.0 → 4.7.0
+
+**Every Schema property has an owner, and the owner is the block it sits in. Set `eidos_version: 4.7.0`; nothing on disk has to move.**
+
+- **`### <tool> Properties` joins `### Eidos Core` and `### Custom Properties`** (`schema.tools.<tool>` in `Framework.yaml`): one block per tool that declares properties of its own, written by that tool alone. Eidos is the first tool and the core block was already its; this generalizes it. `configure` edits the custom block only, `migrate` rewrites the core block only, and a tool's block is never faulted, never filled in, and carried across untouched.
+- **A property a tool declared under 4.6.0** sat in `### Custom Properties` with the tool's column filled. It still conforms; whether to move it into the tool's own block is that tool's next release, not this migration. If the owner moves it by hand, the row moves whole, values on blueprints untouched.
+- **`connects_to` is no longer a core property.** The core is `id`, `title`, `summary`, `flavor`. Nothing has read `connects_to` since the canvas generator left in 4.5.0, and how blueprints relate belongs in the body as links. **Needs a decision per root that used it.** `migrate` rewrites the core block without it and then surfaces every blueprint carrying a value, and the owner picks one of three: declare `connects_to` in `### Custom Properties` (it is then the framework's own, unchanged on every blueprint); fold each link into the body where the relationship is explained; or drop it, the values shown first. Never dropped silently.
+- **`- **Canvas:**` is no longer a declared bullet** on a collection (`canvas` in YAML). Leave it or delete it; nothing reads it, and a tool that draws keeps its own declarations. `configure` stops writing it for new collections.
+- **`id` is no longer required to be kebab-case.** Stable and unique, in any form. Every existing id still conforms; a root that wants numbers or GUIDs from here on may use them, and a check no longer reads the format.
+- **Rule 8 gains three words** ("and an owner"). Nothing renumbers.
+
+### Per root
+
+1. **Set `eidos_version: 4.7.0`** in the framework document, and update the version note in its `## Schema` block. That is the whole migration.
+
+**Nothing else moves.** No property, no body section, no filename, no collection.
+
 ## 4.5.0 → 4.6.0
 
 **What a root defines is a `product`; a framework declares its Vocabulary, the root's own terms, beside its Schema; the root can be snapshotted as a version, on purpose and only when asked; and `_eidos/` is open to tools. Set `eidos_version: 4.6.0` and add the two sections empty; nothing else moves.**

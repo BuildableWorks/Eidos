@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 4.6.0
+**Version:** 4.7.0
 
 A markdown standard for defining a product: an app, a book, a study, a workflow, anything work produces that has a shape. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished.
 
@@ -24,7 +24,7 @@ Every term the standard uses, in the order they build on each other.
 | **Schema** | The framework's whole property contract: the core properties Eidos requires, plus whatever the framework adds. |
 | **term** | One word the root uses on purpose: what it means, and what it is not. Declared so a distinction made once is not lost later. |
 | **Vocabulary** | The framework's whole term contract, beside its Schema. Eidos declares none of a framework's terms; this table is its own. |
-| **top-level doc** | A one-of-a-kind document at the root — a Roadmap, a Vision, the generated canvas. Free-form: no shape, no flavors, no validation. |
+| **top-level doc** | A one-of-a-kind document at the root — a Roadmap, a Vision, a map a tool generates. Free-form: no shape, no flavors, no validation. |
 | **role** | A response contract for one kind of person, saying how an agent talks to them. |
 | **actor** | Who is in the seat right now: their role, plus a personal calibration. |
 | **seed** | A starting framework the standard ships. `install` copies one into a new root. |
@@ -88,7 +88,7 @@ The framework document: the one file describing the structure rather than any si
 
 ```markdown
 ---
-eidos_version: 4.6.0
+eidos_version: 4.7.0
 naming: kebab-case
 ---
 
@@ -107,7 +107,6 @@ The framing docs — declared first.
 - **Leaf:** [<Framing>/index.md](../<Framing>/index.md)
 - **Flavors:**
   - [<kind>](shapes/frame.<kind>.md) — one flavor per kind of frame (mark one default).
-- **Canvas:** file
 
 ### <Collection>
 
@@ -117,20 +116,24 @@ One line on what this collection holds.
 - **Flavors:**
   - [<flavor-1>](shapes/<kind>.<flavor-1>.md) — the fuller shape (default).
   - [<flavor-2>](shapes/<kind>.<flavor-2>.md) — a lighter one to grow out of.
-- **Canvas:** card from `## <Section>`
 - **<Grouping>:**
   - **<Group>** — one line on what falls under it.
 
 ## Schema
 
 ### Eidos Core
-<!-- the standard's block: id, title, summary, flavor, connects_to -->
+<!-- the standard's block: id, title, summary, flavor -->
 
 ### Custom Properties
 | Name   | Type | Applies To   | Meaning                        | <tool>           |
 | ------ | ---- | ------------ | ------------------------------ | ---------------- |
 | <name> | Text | all          | Whatever this framework needs. |                  |
 | <name> | Text | <Collection> | Scoped to one collection.      | <field>: <value> |
+
+### <tool> Properties
+| Name   | Type | Applies To | Meaning                          |
+| ------ | ---- | ---------- | -------------------------------- |
+| <name> | Text | all        | A property the tool keeps itself. |
 
 ## Vocabulary
 
@@ -149,9 +152,8 @@ One line on what this collection holds.
 - **`eidos_version`** — the version this framework targets. `migrate` reads and bumps it.
 - **`naming`** — `kebab-case` (default), `TitleCase`, or `Title Case`. See [Naming](#naming).
 - **`## Top-Level`** — the top-level docs, `README` first. Framing docs are not here; they are a collection.
-- **`## Collections`** — one `###` each: its **Leaf**, its **Flavors** (default marked), its **Canvas**, and its grouping.
-- **`- **Canvas:**`** — how a canvas generator draws the collection: `file` (a full-file node, for prose read whole), `card` (a node embedding the blueprint), or `card from ## Section` (a node embedding that section). Absent means a plain card — a generator knows no collection by name and cannot guess which section is the summary.
-- **`## Schema`** — `### Eidos Core` (the standard's, rewritten by `migrate`) and `### Custom Properties` (the framework's). The first four columns are the standard's; any column past them is a tool's, headed with the tool's name.
+- **`## Collections`** — one `###` each: its **Leaf**, its **Flavors** (default marked), and its grouping.
+- **`## Schema`** — one block per owner: `### Eidos Core` (the standard's, rewritten by `migrate`), `### Custom Properties` (the framework's, edited by `configure`), and `### <tool> Properties` for each tool that declares properties of its own (that tool's, written by nobody else). The first four columns are the standard's; any column past them is a tool's, headed with the tool's name.
 - **`## Vocabulary`** — the root's own terms, one row each: **Term · Means · Not**. Starts empty; absent means none declared.
 - **`## Versions`** — snapshots of the root, taken on purpose, newest first, one row each: **Version · Commit · Tag**. A named commit, nothing copied. Starts empty and stays empty until the owner asks for one; absent means none recorded.
 
@@ -160,7 +162,7 @@ One line on what this collection holds.
 The framework document may be data instead of markdown: `Framework.yaml` (or `.yml`) in place of `Framework.md`. It is the same framework, field for field, in the snake_case the frontmatter already uses, with comments wherever the owner wants them. Choose it when scripts and agents are the main readers: it parses without a markdown convention, and it carries the one thing the markdown form keeps elsewhere, the generated index, under `index` (see [Generated leaves](#generated-leaves)), so a YAML root is one document with everything in it. Choose markdown when people are: it renders in a vault and reads as prose. The markdown form's prose has no field to land in and stays behind when a root converts.
 
 ```yaml
-eidos_version: 4.6.0
+eidos_version: 4.7.0
 naming: kebab-case            # absent = kebab-case
 top_level:                    # the top-level docs, README first
   - title: README
@@ -169,7 +171,6 @@ top_level:                    # the top-level docs, README first
 collections:                  # the first is the framing collection
   - name: <Framing>
     description: The framing docs.
-    canvas: file
     flavors:
       - name: <kind>
         shape: shapes/frame.<kind>.md
@@ -177,7 +178,6 @@ collections:                  # the first is the framing collection
         default: true
   - name: <Collection>
     description: One line on what this collection holds.
-    canvas: { mode: card, section: <Section> }
     flavors:
       - { name: <flavor-1>, shape: shapes/<kind>.<flavor-1>.md, description: the fuller shape, default: true }
       - { name: <flavor-2>, shape: shapes/<kind>.<flavor-2>.md, description: a lighter one to grow out of }
@@ -191,6 +191,9 @@ schema:
   custom:
     - { name: <name>, type: Text, applies_to: all, meaning: Whatever this framework needs. }
     - { name: <name>, type: Text, applies_to: [<Collection>], meaning: Scoped to one collection., <tool>: { <field>: <value> } }
+  tools:                      # one block per tool that declares properties of its own; absent = none
+    <tool>:
+      - { name: <name>, type: Text, applies_to: all, meaning: A property the tool keeps itself. }
 vocabulary:                   # the root's own terms; absent = none declared
   - { term: <Term>, means: One line on what the word denotes here., not: ["<near-miss>, and why it is a different thing"] }
   - { term: <Term>, means: A term its blueprint defines in full., not: [<near-miss>], see: ../<Collection>/<Group>/<Title>.md }
@@ -202,7 +205,7 @@ index:                        # generated, regenerated wholesale by `index`; nev
 ```
 
 - Every path is relative to `_eidos/`, as the markdown form's links are. An index entry's `path` is relative to its collection folder, as an `index.md` link is.
-- `canvas` is `file`, `card`, or `{ mode: card, section: <Section> }`. `default` marks a collection's default flavor; absent on all of them, the first is. `applies_to` is `all` or a list of collections. A key on a property entry that is not one of the standard's four is a tool's, named for the tool. There is no **Leaf**: a structured root's index is inside the document.
+- `default` marks a collection's default flavor; absent on all of them, the first is. `applies_to` is `all` or a list of collections. A key on a property entry that is not one of the standard's four is a tool's, named for the tool. `schema.tools.<tool>` is that tool's own block, the markdown form's `### <tool> Properties`. There is no **Leaf**: a structured root's index is inside the document.
 - `vocabulary` is the markdown form's `## Vocabulary` table, one entry per term: `term`, `means`, and `not` as a list, each entry free to carry its clause. `see` is the path a markdown Term cell would link to, for a term its blueprint defines in full. Absent means no terms declared.
 - `versions` is the markdown form's `## Versions` table, one entry per snapshot: `version`, `commit`, and `tag` when one was made. Absent means none recorded, which is the normal state.
 - A tool reads whichever document is present and treats the framework the same. Converting a markdown root means writing the same fields as data, removing `Framework.md` and each collection's `index.md`, and regenerating the index.
@@ -219,19 +222,20 @@ Each property is a row: **Name · Type · Applies To · Meaning**. A type comes 
 
 **Applies To** scopes a property to collections: `all`, or a list. Frontmatter is generated per blueprint from the properties that apply to its collection, so a scoped property never lands where it makes no sense.
 
-**A row may carry a tool's fields.** The four the standard names come first and mean what they mean here. Past them, a tool that needs something per property (how an editor renders it, what a checker allows, an option list) adds its own under its own name: a key named for the tool on the YAML entry, a column headed with the tool's name in the markdown table. The standard reads its four and ignores the rest; a check never faults them, and `configure` and `migrate` carry them across unchanged and never fill them in. A property a tool needs for itself is declared the same way as any custom property, its fields marking it as the tool's, and it answers to the same rules as every other row, including the one against work-tracking.
+**Every property has an owner, and the owner is the block it sits in.** Eidos is the first tool: `### Eidos Core` is its block, and `migrate` rewrites it. `### Custom Properties` is the framework owner's, and `configure` edits it. A tool that needs properties of its own (the `eidos` CLI, an editor extension, a generator) declares them in a block of its own, `### <tool> Properties` (`schema.tools.<tool>` in YAML), and that tool alone writes it: not `configure`, not `migrate`, not another tool. A tool's properties are Schema properties like any other, generated into frontmatter where they apply, validated by a check, and bound by every rule here including the one against work-tracking; an unknown tool's block is never faulted. When a tool leaves, its block leaves with it, the values it held surfaced first the way any retired property's are.
+
+**A row may also carry a tool's fields.** The four the standard names come first and mean what they mean here. Past them, a tool that needs something per property it does *not* own (how an editor renders `status`, what a checker allows, an option list) adds its own under its own name: a key named for the tool on the YAML entry, a column headed with the tool's name in the markdown table. The standard reads its four and ignores the rest; a check never faults them, and `configure` and `migrate` carry them across unchanged and never fill them in.
 
 **The core** — present on every blueprint, and the whole of what the standard requires:
 
 | Name | Type | Meaning |
 | --- | --- | --- |
-| `id` | Text | Stable, unique, kebab-case identity. Assigned once, never renamed. References point at it. |
+| `id` | Text | Stable, unique identity, in any form: a slug, a number, a GUID. Assigned once, never changed. References point at it. |
 | `title` | Text | Human-readable name. Rename it freely; `id` is what holds still. |
 | `summary` | Text | One plain line: what this blueprint is. The source for the collection's [`index.md`](#generated-leaves) listing; absent, the index flags it. |
 | `flavor` | Text | Which flavor this blueprint follows. Absent = the collection's default. |
-| `connects_to` | List | Blueprints this one connects to on the canvas, each a link, drawn as a directed edge. |
 
-**Eidos defines no custom properties.** A lifecycle `status`, dates, a grouping, a dependency list — all are a framework's own choice. Each [seed](seeds) makes its own set. Add one with `configure`, which presses for all four of Name, Type, Applies To, and Meaning, then backfills the blueprints it applies to.
+**Eidos defines no custom properties.** A lifecycle `status`, dates, a grouping, a dependency list, a relationship list — all are a framework's own choice, and how blueprints relate is better said in the body, as links in prose, than as a frontmatter field. Each [seed](seeds) makes its own set. Add one with `configure`, which presses for all four of Name, Type, Applies To, and Meaning, then backfills the blueprints it applies to.
 
 ### Vocabulary
 
@@ -272,13 +276,13 @@ Everything a human reads in the tree — top-level docs, collection and sub-fold
 
 | Convention | A blueprint file | A grouping folder | For |
 | --- | --- | --- | --- |
-| **kebab-case** (default) | `blueprint-title-here.md` | `group-name/` | readable everywhere: no escaping, no `%20`, and the filename *is* the `id` |
+| **kebab-case** (default) | `blueprint-title-here.md` | `group-name/` | readable everywhere: no escaping, no `%20` |
 | **TitleCase** | `BlueprintTitleHere.md` | `GroupName/` | space-free, capitalized |
 | **Title Case** | `Blueprint Title Here.md` | `Group Name/` | a tree that reads like prose, at the cost of `%20` in every link |
 
 An absent `naming` key means `kebab-case`.
 
-One convention governs the whole folder, and changing it later means renaming files, so it is settled at init. Whichever you pick: `_eidos/` is always lowercase; `README.md` keeps the name every tool already looks for; the `id` is always kebab-case; a grouping property's value matches its folder exactly; and fields meant for tools are not names in the tree.
+One convention governs the whole folder, and changing it later means renaming files, so it is settled at init. Whichever you pick: `_eidos/` is always lowercase; `README.md` keeps the name every tool already looks for; a grouping property's value matches its folder exactly; and fields meant for tools are not names in the tree.
 
 ### Linking
 
@@ -305,7 +309,7 @@ For a top-level doc you've already drafted, `format` organizes it into the house
 
 ## Generated leaves
 
-Two derived views. Both are regenerated wholesale, annotate rather than gate, and have nothing hand-written to preserve.
+One derived view the standard defines, regenerated wholesale, annotating rather than gating, with nothing hand-written to preserve.
 
 **The index.** Each collection carries a generated `index.md` in its folder, listing its blueprints — grouped under their sub-folders when it has them, flat when it doesn't. Each line is the blueprint's `summary`, verbatim; a blueprint with none is flagged, never invented. Links are relative to the collection folder. Rebuilt by `index`.
 
@@ -321,7 +325,7 @@ In a root whose framework document is YAML there are no `index.md` files: every 
 - [<Title>](<Group>/<Title>.md) — one bullet per blueprint, in file order.
 ```
 
-**The canvas.** The spatial counterpart: an Obsidian `.canvas` map. Each collection draws the way it declares itself, is its own group, and nests a group per sub-folder; each blueprint's `connects_to` links become directed edges (with `depends_on` optionally overlaid in another color). The generated `.canvas` is itself a top-level doc — register it in `## Top-Level`. The standard ships no generator; the declarations are there for whichever tool draws one.
+**Any other view is a tool's.** A map, a graph, a report: a tool that draws one reads the leaves and the links in the bodies, keeps whatever it needs in its own Schema block or its `plugins/` folder, and writes its output as a top-level doc, registered in `## Top-Level` like any other. The standard declares nothing for it.
 
 ## Rules
 
@@ -334,7 +338,7 @@ The load-bearing conventions.
 5. **Write it like a human would read it.** The sections are a scaffold for a living blueprint, not a form to pour text into. If a blueprint reads like filled-in boilerplate, reshape it until it reads like someone wrote it.
 6. **Reference other blueprints with links, not bare names** — in prose and in properties alike. Each blueprint's `id` is still its permanent identity, sitting behind the link.
 7. **One shape family per collection, declared as flavors.** What flexes is *which* sections appear and *which* flavor a blueprint uses; never their order or names within a flavor. The shape is never forked per category.
-8. **Properties carry a type and a meaning.** Every property declares its name, its type, which collections it applies to, and what it means. Frontmatter is generated from the Schema, so a new blueprint is born conforming.
+8. **Properties carry a type, a meaning, and an owner.** Every property declares its name, its type, which collections it applies to, and what it means; the block it sits in says who owns it (Eidos, the framework, or a tool), and only the owner writes there. Frontmatter is generated from the Schema, so a new blueprint is born conforming.
 9. **Soft labels are views, not structure.** A category label a framework adds drives views and filtering, never structure. An off-list value is valid. `flavor` carries the structural choice.
 10. **A collection's grouping is the collection's own.** It may group its blueprints one level deep and may declare a property naming that grouping; the value then matches the folder, and an unknown value warns rather than blocks. The standard never names a grouping for it.
 11. **A shape names its own stable part.** Every shape has a part that holds still and a part that moves, and says which is which. If the stable part changes substantially, ask whether this is a different blueprint.
@@ -352,7 +356,7 @@ The load-bearing conventions.
 
 Semantic Versioning: major for breaking changes, minor for backward-compatible additions, patch for clarifications.
 
-This file holds the version of **the standard** — right now, **4.6.0** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its framework document; `migrate` reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
+This file holds the version of **the standard** — right now, **4.7.0** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its framework document; `migrate` reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
 
 **The plugin that ships this standard versions separately.** The skills and seeds change far more often than the standard does, so a release that fixes a skill bumps the plugin and leaves this file — and every framework's `eidos_version` — untouched. When you need to know what a framework conforms to, read this version; the plugin's is in `.claude-plugin/plugin.json`, and `CHANGELOG.md` records which standard each plugin release carried.
 
@@ -374,11 +378,11 @@ _Operating detail. A human can stop above._
 
 **Authoring a blueprint:**
 
-1. From the framework document, take the Schema, the Vocabulary, the naming convention, and the target collection's flavors. Pick a flavor (the default unless the owner chooses another) and read its shape for the body. Name the file for its title in the convention; put a permanent kebab-case `id` inside.
+1. From the framework document, take the Schema, the Vocabulary, the naming convention, and the target collection's flavors. Pick a flavor (the default unless the owner chooses another) and read its shape for the body. Name the file for its title in the convention; put a permanent `id` inside, in whatever form the root uses.
 2. Generate frontmatter from the properties that apply to that collection. Fill values from what the owner tells you; leave a property blank rather than guessing it.
 3. Lead with the shape's opening sections and press hardest on its non-goals section. Read those names off the shape rather than assuming them, and follow whatever labeling it asks for. Omit a section that doesn't apply; keep the order and names of the ones that do.
 4. Where the owner is vague, ask. Don't fill the gap with plausible prose.
 
-**Validating a blueprint:** check frontmatter against the framework's Schema (`id` kebab-case, dates as `YYYY-MM-DD`, custom properties scoped to the collection). Report missing body sections against *the blueprint's flavor shape*, flagging an absent non-goals section first, and note anything skipping the labeling that shape asks for. Note each near-miss the Vocabulary names, with the declared term beside it. Confirm no work-tracking fields crept in. Surface, don't block — the output is a review a human acts on.
+**Validating a blueprint:** check frontmatter against the framework's Schema, every block of it (`id` present and unique, dates as `YYYY-MM-DD`, custom and tool properties scoped to the collection). Report missing body sections against *the blueprint's flavor shape*, flagging an absent non-goals section first, and note anything skipping the labeling that shape asks for. Note each near-miss the Vocabulary names, with the declared term beside it. Confirm no work-tracking fields crept in. Surface, don't block — the output is a review a human acts on.
 
 **Facilitate, don't author.** Format and structure what the owner gives you, supplement, ask, and press on scope. Never invent a blueprint's purpose, decide direction, or hand back a finished blueprint to rubber-stamp. When unsure, ask.

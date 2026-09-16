@@ -10,7 +10,7 @@ Keep `_eidos/Framework.md` working as the framework's **index and contract** —
 
 - **Top-Level** — the top-level documents, `README.md` first (the visible front door and the first listed entry), then the owner's own one-of-a-kind docs (a Roadmap, a Vision, the generated Blueprint Map), each a link and a one-line description. The framing docs are **not** here — they are a collection.
 - **Collections** — each top-level content folder: its grouping (one level of sub-folders) and its **flavors** (body shapes, one marked default), plus a pointer to its generated `index.md` leaf.
-- **Schema** — the property contract every blueprint carries, in two blocks: `### Eidos Core` (the standard's, off-limits here) and `### Custom Properties` (the framework's — the seed's defaults plus your own, each scoped by Applies To).
+- **Schema** — the property contract every blueprint carries, one block per owner: `### Eidos Core` (the standard's, off-limits here), `### Custom Properties` (the framework's — the seed's defaults plus your own, each scoped by Applies To), and `### <tool> Properties` for any tool that declares its own (that tool's, off-limits here too).
 - **Vocabulary** — the term contract: the words the root uses on purpose, one row each (**Term · Means · Not**). Every seed ships it empty; the terms are the root's own, and Eidos declares none of them.
 - **Versions** — snapshots of the root, taken on purpose, newest first, one row each (**Version · Commit · Tag**): a named commit in the repository the root lives in, nothing copied. A team's tool for holding the definition against a fixed point; not the product's release version, and not `eidos_version`, which is the standard's and moves with `migrate`. Empty is the normal state.
 
@@ -20,10 +20,10 @@ It scaffolds collections and flavors, grows and reshapes the custom Schema and r
 
 A collection, flavor, or property nobody thought through reads as meaningful while no one knows what it holds. Don't invent them or guess their shape — facilitate; the owner decides. If they offer only a name, ask for the rest.
 
-- **For a collection:** its **name** (the folder, in the framework's naming convention), a one-line **description**, how it **groups** its blueprints (one level of sub-folders, or flat), at least one **flavor** with a **default**, and how it **draws** on the canvas (below).
+- **For a collection:** its **name** (the folder, in the framework's naming convention), a one-line **description**, how it **groups** its blueprints (one level of sub-folders, or flat), and at least one **flavor** with a **default**.
 - **For a flavor:** its **name** (lowercase, e.g. `full`, `micro`, `api`), a one-line **description**, and its **shape** — the sections the body carries.
 - **For a property:** all four —
-  - **name** — the frontmatter key. Lowercase, words joined by underscores, matching the core style (`summary`, `connects_to`). Short and stable.
+  - **name** — the frontmatter key. Lowercase, words joined by underscores, matching the core style (`summary`, `date_created`). Short and stable.
   - **type** — from the Obsidian set: **Text, List, Number, Checkbox, Date, Date & time**. Anything richer — a structured object, an enum with behavior — belongs in the body, not a property. Say so.
   - **applies to** — `all`, or a list of collection names, so a field never lands where it makes no sense. Absence where it applies is a soft gap the validator notes, never refuses.
   - **meaning** — one line: what it holds and why. This is what stops it rotting into a mystery field.
@@ -35,7 +35,7 @@ A collection, flavor, or property nobody thought through reads as meaningful whi
 ## Boundaries
 
 - **The Framework body only.** You edit its `## Top-Level`, `## Collections`, `### Custom Properties`, `## Vocabulary`, and `## Versions` sections, and create shape files in `_eidos/shapes/`. Not per-blueprint `index.md` files (`index`), not blueprints (`eidos`). In a root whose framework document is `Framework.yaml` (Eidos 4.5.0+), the same declarations are the `top_level`, `collections`, `schema.custom`, `vocabulary`, and `versions` fields, documented in EIDOS.md; edit those, and never the generated `index` key. A framework on a version before 4.6.0 has no Vocabulary; offer `migrate` before adding one.
-- **Never touch `### Eidos Core`.** Those move with the standard's version (`migrate`). A core property change is a standards change; redirect.
+- **Never touch `### Eidos Core` or a `### <tool> Properties` block.** Every property is owned by the block it sits in: the core is Eidos's and moves with the standard's version (`migrate`); a tool's block (`schema.tools.<tool>` in YAML) is written by that tool alone. A core property change is a standards change; a tool property change is that tool's; redirect either. The one exception is a tool that has left the root: then its block is retired like any property, values surfaced first, on the owner's say-so.
 - **Never touch a tool's.** `_eidos/plugins/<name>/` is that tool's folder, and a column in the Schema table headed with a tool's name (a key named for it, in YAML) is that tool's fields on the row. Carry them across unchanged when you edit a row, never fill them in, and when retiring a row that carries some, name the tool so the owner knows what else is affected.
 - **Needs a framework.** Read `_eidos/Framework.md` from the root, found by its `_eidos/` marker. No `_eidos/` means no framework installed — offer `install` first.
 - **Read the actor first.** `_eidos/me.md`, and tune how you facilitate to the role.
@@ -44,12 +44,10 @@ A collection, flavor, or property nobody thought through reads as meaningful whi
 
 ## Adding a collection
 
-1. **Decide** the name, description, grouping (sub-folders or flat), at least a default flavor, and the canvas style with the owner.
-
-   The **canvas style** is a real question — ask it. Blueprints read *whole* (loose prose: framing docs, decisions) want `file`; blueprints scanned by their headline want `card from ## <Section>`, naming whichever section of the shape you just agreed carries the summary. Don't assume a section name. Declaring nothing gets a plain whole-blueprint card, which is rarely what anyone wants.
+1. **Decide** the name, description, grouping (sub-folders or flat), and at least a default flavor with the owner.
 2. **Create the folder** under the root, named in the framework's naming convention (read `naming` from `Framework.md`). Keep its organization to **one level of sub-folders** — deeper is discouraged.
 3. **Create the default flavor's shape** in `_eidos/shapes/` as `<kind>.<flavor>.md` (e.g. `decision.full.md`), body-only, with the sections the owner wants and italic guidance prompts. Pattern it on the existing shapes.
-4. **Register it** under `## Collections` in `Framework.md`: a `###` heading, the description, then bullets — **Leaf**, **Flavors** (default marked), **Canvas**, and the grouping (sub-folders each with a short description, or "ungrouped"). Bullets, never `·` separators, so someone adding a flavor can copy a line:
+4. **Register it** under `## Collections` in `Framework.md`: a `###` heading, the description, then bullets — **Leaf**, **Flavors** (default marked), and the grouping (sub-folders each with a short description, or "ungrouped"). Bullets, never `·` separators, so someone adding a flavor can copy a line:
 
    ```markdown
    ### Decisions
@@ -59,11 +57,8 @@ A collection, flavor, or property nobody thought through reads as meaningful whi
    - **Leaf:** [Decisions/index.md](../Decisions/index.md)
    - **Flavors:**
      - [decision.full.md](shapes/decision.full.md) — context, decision, consequences (default).
-   - **Canvas:** card from `## Decision`
    - Ungrouped — a flat, dated list.
    ```
-
-   The **Canvas** bullet is the only thing telling a canvas generator how this collection draws — it knows no collection by name.
 5. **A grouping property is optional and the collection's own.** Most collections group by sub-folder alone, recorded in the Framework. If the owner wants a property carrying the grouping, that's a Schema change — handle it as a property change below.
 6. **Build the leaf and hand off.** Run `index` for the new `index.md`, point the owner to `eidos` for the first blueprint, and report the folder, shape file, and Collections entry.
 
