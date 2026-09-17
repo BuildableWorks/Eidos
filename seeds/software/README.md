@@ -12,7 +12,7 @@ _One or two sentences: what {{Product}} is, and for whom._
 
 ## Top-level documents
 
-_Your own one-of-a-kind docs (a Vision, the generated Blueprint Map). Add them here as you write them._
+_Your own one-of-a-kind docs: a Vision, a set of Design Principles, the generated Blueprint Map. Add them here as you write them._
 
 ## Collections
 

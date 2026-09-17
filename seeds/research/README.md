@@ -10,6 +10,10 @@
 - **[Frames](Frames/)** — the question, the prior work, the method, the ethics.
 - **[Investigations](Investigations/)** — one file per line of inquiry, grouped by strand.
 
+## Top-level documents
+
+_Your own one-of-a-kind docs: a Pre-registration, a Data Management Plan, a Bibliography. Add them here as you write them._
+
 The full index — every collection, its variants, and the Properties table — is in
 [`.eidos/Framework.yaml`](.eidos/Framework.yaml).
 
