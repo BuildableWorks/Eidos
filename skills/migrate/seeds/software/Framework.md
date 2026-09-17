@@ -1,6 +1,6 @@
 ---
 # The Eidos version this framework targets; migrate reads and bumps it.
-eidos_version: 4.7.0
+eidos_version: 5.0.0
 # How files, folders, and links are named: kebab-case | TitleCase | Title Case. Absent = kebab-case.
 naming: kebab-case
 ---
@@ -8,7 +8,7 @@ naming: kebab-case
 # Framework
 
 The framework's index and config, in one place: the version and naming convention above, and below the
-Top-Level documents, the Collections (with their flavors and grouping), the property Schema, the
+Top-Level documents, the Collections (with their variants and grouping), the Properties table, the
 Vocabulary, and the Versions. The visible `README.md` at the root is the friendly door to it; keep
 it current with the `configure` skill.
 
@@ -22,56 +22,56 @@ it current with the `configure` skill.
 
 ## Collections
 
-A collection is a top-level folder of repeated blueprints that share a body shape. `Frames` holds the
+A collection is a top-level folder of repeated blueprints that share a body template. `Frames` holds the
 framing docs — what the root says first about the product — and `Specs` the product's
-units. Add more with `configure`. Each lists its flavors (the default marked) and its grouping,
+units. Add more with `configure`. Each lists its variants (the default marked) and its grouping,
 and points at its generated `index.md` leaf.
 
 ### Frames
 
 The framing docs that set what every other blueprint is judged against — the product's architecture,
-audience, criteria, and market. This framework's framing collection; each frame follows the flavor of
+audience, criteria, and market. This framework's framing collection; each frame follows the variant of
 its kind, and one left unwritten is a gap to surface, not a failure.
 
 - **Leaf:** [Frames/index.md](../Frames/index.md)
-- **Flavors:**
-  - [architecture](shapes/frame.architecture.md) — the product as a built system (default).
-  - [audience](shapes/frame.audience.md) — who it serves, and how each kind differs.
-  - [criteria](shapes/frame.criteria.md) — budget, scope objectives, timeline.
-  - [market](shapes/frame.market.md) — landscape, positioning, and how it earns.
+- **Variants:**
+  - [architecture](templates/frame.architecture.md) — the product as a built system (default).
+  - [audience](templates/frame.audience.md) — who it serves, and how each kind differs.
+  - [criteria](templates/frame.criteria.md) — budget, scope objectives, timeline.
+  - [market](templates/frame.market.md) — landscape, positioning, and how it earns.
 
 ### Specs
 
 The product's units, one per blueprint, grouped by domain.
 
 - **Leaf:** [Specs/index.md](../Specs/index.md)
-- **Flavors:**
-  - [full](shapes/spec.full.md) — the complete spec shape (default).
-  - [micro](shapes/spec.micro.md) — Intent, Open Questions, ACs, Out of Scope; grow into full.
+- **Variants:**
+  - [full](templates/spec.full.md) — the complete spec template (default).
+  - [micro](templates/spec.micro.md) — Intent, Open Questions, ACs, Out of Scope; grow into full.
 - **Domains:** _(add one bullet per domain — a name and a short description — as domains accrue)_
 
-## Schema
+## Properties
 
 The property contract — what a blueprint's frontmatter may carry, across every collection. One block per
 owner: the **core** properties Eidos's own machinery uses, the **custom** ones you (or the seed) add, and a
-`### <tool> Properties` block for any tool that declares properties of its own (none ship with a seed). Every
+`### <tool>` block for any tool that declares properties of its own (none ship with a seed). Every
 custom property declares which collections it **applies to** — `all`, or a list — so a property never
 lands where it makes no sense (`domain` is Specs-only). A property's type comes from the Obsidian set
 (Text, List, Number, Checkbox, Date, Date & time), so frontmatter renders natively in an Obsidian
 vault. The `configure` skill edits this section.
 
-### Eidos Core
+### Eidos
 
-_Present on every blueprint. Managed by the standard (Eidos 4.7.0); `migrate` rewrites this block on a version change — don't hand-edit it. (`flavor` absent = the collection's default; a missing `summary` is flagged by the index.)_
+_Present on every blueprint. Managed by the standard (Eidos 5.0.0); `migrate` rewrites this block on a version change — don't hand-edit it. (`variant` absent = the collection's default; a missing `summary` is flagged by the index.)_
 
 | Name        | Type | Meaning                                                                                        |
 | ----------- | ---- | ---------------------------------------------------------------------------------------------- |
 | id          | Text | Stable, unique identity, in any form: a slug, a number, a GUID. Assigned once, never changed. References point at it. |
 | title       | Text | Human-readable name.                                                                           |
 | summary     | Text | One plain line — what this blueprint is, in a sentence, distilled from Intent. Source for the collection index.md listing; absent, the index flags it. |
-| flavor      | Text | Which body flavor this blueprint follows, from its collection's declared flavors. Absent = the collection's default flavor. |
+| variant      | Text | Which body variant this blueprint follows, from its collection's declared variants. Absent = the collection's default variant. |
 
-### Custom Properties
+### Custom
 
 _Yours to shape with the `configure` skill. The seed ships a few useful defaults below — keep, scope, or drop any of them; Eidos doesn't depend on them. Absence where a property applies is a soft gap the validator notes, never refuses._
 

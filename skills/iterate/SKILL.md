@@ -14,9 +14,9 @@ Companion to `eidos` (authors and validates) and `format` (reshapes a draft alre
 
 ## Before you ask anything
 
-**Read the actor.** `_eidos/me.md` for the role and calibration, then that role's own contract in `_eidos/roles/<role>.md`, and follow it — it sets the vocabulary, the depth, what to surface, and who holds decisions. Read the contract itself; don't infer a role from its filename. A blank or absent `me.md` means default to full facilitation; offer `whoami`.
+**Read `me.md`.** `.eidos/me.md` for the role and calibration, then that role's own contract in `.eidos/roles/<role>.md`, and follow it — it sets the vocabulary, the depth, what to surface, and who holds decisions. Read the contract itself; don't infer a role from its filename. A blank or absent `me.md` means default to full facilitation; offer `whoami`.
 
-**Read the framework.** `_eidos/Framework.md` for the collections, their flavors, their grouping, the Schema, and the Vocabulary. Ask in the root's own terms; where the owner uses a near-miss a row names, ask which they mean, since the answer is often the distinction the idea turns on. No `_eidos/` means no framework — stop and offer `install`.
+**Read the framework.** `.eidos/Framework.md` for the collections, their variants, their grouping, the Properties table, and the Vocabulary. Ask in the root's own terms; where the owner uses a near-miss a row names, ask which they mean, since the answer is often the distinction the idea turns on. No `.eidos/` means no framework — stop and offer `install`.
 
 **Read the neighbors.** The target collection's `index.md`, and any blueprint the idea sounds adjacent to. Questions asked against what already exists are worth ten asked in a vacuum: you can ask whether this is really separate from something already written, and the owner can see it is.
 
@@ -26,9 +26,9 @@ Never open the interrogation cold. Two minutes of reading turns generic prompts 
 
 Run them in order — each needs the one before it — but treat them as a conversation, not a script. Skip what the owner has already made obvious, and go back a pass when an answer undoes an earlier one.
 
-### 1. Which shape
+### 1. Which template
 
-Where does this live, and what body does it take? From the Framework, propose the collection and flavor you think it fits, say why in a sentence, and **ask**. The owner corrects placement faster than they describe it.
+Where does this live, and what body does it take? From the Framework, propose the collection and variant you think it fits, say why in a sentence, and **ask**. The owner corrects placement faster than they describe it.
 
 Three answers matter more than a smooth fit:
 
@@ -36,7 +36,7 @@ Three answers matter more than a smooth fit:
 - **It fits two.** Usually two ideas wearing one name. Say so and offer to split; splitting here is cheap and later it isn't.
 - **It's bigger than a blueprint.** Several blueprints and a theme. Name the pieces and ask which one this session is about — one idea at a time is the whole discipline.
 
-Once placed, read that flavor's shape. Its sections are what you need to know by the end; let them steer the rest, and use the shape's own names for things rather than generic ones.
+Once placed, read that variant's template. Its sections are what you need to know by the end; let them steer the rest, and use the template's own names for things rather than generic ones.
 
 ### 2. What is the intent
 
@@ -65,7 +65,7 @@ A blueprint in isolation is a wish. Place it against everything else.
 - **"I don't know" is a result.** Write it down as an open question and move on. A blueprint may ship carrying open questions; what it may not carry is a gap nobody noticed.
 - **Notice the words.** When the owner keeps reaching for a word no Vocabulary row declares, or uses two words for what sounds like one thing, say so and ask whether it is one thing or two. Don't define it here; carry it to the recap as a candidate term for `configure`.
 - **Play back what you heard.** Every few rounds, restate the idea in two or three sentences and let the owner correct it. The corrections are the real content.
-- **Don't run the shape as a form.** The shape tells you what to find out, not what to recite. Nobody wants to be walked down a checklist.
+- **Don't run the template as a form.** The template tells you what to find out, not what to recite. Nobody wants to be walked down a checklist.
 
 ## When you're done
 
@@ -75,6 +75,6 @@ Stop at the first of these:
 - **Two rounds add nothing.** If questions stop producing new information, the idea is as understood as it's going to get today. Say so rather than grinding.
 - **The owner is out of answers.** Stop and list what's still open. Half an idea, honestly marked, beats a whole one invented.
 
-Then close with a short recap — the placement (collection and flavor), the intent, the non-goals, the connections, the open questions, and any candidate terms for `configure` — and offer to author it with `eidos`. Hand over the recap; don't make the next skill re-ask what you already asked.
+Then close with a short recap — the placement (collection and variant), the intent, the non-goals, the connections, the open questions, and any candidate terms for `configure` — and offer to author it with `eidos`. Hand over the recap; don't make the next skill re-ask what you already asked.
 
 If the session ends without a blueprint, that is a fine outcome. Learning that an idea is two ideas, or already covered, or not worth doing, is the cheapest thing this skill can produce.

@@ -14,7 +14,7 @@
 # updated copies. Pass --check to verify the copies are current WITHOUT writing (for CI or a
 # pre-commit hook); it exits non-zero if anything is stale.
 #
-# Skills that read the user's folder _eidos/ at runtime (format, configure,
+# Skills that read the user's folder .eidos/ at runtime (format, configure,
 # index, whoami) carry nothing and are not touched.
 #
 set -euo pipefail
@@ -42,7 +42,7 @@ sync_one() {
 # eidos — the ruleset
 sync_one "EIDOS.md"      "skills/eidos/EIDOS.md"
 
-# install — every seed it can install (each carries its own shapes and roles)
+# install — every seed it can install (each carries its own templates and roles)
 sync_one "seeds"         "skills/install/seeds"
 
 # migrate — the seeds plus the full version history, to diff and upgrade

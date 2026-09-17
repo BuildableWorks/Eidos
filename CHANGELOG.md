@@ -8,6 +8,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [5.0.0] - 2026-09-16 — Standard: 5.0.0
+
+**The standard moves to 5.0.0: the vocabulary release.** The feedback on 4.x was that the terms were hard to grasp up front and that the prose read like AI explaining AI. So five words change to ones people already use, the term table is reordered by hierarchy with every definition rewritten in plain words, and the framework folder goes back to the dot-prefix every other tool uses. Breaking, because headings, YAML keys, a folder, a core property, and filenames that tools parse all move; the migration is one mechanical hop, in `versions/MIGRATIONS.md`, with no decision to make unless a template is misnamed. `versions/v5.0.0.md` is the snapshot. This release also carries what had been queued as 4.7.1 (below), never shipped on its own.
+
+### Changed
+
+- **`Schema` is `Properties`.** `## Properties` in `Framework.md`, `properties:` in `Framework.yaml`, and the blocks under it shortened now that the heading carries the word: `### Eidos`, `### Custom`, `### <tool>` (`properties.tools.<tool>`). It is Obsidian's own word for frontmatter, and the standard already takes its types from Obsidian. "Schema" was the most loaded word in the table.
+- **`shape` is `template`.** `.eidos/templates/`, and `template:` for the path in YAML. Every tool a reader has used calls this a template; that a check also measures a body against it is a bonus, not a reason for a rarer word. (4.0.0 used `templates/` for one-of-each top-level scaffolds, retired in 4.1.0; the word was free.)
+- **`flavor` is `variant`.** The core property on every blueprint, `- **Variants:**` on every collection (`variants:` in YAML), and template files named `<unit>.<variant>.md`. The one rename that touches blueprints, not only the framework.
+- **`_eidos/` is `.eidos/` again.** 4.1.0 dropped the dot so Obsidian would show the folder; 5.0.0 puts it back so the folder follows the convention `.git`, `.obsidian`, and `.vscode` follow, and accepts that a vault's file tree hides it. The skills and scripts locate a root by `.eidos/` and nothing else.
+- **The term table is reordered by hierarchy** (product, framework, root, collection, blueprint, frame, unit, template, variant, property, Properties, Vocabulary, top-level doc, role, seed, version, plugin), and **every definition is rewritten** so each uses only plain words or a term above it. Two rows fold away: `term` (Vocabulary's row already says it) and `actor` (role's row says who is in the seat, and `me.md` is named directly everywhere the word was). Collection, group, framework, blueprint, frame, root, and product stay as they were.
+- **`unit` is a declared term**, and a template file is `<unit>.<variant>.md`, faulted otherwise; every variant a collection declares shares its unit, and the framing collection's is `frame`. **Frontmatter is illegal in a template**, faulted rather than read: a blueprint's frontmatter is generated from the Properties table, so a template has nothing to say about it. Every seed template drops the opening comment that restated the standard; the one convention a comment alone carried (the software audience frame's "prose, not tables or headshot cards") moves into that template's Personas prompt.
+- **Skills, seeds, and scripts follow.** `install-seed.py` reads `## Properties` and `- **Variants:**` and writes `variant` on a scaffolded frame; `build-index.py` looks for `.eidos/`; `migrate` fingerprints 5.0.0 and points at the hop. The `eidos` CLI parses every one of these and needs a sync and a release of its own.
+
 ## [4.8.0] - 2026-09-16 — Standard: 4.7.0
 
 **The standard moves to 4.7.0: every Schema property has an owner, and the owner is the block it sits in.** Additive: no root had a tool's block before, so every root already in a repo conforms as it stands and the migration is a one-line `eidos_version` bump. `versions/v4.7.0.md` is the snapshot and `versions/MIGRATIONS.md` the hop.

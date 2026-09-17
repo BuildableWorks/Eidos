@@ -4,7 +4,7 @@
 > product is, true whether or not it's been built.
 
 This README is the front door. The full index and config live in
-[`_eidos/Framework.md`](_eidos/Framework.md); this file orients you and points the way.
+[`.eidos/Framework.md`](.eidos/Framework.md); this file orients you and points the way.
 
 ## What this is
 
@@ -21,4 +21,4 @@ _Your own one-of-a-kind docs (a Roadmap, a Vision, the generated Blueprint Map).
 
 ---
 
-_A root. Its framework lives in [`_eidos/`](_eidos/); see [`_eidos/Framework.md`](_eidos/Framework.md) for the full index. `configure` and `index` keep these current._
+_A root. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.md`](.eidos/Framework.md) for the full index. `configure` and `index` keep these current._

@@ -60,7 +60,7 @@ for path in sorted(glob.glob("skills/*/SKILL.md")):
         problems.append(f"{path}: description is {n} chars (max {LIMIT}) — trim by {n - LIMIT}")
     tags = re.findall(r"<[^>]+>", desc)
     if tags:
-        problems.append(f"{path}: description contains XML/angle-bracket tags {tags} — reword (e.g. `spec.full.md` not `<kind>.<flavor>.md`)")
+        problems.append(f"{path}: description contains XML/angle-bracket tags {tags} — reword (e.g. `spec.full.md` not `<kind>.<variant>.md`)")
 
 if problems:
     print("  ✗ skill manifest check failed:", file=sys.stderr)

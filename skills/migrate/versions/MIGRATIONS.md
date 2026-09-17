@@ -6,6 +6,28 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
+## 4.7.0 → 5.0.0
+
+**The vocabulary release. Five names move on disk, all mechanically; set `eidos_version: 5.0.0` when they have.** Nothing is dropped and nothing needs a decision unless a template file is misnamed.
+
+- **`_eidos/` → `.eidos/`.** The folder name only; everything inside keeps its place. A root-level `.gitignore` that named `_eidos/me.md` updates to match; the `.gitignore` inside the folder does not change.
+- **`shapes/` → `templates/`**, and every link to one in the framework document. A template file must be `<unit>.<variant>.md` (one unit per collection, `frame` for the framing collection) and must not open with frontmatter; a check now faults both. **Needs the owner** only if a collection's templates disagree on their unit.
+- **`## Schema` → `## Properties`**, with its blocks `### Eidos Core` → `### Eidos`, `### Custom Properties` → `### Custom`, `### <tool> Properties` → `### <tool>`. In YAML, `schema:` → `properties:` (`properties.custom`, `properties.tools.<tool>`).
+- **`- **Flavors:**` → `- **Variants:**`** on every collection; in YAML `flavors:` → `variants:` and each entry's `shape:` → `template:`.
+- **`flavor` → `variant`.** The core row in the Properties table, and the property on every blueprint that carries it. A blueprint without one still means the collection's default.
+- **Two words leave the standard's table**, `term` and `actor`; nothing on disk carried either.
+- **Cosmetic:** seed prose installed into a root (`Framework.md` intros, `roles/README.md`) still says shape, flavor, and Schema until refreshed, and a seed template still opens with the old comment. Nothing reads those words.
+
+### Per root
+
+1. **`git mv _eidos .eidos`**, then **`git mv .eidos/shapes .eidos/templates`**.
+2. **In the framework document**, rename the headings and bullets above, and rewrite the `shapes/` links as `templates/`. Rewrite the core block as `id`, `title`, `summary`, `variant`. Update the version note in the block.
+3. **On every blueprint**, rename the `flavor` property to `variant`. Values are unchanged.
+4. **Look at each template.** One that opens with `---` has frontmatter to remove; one named any other way than `<unit>.<variant>.md` is renamed, and its path in the framework document with it.
+5. **Set `eidos_version: 5.0.0`.**
+
+**Nothing else moves.** No body section, no blueprint filename, no collection.
+
 ## 4.6.0 → 4.7.0
 
 **Every Schema property has an owner, and the owner is the block it sits in. Set `eidos_version: 4.7.0`; nothing on disk has to move.**

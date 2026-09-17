@@ -16,9 +16,9 @@ by hand; this script is an accelerator and correctness guarantee, never a depend
 Usage:
   build-index.py [FRAMEWORK_ROOT] [--collection NAME ...] [--check]
 
-  FRAMEWORK_ROOT   the folder containing `_eidos/` (default: current directory).
+  FRAMEWORK_ROOT   the folder containing `.eidos/` (default: current directory).
   --collection    re-index only the named collection(s); repeatable. Default: all
-                  collections declared in `_eidos/Framework.md`.
+                  collections declared in `.eidos/Framework.md`.
   --check         don't write; exit non-zero if any index is stale (CI / pre-commit).
 
 Exit codes: 0 = wrote (or, with --check, all current); 1 = stale (--check); 2 = error.
@@ -130,15 +130,15 @@ def collect(folder):
 
 def main():
     ap = argparse.ArgumentParser(description="Regenerate Eidos collection index.md files.")
-    ap.add_argument("root", nargs="?", default=".", help="root (contains _eidos/)")
+    ap.add_argument("root", nargs="?", default=".", help="root (contains .eidos/)")
     ap.add_argument("--collection", action="append", default=[], help="limit to this collection (repeatable)")
     ap.add_argument("--check", action="store_true", help="verify only; non-zero if stale")
     args = ap.parse_args()
 
     root = Path(args.root).resolve()
-    framework_md = root / "_eidos" / "Framework.md"
+    framework_md = root / ".eidos" / "Framework.md"
     if not framework_md.is_file():
-        print(f"error: no _eidos/Framework.md under {root} — not a root", file=sys.stderr)
+        print(f"error: no .eidos/Framework.md under {root} — not a root", file=sys.stderr)
         return 2
 
     collections = declared_collections(framework_md)
@@ -151,7 +151,7 @@ def main():
         if missing:
             return 2
     if not collections:
-        print("error: no collections declared in _eidos/Framework.md (## Collections)", file=sys.stderr)
+        print("error: no collections declared in .eidos/Framework.md (## Collections)", file=sys.stderr)
         return 2
 
     stale = 0

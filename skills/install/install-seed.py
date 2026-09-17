@@ -4,8 +4,8 @@ install-seed.py — install a seed framework into a new root.
 
 Once the owner has answered the four questions install asks — which seed, which
 root folder, which naming convention, which starting groups — the rest of the install
-is mechanical: copy the seed into `_eidos/`, set `naming`, scaffold a folder and an
-empty `index.md` per declared collection, drop a blank item per flavor the framing
+is mechanical: copy the seed into `.eidos/`, set `naming`, scaffold a folder and an
+empty `index.md` per declared collection, drop a blank item per variant the framing
 collection declares, and record the groups in the Framework. This script does exactly
 that and stops. It writes no prose: intent, scope, and description are the owner's.
 
@@ -24,8 +24,8 @@ Usage:
 
   SEED        the seed to install — a folder name under SEEDS (e.g. `software`).
   ROOT        the root to create (e.g. `Blueprints`). It must not already
-              hold an `_eidos/`; an existing one is a migrate, not an install.
-  --list      print every seed's version, collections, flavors, and grouping; exit.
+              hold an `.eidos/`; an existing one is a migrate, not an install.
+  --list      print every seed's version, collections, variants, and grouping; exit.
   --naming    kebab-case (default) | TitleCase | Title Case. Governs every human-facing
               name: collection folders, item filenames, and the links that reach them.
   --group     a starting group under the grouped collection; repeatable. None = flat.
@@ -45,7 +45,7 @@ from datetime import date
 from pathlib import Path
 
 NAMINGS = ("kebab-case", "TitleCase", "Title Case")
-DECLARED_BULLETS = ("leaf", "flavors", "canvas")  # every other bullet label is the grouping
+DECLARED_BULLETS = ("leaf", "variants", "canvas")  # every other bullet label is the grouping
 INDEX_MARKER = "<!-- index: {name} (regenerated) -->"
 GROUP_PROMPT = "_(one line on what belongs here)_"
 
@@ -53,7 +53,7 @@ GROUP_PROMPT = "_(one line on what belongs here)_"
 # --- naming -----------------------------------------------------------------
 
 def titleize(label):
-    """A declared flavor label as a human name: `prior work` → `Prior Work`."""
+    """A declared variant label as a human name: `prior work` → `Prior Work`."""
     return " ".join(w[:1].upper() + w[1:] for w in label.split())
 
 
@@ -97,40 +97,40 @@ def first_paragraph(block):
 
 
 def parse_collections(text):
-    """Each `### ` under `## Collections`, with its flavors and grouping label.
+    """Each `### ` under `## Collections`, with its variants and grouping label.
 
     The framing collection is the one declared first (EIDOS.md, Layout)."""
     parts = re.split(r"^###\s+(.+?)\s*$", section(text, "Collections"), flags=re.MULTILINE)
     out = []
     for i in range(1, len(parts), 2):
         block = parts[i + 1]
-        flavors, grouping, in_flavors = [], None, False
+        variants, grouping, in_variants = [], None, False
         for line in block.splitlines():
             bullet = re.match(r"^-\s+\*\*(.+?):\*\*", line)
             if bullet:
                 label = bullet.group(1).strip()
-                in_flavors = label.lower() == "flavors"
+                in_variants = label.lower() == "variants"
                 if label.lower() not in DECLARED_BULLETS:
                     grouping = label
                 continue
-            flavor = re.match(r"^\s+-\s+\[(.+?)\]\((.+?)\)\s*(?:—\s*(.*))?$", line)
-            if in_flavors and flavor:
-                flavors.append((flavor.group(1).strip(), flavor.group(2).strip(),
-                                (flavor.group(3) or "").strip()))
+            variant = re.match(r"^\s+-\s+\[(.+?)\]\((.+?)\)\s*(?:—\s*(.*))?$", line)
+            if in_variants and variant:
+                variants.append((variant.group(1).strip(), variant.group(2).strip(),
+                                (variant.group(3) or "").strip()))
         out.append({
             "name": parts[i].strip(),
             "prose": first_paragraph(block),
-            "flavors": flavors,
+            "variants": variants,
             "grouping": grouping,
             "framing": not out,
         })
     return out
 
 
-def parse_schema(text):
-    """The Schema's properties as (name, type, applies-to), core first."""
+def parse_properties(text):
+    """The Properties table's rows as (name, type, applies-to), core first."""
     props = []
-    for line in section(text, "Schema").splitlines():
+    for line in section(text, "Properties").splitlines():
         line = line.strip()
         if not line.startswith("|"):
             continue
@@ -210,7 +210,7 @@ def index_stub(name):
     return f"# {name}\n\n{INDEX_MARKER.format(name=name)}\n"
 
 
-def blank_item(props, collection, values, shape_text, title):
+def blank_item(props, collection, values, template_text, title):
     lines = ["---"]
     for name, ptype, applies in props:
         if not applies_to(applies, collection):
@@ -220,7 +220,7 @@ def blank_item(props, collection, values, shape_text, title):
             value = "[]"
         lines.append(f"{name}: {value}".rstrip())
     lines.append("---")
-    return "\n".join(lines) + "\n\n" + shape_text.replace("{{title}}", title).lstrip("\n")
+    return "\n".join(lines) + "\n\n" + template_text.replace("{{title}}", title).lstrip("\n")
 
 
 # --- commands ---------------------------------------------------------------
@@ -237,7 +237,7 @@ def list_seeds(seeds_dir):
             role = "framing" if c["framing"] else (f"grouped by {c['grouping']}" if c["grouping"] else "flat")
             print(f"  {c['name']} — {role}")
             print(f"    {c['prose']}")
-            for label, _, desc in c["flavors"]:
+            for label, _, desc in c["variants"]:
                 print(f"    · {label} — {desc}" if desc else f"    · {label}")
     return 0
 
@@ -250,8 +250,8 @@ def install(args):
         return 2
 
     root = Path(args.root).resolve()
-    if (root / "_eidos").exists():
-        print(f"error: {root}/_eidos already exists — that's a root; use migrate", file=sys.stderr)
+    if (root / ".eidos").exists():
+        print(f"error: {root}/.eidos already exists — that's a root; use migrate", file=sys.stderr)
         return 2
 
     naming = args.naming
@@ -260,14 +260,14 @@ def install(args):
     if not collections:
         print(f"error: {framework_src} declares no collections", file=sys.stderr)
         return 2
-    props = parse_schema(text)
+    props = parse_properties(text)
     fs = Fs(args.dry_run)
 
     # 1. the framework itself. The seed's own README is the root's visible door,
     #    so it moves to the root; roles/README.md and the rest travel as they are.
-    fs.copytree(seed, root / "_eidos")
-    if (root / "_eidos" / "README.md").exists() or args.dry_run:
-        fs.remove(root / "_eidos" / "README.md")
+    fs.copytree(seed, root / ".eidos")
+    if (root / ".eidos" / "README.md").exists() or args.dry_run:
+        fs.remove(root / ".eidos" / "README.md")
 
     # 2. the Framework: naming, starting groups, and the collection names in convention.
     text = set_naming(text, naming)
@@ -289,7 +289,7 @@ def install(args):
             if readme:
                 readme = rename_collection(readme, c["name"], c["folder"])
 
-    fs.write(root / "_eidos" / "Framework.md", text)
+    fs.write(root / ".eidos" / "Framework.md", text)
     if readme:
         fs.write(root / "README.md", readme)
 
@@ -304,22 +304,22 @@ def install(args):
                 fs.mkdir(folder / convert(group, naming))
         if not c["framing"]:
             continue
-        for label, shape_rel, _ in c["flavors"]:
-            shape = seed / shape_rel
-            if not shape.is_file():
-                print(f"  ! {c['name']}/{label}: no shape at {shape_rel}", file=sys.stderr)
+        for label, template_rel, _ in c["variants"]:
+            template = seed / template_rel
+            if not template.is_file():
+                print(f"  ! {c['name']}/{label}: no template at {template_rel}", file=sys.stderr)
                 continue
             title = titleize(label)
             values = {
                 "id": kebab(label),
                 "title": title,
-                "flavor": label,
+                "variant": label,
                 "status": "Draft",
                 "date_created": args.date,
                 "date_modified": args.date,
             }
             body = blank_item(props, c["name"], values,
-                              shape.read_text(encoding="utf-8"), title)
+                              template.read_text(encoding="utf-8"), title)
             fs.write(folder / f"{convert(title, naming)}.md", body)
             scaffolded.append(f"{c['folder']}/{convert(title, naming)}.md")
 
