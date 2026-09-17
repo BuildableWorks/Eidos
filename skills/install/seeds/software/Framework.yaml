@@ -4,7 +4,7 @@
 # README.md at the root is the friendly door to it; keep it current with the `eidos` CLI.
 
 # The Eidos version this framework targets; migrate reads and bumps it.
-eidos_version: 5.0.0
+eidos_version: 5.1.0
 
 # How files, folders, and links are named: kebab-case | TitleCase | Title Case. Absent = kebab-case. It
 # governs the whole root and changing it later means renaming files, so it is settled at install.
@@ -49,27 +49,28 @@ collections:
 # per owner: the core properties Eidos's own machinery uses, the custom ones you (or the seed) add, and
 # a tools.<tool> block for any tool that declares properties of its own (none ship with a seed). Every
 # custom property declares which collections it applies to, `all` or a list, so a property never lands
-# where it makes no sense (domain is Specs-only). A type comes from the Obsidian set (Text, List,
-# Number, Checkbox, Date, Date & time), so frontmatter renders natively in a vault. The `eidos` CLI
-# edits the custom block.
+# where it makes no sense (domain is Specs-only), and whether it is required: a required property is
+# generated into every new blueprint and a missing one is noted; an optional one (the default) is there
+# when it has a value. A type comes from the Obsidian set (Text, List, Number, Checkbox, Date, Date &
+# time), so frontmatter renders natively in a vault. The `eidos` CLI edits the custom block.
 properties:
-  # Present on every blueprint. Managed by the standard (Eidos 5.0.0); migrate rewrites this block on a
+  # Present on every blueprint. Managed by the standard (Eidos 5.1.0); migrate rewrites this block on a
   # version change, so don't hand-edit it. variant absent = the collection's default; a missing summary
   # is flagged by the index.
   core:
-    - { name: id, type: Text, meaning: "Stable, unique identity, in any form: a slug, a number, a GUID. Assigned once, never changed. References point at it." }
-    - { name: title, type: Text, meaning: "Human-readable name." }
+    - { name: id, type: Text, required: true, meaning: "Stable, unique identity, in any form: a slug, a number, a GUID. Assigned once, never changed. References point at it." }
+    - { name: title, type: Text, required: true, meaning: "Human-readable name." }
     - { name: summary, type: Text, meaning: "One plain line: what this blueprint is, in a sentence, distilled from Intent. Source for the collection's index listing; absent, the index flags it." }
     - { name: variant, type: Text, meaning: "Which body variant this blueprint follows, from its collection's declared variants. Absent = the collection's default." }
   # Yours to shape with the `eidos` CLI. The seed ships a few useful defaults; keep, scope, or drop any of
-  # them, Eidos doesn't depend on them. Absence where a property applies is a soft gap a check notes,
-  # never refuses.
+  # them, Eidos doesn't depend on them. Only the grouping is required; a missing required property is
+  # a soft gap a check notes, never refuses, and an absent optional one is nothing.
   custom:
     - { name: status, type: Text, applies_to: all, meaning: "Lifecycle value: Draft / Intake / In Progress / Done / Archived / Deprecated. An off-list value warns." }
     - { name: date_created, type: Date, applies_to: all, meaning: "YYYY-MM-DD. The day the blueprint was first written. Set once." }
     - { name: date_modified, type: Date, applies_to: all, meaning: "YYYY-MM-DD. The day the blueprint was last changed." }
     - { name: tags, type: List, applies_to: all, meaning: "Free tags." }
-    - { name: domain, type: Text, applies_to: [Specs], meaning: "The grouping, matching the blueprint's sub-folder under its collection in the naming convention. An unknown value warns, never fails." }
+    - { name: domain, type: Text, required: true, applies_to: [Specs], meaning: "The grouping, matching the blueprint's sub-folder under its collection in the naming convention. An unknown value warns, never fails." }
     - { name: depends_on, type: List, applies_to: [Specs], meaning: "Blueprints this one needs, each a markdown link. An implementation dependency." }
     - { name: type, type: Text, applies_to: [Specs], meaning: "Open, soft category label: drives views and filtering, never structure. e.g. feature, capability, integration." }
 

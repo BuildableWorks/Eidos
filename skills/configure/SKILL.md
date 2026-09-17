@@ -21,10 +21,11 @@ A collection, variant, or property nobody thought through reads as meaningful wh
 
 - **For a collection:** its **name** (the folder, in the framework's naming convention), a one-line **description**, how it **groups** its blueprints (one level of sub-folders, or flat), and at least one **variant** with a **default**.
 - **For a variant:** its **name** (lowercase, e.g. `full`, `micro`, `api`), a one-line **description**, and its **template** — the sections the body carries.
-- **For a property:** all four —
+- **For a property:** all five —
   - **name** — the frontmatter key. Lowercase, words joined by underscores, matching the core style (`summary`, `date_created`). Short and stable.
   - **type** — from the Obsidian set: **Text, List, Number, Checkbox, Date, Date & time**. Anything richer — a structured object, an enum with behavior — belongs in the body, not a property. Say so.
-  - **applies to** — `all`, or a list of collection names, so a field never lands where it makes no sense. Absence where it applies is a soft gap the validator notes, never refuses.
+  - **applies to** — `all`, or a list of collection names, so a field never lands where it makes no sense.
+  - **required** — `true` or `false` (absent means `false`). Required: generated into every new blueprint it applies to, and a missing one is a soft gap the validator notes, never refuses. Optional: written when it has a value, absent otherwise, and never a gap. Default to optional; require only what the owner says every blueprint must answer.
   - **meaning** — one line: what it holds and why. This is what stops it rotting into a mystery field.
 - **For a term:** all three —
   - **term** — the word, as prose uses it. One word or a short phrase; if the owner offers two spellings, that is the first distinction to settle.
@@ -67,13 +68,13 @@ A collection, variant, or property nobody thought through reads as meaningful wh
 
 ## Adding a property
 
-1. **Decide the four** (name, type, applies to, meaning — above) with the owner.
+1. **Decide the five** (name, type, applies to, required, meaning — above) with the owner.
 2. **Write the entry** under `properties.custom` in `Framework.yaml`:
 
    ```yaml
-   - { name: team, type: Text, applies_to: all, meaning: "Owning team, for filtering." }
+   - { name: team, type: Text, applies_to: all, required: true, meaning: "Owning team, for filtering." }
    ```
-3. **Backfill the blueprints** in the collections it applies to, with an empty or owner-supplied stub so each is conformant and fillable. Blueprints elsewhere are left alone; new blueprints are generated from the Properties table, so only pre-existing ones need this.
+3. **Backfill the blueprints** in the collections it applies to, when it is required, with an empty or owner-supplied stub so each is conformant and fillable. An optional property backfills nothing. Blueprints elsewhere are left alone; new blueprints are generated from the Properties table, so only pre-existing ones need this.
 4. **Report** the entry added and the blueprints touched, flagging which still need a value.
 
 ## Renaming a property

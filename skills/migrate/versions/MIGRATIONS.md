@@ -6,6 +6,12 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
+## 5.0.0 → 5.1.0
+
+**Additive: regions and required properties. Set `eidos_version: 5.1.0`; nothing else has to move.** 5.1.0 lets a tool keep something inside a markdown file between two HTML comments carrying its name (`<!-- <tool>:<region> <args> -->` to `<!-- /<tool>:<region> -->`). No root had one before, so no file changes on the way up; a root that already carries a tool's comments of some other shape is not faulted for them, since a marker is only what matches the grammar exactly. From here on, an edit or a migration carries every region across as found.
+
+The same release adds `required` to a property entry, absent meaning `false`. The migration rewrites `properties.core` with `id` and `title` required, as every core block is rewritten on a bump; it sets nothing on a custom or tool entry, so every custom property a root declares becomes optional until the owner marks it. That is a change in what a check reports, not in any file: a blueprint missing an optional property is no longer noted. Where the owner wants a field on every blueprint, they add `required: true` to its entry; the CLI's `eidos framework` edits the custom block.
+
 ## 4.7.0 → 5.0.0
 
 **The vocabulary release. Five names move on disk and the framework document takes its one form, all mechanically; set `eidos_version: 5.0.0` when they have.** Nothing is dropped and nothing needs a decision unless a template file is misnamed, and the `eidos` CLI's `migrate` makes the whole hop in one run.

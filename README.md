@@ -10,9 +10,9 @@
 >
 > **Use the [`eidos` CLI](https://eidosmd.com/docs/cli) with your agent.** `npm install -g eidosmd`, then `eidos instructions`. The CLI does the mechanical part (scaffold, generate, check, index) deterministically and hands the agent only what it needs, so a session is faster and spends a fraction of the context that skills reading the standard every time do. Anything running on a host with a shell uses the CLI. The skills here are for hosts with no shell: Claude Desktop chat, the web, Cowork.
 
-## **[Eidos v5.0.0](EIDOS.md)** — the full standard
+## **[Eidos v5.1.0](EIDOS.md)** — the full standard
 
-Eidos is a system of organization for defining a product: an app, a book, a study, a workflow, anything work produces that has a shape. It puts a structure around the documentation that a tool can enforce, so ideation and development progress in one place and the definition keeps pace with both. One file is the complete source of truth for one unit of the product, independent of time or status: as true of something planned as of something long finished. The product is written in plain markdown beside your code; the structure it is written in is data, in a hidden `.eidos/` folder you seldom open. No SaaS. No lock-in. Nothing outside the repo.
+Eidos is a system of organization for defining a product: an app, a book, a study, a workflow, anything work produces that has a shape. It puts a structure around the documentation that a tool can enforce, so ideation and development progress in one place and the definition keeps pace with both. One file is the complete source of truth for one unit of the product, independent of time or status: as true of something planned as of something long finished. The product is written in plain markdown beside your code; the structure it is written in is data, in a hidden `.eidos/` folder you seldom open. The result is a database of intent: what the product is meant to be, queryable and version-controlled, living in the repo. No SaaS. No lock-in. Nothing outside the repo.
 
 A blueprint captures **a vision of the product as a source of truth**, not work. Tasks describe work and die when the work ships; a blueprint describes the product and stays accurate across its whole life: drafted, built, deprecated.
 
@@ -20,7 +20,7 @@ Eidos is **human-first**. A Framework Owner holds the intent, the scope, and the
 
 ## Why
 
-Product knowledge rots in tickets, wikis, and people's heads. Eidos keeps the authoritative answer to "what is this product" as version-controlled markdown, reviewed in PRs alongside the code it describes. Humans and coding agents read the same source of truth.
+Product knowledge rots in tickets, wikis, and people's heads. A tracker is a database of work, and work dies when it ships. Eidos is a database of intent, and intent outlives every ticket. It keeps the authoritative answer to "what is this product" as version-controlled markdown, reviewed in PRs alongside the code it describes. Humans and coding agents read the same source of truth.
 
 It gives every role the same place to stand. A designer, a developer, a product owner, and a stakeholder each answer to the same blueprint in the same words, so working across roles stops being a run of misunderstandings to reconcile. And because the definition lives in the repository, the product's source and its source of truth are one thing in one place, not a codebase here and a document somewhere else that drifted.
 
@@ -48,11 +48,11 @@ Blueprints/                # the root — may be named anything
 - **Framework** — the structure layer, found by its hidden `.eidos/` folder, and the piece you can publish or hand to another team. [`Framework.yaml`](seeds/software/Framework.yaml) is the framework document, config and index in one; a visible `README.md` is the door into it.
 - **Collections** — folders of repeated blueprints, at least one per framework. A blueprint is a **frontmatter** contract plus a **body**. Every seed Eidos ships opens with a `Frames` collection, the loose docs saying what the whole product is: the standard doesn't require one, but it is the recommendation for every product.
 - **Templates & variants** — a **template** is the body a collection's blueprints follow; a collection can offer more than one — **variants** — with one default. Start in the variant that fits and grow into a fuller one later.
-- **Properties** — the frontmatter contract every blueprint carries: four core properties Eidos requires (`id`, `title`, `summary`, `variant`), plus whatever the framework adds.
+- **Properties** — the frontmatter contract every blueprint carries: four core properties from Eidos (`id`, `title`, `summary`, `variant`), plus whatever the framework adds. Each says whether it is required, so only the fields a framework insists on land on every blueprint; the rest are there when they have a value.
 - **Vocabulary** — the term contract: the words the root uses on purpose, each with what it means and what it is *not*, so a distinction made once (a team member is not staff) is not lost three blueprints later. Starts empty; Eidos declares none of them.
 - **Top-level docs** — one-of-a-kind documents at the root: a Vision, a map a tool generates. Free-form, no template, no validation.
 - **Roles** — [`roles/`](seeds) say how the agent talks to each kind of person; the personal, gitignored `me.md` says who *you* are, so the same blueprints answer each reader differently.
-- **Plugins** — `.eidos/` is open the way `.obsidian/` is: a tool that keeps something in the framework takes `plugins/<name>/`, and a Properties row may carry the tool's own fields past the standard's four. The standard reads none of it and every skill leaves it alone.
+- **Plugins** — `.eidos/` is open the way `.obsidian/` is: a tool that keeps something in the framework takes `plugins/<name>/`, and a Properties row may carry the tool's own fields past the standard's four. Inside a file, a tool keeps what it needs in a **region**, a span between two HTML comments carrying its name, `<!-- <tool>:<region> <args> -->` to `<!-- /<tool>:<region> -->`, whose contents are the tool's own. The standard reads none of it and every skill leaves it alone.
 
 **Nothing above is named by the standard.** `EIDOS.md` defines collections, templates, variants, and properties — never what any of them is called. That is the framework's, and the [seeds](seeds) show the same machinery answering to three different vocabularies:
 
