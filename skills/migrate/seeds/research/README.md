@@ -7,11 +7,11 @@
 
 ## Where things are
 
-- **[Frames](Frames/index.md)** — the question, the prior work, the method, the ethics.
-- **[Investigations](Investigations/index.md)** — one file per line of inquiry, grouped by strand.
+- **[Frames](Frames/)** — the question, the prior work, the method, the ethics.
+- **[Investigations](Investigations/)** — one file per line of inquiry, grouped by strand.
 
 The full index — every collection, its variants, and the Properties table — is in
-[`.eidos/Framework.md`](.eidos/Framework.md).
+[`.eidos/Framework.yaml`](.eidos/Framework.yaml).
 
 ## How to use it
 
@@ -20,4 +20,4 @@ notebook, a protocol, or a task list. Write the question and the falsifier befor
 them true after — an investigation that comes back `Inconclusive` or `Abandoned` stays here, because
 the question and the attempt are both part of what the programme knows.
 
-_A root. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.md`](.eidos/Framework.md) for the full index._
+_A root. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.yaml`](.eidos/Framework.yaml) for the full index._

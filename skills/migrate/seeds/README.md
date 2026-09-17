@@ -14,7 +14,7 @@ Every seed carries the same pieces, so the skills work identically across them:
 <seed>/
   templates/       # body templates, one file per variant (<unit>.<variant>.md)
   roles/        # response contracts, one per role
-  Framework.md  # version, naming, Top-Level, Collections, the Properties table, the Vocabulary, and the Versions
+  Framework.yaml # version, naming, top_level, collections, properties, vocabulary, and versions (and the index, once blueprints exist)
   me.md         # blank me.md, who is in the seat (installs gitignored)
   .gitignore    # keeps me.md out of version control
   README.md     # the {{Product}} front-door template

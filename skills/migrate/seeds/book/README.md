@@ -7,11 +7,11 @@
 
 ## Where things are
 
-- **[Frames](Frames/index.md)** — what the book argues, who reads it, how it sounds, where it sits.
-- **[Chapters](Chapters/index.md)** — one file per chapter, grouped by part.
+- **[Frames](Frames/)** — what the book argues, who reads it, how it sounds, where it sits.
+- **[Chapters](Chapters/)** — one file per chapter, grouped by part.
 
 The full index — every collection, its variants, and the Properties table — is in
-[`.eidos/Framework.md`](.eidos/Framework.md).
+[`.eidos/Framework.yaml`](.eidos/Framework.yaml).
 
 ## How to use it
 
@@ -19,4 +19,4 @@ A chapter here describes what the chapter **is**: why it exists, what happens in
 reader leaves with. It is not a draft and not a task. Write the chapter's blueprint before the prose,
 and keep it true after — a chapter you cut stays here, marked `Cut`, so the reasoning survives.
 
-_A root. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.md`](.eidos/Framework.md) for the full index._
+_A root. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.yaml`](.eidos/Framework.yaml) for the full index._

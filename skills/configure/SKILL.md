@@ -1,20 +1,20 @@
 ---
 name: configure
 description: >-
-  Configure a root's framework, the structure and contract in `.eidos/Framework.md`: its Collections and their Variants (body templates), its Properties table (the frontmatter contract), its Vocabulary (the terms the root uses on purpose), and its Top-Level index. Use to add a kind of content folder ("add a Decisions/ADR folder"), add or change a variant ("add a micro spec template", "make spec.full the default"), add, rename, or retire a custom property and backfill it ("add a `team` field to every spec"), declare, rename, or retire a term ("a team member is not staff, write that down", "add this to the vocabulary"), snapshot the root as a version, only when asked ("version the specs", "tag this as a spec version"), or refresh the Top-Level index ("the Framework is out of date"). It scaffolds folders and template files and reconciles the blueprints. It does not author blueprints (`eidos`), build a collection's `index.md` (`index`), or touch the Eidos core properties (`migrate`).
+  Configure a root's framework, the structure and contract in `.eidos/Framework.yaml`: its collections and their variants (body templates), its Properties table (the frontmatter contract), its Vocabulary (the terms the root uses on purpose), and its top-level index. Use to add a kind of content folder ("add a Decisions/ADR folder"), add or change a variant ("add a micro spec template", "make spec.full the default"), add, rename, or retire a custom property and backfill it ("add a `team` field to every spec"), declare, rename, or retire a term ("a team member is not staff, write that down", "add this to the vocabulary"), snapshot the root as a version, only when asked ("version the specs", "tag this as a spec version"), or refresh the top-level index ("the Framework is out of date"). It scaffolds folders and template files and reconciles the blueprints. It does not author blueprints (`eidos`), build the index (`index`), or touch the Eidos core properties (`migrate`).
 ---
 
 # Eidos Configure
 
-Keep `.eidos/Framework.md` working as the framework's **index and contract** — the authoritative description of the structure everything is written in, with the visible root `README.md` as the friendly door to it. This skill owns the five indexed parts of the Framework body:
+Keep `.eidos/Framework.yaml` working as the framework's **index and contract** — the authoritative description of the structure everything is written in, with the visible root `README.md` as the friendly door to it. This skill owns five of its keys:
 
-- **Top-Level** — the top-level documents, `README.md` first (the visible front door and the first listed entry), then the owner's own one-of-a-kind docs (a Roadmap, a Vision, the generated Blueprint Map), each a link and a one-line description. The framing docs are **not** here — they are a collection.
-- **Collections** — each top-level content folder: its grouping (one level of sub-folders) and its **variants** (body templates, one marked default), plus a pointer to its generated `index.md` leaf.
-- **Properties** — the property contract every blueprint carries, one block per owner: `### Eidos` (the standard's, off-limits here), `### Custom` (the framework's — the seed's defaults plus your own, each scoped by Applies To), and `### <tool>` for any tool that declares its own (that tool's, off-limits here too).
-- **Vocabulary** — the term contract: the words the root uses on purpose, one row each (**Term · Means · Not**). Every seed ships it empty; the terms are the root's own, and Eidos declares none of them.
-- **Versions** — snapshots of the root, taken on purpose, newest first, one row each (**Version · Commit · Tag**): a named commit in the repository the root lives in, nothing copied. A team's tool for holding the definition against a fixed point; not the product's release version, and not `eidos_version`, which is the standard's and moves with `migrate`. Empty is the normal state.
+- **`top_level`** — the top-level documents, `README.md` first (the visible front door and the first listed entry), then the owner's own one-of-a-kind docs (a Roadmap, a Vision, the generated Blueprint Map), each a title, a path, and a one-line description. The framing docs are **not** here — they are a collection.
+- **`collections`** — each top-level content folder: its description, its grouping (one level of sub-folders, each group described), and its **variants** (body templates, one marked default).
+- **`properties`** — the property contract every blueprint carries, one block per owner: `core` (the standard's, off-limits here), `custom` (the framework's — the seed's defaults plus your own, each scoped by `applies_to`), and `tools.<tool>` for any tool that declares its own (that tool's, off-limits here too).
+- **`vocabulary`** — the term contract: the words the root uses on purpose, one entry each (`term`, `means`, `not`, and `see` when a blueprint defines it in full). Every seed ships it empty; the terms are the root's own, and Eidos declares none of them.
+- **`versions`** — snapshots of the root, taken on purpose, newest first, one entry each (`version`, `commit`, `tag`): a named commit in the repository the root lives in, nothing copied. A team's tool for holding the definition against a fixed point; not the product's release version, and not `eidos_version`, which is the standard's and moves with `migrate`. Empty is the normal state.
 
-It scaffolds collections and variants, grows and reshapes the custom Properties block and reconciles blueprints to it, grows the Vocabulary a term at a time, snapshots a version only when asked, and refreshes the Top-Level index. For anything the rules decide — what a collection is, the variant model, the `variant` property, what a term is — defer to **EIDOS.md**.
+It scaffolds collections and variants, grows and reshapes the custom Properties block and reconciles blueprints to it, grows the Vocabulary a term at a time, snapshots a version only when asked, and refreshes the top-level index. For anything the rules decide — what a collection is, the variant model, the `variant` property, what a term is — defer to **EIDOS.md**.
 
 ## How you work: press the owner to decide
 
@@ -34,10 +34,10 @@ A collection, variant, or property nobody thought through reads as meaningful wh
 
 ## Boundaries
 
-- **The Framework body only.** You edit its `## Top-Level`, `## Collections`, `### Custom`, `## Vocabulary`, and `## Versions` sections, and create template files in `.eidos/templates/`. Not per-blueprint `index.md` files (`index`), not blueprints (`eidos`). In a root whose framework document is `Framework.yaml` (Eidos 4.5.0+), the same declarations are the `top_level`, `collections`, `properties.custom`, `vocabulary`, and `versions` fields, documented in EIDOS.md; edit those, and never the generated `index` key. A framework on a version before 4.6.0 has no Vocabulary; offer `migrate` before adding one.
-- **Never touch `### Eidos` or a `### <tool>` block.** Every property is owned by the block it sits in: the core is Eidos's and moves with the standard's version (`migrate`); a tool's block (`properties.tools.<tool>` in YAML) is written by that tool alone. A core property change is a standards change; a tool property change is that tool's; redirect either. The one exception is a tool that has left the root: then its block is retired like any property, values surfaced first, on the owner's say-so.
-- **Never touch a tool's.** `.eidos/plugins/<name>/` is that tool's folder, and a column in the Properties table headed with a tool's name (a key named for it, in YAML) is that tool's fields on the row. Carry them across unchanged when you edit a row, never fill them in, and when retiring a row that carries some, name the tool so the owner knows what else is affected.
-- **Needs a framework.** Read `.eidos/Framework.md` from the root, found by its `.eidos/` marker. No `.eidos/` means no framework installed — offer `install` first.
+- **The framework document's declarations only.** You edit its `top_level`, `collections`, `properties.custom`, `vocabulary`, and `versions` keys, documented in EIDOS.md, and create template files in `.eidos/templates/`. Never the generated `index` key (`index`), never blueprints (`eidos`). A framework on a version before 5.0.0 keeps a markdown `Framework.md`; offer `migrate` before editing it.
+- **Never touch `properties.core` or a `properties.tools.<tool>` block.** Every property is owned by the block it sits in: the core is Eidos's and moves with the standard's version (`migrate`); a tool's block is written by that tool alone. A core property change is a standards change; a tool property change is that tool's; redirect either. The one exception is a tool that has left the root: then its block is retired like any property, values surfaced first, on the owner's say-so.
+- **Never touch a tool's.** `.eidos/plugins/<name>/` is that tool's folder, and a key named for a tool on a property entry is that tool's fields on the entry. Carry them across unchanged when you edit an entry, never fill them in, and when retiring an entry that carries some, name the tool so the owner knows what else is affected.
+- **Needs a framework.** Read `.eidos/Framework.yaml` from the root, found by its `.eidos/` marker. No `.eidos/` means no framework installed — offer `install` first.
 - **Read `me.md` first.** `.eidos/me.md`, and tune how you facilitate to the role.
 - **Templates are the owner's.** A variant's sections are a content decision. Scaffold a starting point — usually by trimming the collection's default variant — but let the owner shape it.
 - **Don't silently drop values.** Renaming or retiring a property touches real data in real blueprints. Surface what's there before changing it.
@@ -45,114 +45,100 @@ A collection, variant, or property nobody thought through reads as meaningful wh
 ## Adding a collection
 
 1. **Decide** the name, description, grouping (sub-folders or flat), and at least a default variant with the owner.
-2. **Create the folder** under the root, named in the framework's naming convention (read `naming` from `Framework.md`). Keep its organization to **one level of sub-folders** — deeper is discouraged.
+2. **Create the folder** under the root, named in the framework's naming convention (read `naming` from `Framework.yaml`). Keep its organization to **one level of sub-folders** — deeper is discouraged.
 3. **Create the default variant's template** in `.eidos/templates/` as `<unit>.<variant>.md` (e.g. `decision.full.md`), body-only, with the sections the owner wants and italic guidance prompts. Pattern it on the existing templates.
-4. **Register it** under `## Collections` in `Framework.md`: a `###` heading, the description, then bullets — **Leaf**, **Variants** (default marked), and the grouping (sub-folders each with a short description, or "ungrouped"). Bullets, never `·` separators, so someone adding a variant can copy a line:
+4. **Register it** under `collections` in `Framework.yaml`: an entry with its `name`, `description`, `variants` (default marked), and `grouping` (a label and a described group per sub-folder; none for a flat collection). One variant per line, so someone adding one can copy it:
 
-   ```markdown
-   ### Decisions
-
-   Architecture decision records — one per significant choice.
-
-   - **Leaf:** [Decisions/index.md](../Decisions/index.md)
-   - **Variants:**
-     - [decision.full.md](templates/decision.full.md) — context, decision, consequences (default).
-   - Ungrouped — a flat, dated list.
+   ```yaml
+   - name: Decisions
+     description: Architecture decision records, one per significant choice; a flat, dated list.
+     variants:
+       - { name: full, template: templates/decision.full.md, description: "context, decision, consequences", default: true }
    ```
 5. **A grouping property is optional and the collection's own.** Most collections group by sub-folder alone, recorded in the Framework. If the owner wants a property carrying the grouping, that's a Properties change — handle it as a property change below.
-6. **Build the leaf and hand off.** Run `index` for the new `index.md`, point the owner to `eidos` for the first blueprint, and report the folder, template file, and Collections entry.
+6. **Build the index and hand off.** Run `index` so the new collection has its list, point the owner to `eidos` for the first blueprint, and report the folder, template file, and `collections` entry.
 
 ## Adding a variant to a collection
 
 1. **Decide** the variant's name, description, and template with the owner. A good second variant is a deliberate one — a lighter one to grow out of, or a genuine split in kind — never a fork per category label, which EIDOS.md forbids.
 2. **Create the template file** `.eidos/templates/<unit>.<variant>.md`, the collection's unit and then the variant. Start from the collection's default variant and trim or extend it to what the owner wants; keep the section order and names of whatever it shares with the default.
-3. **Register it** under the collection in `Framework.md`, in the **Variants** line with its link. If this variant should be the default, move the `(default)` marker to it (and only it).
+3. **Register it** under the collection's `variants` in `Framework.yaml`, with its `template` path. If this variant should be the default, move `default: true` to it (and only it).
 4. **Existing blueprints are untouched** — an absent `variant` still means the collection's default. Authoring in the new variant is `eidos`'s job.
-5. **Report** the template file added and the Collections entry updated, noting which variant is now default.
+5. **Report** the template file added and the `collections` entry updated, noting which variant is now default.
 
 ## Adding a property
 
 1. **Decide the four** (name, type, applies to, meaning — above) with the owner.
-2. **Write the row** into `### Custom` in the Framework's `## Properties`:
+2. **Write the entry** under `properties.custom` in `Framework.yaml`:
 
-   ```markdown
-   | Name | Type | Applies To | Meaning                     |
-   | ---- | ---- | ---------- | --------------------------- |
-   | team | Text | all        | Owning team, for filtering. |
+   ```yaml
+   - { name: team, type: Text, applies_to: all, meaning: "Owning team, for filtering." }
    ```
-
-   (Match the existing table's Title Case column headers.)
 3. **Backfill the blueprints** in the collections it applies to, with an empty or owner-supplied stub so each is conformant and fillable. Blueprints elsewhere are left alone; new blueprints are generated from the Properties table, so only pre-existing ones need this.
-4. **Report** the row added and the blueprints touched, flagging which still need a value.
+4. **Report** the entry added and the blueprints touched, flagging which still need a value.
 
 ## Renaming a property
 
-1. Confirm the new name (same naming rule). Custom properties only — never `### Eidos`.
-2. Update the `Name` cell in the Framework's `## Properties`.
+1. Confirm the new name (same naming rule). Custom properties only — never `properties.core`.
+2. Update the entry's `name` under `properties.custom`.
 3. Rename the key in every blueprint's frontmatter, **carrying the value across unchanged**.
 4. Report the blueprints touched. Only the key moved.
 
 ## Retiring a property
 
 1. **Surface first.** Show the owner every value that would be lost, and ask whether to fold them somewhere or deliberately drop them.
-2. Remove the row from `### Custom`.
+2. Remove the entry from `properties.custom`.
 3. Remove the key from every blueprint, once the owner has agreed to let the values go.
 4. Report the blueprints touched and anything carried over.
 
-A seed's own defaults — a lifecycle, dates, tags, a grouping — are reshaped or retired the same way. Read the framework's `### Custom` rather than assuming a set.
+A seed's own defaults — a lifecycle, dates, tags, a grouping — are reshaped or retired the same way. Read the framework's `properties.custom` rather than assuming a set.
 
 ## Declaring a term
 
-1. **Decide the three** (term, means, not — above) with the owner. Most terms arrive as a collision: two words being used for one thing, or one word for two. Start from the collision, not from a blank definition. If the concept has a blueprint of its own, the row's Term cell links to it, and the blueprint's body carries the full account; the row stays one line.
-2. **Write the row** into `## Vocabulary`:
+1. **Decide the three** (term, means, not — above) with the owner. Most terms arrive as a collision: two words being used for one thing, or one word for two. Start from the collision, not from a blank definition. If the concept has a blueprint of its own, the entry's `see` points at it, and the blueprint's body carries the full account; the entry stays one line.
+2. **Write the entry** under `vocabulary` in `Framework.yaml`: `term`, `means`, `not` as a list, and `see` for the path to the blueprint that defines it in full:
 
-   ```markdown
-   | Term        | Means                                              | Not                                                            |
-   | ----------- | -------------------------------------------------- | -------------------------------------------------------------- |
-   | Team member | A person with a login on a team, in any role.      | staff (payroll only), teammate (informal, never in a blueprint) |
+   ```yaml
+   - term: Team member
+     means: A person with a login on a team, in any role.
+     not: ["staff (payroll only)", "teammate (informal, never in a blueprint)"]
    ```
-
-   (Match the existing table's Title Case column headers. In a YAML document it is one `vocabulary` entry: `term`, `means`, `not` as a list, and `see` for the path a Term cell would link to.)
 3. **Surface the near-misses already written.** Search the blueprints for each word in the row's Not and list where it appears with the declared term beside it. Don't rewrite them: which uses were the near-miss and which meant something else is the owner's call, and the edit is `eidos`'s.
-4. **Report** the row added and the places that may want the declared term.
+4. **Report** the entry added and the places that may want the declared term.
 
 ## Renaming a term
 
 1. Confirm the new word. If the old one stays in circulation with a different meaning, that is two rows, not a rename.
-2. Update the Term cell. The old word usually belongs in Not, so the distinction that prompted the rename is kept.
+2. Update `term`. The old word usually belongs in `not`, so the distinction that prompted the rename is kept.
 3. Surface every blueprint using the old word, as in declaring; the owner decides which move.
-4. Report the row changed and the places surfaced.
+4. Report the entry changed and the places surfaced.
 
 ## Retiring a term
 
 1. **Surface first.** Show the owner where the term is used, and ask whether the distinction is being dropped or just the word.
-2. Remove the row. The blueprints keep their text; a word that is no longer declared is just a word.
-3. Report the row removed and the places that used it.
+2. Remove the entry. The blueprints keep their text; a word that is no longer declared is just a word.
+3. Report the entry removed and the places that used it.
 
 ## Recording a version
 
-Only when the owner asks. Never propose a version, never ask whether it is time for one, and never treat an empty `## Versions` as a gap: working alone, most roots never take one. It is for a team that needs a fixed point to hold the definition against later, and the owner knows when that is.
+Only when the owner asks. Never propose a version, never ask whether it is time for one, and never treat an empty `versions` as a gap: working alone, most roots never take one. It is for a team that needs a fixed point to hold the definition against later, and the owner knows when that is.
 
 1. **Decide the two** with the owner: the **version**, the root's own number in whatever scheme they keep (semver reads well, since a change of direction is a major); and the **commit**, a sha that already exists in the repository the root lives in, the state being snapshotted. If nothing has been committed since the state they mean, that commit is `HEAD`: show it and have them confirm. Nothing is copied into the root; git holds every blueprint as it was at that commit.
-2. **Write the row** at the top of `## Versions`, newest first:
+2. **Write the entry** at the top of `versions`, newest first:
 
-   ```markdown
-   | Version | Commit  | Tag              |
-   | ------- | ------- | ---------------- |
-   | 2.0.0   | 9f3c1e2 | blueprints/2.0.0 |
+   ```yaml
+   - { version: 2.0.0, commit: 9f3c1e2, tag: blueprints/2.0.0 }
    ```
+3. **Ask about the tag.** One question: tag it? The name is `blueprints/<version>`, its own namespace so it never collides with the product's release tags and never names the tool. On a yes, `git tag blueprints/<version> <commit>` on the snapshot commit, and fill `tag`; on a no, leave it out. Never create a tag on any other answer.
+4. **Say what it means.** The commit that adds this entry comes after the one it names, so the entry is not in the snapshot it records; that is how a tag works too. The blueprints as they stand at that sha are the root at that version, and a blueprint never carries a version of its own.
+5. **Report** the entry added, and whether it was tagged.
 
-   (In a YAML document it is one `versions` entry: `version`, `commit`, and `tag` when there is one.)
-3. **Ask about the tag.** One question: tag it? The name is `blueprints/<version>`, its own namespace so it never collides with the product's release tags and never names the tool. On a yes, `git tag blueprints/<version> <commit>` on the snapshot commit, and fill the Tag cell; on a no, leave the cell empty. Never create a tag on any other answer.
-4. **Say what it means.** The commit that adds this row comes after the one it names, so the row is not in the snapshot it records; that is how a tag works too. The blueprints as they stand at that sha are the root at that version, and a blueprint never carries a version of its own.
-5. **Report** the row added, and whether it was tagged.
-
-## Refreshing the Top-Level index
+## Refreshing the top-level index
 
 1. **Enumerate the top-level documents** at the root — `README.md` first, then the owner's own one-of-a-kind docs. Frames are collection blueprints, not top-level.
-2. **Rebuild the list** under `## Top-Level`, after the `<!-- configure: top-level index (regenerated) -->` marker: one bullet per doc, `- [Title](../Title.md) — one-line description`, `README` first. **Keep the owner's existing descriptions**; give a doc with none a `<!-- TODO: describe -->` and ask. Never invent one.
+2. **Rebuild the list** under `top_level`: one entry per doc, a `title`, a `path` from `.eidos/` (`../Roadmap.md`), and a `description`, `README` first. **Keep the owner's existing descriptions**; give a doc with none an empty description and ask. Never invent one.
 3. **Report** — the docs indexed and any still needing a description. A top-level doc that's still a stub is **in progress** — note it so the intention to complete it stays visible.
 
 ## After
 
-The Framework is a current index and contract for the root. From here, `eidos` reads it to know a blueprint's collection and variants when authoring, and validates each blueprint against the updated Properties table — a custom property now counts among the fields it checks for the collections it applies to, surfaced and added with a note where an applicable blueprint is missing it, never failing the file. A declared term is the word `eidos` writes with, and a near-miss it finds is noted with the declared term beside it, never swapped in silently. `index` rebuilds each collection's `index.md` (the per-blueprint leaf) beneath it; and `README.md` is the visible door a human lands at first.
+The Framework is a current index and contract for the root. From here, `eidos` reads it to know a blueprint's collection and variants when authoring, and validates each blueprint against the updated Properties table — a custom property now counts among the fields it checks for the collections it applies to, surfaced and added with a note where an applicable blueprint is missing it, never failing the file. A declared term is the word `eidos` writes with, and a near-miss it finds is noted with the declared term beside it, never swapped in silently. `index` rebuilds the `index` key beneath it; and `README.md` is the visible door a human lands at first.

@@ -4,7 +4,7 @@
 > product is, true whether or not it's been built.
 
 This README is the front door. The full index and config live in
-[`.eidos/Framework.md`](.eidos/Framework.md); this file orients you and points the way.
+[`.eidos/Framework.yaml`](.eidos/Framework.yaml); this file orients you and points the way.
 
 ## What this is
 
@@ -16,9 +16,9 @@ _Your own one-of-a-kind docs (a Roadmap, a Vision, the generated Blueprint Map).
 
 ## Collections
 
-- **[Frames](Frames/index.md)** — the framing docs: Architecture, Audience, Criteria, Market.
-- **[Specs](Specs/index.md)** — the product's units, grouped by domain.
+- **[Frames](Frames/)** — the framing docs: Architecture, Audience, Criteria, Market.
+- **[Specs](Specs/)** — the product's units, grouped by domain.
 
 ---
 
-_A root. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.md`](.eidos/Framework.md) for the full index. `configure` and `index` keep these current._
+_A root. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.yaml`](.eidos/Framework.yaml) for the full index. `configure` and `index` keep these current._

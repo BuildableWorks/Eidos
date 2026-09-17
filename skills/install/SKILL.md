@@ -28,45 +28,45 @@ Every seed carries the same pieces, in the same layout:
 seeds/<seed>/
   templates/             # collection body templates, one file per variant (<unit>.<variant>.md)
   roles/              # response contracts, one per role (installs to .eidos/roles/)
-  Framework.md        # version + naming (frontmatter); body indexes Top-Level, Collections, the Properties table, the Vocabulary, and the Versions
+  Framework.yaml      # version, naming, top_level, collections, properties, vocabulary, versions (and the index, once blueprints exist)
   me.md               # blank me.md (installs to .eidos/me.md — personal, gitignored)
   .gitignore          # installs to .eidos/.gitignore (ignores me.md beside it)
   README.md           # the {{Product}} template — installs to <root>/README.md, the visible "start here"
 ```
 
-**Read the seeds at runtime, don't hardcode that table.** `install-seed.py --list` prints every seed's version, collections, variants, and grouping in one call, so a seed added after this file was written still gets offered. By hand, read only each `Framework.md`'s `## Collections` section: its variants and grouping lines are everything the offer needs, and a whole `Framework.md` per seed is three files read to quote twelve lines. Take the version from the chosen seed's `Framework.md`; don't guess it. The templates wait until step 6, and are read from the installed copy.
+**Read the seeds at runtime, don't hardcode that table.** `eidos seeds` prints every seed's version, collections, variants, and grouping in one call, so a seed added after this file was written still gets offered. By hand, read only each `Framework.yaml`'s `collections` key: its variants and grouping are everything the offer needs. Take the version from the chosen seed's `Framework.yaml`; don't guess it. The templates wait until step 6, and are read from the installed copy.
 
-## Run the script when you can
+## Run the CLI when you can
 
-The skill ships **`install-seed.py`** (beside this file), stdlib-only Python 3 that performs steps 5 and 6 from the four answers the owner gives you. **Prefer it whenever you have a shell** (Claude Code, the IDE):
+The `eidos` CLI (npm package `eidosmd`; `npx eidosmd` runs it with nothing installed) performs steps 5 and 6 from the four answers the owner gives you. **Prefer it whenever you have a shell** (Claude Code, the IDE):
 
 ```
-python3 <skill>/install-seed.py --list      # every seed: version, collections, variants, grouping
-python3 <skill>/install-seed.py <seed> <root> --naming "<convention>" --group "<Group>" --product "<Name>"
+eidos seeds                                   # every seed: version, collections, variants, grouping
+eidos init <root> --seed <seed> --naming "<convention>" --group "<Group>" --product "<Name>"
 ```
 
-It copies the seed into `<root>/.eidos/`, moves the seed README out to `<root>/README.md`, sets `naming`, renames each collection into the chosen convention (heading, folder, and the links that reach it), creates every collection folder with an empty `index.md`, scaffolds one blank blueprint per framing variant (frontmatter from the Properties table, body from that variant's template with its guidance kept), and writes a bullet per starting group under the grouped collection. `--group` is repeatable and optional; `--dry-run` prints every write and touches nothing.
+It copies the seed into `<root>/.eidos/`, moves the seed README out to `<root>/README.md`, sets `naming`, renames each collection into the chosen convention (its entry, its folder, and the links that reach it), creates every collection folder, scaffolds one blank blueprint per framing variant (frontmatter from the Properties table, body from that variant's template with its guidance kept), writes an entry per starting group under the grouped collection's `grouping.groups`, and builds the index. `--group` is repeatable and optional; `--dry-run` prints every write and touches nothing.
 
-It deliberately writes **no prose**. The README's one-liner, each group's description, and every scaffolded blueprint's `summary` and body remain the owner's, and the script's closing report names them as what is still open.
+It deliberately writes **no prose**. The README's one-liner, each group's description, and every scaffolded blueprint's `summary` and body remain the owner's, and its closing report names them as what is still open.
 
-On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand: steps 5 and 6 are exactly what the script does.
+On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand: steps 5 and 6 are exactly what it does.
 
 ## Procedure
 
 1. **Confirm it's a fresh start.** Look for an `.eidos/` folder anywhere in the tree — that marker, not a folder name, is what makes a root. If one exists, stop: point the user to `eidos` to author, or `migrate` if it's on an older version.
 
-2. **Choose the seed.** List `seeds/` and offer them with `AskUserQuestion`, describing each from its declared collections, their variants, and how they group. `install-seed.py --list` prints that for every seed at once; by hand, read only the `## Collections` section of each seed's `Framework.md`. Ask what the owner is actually defining, not which seed they want: "a product being built," "a book or course," "a research question" pick themselves.
+2. **Choose the seed.** List `seeds/` and offer them with `AskUserQuestion`, describing each from its declared collections, their variants, and how they group. `eidos seeds` prints that for every seed at once; by hand, read only the `collections` key of each seed's `Framework.yaml`. Ask what the owner is actually defining, not which seed they want: "a product being built," "a book or course," "a research question" pick themselves.
 
    Say plainly that a seed is a **starting point, not a commitment**: everything in it is reshapeable later with `configure`, so one that is merely *close* is a fine choice. If none fit, take the nearest and name the parts they will likely rename. `software` is the default when the owner has no view and the repo is code — don't default silently on a repo that isn't.
 
 3. **Name the root.** Default `Blueprints/`; offer to rename. Low-stakes — nothing points at it by path — so any name works. Several roots in one repo nest as `Blueprints/<name>/`, each with its own `.eidos/`.
 
-4. **Choose the naming convention.** Offer the three with `AskUserQuestion` — **kebab-case** (default; lowercase and space-free, no `%20` in links), **TitleCase** (space-free and capitalized), **Title Case** (reads like prose, `%20` in every link) — and record it as `naming` in `Framework.md`'s frontmatter. EIDOS.md has the worked table. It governs the whole folder and changing it later means renaming files, so settle it now; the default is the safe answer.
+4. **Choose the naming convention.** Offer the three with `AskUserQuestion` — **kebab-case** (default; lowercase and space-free, no `%20` in links), **TitleCase** (space-free and capitalized), **Title Case** (reads like prose, `%20` in every link) — and record it as `naming` in `Framework.yaml`. EIDOS.md has the worked table. It governs the whole folder and changing it later means renaming files, so settle it now; the default is the safe answer.
 
 5. **Install the chosen framework.** Copy `seeds/<chosen>/` into the root as a hidden `.eidos/` — everything except `README.md`, which goes to the root:
 
    - `templates/`, `roles/`, `me.md`, `.gitignore` → straight into `<root>/.eidos/`.
-   - `Framework.md` → `<root>/.eidos/Framework.md`, then set its `naming` to the convention from step 4 (seeds ship `kebab-case`). It carries the index, the Properties table (core and custom; no seed ships a tool's block), the Vocabulary, **and** the Versions — there is no separate Properties, glossary, or release file.
+   - `Framework.yaml` → `<root>/.eidos/Framework.yaml`, then set its `naming` to the convention from step 4 (seeds ship `kebab-case`). It carries the top-level docs, the collections, the Properties table (core and custom; no seed ships a tool's block), the Vocabulary, the Versions, and once blueprints exist the index — there is no separate Properties, glossary, or release file.
    - `README.md` → `<root>/README.md`, the visible "start here"; you fill its name and one-liner in step 6.
 
    Take every file from the **one** seed. Don't mix templates from one with roles from another — a seed's roles are written against its own collections.
@@ -75,12 +75,12 @@ On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand
 
    This is the root's own framework — what every other skill reads from here on. Leave it as the baseline; the owner can extend it later (`configure` for a custom property, a collection, a variant, or a term), and a tool that keeps something in the framework makes its own `.eidos/plugins/<name>/` when first used. No seed ships one.
 
-6. **Scaffold the seed's collections.** Read them from the `Framework.md` you just installed — never assume `Specs` and `Frames` — and create a folder for each, named in the chosen convention:
+6. **Scaffold the seed's collections.** Read them from the `Framework.yaml` you just installed — never assume `Specs` and `Frames` — and create a folder for each, named in the chosen convention:
 
-   - **the framing collection** (`Frames` in every seed Eidos ships) — every framework declares one, so it always gets scaffolded: its folder and an empty `index.md`. Offer one blank blueprint per variant the seed declares, reading the variants off `Framework.md`, each with frontmatter from the Properties table and its body from that variant's template, italic prompts kept. A frame scaffolded but unfilled is fine; it's in progress.
-   - **the grouped collection** — the one the owner will write many of: its folder, a sub-folder per starting group they name, and an empty `index.md`. Groups are optional; skipping them gives a flat collection.
+   - **the framing collection** (`Frames` in every seed Eidos ships) — every framework declares one, so it always gets scaffolded: its folder. Offer one blank blueprint per variant the seed declares, reading the variants off `Framework.yaml`, each with frontmatter from the Properties table and its body from that variant's template, italic prompts kept. A frame scaffolded but unfilled is fine; it's in progress.
+   - **the grouped collection** — the one the owner will write many of: its folder and a sub-folder per starting group they name. Groups are optional; skipping them gives a flat collection.
    - **`README.md`** at the root: fill its name and a one-line "what this is." Keep it thin.
-   - **the Framework's index** — `## Collections` already declares the seed's collections; add a bullet per starting group under the grouped collection's grouping line (**Domains**, **Parts**, **Strands** — whatever that seed calls it). Leave `## Top-Level`, `## Vocabulary`, and `## Versions` empty; top-level docs and terms are the owner's, added later, and a version is taken only when a team asks for one.
+   - **the framework document** — `collections` already declares the seed's collections; add an entry per starting group under the grouped collection's `grouping.groups` (Domains, Parts, Strands: whatever that seed labels it), each a `name` and a `description` the owner supplies. Leave `top_level` at the README, and `vocabulary` and `versions` empty; top-level docs and terms are the owner's, added later, and a version is taken only when a team asks for one. Then build the `index` (`eidos index`, or by hand as the `index` skill describes) so the scaffolded frames are listed.
 
    Don't write blueprint prose here — that's `eidos`. Don't invent top-level docs; if the owner wants one, point them at `format`. Install lays the frame.
 
@@ -90,4 +90,4 @@ On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand
 
 ## After init
 
-The folder is plain markdown — commit it alongside the code, `.eidos/` and all, except the personal `me.md` the seeded `.gitignore` keeps out. From here: `eidos` authors and validates, `configure` adds a collection, variant, or property, `index` rebuilds the leaves, `whoami` sets who you are, `migrate` moves versions.
+The folder is plain markdown — commit it alongside the code, `.eidos/` and all, except the personal `me.md` the seeded `.gitignore` keeps out. From here: `eidos` authors and validates, `configure` adds a collection, variant, or property, `index` rebuilds the index, `whoami` sets who you are, `migrate` moves versions.

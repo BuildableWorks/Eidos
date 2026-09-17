@@ -8,20 +8,21 @@ Each entry says what moves, what stays, and what needs a human decision.
 
 ## 4.7.0 → 5.0.0
 
-**The vocabulary release. Five names move on disk, all mechanically; set `eidos_version: 5.0.0` when they have.** Nothing is dropped and nothing needs a decision unless a template file is misnamed.
+**The vocabulary release. Five names move on disk and the framework document takes its one form, all mechanically; set `eidos_version: 5.0.0` when they have.** Nothing is dropped and nothing needs a decision unless a template file is misnamed, and the `eidos` CLI's `migrate` makes the whole hop in one run.
 
 - **`_eidos/` → `.eidos/`.** The folder name only; everything inside keeps its place. A root-level `.gitignore` that named `_eidos/me.md` updates to match; the `.gitignore` inside the folder does not change.
-- **`shapes/` → `templates/`**, and every link to one in the framework document. A template file must be `<unit>.<variant>.md` (one unit per collection, `frame` for the framing collection) and must not open with frontmatter; a check now faults both. **Needs the owner** only if a collection's templates disagree on their unit.
-- **`## Schema` → `## Properties`**, with its blocks `### Eidos Core` → `### Eidos`, `### Custom Properties` → `### Custom`, `### <tool> Properties` → `### <tool>`. In YAML, `schema:` → `properties:` (`properties.custom`, `properties.tools.<tool>`).
-- **`- **Flavors:**` → `- **Variants:**`** on every collection; in YAML `flavors:` → `variants:` and each entry's `shape:` → `template:`.
+- **`Framework.md` → `Framework.yaml`.** The framework document has one form. A root that kept the markdown form writes the same fields as data (`eidos_version`, `naming`, `top_level`, `collections`, `properties`, `vocabulary`, `versions`), builds the index inside it under `index`, and removes `Framework.md` and each collection's `index.md`. The markdown form's prose (section intros, HTML comments) has no field to land in; keep what is worth keeping as comments. A root already on `Framework.yaml` has nothing to do here.
+- **`shapes/` → `templates/`**, and every path to one in the framework document. A template file must be `<unit>.<variant>.md` (one unit per collection, `frame` for the framing collection) and must not open with frontmatter; a check now faults both. **Needs the owner** only if a collection's templates disagree on their unit.
+- **`schema:` → `properties:`**, with its blocks `core`, `custom`, and `tools.<tool>`. In a markdown document being converted, the headings first: `## Schema` → `## Properties`, `### Eidos Core` → `### Eidos`, `### Custom Properties` → `### Custom`, `### <tool> Properties` → `### <tool>`.
+- **`flavors:` → `variants:`** on every collection, and each entry's `shape:` → `template:`. In a markdown document being converted, `- **Flavors:**` → `- **Variants:**`.
 - **`flavor` → `variant`.** The core row in the Properties table, and the property on every blueprint that carries it. A blueprint without one still means the collection's default.
 - **Two words leave the standard's table**, `term` and `actor`; nothing on disk carried either.
-- **Cosmetic:** seed prose installed into a root (`Framework.md` intros, `roles/README.md`) still says shape, flavor, and Schema until refreshed, and a seed template still opens with the old comment. Nothing reads those words.
+- **Cosmetic:** seed prose installed into a root (`roles/README.md`) still says shape, flavor, and Schema until refreshed, and a seed template still opens with the old comment. Nothing reads those words.
 
 ### Per root
 
 1. **`git mv _eidos .eidos`**, then **`git mv .eidos/shapes .eidos/templates`**.
-2. **In the framework document**, rename the headings and bullets above, and rewrite the `shapes/` links as `templates/`. Rewrite the core block as `id`, `title`, `summary`, `variant`. Update the version note in the block.
+2. **In the framework document**, rename the keys above and rewrite the `shapes/` paths as `templates/`. Rewrite the core block as `id`, `title`, `summary`, `variant`, and update the version note on it. A root on `Framework.md` does the same in the markdown, then writes `Framework.yaml` from it, builds the `index`, and deletes `Framework.md` and every `index.md`.
 3. **On every blueprint**, rename the `flavor` property to `variant`. Values are unchanged.
 4. **Look at each template.** One that opens with `---` has frontmatter to remove; one named any other way than `<unit>.<variant>.md` is renamed, and its path in the framework document with it.
 5. **Set `eidos_version: 5.0.0`.**

@@ -16,9 +16,9 @@ Companion to `eidos` (authors and validates) and `format` (reshapes a draft alre
 
 **Read `me.md`.** `.eidos/me.md` for the role and calibration, then that role's own contract in `.eidos/roles/<role>.md`, and follow it — it sets the vocabulary, the depth, what to surface, and who holds decisions. Read the contract itself; don't infer a role from its filename. A blank or absent `me.md` means default to full facilitation; offer `whoami`.
 
-**Read the framework.** `.eidos/Framework.md` for the collections, their variants, their grouping, the Properties table, and the Vocabulary. Ask in the root's own terms; where the owner uses a near-miss a row names, ask which they mean, since the answer is often the distinction the idea turns on. No `.eidos/` means no framework — stop and offer `install`.
+**Read the framework.** `.eidos/Framework.yaml` for the collections, their variants, their grouping, the Properties table, and the Vocabulary. Ask in the root's own terms; where the owner uses a near-miss a row names, ask which they mean, since the answer is often the distinction the idea turns on. No `.eidos/` means no framework — stop and offer `install`.
 
-**Read the neighbors.** The target collection's `index.md`, and any blueprint the idea sounds adjacent to. Questions asked against what already exists are worth ten asked in a vacuum: you can ask whether this is really separate from something already written, and the owner can see it is.
+**Read the neighbors.** The target collection's entries under `index` in `Framework.yaml`, and any blueprint the idea sounds adjacent to. Questions asked against what already exists are worth ten asked in a vacuum: you can ask whether this is really separate from something already written, and the owner can see it is.
 
 Never open the interrogation cold. Two minutes of reading turns generic prompts into specific ones.
 
