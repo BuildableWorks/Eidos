@@ -28,7 +28,7 @@ Every seed carries the same pieces, in the same layout:
 seeds/<seed>/
   templates/             # collection body templates, one file per variant (<unit>.<variant>.md)
   roles/              # response contracts, one per role (installs to .eidos/roles/)
-  Framework.yaml      # version, naming, top_level, collections, properties, vocabulary, versions (and the index, once blueprints exist)
+  Framework.yaml      # version, naming, top_level, collections, properties, vocabulary (and the index, once blueprints exist)
   me.md               # blank me.md (installs to .eidos/me.md — personal, gitignored)
   .gitignore          # installs to .eidos/.gitignore (ignores me.md beside it)
   README.md           # the {{Product}} template — installs to <root>/README.md, the visible "start here"
@@ -77,10 +77,10 @@ On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand
 
 6. **Scaffold the seed's collections.** Read them from the `Framework.yaml` you just installed — never assume `Specs` and `Frames` — and create a folder for each, named in the chosen convention:
 
-   - **the framing collection** (`Frames` in every seed Eidos ships) — every framework declares one, so it always gets scaffolded: its folder. Offer one blank blueprint per variant the seed declares, reading the variants off `Framework.yaml`, each with frontmatter from the Properties table and its body from that variant's template, italic prompts kept. A frame scaffolded but unfilled is fine; it's in progress.
+   - **the framing collection** (`Frames` in every seed Eidos ships) — the standard doesn't require one, but Eidos recommends it for every product, so it always gets scaffolded: its folder. Offer one blank blueprint per variant the seed declares, reading the variants off `Framework.yaml`, each with frontmatter from the Properties table and its body from that variant's template, italic prompts kept. A frame scaffolded but unfilled is fine; it's in progress.
    - **the grouped collection** — the one the owner will write many of: its folder and a sub-folder per starting group they name. Groups are optional; skipping them gives a flat collection.
    - **`README.md`** at the root: fill its name and a one-line "what this is." Keep it thin.
-   - **the framework document** — `collections` already declares the seed's collections; add an entry per starting group under the grouped collection's `grouping.groups` (Domains, Parts, Strands: whatever that seed labels it), each a `name` and a `description` the owner supplies. Leave `top_level` at the README, and `vocabulary` and `versions` empty; top-level docs and terms are the owner's, added later, and a version is taken only when a team asks for one. Then build the `index` (`eidos index`, or by hand as the `index` skill describes) so the scaffolded frames are listed.
+   - **the framework document** — `collections` already declares the seed's collections; add an entry per starting group under the grouped collection's `grouping.groups` (Domains, Parts, Strands: whatever that seed labels it), each a `name` and a `description` the owner supplies. Leave `top_level` at the README and `vocabulary` empty; top-level docs and terms are the owner's, added later. Then build the `index` (`eidos index`, or by hand as the `index` skill describes) so the scaffolded frames are listed.
 
    Don't write blueprint prose here — that's `eidos`. Don't invent top-level docs; if the owner wants one, point them at `format`. Install lays the frame.
 

@@ -21,4 +21,4 @@ _Your own one-of-a-kind docs (a Roadmap, a Vision, the generated Blueprint Map).
 
 ---
 
-_A root. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.yaml`](.eidos/Framework.yaml) for the full index. `configure` and `index` keep these current._
+_A root. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.yaml`](.eidos/Framework.yaml) for the full index. `eidos index` keeps the index current._

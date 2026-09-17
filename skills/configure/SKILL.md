@@ -1,7 +1,7 @@
 ---
 name: configure
 description: >-
-  Configure a root's framework, the structure and contract in `.eidos/Framework.yaml`: its collections and their variants (body templates), its Properties table (the frontmatter contract), its Vocabulary (the terms the root uses on purpose), and its top-level index. Use to add a kind of content folder ("add a Decisions/ADR folder"), add or change a variant ("add a micro spec template", "make spec.full the default"), add, rename, or retire a custom property and backfill it ("add a `team` field to every spec"), declare, rename, or retire a term ("a team member is not staff, write that down", "add this to the vocabulary"), snapshot the root as a version, only when asked ("version the specs", "tag this as a spec version"), or refresh the top-level index ("the Framework is out of date"). It scaffolds folders and template files and reconciles the blueprints. It does not author blueprints (`eidos`), build the index (`index`), or touch the Eidos core properties (`migrate`).
+  Configure a root's framework, the structure and contract in `.eidos/Framework.yaml`: its collections and their variants (body templates), its Properties table (the frontmatter contract), its Vocabulary (the terms the root uses on purpose), and its top-level index. Use to add a kind of content folder ("add a Decisions/ADR folder"), add or change a variant ("add a micro spec template", "make spec.full the default"), add, rename, or retire a custom property and backfill it ("add a `team` field to every spec"), declare, rename, or retire a term ("a team member is not staff, write that down", "add this to the vocabulary"), or refresh the top-level index ("the Framework is out of date"). It scaffolds folders and template files and reconciles the blueprints. It does not author blueprints (`eidos`), build the index (`index`), or touch the Eidos core properties (`migrate`).
 ---
 
 # Eidos Configure
@@ -12,9 +12,8 @@ Keep `.eidos/Framework.yaml` working as the framework's **index and contract** �
 - **`collections`** — each top-level content folder: its description, its grouping (one level of sub-folders, each group described), and its **variants** (body templates, one marked default).
 - **`properties`** — the property contract every blueprint carries, one block per owner: `core` (the standard's, off-limits here), `custom` (the framework's — the seed's defaults plus your own, each scoped by `applies_to`), and `tools.<tool>` for any tool that declares its own (that tool's, off-limits here too).
 - **`vocabulary`** — the term contract: the words the root uses on purpose, one entry each (`term`, `means`, `not`, and `see` when a blueprint defines it in full). Every seed ships it empty; the terms are the root's own, and Eidos declares none of them.
-- **`versions`** — snapshots of the root, taken on purpose, newest first, one entry each (`version`, `commit`, `tag`): a named commit in the repository the root lives in, nothing copied. A team's tool for holding the definition against a fixed point; not the product's release version, and not `eidos_version`, which is the standard's and moves with `migrate`. Empty is the normal state.
 
-It scaffolds collections and variants, grows and reshapes the custom Properties block and reconciles blueprints to it, grows the Vocabulary a term at a time, snapshots a version only when asked, and refreshes the top-level index. For anything the rules decide — what a collection is, the variant model, the `variant` property, what a term is — defer to **EIDOS.md**.
+It scaffolds collections and variants, grows and reshapes the custom Properties block and reconciles blueprints to it, grows the Vocabulary a term at a time, and refreshes the top-level index. For anything the rules decide — what a collection is, the variant model, the `variant` property, what a term is — defer to **EIDOS.md**.
 
 ## How you work: press the owner to decide
 
@@ -34,7 +33,7 @@ A collection, variant, or property nobody thought through reads as meaningful wh
 
 ## Boundaries
 
-- **The framework document's declarations only.** You edit its `top_level`, `collections`, `properties.custom`, `vocabulary`, and `versions` keys, documented in EIDOS.md, and create template files in `.eidos/templates/`. Never the generated `index` key (`index`), never blueprints (`eidos`). A framework on a version before 5.0.0 keeps a markdown `Framework.md`; offer `migrate` before editing it.
+- **The framework document's declarations only.** You edit its `top_level`, `collections`, `properties.custom`, and `vocabulary` keys, documented in EIDOS.md, and create template files in `.eidos/templates/`. Never the generated `index` key (`index`), never blueprints (`eidos`). A framework on a version before 5.0.0 keeps a markdown `Framework.md`; offer `migrate` before editing it.
 - **Never touch `properties.core` or a `properties.tools.<tool>` block.** Every property is owned by the block it sits in: the core is Eidos's and moves with the standard's version (`migrate`); a tool's block is written by that tool alone. A core property change is a standards change; a tool property change is that tool's; redirect either. The one exception is a tool that has left the root: then its block is retired like any property, values surfaced first, on the owner's say-so.
 - **Never touch a tool's.** `.eidos/plugins/<name>/` is that tool's folder, and a key named for a tool on a property entry is that tool's fields on the entry. Carry them across unchanged when you edit an entry, never fill them in, and when retiring an entry that carries some, name the tool so the owner knows what else is affected.
 - **Needs a framework.** Read `.eidos/Framework.yaml` from the root, found by its `.eidos/` marker. No `.eidos/` means no framework installed — offer `install` first.
@@ -118,20 +117,6 @@ A seed's own defaults — a lifecycle, dates, tags, a grouping — are reshaped 
 1. **Surface first.** Show the owner where the term is used, and ask whether the distinction is being dropped or just the word.
 2. Remove the entry. The blueprints keep their text; a word that is no longer declared is just a word.
 3. Report the entry removed and the places that used it.
-
-## Recording a version
-
-Only when the owner asks. Never propose a version, never ask whether it is time for one, and never treat an empty `versions` as a gap: working alone, most roots never take one. It is for a team that needs a fixed point to hold the definition against later, and the owner knows when that is.
-
-1. **Decide the two** with the owner: the **version**, the root's own number in whatever scheme they keep (semver reads well, since a change of direction is a major); and the **commit**, a sha that already exists in the repository the root lives in, the state being snapshotted. If nothing has been committed since the state they mean, that commit is `HEAD`: show it and have them confirm. Nothing is copied into the root; git holds every blueprint as it was at that commit.
-2. **Write the entry** at the top of `versions`, newest first:
-
-   ```yaml
-   - { version: 2.0.0, commit: 9f3c1e2, tag: blueprints/2.0.0 }
-   ```
-3. **Ask about the tag.** One question: tag it? The name is `blueprints/<version>`, its own namespace so it never collides with the product's release tags and never names the tool. On a yes, `git tag blueprints/<version> <commit>` on the snapshot commit, and fill `tag`; on a no, leave it out. Never create a tag on any other answer.
-4. **Say what it means.** The commit that adds this entry comes after the one it names, so the entry is not in the snapshot it records; that is how a tag works too. The blueprints as they stand at that sha are the root at that version, and a blueprint never carries a version of its own.
-5. **Report** the entry added, and whether it was tagged.
 
 ## Refreshing the top-level index
 

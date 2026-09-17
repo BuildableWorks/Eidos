@@ -4,7 +4,7 @@ Who is in the seat. This file is **personal and per-actor** — it is gitignored
 each person who works on this folder keeps their own. The agent reads it before acting, to know who
 you are and how to help.
 
-Set who you are below — `install` asks, or just edit this file. Leaving it blank is fine: the agent
+Set who you are below — `eidos whoami` asks, or just edit this file. Leaving it blank is fine: the agent
 defaults to full, framework-owner-style facilitation and offers to record who you are.
 
 ## You are:
