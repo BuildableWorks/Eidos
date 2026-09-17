@@ -8,7 +8,7 @@ description: >-
 
 Keep `.eidos/Framework.yaml` working as the framework's **index and contract** — the authoritative description of the structure everything is written in, with the visible root `README.md` as the friendly door to it. This skill owns five of its keys:
 
-- **`top_level`** — the top-level documents, `README.md` first (the visible front door and the first listed entry), then the owner's own one-of-a-kind docs (a Roadmap, a Vision, the generated Blueprint Map), each a title, a path, and a one-line description. The framing docs are **not** here — they are a collection.
+- **`top_level`** — the top-level documents, `README.md` first (the visible front door and the first listed entry), then the owner's own one-of-a-kind docs (a Vision, the generated Blueprint Map), each a title, a path, and a one-line description. The framing docs are **not** here — they are a collection.
 - **`collections`** — each top-level content folder: its description, its grouping (one level of sub-folders, each group described), and its **variants** (body templates, one marked default).
 - **`properties`** — the property contract every blueprint carries, one block per owner: `core` (the standard's, off-limits here), `custom` (the framework's — the seed's defaults plus your own, each scoped by `applies_to`), and `tools.<tool>` for any tool that declares its own (that tool's, off-limits here too).
 - **`vocabulary`** — the term contract: the words the root uses on purpose, one entry each (`term`, `means`, `not`, and `see` when a blueprint defines it in full). Every seed ships it empty; the terms are the root's own, and Eidos declares none of them.
@@ -121,7 +121,7 @@ A seed's own defaults — a lifecycle, dates, tags, a grouping — are reshaped 
 ## Refreshing the top-level index
 
 1. **Enumerate the top-level documents** at the root — `README.md` first, then the owner's own one-of-a-kind docs. Frames are collection blueprints, not top-level.
-2. **Rebuild the list** under `top_level`: one entry per doc, a `title`, a `path` from `.eidos/` (`../Roadmap.md`), and a `description`, `README` first. **Keep the owner's existing descriptions**; give a doc with none an empty description and ask. Never invent one.
+2. **Rebuild the list** under `top_level`: one entry per doc, a `title`, a `path` from `.eidos/` (`../Vision.md`), and a `description`, `README` first. **Keep the owner's existing descriptions**; give a doc with none an empty description and ask. Never invent one.
 3. **Report** — the docs indexed and any still needing a description. A top-level doc that's still a stub is **in progress** — note it so the intention to complete it stays visible.
 
 ## After

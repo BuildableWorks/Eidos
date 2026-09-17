@@ -14,7 +14,7 @@
 
 Eidos is a system of organization for defining a product: an app, a book, a study, a workflow, anything work produces that has a shape. It puts a structure around the documentation that a tool can enforce, so ideation and development progress in one place and the definition keeps pace with both. One file is the complete source of truth for one unit of the product, independent of time or status: as true of something planned as of something long finished. The product is written in plain markdown beside your code; the structure it is written in is data, in a hidden `.eidos/` folder you seldom open. No SaaS. No lock-in. Nothing outside the repo.
 
-A blueprint captures **state and intent, not work**. Tasks describe work and die when the work ships; a blueprint describes the product and stays accurate across its whole life: drafted, built, deprecated.
+A blueprint captures **a vision of the product as a source of truth**, not work. Tasks describe work and die when the work ships; a blueprint describes the product and stays accurate across its whole life: drafted, built, deprecated.
 
 Eidos is **human-first**. A Framework Owner holds the intent, the scope, and the decisions. An agent — via the `eidos` skill — facilitates: it formats, supplements, asks clarifying questions, and presses on scope. It does **not** author blueprints for you. A blueprint no one thought through is worse than none.
 
