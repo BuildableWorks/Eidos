@@ -8,7 +8,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-- **Everything at the root is declared (Rule 21).** A folder at the root is `.eidos/` or a declared collection, a file at the root is a top-level doc listed under `top_level`, and nothing is declared that isn't there; a check surfaces anything without its counterpart, and the owner declares it or moves it. Hidden entries are the host's. The Layout section carries the paragraph; the `top_level` and `collections` bullets, the term table, the seeds' comments, and `configure`, `eidos`, `format`, and `iterate` follow. Unreleased: the standard's version has not moved.
+## [5.3.0] - 2026-09-18 — Standard: 5.3.0
+
+**The standard moves to 5.3.0: the root is fully declared, and the text is a five-minute read.** Two things had drifted apart. A root could carry a folder or a file the framework document knew nothing about, so a reader opening one had to ask what it was; and the standard had grown to 7,500 words explaining itself, so a reader opening *it* had to set aside half an hour. 5.3.0 fixes both. Every folder at the root is declared with a type and every file with an entry, so the framework document is the inventory of the root and nothing there is a mystery. And `EIDOS.md` is rewritten to 2,500 words with the same contract: terms in one line each, folder types in a table, rules in a sentence, no paragraph explaining what a sentence already says. The one key that moves is `collections:`, which becomes `folders:` with `type: collection` on each entry; `eidos migrate` makes that hop in one pass. `versions/v5.3.0.md` is the snapshot.
+
+### Added
+
+- **Folders have a type.** `folders` replaces `collections` in `Framework.yaml`; each entry is a `name`, a `type`, and a `description`. Three types: `collection` (blueprints, with variants and grouping, as before), `assets` (files that are not markdown; the standard reads nothing inside, and the files keep the names their tools gave them), and `other` (whatever the owner's description says; declared and otherwise left alone). An unknown type is a fault. The standard names the types and no folder; how many of each a root has is the framework's.
+- **Rule 21, everything at the root is declared.** A folder is `.eidos/` or declared under `folders`; a file is listed under `top_level`; nothing is declared that isn't there. A check surfaces anything without its counterpart; the owner declares it or moves it. Hidden entries are the host's.
+- **Relative markdown links for everything.** A file that is not a blueprint is linked or embedded the same way a blueprint is: a standard markdown link or image, relative to the file it sits in, resolving on disk. No wikilinks, no absolute paths, no resolution by filename. A check verifies the path resolves.
+- **Every seed ships an `assets` folder**, declared with `type: assets`.
+
+### Changed
+
+- **`EIDOS.md` is rewritten short**: 7,548 words to 2,467. One layout tree instead of two, folders first and alphabetical. The term table is one line per term. Folders are a table. Rules are one or two sentences each. `## For an agent` is eight bullets. Rule 4 is retitled "Surface, never refuse", which is what it said. The README is no longer in the layout: it is one possible top-level doc, and the seeds ship one.
+- **A collection is flat or grouped, nothing else.** Every sub-folder of a collection is a declared group, and a group holds blueprints and nothing deeper. A non-markdown file inside a collection is not a blueprint: not indexed, not checked, not faulted.
+- **The seeds' `Framework.yaml` comments are a line or two per key** and point at `EIDOS.md` for the rest. `eidos_version` is 5.3.0.
+- **`README.md` and `AGENTS.md` are cut to what a reader needs**: what Eidos is, the layout, the seeds, the quick start, how to install the skills, how versioning works. The skill table replaces the prose list; the duplication rationale is two sentences.
+- **Every skill is rewritten shorter and follows the new shape.** `configure` owns `folders` and refreshes the root's declarations for folders as well as files; `eidos` checks the root, links, and non-markdown files while validating; `install` scaffolds every declared folder including `assets`; `index` walks declared groups and ignores non-markdown files; `migrate` fingerprints 5.3.0 and points at `versions/` instead of carrying every fingerprint inline; `format`, `iterate`, and `whoami` lose their explanatory prose and keep their procedures.
 
 ## [5.2.1] - 2026-09-17 — Standard: 5.2.1
 

@@ -14,10 +14,11 @@ _One or two sentences: what {{Product}} is, and for whom._
 
 _Your own one-of-a-kind docs: a Vision, a set of Design Principles, the generated Blueprint Map. Add them here as you write them._
 
-## Collections
+## Folders
 
 - **[Frames](Frames/)** — the framing docs: Architecture, Audience, Criteria, Market.
 - **[Specs](Specs/)** — the product's units, grouped by domain.
+- **[assets](assets/)** — images, diagrams, and documents the blueprints link to.
 
 ---
 

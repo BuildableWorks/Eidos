@@ -1,47 +1,23 @@
 ---
 name: whoami
 description: >-
-  Set or update who you are in a root — your role and calibration — written to your personal `.eidos/me.md`. Use when someone wants to "set my user", "tell Eidos who I am", "I'm the designer / a developer / the framework owner", "change my role", "set up who I am", "the AI is talking over my head" or "it's explaining things I already know", or when `.eidos/me.md` is blank or absent. It offers whatever roles the framework installed (`.eidos/roles/`), then calibrates the chosen one on three axes — your role for this product, your experience with the scope, and your technical capacity — and writes `.eidos/me.md`. That file is personal and gitignored; the agent reads it before acting to decide how to respond (vocabulary, depth, what to surface, who decides). Companion to `install`, which scaffolds the folder; this sets the person.
+  Set or update who you are in a root: your role and calibration, written to your personal `.eidos/me.md`. Use for "set my user", "I'm the designer", "change my role", "the AI is talking over my head", "it's explaining things I already know", or when `me.md` is blank or absent. Offers the roles the framework installed, calibrates the chosen one on three axes, and writes the file. Personal and gitignored; the agent reads it before acting.
 ---
 
 # Eidos Whoami
 
-Set **who is in the seat** so the agent knows how to respond to _you_. Writes your personal `.eidos/me.md`: a **role** (the baseline response contract) plus a **calibration** (how it adjusts for you). Companion to `install`: that one scaffolds the folder, this one is about the person.
-
-`.eidos/me.md` is **personal and gitignored** — each person who works on the folder runs this for themselves, and no one's role lands in anyone else's checkout.
-
-## Why this matters
-
-A role is a response contract: vocabulary and technical depth, what to surface vs. fold away, who holds which decisions. One role is told to keep mechanism out of the reply; another gets full technical depth; the Framework Owner is brought the decisions. With a blank `me.md` the agent defaults to full facilitation — workable, but generic.
-
-## How you work
-
-A short guided interview, then a small file write. You do **not** invent role content — it lives in `.eidos/roles/`. You help the person pick one and calibrate it.
+A role is a response contract: vocabulary, depth, what to surface, who decides. `me.md` names yours and tunes it. Each person runs this for themselves; the file is gitignored and never lands in another checkout. You do not write role content (that lives in `.eidos/roles/`); you help the person pick one and calibrate it.
 
 ## Procedure
 
-1. **Find the roles.** Read `.eidos/roles/` from the root, found by its `.eidos/` marker. No `.eidos/` means no framework installed — offer `install`. An `.eidos/` with no `roles/` is an older framework — offer to install a seed's, or point to `migrate`.
-2. **Read the current `.eidos/me.md`** if it exists, so you update rather than overwrite blind.
-3. **Pick the role.** With `AskUserQuestion`, offer the roles actually installed in `.eidos/roles/` — **list the folder, don't assume a cast.** Every framework carries a Framework Owner; the rest differ by seed (a software framework has a Developer and a Designer, a book framework an Editor and a Reader). Describe each from its own file. Let them pick one, or describe a custom role.
-4. **Calibrate it** on three axes (ask, don't assume):
-   - **Ownership** — what they own on this folder, in their own words.
-   - **Experience with the scope** — new, familiar, or deep. Sets how much orientation to give.
-   - **Technical capacity** — non-technical, some, or fluent. Sets how much mechanism and jargon, on top of the role's default.
-5. **Write `.eidos/me.md`.** The chosen role under `## You are: <Role>` (a link to its role file in `.eidos/roles/`), then a `## Calibration` block with the three axes in their words. Don't fill an axis they declined — leave it for later.
-6. **Confirm.** Summarize who you now understand them to be and how you'll adjust, and note they can re-run this any time their role changes.
-
-## Boundaries
-
-- **Personal file only.** You write `.eidos/me.md` — not blueprints (`eidos`), not the framework index (`configure`), not the role files themselves (a team decision).
-- **Never commit it.** `me.md` is gitignored by the root's `.gitignore`. If it somehow isn't ignored, say so — it shouldn't be shared.
-- **A blank `me.md` is valid.** If they would rather not say, leave `me.md` blank; the agent defaults to full facilitation and can ask again later.
-
-## Example `.eidos/me.md`
+1. **Find the roles** in `.eidos/roles/`. No `.eidos/` means offer `install`; an `.eidos/` with no `roles/` is an older framework, offer `migrate`.
+2. **Read the current `me.md`**, if any, so you update rather than overwrite blind.
+3. **Pick the role.** Offer the roles actually installed, described from their own files; never assume a cast. Every framework has a Framework Owner; the rest differ by seed. A custom role in their own words is fine.
+4. **Calibrate** on three axes, asking rather than assuming: **ownership** (what they own here), **experience with the scope** (new, familiar, deep), **technical capacity** (non-technical, some, fluent). Leave an axis they decline blank.
+5. **Write `.eidos/me.md`** and confirm how you will adjust. They can re-run this any time.
 
 ```markdown
 # Me
-
-Personal, one per person — gitignored, never shared. The agent reads it before acting.
 
 ## You are: <Role>
 
@@ -49,7 +25,9 @@ Role: [.eidos/roles/<role>.md](roles/<role>.md). One line on how you want to be 
 
 ## Calibration
 
-- **Ownership:** <what you own on this folder, in your own words>.
-- **Experience with the scope:** Deep — a year on this product. (Skip the basics.)
-- **Technical capacity:** Low — explain in product/UX terms, not db/infra.
+- **Ownership:** <in your own words>
+- **Experience with the scope:** Deep; a year on this product.
+- **Technical capacity:** Low; explain in product terms, not infrastructure.
 ```
+
+A blank `me.md` is valid: the agent defaults to full facilitation. If `me.md` is not gitignored, say so.

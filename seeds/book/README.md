@@ -9,12 +9,13 @@
 
 - **[Frames](Frames/)** — what the book argues, who reads it, how it sounds, where it sits.
 - **[Chapters](Chapters/)** — one file per chapter, grouped by part.
+- **[assets](assets/)** — images, diagrams, and documents the blueprints link to.
 
 ## Top-level documents
 
 _Your own one-of-a-kind docs: an Outline of the whole book, a Style Sheet (spellings, names, hyphenation), a Bibliography. Add them here as you write them._
 
-The full index — every collection, its variants, and the Properties table — is in
+The full index — every folder, its variants, and the Properties table — is in
 [`.eidos/Framework.yaml`](.eidos/Framework.yaml).
 
 ## How to use it

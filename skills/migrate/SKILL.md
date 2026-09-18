@@ -1,53 +1,55 @@
 ---
 name: migrate
 description: >-
-  Migrate a root — its blueprints and top-level docs — from one version of the standard to another. Use whenever someone wants to upgrade, migrate, or bring a root up to date with a new Eidos version — e.g. "migrate our specs to Eidos 3.0", "we bumped the standard, update the specs", "bring this folder to the latest format", or "what changed between Eidos v1 and v3 and how do I move my specs over". Migrations are non-sequential: go directly from any source version to any target (v1.0.0 → v3.0.0) by diffing the two version snapshots. Trigger even when the user doesn't say "migrate" — "these specs are on the old format" or "update the frontmatter to the new schema" apply too.
+  Migrate a root from one version of the Eidos standard to another: "migrate our specs to Eidos 5.3", "we bumped the standard, update the folder", "these specs are on the old format". Migrations are non-sequential: diff the source and target snapshots directly and apply the net change.
 ---
 
 # Eidos Migrate
 
-Move a root's blueprints and top-level docs from one version of the Eidos standard to another. A migration is a **diff between two standard snapshots**, applied to the folder. You do not step through intermediate versions — to go from v1.0.0 to v3.0.0, you diff those two snapshots directly and apply the net change.
+A migration is a diff between two standard snapshots, applied to the root. Go straight from the source to the target; never step through intermediate versions.
 
-This skill is the companion to `eidos` (authoring/validation). Read `eidos` for the target contract; read this when the contract itself has moved and files need to catch up.
+## Facilitate, don't bulldoze
 
-## How you work: facilitate, don't bulldoze
-
-Migration is mechanical, but it is still the owner's folder. Propose the plan, show what will change, and **never silently drop content**. If the target version removes a field or section that holds real information, surface that information and ask where it should go (fold into another section, keep as a note, or deliberately drop) — do not delete it on the user's behalf. The custom part of a root's framework — its custom properties, any reshaped section — is the owner's and is preserved, never overwritten.
+It is still the owner's folder. Propose the plan, show what will change, and never silently drop content: where the target removes a field or section holding real information, surface it and ask where it goes. Custom properties, the Vocabulary, reshaped templates, every `properties.tools.<tool>` block, every region, and everything under `.eidos/plugins/` are the owner's or a tool's and are carried across untouched.
 
 ## What you read
 
-Committed copies live in this skill's own folder, synced from the standard by `scripts/sync-skills.sh`, so they are present on a sandboxed host too:
+Committed copies in this folder, synced by `scripts/sync-skills.sh`:
 
-- **`versions/vX.Y.Z.md`** — a frozen snapshot of each released standard. A migration needs both endpoints.
-- **`versions/MIGRATIONS.md`** — the worked hop for each release: what moves, what stays, what needs a human decision. Read the one spanning your source and target; it is a shortcut, not a required path.
-- **`EIDOS.md`** — the current standard, and the usual target.
-- **`seeds/`** — every seed, for when a pre-v3 folder needs a structure layer installed.
+- `versions/vX.Y.Z.md`: every released standard. A migration needs both endpoints.
+- `versions/MIGRATIONS.md`: the worked hop for each release, newest first. Read the ones spanning your endpoints.
+- `versions/README.md`: one line per release, for finding the source by its fingerprint.
+- `EIDOS.md`: the current standard, the usual target.
+- `seeds/`: for a pre-3.0 root that needs a framework installed.
 
-If a needed snapshot is missing, say so; never fabricate a version's contract.
+If a snapshot is missing, say so. Never fabricate a version's contract.
 
 ## Procedure
 
-1. **Establish the target.** Default to the current `EIDOS.md`. If migrating to a non-current version, use its `versions/` snapshot.
+1. **Target.** The current `EIDOS.md` unless told otherwise.
 
-2. **Establish the source.** Check for the structure-layer directory — `.eidos/` (v3.0–v4.0, and again from 5.0.0) or `_eidos/` (v4.1–v4.7) — and read its framework document — `Framework.yaml` (5.0.0), `Framework.md` (v4.2–v4.7, and from 4.5.0 possibly `Framework.yaml`), or `Registry.md` (v3.0–v4.1) — where a v3+ folder declares its version. If there is neither (pre-v3), detect the source from the file's own shape and confirm with the user. Fingerprints:
+2. **Source.** Read the version from the framework document: `.eidos/Framework.yaml` (5.0.0+), `_eidos/Framework.md` (4.2 to 4.7), `_eidos/Registry.md` (4.1), `.eidos/Registry.md` (3.0 to 4.0). Pre-3.0 roots have no structure directory; fingerprint the files (`last_validated` and `## Behavior` are 1.x; `created`/`modified` with `AC{n}` labels are 2.x) and confirm with the owner. `versions/README.md` has the rest.
 
-   - **v1.x** — frontmatter has `last_validated`, `implements`, `serves_job`, `activity`, or `supersedes`; body uses `## Behavior`, separate `## Constraints` and `## Decisions`; `status` is lowercase (`proposed`, `in-progress`, …); root folder is `product/`.
-   - **v2.x** — frontmatter has `created`/`modified` and often a per-doc `eidos_version`; body uses `## Behaviors & Acceptance Criteria` with `AC{n}` labels, merged `## Constraints & Decisions`; `status` is Title Case; **no structure-layer directory**.
-   - **v3.0–v4.0** — has a structure-layer directory named **`.eidos/`** (`shapes/`, `Schema.md`, `Registry.md`); the version is in `Registry.md`; blueprints carry no `eidos_version`. **v4.1** is identical but the directory is renamed **`_eidos/`** (the dot dropped so Obsidian shows it). **v4.2+** additionally renames the index file `Registry.md` → **`Framework.md`**; the `registry-owner` role is `framework-owner`. **v4.2.1** settles the vocabulary: the `_eidos/` structure layer is the *framework*, the product written with it is the *folder*. Prose only. **v4.3.0** adds a `- **Canvas:**` bullet to each collection in `Framework.md` (dropped again in 4.7.0; a root on either side loads fine, and nothing reads it now). **v4.4.0** renames `_eidos/personas/` → `_eidos/roles/` and `_eidos/user.md` → `_eidos/me.md` (a root still on the old names is pre-4.4.0), and flips the naming default: an absent `naming` key means `kebab-case` where it used to mean `Title Case`. A root carrying the key is unaffected; for one without it, read the convention off its own filenames (a space means Title Case, space-free and capitalized means TitleCase, lowercase and hyphenated means kebab-case), confirm it, and write it down before bumping. **v4.6.0** adds a `## Vocabulary` section to `Framework.md` (a `vocabulary` key in `Framework.yaml`), the root's own terms; a root without one loads and declares no terms, and the section is added empty on the way up, never filled. The same release reserves `_eidos/plugins/<name>/` for tools, lets a Schema row carry a tool's fields past the standard's four, and adds `## Versions` (a `versions` key), snapshots of the root taken on purpose as named commits, which is also added empty on the way up and stays empty unless the owner asks; none of it needs anything else, and all of it is carried across untouched. **v4.7.0** makes ownership explicit: a tool that declares properties of its own gets a `### <tool> Properties` block (`schema.tools.<tool>`) beside `### Eidos Core` and `### Custom Properties`, written by that tool alone; nothing on the way up, since no root had one before. It also drops `connects_to` from the core: rewrite the core block as the four (`id`, `title`, `summary`, `flavor`), then surface every blueprint carrying a `connects_to` value and ask whether to declare it as a custom property, fold the links into the body, or drop it. Never drop silently. **v5.0.0** is the vocabulary release, and the one hop that renames things on disk: `_eidos/` goes back to **`.eidos/`**, `shapes/` becomes **`templates/`**, the core property `flavor` becomes **`variant`** on every blueprint that carries it, `## Schema` becomes **`## Properties`** with its blocks shortened to `### Eidos`, `### Custom`, and `### <tool>` (`properties:` and `properties.tools.<tool>` in YAML), and each collection's `- **Flavors:**` bullet becomes `- **Variants:**` (`variants:` with a `template:` path); and the framework document has one form, **`Framework.yaml`**: a root still on `Framework.md` writes the same fields as data with the index inside under `index`, then removes `Framework.md` and each collection's `index.md`, keeping the markdown prose only as comments where the owner wants it. The same release drops the `versions` key: delete it when empty (nearly always), and move a non-empty list into the plugin folder of whatever tool tracks snapshots. All mechanical; the hop is in `versions/MIGRATIONS.md`, and the `eidos` CLI's `migrate` makes it in one run. **v5.1.0** adds regions, a tool-owned span between `<!-- <tool>:<region> <args> -->` and `<!-- /<tool>:<region> -->` in any markdown file; additive, nothing on the way up, and every region is carried across as found from here on. The same release adds `required` to a property entry (absent = `false`): rewrite the core block with `id` and `title` required, set nothing on custom or tool entries, and tell the owner every custom property is now optional until marked. **v5.2.0** adds `options` to a property entry, a non-empty list closing a Text value (or a List's elements) to a declared set, and names a tool's personal file: `plugins/<name>/local.yaml` is one person's on one machine and never committed, and the root's `.eidos/.gitignore` carries `plugins/*/local.yaml` beside `me.md`. On the way up, add that one line under `me.md` if it is missing; an entry without `options` means what it always meant, so no entry has to gain one, but where a custom property's `meaning` lists its values in prose, offer to move them into `options` (the owner's call, never `variant` or a grouping property, whose sets are the collection's). Nothing else moves, and a tool that had been ignoring a personal file under another name moves to `local.yaml` in its own release, carried across as found until then. **v5.2.1** makes `README.md` optional and drops the rule that `top_level` leads with it. Prose only: bump the version and touch nothing; a root with a README keeps it listed first, and one without is conforming.
+3. **Diff the snapshots** across four concerns: the structure layer (its name and files), properties (added, removed, renamed, re-valued), templates (sections renamed, merged, split, added, removed), and layout (root, folders, generated files). Diffing the endpoints resolves a field renamed twice to its net state on its own.
 
-3. **Diff the two snapshots.** Check `versions/MIGRATIONS.md` first — if a hop spanning your endpoints is written up, it has the shortcuts already. Then derive the net transformation across four concerns: **the structure layer** (does the target keep one, and under what name), **properties** (fields added, removed, renamed, or re-valued, mapped onto the target Properties), **body template** (sections renamed, merged, split, added, removed, and any labeling), and **layout** (root folder, collection layout, generated leaves).
+4. **Write the plan**: each transform per concern, and every point needing a human decision. Show it before touching files.
 
-   Diffing the endpoints means a field dropped and later reintroduced, or renamed twice, resolves to its correct net state automatically.
+5. **Apply, in order.**
+   - The structure layer first. A root with none gets a seed installed whole (ask which; across a device bridge, send the files with the file-delivery tool in one call, never re-typed or archived). A root with one has its directory and document renamed to the target's names, then only the standard's core block rewritten.
+   - Each blueprint: map frontmatter onto the target's Properties, drop removed fields after surfacing their content, add newly required ones as stubs, restructure the body to the target variant's template with new sections as flagged empty stubs.
+   - Structural changes across the folder (renamed keys, moved folders).
+   - Set `eidos_version` in the framework document.
 
-4. **Write the migration plan.** A short, per-concern list of every transform, plus anything that needs human judgment (removed fields/sections that hold content, a custom template that conflicts). Show it before touching files.
+6. **Validate** with the `eidos` pass against the target and report gaps as suggestions.
 
-5. **Apply, once the plan is agreed.** Order matters when the structure layer is involved:
+7. **Report** per file: what changed, what carried over, what still needs a decision.
 
-   - **The structure layer first.** If the target has one and the folder doesn't, **ask which seed** and install it whole into the structure dir. The seed ships inside this skill and the folder may be on another machine: across a device bridge, send the seed files with the file-delivery tool and write them to their final paths in a single call. Never re-type contents, base64, or a tarball through a heredoc, and never stage an archive inside the repo. If the folder already has one, rename the directory and its framework document to the target's names, then rewrite **only** the standard-managed core block — leave the framework's custom properties (a tool's keys on them included), every `properties.tools.<tool>` block (those are their tools' to write), its Vocabulary, its Versions, and everything under `.eidos/plugins/` untouched, and offer new canonical templates additively rather than overwriting a customized one. The per-version names are in `versions/MIGRATIONS.md`.
-   - **Migrate each blueprint** (across every collection). Map frontmatter onto the target's Properties; drop removed fields _after_ surfacing any content they held; add newly-required fields as stubs the human fills (e.g. `date_created` where none can be derived). Restructure the body to the target variant's template, applying labeling; add new recommended sections only as clearly-flagged empty stubs — never invent their contents.
-   - **Apply structural/naming changes** across the folder (e.g. `product/` → `Blueprint/`).
-   - **Set the version.** Write the target version into the structure dir's framework document — `Framework.yaml` for 5.0.0, `Framework.md` for 4.2–4.7, `Registry.md` for 3.0–4.1 (creating it if new), under whichever directory name the target uses.
+## Recent hops in one line each
 
-6. **Validate.** Run the `eidos` validation pass against the **target** Properties and report remaining gaps as suggestions, not failures.
+Full detail in `versions/MIGRATIONS.md`.
 
-7. **Report.** Summarize per file: what changed, what was carried over, and every place a human decision is still needed.
+- **5.3.0**: `collections:` becomes `folders:` with `type: collection` on each entry; a folder may also be `assets` or `other`; every folder and file at the root must be declared; every sub-folder of a collection is a declared group. Rename the key, add the type, then walk the root: offer a declaration or a move for anything undeclared, ask before dropping an entry with nothing behind it.
+- **5.2.1**: prose only; bump.
+- **5.2.0**: `options` on a property entry (offer to move a `meaning` that lists values); `plugins/*/local.yaml` added to `.eidos/.gitignore`.
+- **5.1.0**: regions and `required` on property entries; rewrite the core with `id` and `title` required.
+- **5.0.0**: `_eidos/` back to `.eidos/`, `shapes/` to `templates/`, `flavor` to `variant`, `Schema` to `Properties`, one `Framework.yaml` with the index inside; `versions` key dropped.

@@ -1,43 +1,31 @@
-# The framework document: the structure this root is written in, in one place. The version and naming
-# convention, the top-level documents, the collections (with their variants and grouping), the Properties
-# table, the Vocabulary, and, once blueprints exist, the generated index. The visible
-# README.md at the root is the friendly door to it; keep it current with the `eidos` CLI.
+# The framework document: the structure this root is written in. See EIDOS.md for what each key means;
+# the `eidos` CLI edits this file. Every path is relative to this folder.
 
-# The Eidos version this framework targets; migrate reads and bumps it.
-eidos_version: 5.2.1
+eidos_version: 5.3.0
 
-# How files, folders, and links are named: kebab-case | TitleCase | Title Case. Absent = kebab-case. It
-# governs the whole root and changing it later means renaming files, so it is settled at install.
+# kebab-case | TitleCase | Title Case. Settled at install; changing it later means renaming files.
 naming: kebab-case
 
-# The top-level documents: one entry per one-of-a-kind doc (a Vision, a set of Design
-# Principles, the generated Blueprint Map), each a title, a path from this folder, and a one-line
-# description. This is the whole list: every file at the root is listed here, and a check surfaces a
-# file with no entry or an entry with no file. The framing docs live in the framing collection, not
-# here. The `eidos` CLI refreshes this list.
+# Every file at the root, one entry each.
 top_level:
   - title: README
     path: ../README.md
     description: "the root's front door: what this is, and pointers in."
 
-# A collection is a top-level folder of repeated blueprints that share a body template. Frames holds
-# the framing docs, what the root says first about the product, and Specs the product's units. Add
-# more with the `eidos` CLI. Each declares its variants (one default; each a template file named
-# <unit>.<variant>.md under templates/, the unit being the word for one of its blueprints) and its grouping.
-# This is the whole list too: every folder at the root outside .eidos/ is a collection declared here, and
-# a check surfaces a folder with no entry or an entry with no folder.
-collections:
-  # This framework's framing collection: the docs that set what every other blueprint is judged
-  # against. Each frame follows the variant of its kind, and one left unwritten is a gap to surface,
+# Every folder at the root, one entry each, with its type: collection | assets | other.
+folders:
+  # The framing docs: what every other blueprint is judged against. One left unwritten is a gap to surface,
   # not a failure.
   - name: Frames
-    description: "The framing docs that set what every other blueprint is judged against — the product's architecture, audience, criteria, and market."
+    type: collection
+    description: "What every other blueprint is judged against: the product's architecture, audience, criteria, and market."
     variants:
       - { name: architecture, template: templates/frame.architecture.md, description: "the product as a built system", default: true }
       - { name: audience, template: templates/frame.audience.md, description: "who it serves, and how each kind differs" }
       - { name: criteria, template: templates/frame.criteria.md, description: "budget, scope objectives, timeline" }
       - { name: market, template: templates/frame.market.md, description: "landscape, positioning, and how it earns" }
   - name: Specs
+    type: collection
     description: "The product's units, one per blueprint, grouped by domain."
     variants:
       - { name: full, template: templates/spec.full.md, description: "the complete spec template", default: true }
@@ -45,44 +33,30 @@ collections:
     grouping:
       label: Domains
       property: domain
-      # One entry per domain, a name and a short description, as they accrue.
-      groups: []
+      groups: []              # one entry per domain, a name and a description, as they accrue
+  - name: assets
+    type: assets
+    description: "Images, diagrams, and documents the blueprints link to."
 
-# The property contract: what a blueprint's frontmatter may carry, across every collection. One block
-# per owner: the core properties Eidos's own machinery uses, the custom ones you (or the seed) add, and
-# a tools.<tool> block for any tool that declares properties of its own (none ship with a seed). Every
-# custom property declares which collections it applies to, `all` or a list, so a property never lands
-# where it makes no sense (domain is Specs-only), and whether it is required: a required property is
-# generated into every new blueprint and a missing one is noted; an optional one (the default) is there
-# when it has a value. A type comes from the Obsidian set (Text, List, Number, Checkbox, Date, Date &
-# time), so frontmatter renders natively in a vault. A property whose value is one of a closed set
-# declares the set as `options`, in the order the values run; a value off the list is surfaced, never
-# refused. The `eidos` CLI edits the custom block.
+# The property contract, one block per owner. A property applies to `all` collections or a list; a required
+# one is generated into every new blueprint and surfaced when missing; `options` closes the value to a set.
 properties:
-  # Present on every blueprint. Managed by the standard (Eidos 5.2.1); migrate rewrites this block on a
-  # version change, so don't hand-edit it. variant absent = the collection's default; a missing summary
-  # is flagged by the index.
+  # The standard's. migrate rewrites this block; don't hand-edit it.
   core:
-    - { name: id, type: Text, required: true, meaning: "Stable, unique identity, in any form: a slug, a number, a GUID. Assigned once, never changed. References point at it." }
+    - { name: id, type: Text, required: true, meaning: "Stable, unique identity, in any form. Assigned once, never changed." }
     - { name: title, type: Text, required: true, meaning: "Human-readable name." }
-    - { name: summary, type: Text, meaning: "One plain line: what this blueprint is, in a sentence, distilled from Intent. Source for the collection's index listing; absent, the index flags it." }
-    - { name: variant, type: Text, meaning: "Which body variant this blueprint follows, from its collection's declared variants. Absent = the collection's default." }
-  # Yours to shape with the `eidos` CLI. The seed ships a few useful defaults; keep, scope, or drop any of
-  # them, Eidos doesn't depend on them. Only the grouping is required; a missing required property is
-  # a soft gap a check notes, never refuses, and an absent optional one is nothing.
+    - { name: summary, type: Text, meaning: "One line: what this blueprint is. Feeds the index; absent, the index flags it." }
+    - { name: variant, type: Text, meaning: "Which variant this blueprint follows. Absent = the collection's default." }
+  # Yours. The seed ships defaults; keep, scope, or drop any of them. Only the grouping is required.
   custom:
     - { name: status, type: Text, applies_to: all, options: [Draft, Intake, In Progress, Done, Archived, Deprecated], meaning: "Lifecycle stage." }
-    - { name: date_created, type: Date, applies_to: all, meaning: "YYYY-MM-DD. The day the blueprint was first written. Set once." }
-    - { name: date_modified, type: Date, applies_to: all, meaning: "YYYY-MM-DD. The day the blueprint was last changed." }
+    - { name: date_created, type: Date, applies_to: all, meaning: "YYYY-MM-DD. Set once." }
+    - { name: date_modified, type: Date, applies_to: all, meaning: "YYYY-MM-DD. The last change." }
     - { name: tags, type: List, applies_to: all, meaning: "Free tags." }
-    - { name: domain, type: Text, required: true, applies_to: [Specs], meaning: "The grouping, matching the blueprint's sub-folder under its collection in the naming convention. An unknown value warns, never fails." }
-    - { name: depends_on, type: List, applies_to: [Specs], meaning: "Blueprints this one needs, each a markdown link. An implementation dependency." }
-    - { name: type, type: Text, applies_to: [Specs], meaning: "Open, soft category label: drives views and filtering, never structure. e.g. feature, capability, integration." }
+    - { name: domain, type: Text, required: true, applies_to: [Specs], meaning: "The group: matches the blueprint's sub-folder. An unknown value warns." }
+    - { name: depends_on, type: List, applies_to: [Specs], meaning: "Blueprints this one needs, each a markdown link." }
+    - { name: type, type: Text, applies_to: [Specs], meaning: "Soft category label: drives views and filtering, never structure. e.g. feature, capability, integration." }
 
-# The term contract: the words this root uses on purpose, so a distinction made once is not lost later.
-# One entry per term: what it means, and what it is not (the near-misses, each with why it is a different
-# thing); `see` points at the blueprint that defines the term in full. Eidos declares none of these; the
-# list starts empty and grows an entry when a word begins to carry a distinction worth keeping.
-# The `eidos` CLI edits it and presses for all three of term, means, and not.
+# The root's own terms: term, means, not (the near-misses and why), and see (the blueprint that defines it).
+# Starts empty; Eidos declares none.
 vocabulary: []
-

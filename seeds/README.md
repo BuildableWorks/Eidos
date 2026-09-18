@@ -1,25 +1,21 @@
 # Seeds
 
-The starting **frameworks** Eidos ships. A seed is a complete structure layer — collections, body templates and their variants, roles, a Properties table, and an empty Vocabulary and Versions — that `eidos init` copies into a new root's `.eidos/`. Pick the one nearest what you're defining; reshape it from there with the `eidos` CLI.
+The starting frameworks Eidos ships. A seed is a complete `.eidos/` (templates, roles, `Framework.yaml`, `me.md`, `.gitignore`) plus a root `README.md`; `eidos init` installs the one you pick. Reshape it from there.
 
-| Seed | For | Collections |
+| Seed | For | Folders |
 | --- | --- | --- |
-| [`software/`](software) | a product, service, or system being built | `Frames` (architecture, audience, criteria, market) · `Specs` by domain |
-| [`book/`](book) | a book, long-form argument, or course | `Frames` (premise, reader, voice, market) · `Chapters` by part |
-| [`research/`](research) | a question, a study, or a programme of inquiry | `Frames` (question, prior work, method, ethics) · `Investigations` by strand |
-
-Every seed carries the same pieces, so the `eidos` CLI works identically across them:
+| [`software/`](software) | a product, service, or system being built | `Frames` (architecture, audience, criteria, market) · `Specs` by domain · `assets` |
+| [`book/`](book) | a book, long-form argument, or course | `Frames` (premise, reader, voice, market) · `Chapters` by part · `assets` |
+| [`research/`](research) | a question, a study, or a programme of inquiry | `Frames` (question, prior work, method, ethics) · `Investigations` by strand · `assets` |
 
 ```txt
 <seed>/
-  templates/       # body templates, one file per variant (<unit>.<variant>.md)
-  roles/        # response contracts, one per role
-  Framework.yaml # version, naming, top_level, collections, properties, vocabulary, and versions (and the index, once blueprints exist)
-  me.md         # blank me.md, who is in the seat (installs gitignored)
-  .gitignore    # keeps me.md out of version control
-  README.md     # the {{Product}} front-door template
+  roles/           # response contracts, one per role
+  templates/       # body templates, <unit>.<variant>.md
+  .gitignore       # keeps me.md and plugins/*/local.yaml out of version control
+  Framework.yaml   # the framework document
+  me.md            # blank; who is in the seat (personal)
+  README.md        # the {{Product}} front door, installed at the root
 ```
 
-**Three seeds, one standard.** `software` is the default and the one the standard teaches from, but nothing in Eidos knows a collection by name: `book` calls its units `Chapters` and groups them by `part`, `research` calls them `Investigations` and groups them by `strand`, and both work the same way the software seed does. A seed is a starting point, not a cage — and it's the same kind of artifact you'd publish for someone else to start from.
-
-**None of these fit?** Start from the nearest and reshape it, or scaffold your own collections with the `eidos` CLI.
+Nothing in Eidos knows a folder by name: `software` is the default, and the other two run the same machinery under different words. None fit? Start from the nearest and reshape it with the `eidos` CLI.
