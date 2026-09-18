@@ -6,7 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 **Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your Eidos folders need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
-## [Unreleased]
+## [Unreleased] — Standard: unchanged
+
+**The seeds are laid out as roots.** Each seed under `seeds/` had been the flattened contents of a `.eidos/` folder with a `README.md` beside it, so there was no root to point a tool at. Now each is exactly what `eidos init` produces from it: `.eidos/` (`Framework.yaml`, `templates/`, `roles/`, `me.md`, `.gitignore`) with the `README.md` and every declared folder at the root. A seed can be checked in place with `eidos check`, and the Eidos Registry can publish it as a package by path (`seeds/software`, `seeds/book`, `seeds/research`) at a tag. The standard's text does not move; `eidos_version` in the seeds stays 5.3.0.
+
+### Changed
+
+- **Every seed is a root.** `Framework.yaml`, `templates/`, `roles/`, `me.md`, and `.gitignore` moved into `seeds/<seed>/.eidos/`; `README.md` stays at the seed's root as its top-level doc. The declared folders (`Frames`, the grouped collection, `assets`) are present and empty but for a `.gitkeep`, so the root passes Rule 21; no blueprints are scaffolded inside them, an installer does that.
+- **The blank `me.md` is force-added.** Each seed's `.eidos/.gitignore` ignores the `me.md` beside it, so in this repository the shipped template is kept tracked with `git add -f`; `scripts/sync-skills.sh` does this for the top-level seeds and the committed skill copies, and `seeds/README.md` says so.
+- **`install` copies the seed's `.eidos/` and `README.md`**, and recreates the declared folders in the scaffold step. `seeds/README.md`, the root `README.md`, and `AGENTS.md` describe the new shape.
 
 ## [5.3.0] - 2026-09-18 — Standard: 5.3.0
 

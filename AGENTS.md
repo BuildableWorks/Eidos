@@ -9,7 +9,7 @@ This repository is the home of the **Eidos** standard. `EIDOS.md` is the authori
 ## Two versions, bumped separately
 
 - **The plugin version** lives in `.claude-plugin/plugin.json` **and** `.claude-plugin/marketplace.json` (both, or updates no-op: Claude Code compares the marketplace field against the installed version). It moves on every shipped release, including skill-only and seed-only ones. Each release gets a `CHANGELOG.md` entry naming the plugin version and, on its first line, the standard it ships.
-- **The standard version** lives in `EIDOS.md` (`**Version:**`, the Versioning section, the `eidos_version` in the sample YAML). It moves only when the text of `EIDOS.md` moves. When it does, also update the heading in `README.md` and `eidos_version` in every `seeds/*/Framework.yaml`, copy `EIDOS.md` to `versions/vX.Y.Z.md`, add the hop to `versions/MIGRATIONS.md` (newest first) and the line to `versions/README.md`, and fingerprint it in `skills/migrate/SKILL.md`.
+- **The standard version** lives in `EIDOS.md` (`**Version:**`, the Versioning section, the `eidos_version` in the sample YAML). It moves only when the text of `EIDOS.md` moves. When it does, also update the heading in `README.md` and `eidos_version` in every `seeds/*/.eidos/Framework.yaml`, copy `EIDOS.md` to `versions/vX.Y.Z.md`, add the hop to `versions/MIGRATIONS.md` (newest first) and the line to `versions/README.md`, and fingerprint it in `skills/migrate/SKILL.md`.
 
 A skill fix bumps the plugin and nothing else.
 

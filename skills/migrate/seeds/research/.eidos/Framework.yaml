@@ -21,7 +21,7 @@ folders:
     description: "What every investigation is judged against: what is asked, what is known, what would count as knowing, and who is affected."
     variants:
       - { name: question, template: templates/frame.question.md, description: "what the programme asks, and why it matters", default: true }
-      - { name: "prior work", template: templates/frame.prior-work.md, description: "what is already known, and where this sits" }
+      - { name: prior-work, template: templates/frame.prior-work.md, description: "what is already known, and where this sits" }
       - { name: method, template: templates/frame.method.md, description: "how anyone would know, and the standard of evidence" }
       - { name: ethics, template: templates/frame.ethics.md, description: "who is affected, what they consented to, what could go wrong" }
   - name: Investigations

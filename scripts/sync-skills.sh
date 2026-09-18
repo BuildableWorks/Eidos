@@ -51,11 +51,11 @@ sync_one "versions"      "skills/migrate/versions"
 sync_one "CHANGELOG.md"  "skills/migrate/CHANGELOG.md"
 sync_one "EIDOS.md"      "skills/migrate/EIDOS.md"
 
-# Each seed's .gitignore ignores the me.md beside it; the shipped blank template must still travel
+# Each seed's .eidos/.gitignore ignores the me.md beside it; the shipped blank template must still travel
 # with the top-level seeds and the committed skill copies alike, so keep every one of them tracked
 # past the ignore (a fresh clone is otherwise missing them).
 if [ "$check" -eq 0 ]; then
-  for seed in seeds/*/me.md skills/install/seeds/*/me.md skills/migrate/seeds/*/me.md; do
+  for seed in seeds/*/.eidos/me.md skills/install/seeds/*/.eidos/me.md skills/migrate/seeds/*/.eidos/me.md; do
     [ -f "$seed" ] && git add -f "$seed" 2>/dev/null || true
   done
 fi

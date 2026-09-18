@@ -86,7 +86,7 @@ Three skills (`eidos`, `install`, `migrate`) carry committed copies of `EIDOS.md
 
 ## Seeds
 
-[`seeds/`](seeds) holds the starting frameworks: [`software`](seeds/software) (the default), [`book`](seeds/book), and [`research`](seeds/research). Each is a complete `.eidos/` (templates, roles, `Framework.yaml`, `me.md`, `.gitignore`) plus a root `README.md`. A seed is a starting point, not a cage: add a property, adjust a template, retune a role, none of it forks the standard.
+[`seeds/`](seeds) holds the starting frameworks: [`software`](seeds/software) (the default), [`book`](seeds/book), and [`research`](seeds/research). Each is a root as `eidos init` would produce it: a complete `.eidos/` (templates, roles, `Framework.yaml`, `me.md`, `.gitignore`), its declared folders, and a `README.md`, publishable to the Registry as a package by path. A seed is a starting point, not a cage: add a property, adjust a template, retune a role, none of it forks the standard.
 
 ## Versioning
 
