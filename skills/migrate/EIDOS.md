@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 5.1.0
+**Version:** 5.2.0
 
 A system of organization for defining a product: an app, a book, a study, a workflow, anything work produces that has a shape. The structure is data, in a hidden folder, that a tool can check a root against; the product is written in markdown against that structure. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished.
 
@@ -20,11 +20,11 @@ Every term the standard uses, in the order they build on each other.
 | **unit**          | What one blueprint defines: one piece of the product, of the kind its collection holds: a spec, a chapter, an investigation. A collection's templates are named for its unit, in the singular.                                                          |
 | **template**      | The body a collection's blueprints follow: sections in order, under set names, each with a note on what goes there. Body only; frontmatter is illegal in a template. One file each, in `.eidos/templates/`.                                             |
 | **variant**       | A collection can have more than one template, and each is a variant (`<unit>.<variant>.md`). One is the default; a blueprint on another says so in its `variant` property.                                                                              |
-| **property**      | One field in a blueprint's frontmatter: a name, a type, which collections it applies to, whether it is required, and what it means. The framework's whole table of them, in `Framework.yaml`, is its Properties: the standard's four, plus what the owner and any tool add. |
+| **property**      | One field in a blueprint's frontmatter: a name, a type, which collections it applies to, whether it is required, what it means, and, when its value is one of a closed set, the options. The framework's whole table of them, in `Framework.yaml`, is its Properties: the standard's four, plus what the owner and any tool add. |
 | **vocabulary**    | The framework's table of words used on purpose: what each means, and what it is not.                                                                                                                                                                    |
 | **top-level doc** | A one-of-a-kind file at the root: a Vision, a map a tool generates. No template, no validation.                                                                                                                                                         |
 | **role**          | How an agent talks to one kind of person. `.eidos/me.md` says which role is in the seat.                                                                                                                                                                |
-| **plugin**        | A tool's own folder inside the framework, `.eidos/plugins/<name>/`, holding whatever that tool keeps there. The standard reads none of it.                                                                                                              |
+| **plugin**        | A tool's own folder inside the framework, `.eidos/plugins/<name>/`, holding whatever that tool keeps there. The standard reads none of it. One file in it, `local.yaml`, is one person's on one machine and is never committed.                         |
 | **region**        | A span inside a markdown file that a tool owns, fenced by two HTML comments carrying the tool's name. What is between them is the tool's; everything outside is the person's. The standard reads none of it.                                          |
 
 A blueprint captures a vision of the product as a source of truth. A task describes work and dies when the work ships; a blueprint describes the product and stays accurate across its whole life — drafted, built, deprecated.
@@ -58,13 +58,14 @@ Hidden the way `.git` and `.obsidian` are: present, manageable, out of the way o
   Framework.yaml           # the framework document: version, naming, top-level docs, collections, properties, vocabulary, and the index
   plugins/                 # whatever tools keep in the framework, one folder each
     <name>/                #   a tool's own; the standard reads none of it
+      local.yaml           #     the tool's personal settings, one machine's (gitignored)
   me.md                    # who is in the seat (personal, gitignored)
-  .gitignore               # ignores me.md, and any personal file a plugin names
+  .gitignore               # ignores me.md and plugins/*/local.yaml
 ```
 
 ### Plugins
 
-The top level of `.eidos/` is the standard's: the entries above, and whatever a later version adds. Everything else lives under `.eidos/plugins/`, one folder per tool, named for the tool: a CLI's cache, an editor extension's settings, a generator's templates, a script's state. What goes inside is the tool's own, and the standard neither reads nor validates it; a check never faults a folder there, a migration carries it across untouched, and a fresh root starts with none. A plugin folder is committed with the rest of the framework; a tool that keeps personal state names those files, and they go in `.eidos/.gitignore` beside `me.md`.
+The top level of `.eidos/` is the standard's: the entries above, and whatever a later version adds. Everything else lives under `.eidos/plugins/`, one folder per tool, named for the tool: a CLI's cache, an editor extension's settings, a generator's templates, a script's state. What goes inside is the tool's own, and the standard neither reads nor validates it; a check never faults a folder there, a migration carries it across untouched, and a fresh root starts with none. A plugin folder is committed with the rest of the framework, with one exception. A tool's folder may hold `local.yaml`: the settings that belong to one person on one machine (a viewer command, an editor, a key path). It is never committed. Everything else in the folder is the root's and travels with it. The root's `.eidos/.gitignore` carries the pattern `plugins/*/local.yaml` beside `me.md`, so one line covers every tool and no tool writes a `.gitignore` of its own. The standard reads neither file, as it reads nothing in a tool's folder; what is a root setting and what is a personal one is the tool's to declare, and the standard fixes only the name of the personal file and that it is not committed.
 
 A tool touches only the folder it owns. The framework document, the templates, and the roles are the owner's, edited by hand or through a tool the owner runs; a plugin that needs the framework to know something declares it in its own folder, not in theirs. The same holds inside the files: a tool that needs to keep something in a blueprint or a top-level doc writes it in a [region](#regions) under its own name, and touches no other tool's.
 
@@ -73,7 +74,7 @@ A tool touches only the folder it owns. The framework document, the templates, a
 The framework document: the one file describing the structure rather than any single blueprint, exactly one per root. It is data, `Framework.yaml` (or `.yml`), in snake_case, with comments wherever the owner wants them: the version and naming convention, the top-level docs, the collections, the Properties table, the Vocabulary, and the generated index, so a root is one document with everything in it. Scripts and agents parse it without a markdown convention, a person reads it the way they read any config file, and tools edit it in place.
 
 ```yaml
-eidos_version: 5.1.0
+eidos_version: 5.2.0
 naming: kebab-case            # absent = kebab-case
 top_level:                    # the top-level docs, README first
   - title: README
@@ -95,6 +96,7 @@ properties:
   custom:
     - { name: <name>, type: Text, applies_to: all, required: true, meaning: Every blueprint carries this. }
     - { name: <name>, type: Text, applies_to: all, meaning: Whatever this framework needs; absent = not required. }
+    - { name: <name>, type: Text, applies_to: all, options: [<Value>, <Value>], meaning: One of a closed set; a value off the list is surfaced. }
     - { name: <name>, type: Text, applies_to: [<Collection>], meaning: Scoped to one collection., <tool>: { <field>: <value> } }
   tools:                      # one block per tool that declares properties of its own; absent = none
     <tool>:
@@ -111,7 +113,7 @@ index:                        # generated, regenerated wholesale; never hand-edi
 - **`naming`**: `kebab-case` (default), `TitleCase`, or `Title Case`. See [Naming](#naming).
 - **`top_level`**: the top-level docs, `README` first, each a `title`, a `path`, and a `description`.
 - **`collections`**: one entry each: its `name`, its `description`, its `variants` (`default` marks the default; absent on all of them, the first is), and its `grouping` (a `label`, the custom `property` carrying the group if one does, and its `groups`).
-- **`properties`**: one block per owner. `core` is the standard's, rewritten by a migration (empty means the standard's core for this `eidos_version`); `custom` is the framework's, edited by the owner; `tools.<tool>` is one block per tool that declares properties of its own, that tool's and written by nobody else. `applies_to` is `all` or a list of collections; `required` is `true` or `false`, absent meaning `false`. The five keys the standard names are the standard's; any other key on an entry is a tool's, named for the tool.
+- **`properties`**: one block per owner. `core` is the standard's, rewritten by a migration (empty means the standard's core for this `eidos_version`); `custom` is the framework's, edited by the owner; `tools.<tool>` is one block per tool that declares properties of its own, that tool's and written by nobody else. `applies_to` is `all` or a list of collections; `required` is `true` or `false`, absent meaning `false`; `options`, when present, is the closed set of values. The six keys the standard names are the standard's; any other key on an entry is a tool's, named for the tool.
 - **`vocabulary`**: the root's own terms, one entry each: `term`, `means`, and `not` as a list, each item free to carry its clause, and `see` for the path to the blueprint that defines the term in full. Starts empty; absent means none declared.
 - **`index`**: every collection's blueprints, generated (see [The index](#the-index)). Rebuilt wholesale by whatever indexes the root, which rewrites this key and nothing else; never hand-edited.
 - Every path is relative to `.eidos/`; an index entry's `path` is relative to its collection folder.
@@ -124,15 +126,17 @@ The default variant is what gets scaffolded; a blueprint on another records it i
 
 ### Properties
 
-Each property is an entry with five fields: `name`, `type`, `applies_to`, `required`, `meaning`. A type comes from the set Obsidian uses — **Text, List, Number, Checkbox, Date, Date & time** — so frontmatter renders natively in a vault. Anything wanting more structure than one of those belongs in the body.
+Each property is an entry with five fields: `name`, `type`, `applies_to`, `required`, `meaning`, and a sixth, `options`, when its value is one of a closed set. A type comes from the set Obsidian uses — **Text, List, Number, Checkbox, Date, Date & time** — so frontmatter renders natively in a vault. Anything wanting more structure than one of those belongs in the body.
 
 **Applies To** scopes a property to collections: `all`, or a list. Frontmatter is generated per blueprint from the required properties that apply to its collection, so a scoped property never lands where it makes no sense.
 
 **Required** says whether a blueprint the property applies to must carry it: `true` or `false`, and an absent key means `false`. A required property is generated into every new blueprint it applies to, and a check surfaces one that is missing. An optional property is written when it has a value and otherwise left out; a blueprint without it is complete, a check says nothing about its absence, and a value present is still checked against its type. Declaring a property is not the same as putting it on every file: the table can hold a dozen fields a framework may use while only the few it insists on land on every blueprint.
 
+**Options** closes a property's value to a declared set: a non-empty list of values, on a Text property or a List one. A Text value is one of them; every element of a List value is. The list is ordered: the values run in the order the owner declared them, so a lifecycle reads first stage to last, and a tool that lays them out (a dropdown, a board's columns, a sort) keeps that order rather than inventing one. The comparison is exact, case included: the owner wrote the list once, and a check has no reason to guess. A value off the list is surfaced with the list beside it, never refused and never swapped in silently. An entry without the key is bounded by its type alone, which is what a Text property has always been, so nothing existing changes meaning; an entry whose list is empty is a fault in the framework document, since an open set is what the absent key already says. `options` carries the values and `meaning` says what they are for; a `meaning` that lists values in prose is describing a set the entry should declare. Options never carry a default: a required property with them is generated blank like any other and the owner picks, and an optional one is absent until it has a value. Two properties take their set from the structure instead and never carry `options`: `variant`, whose values are the collection's declared variants and whose absence means the collection's default, and a collection's grouping property, whose values are its declared groups. `options` is the one refinement of a type the standard makes; a pattern, a range, or a check that a link resolves is a tool's, under its own key.
+
 **Every property has an owner, and the owner is the block it sits in.** Eidos is the first tool: `properties.core` is its block, and a migration rewrites it. `properties.custom` is the framework owner's, and the owner edits it. A tool that needs properties of its own (the `eidos` CLI, an editor extension, a generator) declares them in a block of its own, `properties.tools.<tool>`, and that tool alone writes it: not the owner, not a migration, not another tool. A tool's properties are Properties properties like any other, generated into frontmatter where they apply, validated by a check, and bound by every rule here including the one against work-tracking; an unknown tool's block is never faulted. When a tool leaves, its block leaves with it, the values it held surfaced first the way any retired property's are.
 
-**A row may also carry a tool's fields.** The five the standard names come first and mean what they mean here. Past them, a tool that needs something per property it does *not* own (how an editor renders `status`, what a checker allows, an option list) adds its own under its own name: a key named for the tool on the property's entry. The standard reads its five and ignores the rest; a check never faults them, and an edit or a migration carries them across unchanged and never fills them in.
+**A row may also carry a tool's fields.** The six the standard names come first and mean what they mean here. Past them, a tool that needs something per property it does *not* own (how an editor renders `status`, a color per option, what a stricter checker allows) adds its own under its own name: a key named for the tool on the property's entry. The standard reads its six and ignores the rest; a check never faults them, and an edit or a migration carries them across unchanged and never fills them in.
 
 **The core** — the whole of what the standard declares, two of them required:
 
@@ -143,7 +147,7 @@ Each property is an entry with five fields: `name`, `type`, `applies_to`, `requi
 | `summary` | Text | no       | One plain line: what this blueprint is. The source for the collection's [index](#the-index) listing; absent, the index flags it. |
 | `variant` | Text | no       | Which variant this blueprint follows. Absent = the collection's default.                                                         |
 
-**Eidos defines no custom properties.** A lifecycle `status`, dates, a grouping, a dependency list, a relationship list — all are a framework's own choice, and how blueprints relate is better said in the body, as links in prose, than as a frontmatter field. Adding one means deciding all five of Name, Type, Applies To, Required, and Meaning, then backfilling the blueprints it applies to when it is required.
+**Eidos defines no custom properties.** A lifecycle `status`, dates, a grouping, a dependency list, a relationship list — all are a framework's own choice, and how blueprints relate is better said in the body, as links in prose, than as a frontmatter field. Adding one means deciding all five of Name, Type, Applies To, Required, and Meaning, and Options where the value is one of a set, then backfilling the blueprints it applies to when it is required.
 
 ### Vocabulary
 
@@ -242,8 +246,8 @@ The load-bearing conventions.
 5. **Write it like a human would read it.** The sections are a scaffold for a living blueprint, not a form to pour text into. If a blueprint reads like filled-in boilerplate, reshape it until it reads like someone wrote it.
 6. **Reference other blueprints with links, not bare names** — in prose and in properties alike. Each blueprint's `id` is still its permanent identity, sitting behind the link.
 7. **One template family per collection, declared as variants.** What flexes is *which* sections appear and *which* variant a blueprint uses; never their order or names within a variant. The template is never forked per category.
-8. **Properties carry a type, a meaning, and an owner.** Every property declares its name, its type, which collections it applies to, whether it is required, and what it means; the block it sits in says who owns it (Eidos, the framework, or a tool), and only the owner writes there. Frontmatter is generated from the required properties in the table, so a new blueprint is born conforming and carries nothing it doesn't need.
-9. **Soft labels are views, not structure.** A category label a framework adds drives views and filtering, never structure. An off-list value is valid. `variant` carries the structural choice.
+8. **Properties carry a type, a meaning, and an owner.** Every property declares its name, its type, which collections it applies to, whether it is required, and what it means, and one whose value is one of a closed set declares its options; the block it sits in says who owns it (Eidos, the framework, or a tool), and only the owner writes there. Frontmatter is generated from the required properties in the table, so a new blueprint is born conforming and carries nothing it doesn't need.
+9. **Soft labels are views, not structure.** A category label a framework adds drives views and filtering, never structure. Without `options` any value is valid; with them, a value off the list is surfaced, never refused. `variant` carries the structural choice.
 10. **A collection's grouping is the collection's own.** It may group its blueprints one level deep and may declare a property naming that grouping; the value then matches the folder, and an unknown value warns rather than blocks. The standard never names a grouping for it.
 11. **A template names its own stable part.** Every template has a part that holds still and a part that moves, and says which is which. If the stable part changes substantially, ask whether this is a different blueprint.
 12. **Non-goals carry the most weight.** Where a template declares a section for what a blueprint deliberately will *not* do, that section is its strongest — it is where scope management actually happens. Still not a hard gate.
@@ -260,7 +264,7 @@ The load-bearing conventions.
 
 Semantic Versioning: major for breaking changes, minor for backward-compatible additions, patch for clarifications.
 
-This file holds the version of **the standard** — right now, **5.1.0** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its framework document; a migration reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
+This file holds the version of **the standard** — right now, **5.2.0** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its framework document; a migration reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
 
 **Tools that ship this standard version separately.** A CLI, a plugin, a starting framework: each changes far more often than the standard does, so a release of one leaves this file — and every framework's `eidos_version` — untouched. When you need to know what a framework conforms to, read this version; a tool names the standard it carries.
 
@@ -283,10 +287,10 @@ This file holds the version of **the standard** — right now, **5.1.0** — and
 **Authoring a blueprint:**
 
 1. From the framework document, take the Properties table, the Vocabulary, the naming convention, and the target collection's variants. Pick a variant (the default unless the owner chooses another) and read its template for the body. Name the file for its title in the convention; put a permanent `id` inside, in whatever form the root uses.
-2. Generate frontmatter from the required properties that apply to that collection, and add an optional one only when the owner gives it a value. Fill values from what the owner tells you; leave a required property blank rather than guessing it.
+2. Generate frontmatter from the required properties that apply to that collection, and add an optional one only when the owner gives it a value. Fill values from what the owner tells you; where a property declares `options`, the value is one of them; leave a required property blank rather than guessing it.
 3. Lead with the template's opening sections and press hardest on its non-goals section. Read those names off the template rather than assuming them, and follow whatever labeling it asks for. Omit a section that doesn't apply; keep the order and names of the ones that do.
 4. Where the owner is vague, ask. Don't fill the gap with plausible prose.
 
-**Validating a blueprint:** check frontmatter against the framework's Properties table, every block of it (every required property present, `id` unique, dates as `YYYY-MM-DD`, custom and tool properties scoped to the collection, an optional property checked only when present). Report missing body sections against *the blueprint's variant template*, flagging an absent non-goals section first, and note anything skipping the labeling that template asks for. Note each near-miss the Vocabulary names, with the declared term beside it. Confirm no work-tracking fields crept in. Leave every region's contents alone, and report an opener with no closer. Surface, don't block — the output is a review a human acts on.
+**Validating a blueprint:** check frontmatter against the framework's Properties table, every block of it (every required property present, `id` unique, dates as `YYYY-MM-DD`, custom and tool properties scoped to the collection, an optional property checked only when present, a value on a property with `options` one of them, `variant` one of the collection's variants, a grouping value one of its groups). Report missing body sections against *the blueprint's variant template*, flagging an absent non-goals section first, and note anything skipping the labeling that template asks for. Note each near-miss the Vocabulary names, with the declared term beside it. Confirm no work-tracking fields crept in. Leave every region's contents alone, and report an opener with no closer. Surface, don't block — the output is a review a human acts on.
 
 **Facilitate, don't author.** Format and structure what the owner gives you, supplement, ask, and press on scope. Never invent a blueprint's purpose, decide direction, or hand back a finished blueprint to rubber-stamp. When unsure, ask.

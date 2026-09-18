@@ -30,7 +30,7 @@ seeds/<seed>/
   roles/              # response contracts, one per role (installs to .eidos/roles/)
   Framework.yaml      # version, naming, top_level, collections, properties, vocabulary (and the index, once blueprints exist)
   me.md               # blank me.md (installs to .eidos/me.md — personal, gitignored)
-  .gitignore          # installs to .eidos/.gitignore (ignores me.md beside it)
+  .gitignore          # installs to .eidos/.gitignore (ignores me.md and plugins/*/local.yaml)
   README.md           # the {{Product}} template — installs to <root>/README.md, the visible "start here"
 ```
 
@@ -73,7 +73,7 @@ On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand
 
    **The seed and the root may be on different machines.** The seed ships inside this skill; the root lives in the user's repo, which on some hosts is reachable only across a device bridge. One filesystem, and a copy (or the script) is the whole job. Across a bridge, **send the seed files with the file-delivery tool and write them to their final paths in a single commit call.** Never re-type a file's contents, base64, or a tarball through a shell heredoc: transcription is lossy, a failed checksum costs the entire round trip, and a staged archive is litter inside someone's repo that you then need permission to delete.
 
-   This is the root's own framework — what every other skill reads from here on. Leave it as the baseline; the owner can extend it later (`configure` for a custom property, a collection, a variant, or a term), and a tool that keeps something in the framework makes its own `.eidos/plugins/<name>/` when first used. No seed ships one.
+   This is the root's own framework — what every other skill reads from here on. Leave it as the baseline; the owner can extend it later (`configure` for a custom property, a collection, a variant, or a term), and a tool that keeps something in the framework makes its own `.eidos/plugins/<name>/` when first used. No seed ships one. The one personal file a tool may keep there, `local.yaml`, is already covered by the seeded `.gitignore`, so no tool adds a `.gitignore` of its own.
 
 6. **Scaffold the seed's collections.** Read them from the `Framework.yaml` you just installed — never assume `Specs` and `Frames` — and create a folder for each, named in the chosen convention:
 
@@ -84,10 +84,10 @@ On a **sandboxed host** (Claude Desktop) where you can't run it, install by hand
 
    Don't write blueprint prose here — that's `eidos`. Don't invent top-level docs; if the owner wants one, point them at `format`. Install lays the frame.
 
-7. **Set who you are.** Run [`whoami`](../whoami) to pick a role and calibrate it into `.eidos/me.md`. Blank is fine — a blank one means full facilitation, and they can run it later. Personal and gitignored, the one piece not committed.
+7. **Set who you are.** Run [`whoami`](../whoami) to pick a role and calibrate it into `.eidos/me.md`. Blank is fine — a blank one means full facilitation, and they can run it later. Personal and gitignored, like a tool's `plugins/<name>/local.yaml`; everything else in `.eidos/` is committed.
 
 8. **Hand off.** Report which seed was installed, what landed in `.eidos/`, the `README.md` front door, and the collections scaffolded — then point to `eidos` to start authoring. Don't fill anything in yourself.
 
 ## After init
 
-The folder is plain markdown — commit it alongside the code, `.eidos/` and all, except the personal `me.md` the seeded `.gitignore` keeps out. From here: `eidos` authors and validates, `configure` adds a collection, variant, or property, `index` rebuilds the index, `whoami` sets who you are, `migrate` moves versions.
+The folder is plain markdown — commit it alongside the code, `.eidos/` and all, except the personal `me.md` and any tool's `plugins/<name>/local.yaml`, which the seeded `.gitignore` keeps out. From here: `eidos` authors and validates, `configure` adds a collection, variant, or property, `index` rebuilds the index, `whoami` sets who you are, `migrate` moves versions.

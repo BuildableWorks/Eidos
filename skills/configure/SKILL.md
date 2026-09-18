@@ -21,12 +21,13 @@ A collection, variant, or property nobody thought through reads as meaningful wh
 
 - **For a collection:** its **name** (the folder, in the framework's naming convention), a one-line **description**, how it **groups** its blueprints (one level of sub-folders, or flat), and at least one **variant** with a **default**.
 - **For a variant:** its **name** (lowercase, e.g. `full`, `micro`, `api`), a one-line **description**, and its **template** — the sections the body carries.
-- **For a property:** all five —
+- **For a property:** all five, and the sixth when it applies —
   - **name** — the frontmatter key. Lowercase, words joined by underscores, matching the core style (`summary`, `date_created`). Short and stable.
-  - **type** — from the Obsidian set: **Text, List, Number, Checkbox, Date, Date & time**. Anything richer — a structured object, an enum with behavior — belongs in the body, not a property. Say so.
+  - **type** — from the Obsidian set: **Text, List, Number, Checkbox, Date, Date & time**. Anything richer — a structured object, a value with behavior — belongs in the body, not a property. Say so.
   - **applies to** — `all`, or a list of collection names, so a field never lands where it makes no sense.
   - **required** — `true` or `false` (absent means `false`). Required: generated into every new blueprint it applies to, and a missing one is a soft gap the validator notes, never refuses. Optional: written when it has a value, absent otherwise, and never a gap. Default to optional; require only what the owner says every blueprint must answer.
   - **meaning** — one line: what it holds and why. This is what stops it rotting into a mystery field.
+  - **options** — only when the value is one of a closed set (a lifecycle, a category the owner controls): the list, non-empty, on a Text or List property, in the order the values run (a lifecycle first stage to last; tools render and sort in that order). Exact match, case included. Off-list is surfaced, never refused. Without it any value is valid, so a label the owner wants open takes none; a `meaning` that lists values in prose is a set the entry should declare. No default rides with it: a required property with options is generated blank and the author picks. `variant` and a grouping property never carry it; their sets are the collection's.
 - **For a term:** all three —
   - **term** — the word, as prose uses it. One word or a short phrase; if the owner offers two spellings, that is the first distinction to settle.
   - **means** — one line: what the word denotes in this root.
@@ -68,11 +69,12 @@ A collection, variant, or property nobody thought through reads as meaningful wh
 
 ## Adding a property
 
-1. **Decide the five** (name, type, applies to, required, meaning — above) with the owner.
+1. **Decide the five** (name, type, applies to, required, meaning — above) with the owner, and the options when the value is one of a set.
 2. **Write the entry** under `properties.custom` in `Framework.yaml`:
 
    ```yaml
    - { name: team, type: Text, applies_to: all, required: true, meaning: "Owning team, for filtering." }
+   - { name: tier, type: Text, applies_to: all, options: [Core, Extended, Experimental], meaning: "How central the unit is to the product." }
    ```
 3. **Backfill the blueprints** in the collections it applies to, when it is required, with an empty or owner-supplied stub so each is conformant and fillable. An optional property backfills nothing. Blueprints elsewhere are left alone; new blueprints are generated from the Properties table, so only pre-existing ones need this.
 4. **Report** the entry added and the blueprints touched, flagging which still need a value.
@@ -92,6 +94,8 @@ A collection, variant, or property nobody thought through reads as meaningful wh
 4. Report the blueprints touched and anything carried over.
 
 A seed's own defaults — a lifecycle, dates, tags, a grouping — are reshaped or retired the same way. Read the framework's `properties.custom` rather than assuming a set.
+
+Narrowing a property's `options` is retiring values: before a value leaves the list, show the owner every blueprint carrying it and settle where each goes. Widening a list touches no blueprint. Adding `options` to a property that had none is a change to what conforms, so surface every existing value off the new list first.
 
 ## Declaring a term
 
