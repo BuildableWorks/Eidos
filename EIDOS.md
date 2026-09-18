@@ -13,9 +13,11 @@ Every term the standard uses, in the order they build on each other.
 | Term              | What it is                                                                                                                                                                                                                                              |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **product**       | What you are defining: an app, a book, a study, a workflow, anything work produces that has a shape.                                                                                                                                                    |
-| **framework**     | How the files are organized: the collections, templates, variants, properties, vocabulary, and roles a product is written in. Lives in `.eidos/`, and the same framework can govern any number of products.                                             |
+| **framework**     | How the files are organized: the folders, templates, variants, properties, vocabulary, and roles a product is written in. Lives in `.eidos/`, and the same framework can govern any number of products.                                             |
 | **root**          | The folder it all lives in: `.eidos/` and the files written with it. Found by the `.eidos/` inside it, never by its name.                                                                                                                               |
-| **collection**    | A top-level folder in the root holding files of one kind: specs, chapters, investigations. A framework declares each one, and may group its files in one level of sub-folders.                                                                          |
+| **folder**        | A top-level folder in the root, declared by the framework with one of three types: a collection, assets, or other. Nothing else sits at the root beside `.eidos/`.                                                                                    |
+| **collection**    | A folder of type `collection`, holding blueprints of one kind: specs, chapters, investigations. Its sub-folders, if it has any, are its groups, each declared. A file in it that is not markdown is not a blueprint.                                       |
+| **assets**        | A folder of type `assets`, holding the files that are not markdown: images, diagrams, documents the blueprints link to. The standard reads none of it.                                                                                                 |
 | **blueprint**     | One markdown file in a collection, defining one thing completely: properties at the top, a body below.                                                                                                                                                  |
 | **unit**          | What one blueprint defines: one piece of the product, of the kind its collection holds: a spec, a chapter, an investigation. A collection's templates are named for its unit, in the singular.                                                          |
 | **template**      | The body a collection's blueprints follow: sections in order, under set names, each with a note on what goes there. Body only; frontmatter is illegal in a template. One file each, in `.eidos/templates/`.                                             |
@@ -35,15 +37,16 @@ The root is found by the hidden `.eidos/` inside it. It may be named anything; n
 
 ```txt
 Blueprints/              # the root — `Blueprints` is only the default name
-  README.md              # the visible "start here": optional, and every seed ships one
   .eidos/                # the framework (below)
-  <Collection>/          # a collection of blueprints; declare as many as the work needs
-    <Group>/             #   one level of sub-folders, at most
+  <Assets>/              # a folder of type assets: the files that are not markdown; optional, as many as the work needs
+  <Collection>/          # a folder of type collection; declare as many as the work needs
+    <Group>/             #   a declared group, when the collection groups; nothing deeper
       <Title>.md         #     one blueprint per file
+  <Other>/               # a folder of type other: the owner's, described and otherwise left alone; optional
   <Doc>.md               # a top-level doc — optional, yours, listed under top_level
 ```
 
-**Everything at the root is declared.** The framework document is the inventory of the root: a folder at the root is `.eidos/` or a collection declared under `collections`, and a file at the root is a top-level doc listed under `top_level`, whatever its extension. A reader of the framework document knows everything the root holds without opening it, and nothing at the root leaves a person asking what it is. Anything else at the root is a fault: a check surfaces it, and the owner declares it or moves it. Nothing declares it silently, since a collection's description and a doc's description are the owner's to write. A declared collection or a listed doc that isn't there is faulted the same way. Hidden entries (`.git`, `.obsidian/`, a `.gitignore`) are the host's, not the root's, and are neither declared nor faulted.
+**Everything at the root is declared.** The framework document is the inventory of the root: a folder at the root is `.eidos/` or a folder declared under `folders`, with its type, and a file at the root is a top-level doc listed under `top_level`, whatever its extension. A reader of the framework document knows everything the root holds without opening it, and nothing at the root leaves a person asking what it is. Anything else at the root is a fault: a check surfaces it, and the owner declares it or moves it. Nothing declares it silently, since a folder's type and description and a doc's description are the owner's to write. A declared folder or a listed doc that isn't there is faulted the same way. Hidden entries (`.git`, `.obsidian/`, a `.gitignore`) are the host's, not the root's, and are neither declared nor faulted.
 
 ## The framework (`.eidos/`)
 
@@ -51,18 +54,18 @@ Hidden the way `.git` and `.obsidian` are: present, manageable, out of the way o
 
 ```txt
 .eidos/
-  templates/               # one file per variant
-    <unit>.<variant-1>.md   #   a collection's default variant
-    <unit>.<variant-2>.md   #   a second variant of the same unit
-  roles/                   # response contracts, committed and team-tunable
-    framework-owner.md     #   the role that holds intent, scope, and decisions
-    <role>.md              #   the rest are the framework's own
-  Framework.yaml           # the framework document: version, naming, top-level docs, collections, properties, vocabulary, and the index
   plugins/                 # whatever tools keep in the framework, one folder each
     <name>/                #   a tool's own; the standard reads none of it
       local.yaml           #     the tool's personal settings, one machine's (gitignored)
-  me.md                    # who is in the seat (personal, gitignored)
+  roles/                   # response contracts, committed and team-tunable
+    framework-owner.md     #   the role that holds intent, scope, and decisions
+    <role>.md              #   the rest are the framework's own
+  templates/               # one file per variant
+    <unit>.<variant-1>.md   #   a collection's default variant
+    <unit>.<variant-2>.md   #   a second variant of the same unit
   .gitignore               # ignores me.md and plugins/*/local.yaml
+  Framework.yaml           # the framework document: version, naming, top-level docs, folders, properties, vocabulary, and the index
+  me.md                    # who is in the seat (personal, gitignored)
 ```
 
 ### Plugins
@@ -73,7 +76,7 @@ A tool touches only the folder it owns. The framework document, the templates, a
 
 ### `Framework.yaml`
 
-The framework document: the one file describing the structure rather than any single blueprint, exactly one per root. It is data, `Framework.yaml` (or `.yml`), in snake_case, with comments wherever the owner wants them: the version and naming convention, the top-level docs, the collections, the Properties table, the Vocabulary, and the generated index, so a root is one document with everything in it. Scripts and agents parse it without a markdown convention, a person reads it the way they read any config file, and tools edit it in place.
+The framework document: the one file describing the structure rather than any single blueprint, exactly one per root. It is data, `Framework.yaml` (or `.yml`), in snake_case, with comments wherever the owner wants them: the version and naming convention, the top-level docs, the folders, the Properties table, the Vocabulary, and the generated index, so a root is one document with everything in it. Scripts and agents parse it without a markdown convention, a person reads it the way they read any config file, and tools edit it in place.
 
 ```yaml
 eidos_version: 5.2.1
@@ -82,8 +85,9 @@ top_level:                    # the top-level docs
   - title: README
     path: ../README.md
     description: the front door.
-collections:                  # one entry per collection
+folders:                      # one entry per folder at the root, each with its type
   - name: <Collection>
+    type: collection
     description: One line on what this collection holds.
     variants:
       - { name: <variant-1>, template: templates/<unit>.<variant-1>.md, description: the fuller template, default: true }
@@ -93,6 +97,8 @@ collections:                  # one entry per collection
       property: <name>          # the custom property carrying the group, if one does
       groups:
         - { name: <Group>, description: one line on what falls under it }
+  - { name: <Assets>, type: assets, description: One line on what goes here rather than in another assets folder. }
+  - { name: <Other>, type: other, description: One line on what this holds, since nothing else will say. }
 properties:
   core: []                    # absent = the standard's core for this eidos_version
   custom:
@@ -114,11 +120,23 @@ index:                        # generated, regenerated wholesale; never hand-edi
 - **`eidos_version`**: the version this framework targets. A migration reads and bumps it.
 - **`naming`**: `kebab-case` (default), `TitleCase`, or `Title Case`. See [Naming](#naming).
 - **`top_level`**: the top-level docs, each a `title`, a `path`, and a `description`. It is the whole list: every file at the root is a top-level doc and has an entry here, and no entry points at a file that isn't there (see [Layout](#layout)). A `README.md`, when the root has one, is listed here like any other.
-- **`collections`**: one entry each: its `name`, its `description`, its `variants` (`default` marks the default; absent on all of them, the first is), and its `grouping` (a `label`, the custom `property` carrying the group if one does, and its `groups`). Every folder at the root outside `.eidos/` is one of these (see [Layout](#layout)).
+- **`folders`**: one entry per folder at the root, each its `name`, its `type`, and its `description`. Every folder at the root outside `.eidos/` is one of these (see [Layout](#layout)). A `collection` entry also carries its `variants` (`default` marks the default; absent on all of them, the first is) and its `grouping` (a `label`, the custom `property` carrying the group if one does, and its `groups`). An `assets` or `other` entry carries nothing more. The types are the standard's (see [Folders](#folders)); a type the standard does not name is a fault in the framework document.
 - **`properties`**: one block per owner. `core` is the standard's, rewritten by a migration (empty means the standard's core for this `eidos_version`); `custom` is the framework's, edited by the owner; `tools.<tool>` is one block per tool that declares properties of its own, that tool's and written by nobody else. `applies_to` is `all` or a list of collections; `required` is `true` or `false`, absent meaning `false`; `options`, when present, is the closed set of values. The six keys the standard names are the standard's; any other key on an entry is a tool's, named for the tool.
 - **`vocabulary`**: the root's own terms, one entry each: `term`, `means`, and `not` as a list, each item free to carry its clause, and `see` for the path to the blueprint that defines the term in full. Starts empty; absent means none declared.
 - **`index`**: every collection's blueprints, generated (see [The index](#the-index)). Rebuilt wholesale by whatever indexes the root, which rewrites this key and nothing else; never hand-edited.
 - Every path is relative to `.eidos/`; an index entry's `path` is relative to its collection folder.
+
+### Folders
+
+Every folder at the root is declared with one of three types, and the type says what the folder holds and what the standard does with it. The standard names the types and no folder: how many of each a root has, and what they are called, is the framework's.
+
+**`collection`** holds blueprints of one kind, each following one of the collection's declared variants, optionally grouped. Its markdown files are its blueprints: generated into frontmatter from the Properties table, validated against their variant's template, and listed in the index. A file in a collection folder that is not markdown is not a blueprint: it is not indexed, not checked, and not faulted; it is simply there, and a blueprint may link to it. Everything else this standard says about collections, variants, grouping, and templates is about folders of this type.
+
+A collection is flat or it groups; there is no third shape. Flat, it holds its blueprints directly and no sub-folder at all. Grouped, its sub-folders are its groups, each declared with a description, and its blueprints sit in them; a sub-folder no group names is surfaced, and so is a folder inside a group, since a group holds blueprints and nothing else. The grouping property's value, where the collection declares one, is the group's name.
+
+**`assets`** holds the files that are not markdown: images, diagrams, PDFs, whatever the blueprints embed or point at. The standard reads nothing inside it, indexes nothing, and validates nothing past the declaration; a check faults nothing in it. The folder's name follows the root's `naming` convention; the files inside it do not, since they are named by whatever made them. A framework declares as many as it wants, split however it wants (one for images and one for documents, one per collection, or a single one), and the standard prefers none of these; where a tool drops a new file is that tool's setting, kept in its own `plugins/` folder, not the standard's.
+
+**`other`** holds whatever the owner says it holds, and the description is where they say it. It is the declaration for organization the standard has no type for: a folder of exports, of meeting notes, of material a team keeps beside the product and wants named rather than faulted. The standard reads nothing inside it, indexes nothing, checks nothing, and holds nothing in it to the naming convention; a markdown file there is not a blueprint. What the folder preserves is the organization: it is declared, described, and accounted for at the root, and a tool leaves it as found.
 
 ### Templates and variants
 
@@ -155,7 +173,7 @@ Each property is an entry with five fields: `name`, `type`, `applies_to`, `requi
 
 The Properties table's sibling: where that table is the contract for properties, the Vocabulary is the contract for words. Each term is an entry: `term`, `means`, `not`, and `see` when a blueprint defines the concept in full. **term** is the word as prose uses it. **means** is one line. **not** is the near-misses, each with a clause on why it is a different thing, and it is where an entry earns its place: a term with nothing there is a dictionary entry, and a term that needs a body of its own is a blueprint, pointed at from its entry.
 
-Three layers of words meet in a root, and each is declared where it lives. The standard's terms are the table at the top of this file. A framework's structural names (its collections, variants, groups) are declared where the structure is. The root's own terms, the words the product itself is described in, are the framework's Vocabulary. **Eidos declares none of the last.** A Vocabulary starts empty and grows an entry when a word begins to carry a distinction worth keeping, each entry deciding all three of term, means, and not.
+Three layers of words meet in a root, and each is declared where it lives. The standard's terms are the table at the top of this file. A framework's structural names (its folders, variants, groups) are declared where the structure is. The root's own terms, the words the product itself is described in, are the framework's Vocabulary. **Eidos declares none of the last.** A Vocabulary starts empty and grows an entry when a word begins to carry a distinction worth keeping, each entry deciding all three of term, means, and not.
 
 A declared term is the word (Rule 19). An agent authoring or checking a blueprint uses it, and where a near-miss appears says which term the Vocabulary would have, as a suggestion. This is distinct from what a role sets: a role is register, how deep an agent goes and what it surfaces for one kind of reader; the Vocabulary is meaning, what a word denotes for every reader.
 
@@ -172,11 +190,11 @@ One role every framework has: the **Framework Owner**, who holds the intent, the
 
 ### `README.md`
 
-A visible front door at the root: what the product is, and pointers into it — the top-level docs, the collections, and the framework document for the full index. Thin, orientation and links, edited in place. Optional: every seed ships one and lists it first under `top_level`, because a person and an agent both land on it before the framework document, but nothing reads it and nothing requires it. A root without one is whole; its `top_level` simply starts with whatever it has.
+A visible front door at the root: what the product is, and pointers into it — the top-level docs, the folders, and the framework document for the full index. Thin, orientation and links, edited in place. Optional: every seed ships one and lists it first under `top_level`, because a person and an agent both land on it before the framework document, but nothing reads it and nothing requires it. A root without one is whole; its `top_level` simply starts with whatever it has.
 
 ### Naming
 
-Everything a human reads in the tree — top-level docs, collection and sub-folders, blueprint files — follows the framework's `naming` convention.
+Everything a human reads in the tree — top-level docs, folders and sub-folders, blueprint files — follows the framework's `naming` convention. The exception is what is inside an assets or other folder: the standard reads nothing there, so it holds nothing there to the convention, and the files keep the names their tools gave them.
 
 | Convention               | A blueprint file          | A grouping folder | For                                                              |
 | ------------------------ | ------------------------- | ----------------- | ---------------------------------------------------------------- |
@@ -186,7 +204,7 @@ Everything a human reads in the tree — top-level docs, collection and sub-fold
 
 An absent `naming` key means `kebab-case`.
 
-One convention governs the whole folder, and changing it later means renaming files, so it is settled at init. Whichever you pick: `.eidos/` is always lowercase; a `README.md`, if the root has one, keeps the name every tool already looks for; a grouping property's value matches its folder exactly; and fields meant for tools are not names in the tree.
+One convention governs the whole folder, and changing it later means renaming files, so it is settled at init. Whichever you pick: `.eidos/` is always lowercase; a `README.md`, if the root has one, keeps the name every tool already looks for; a grouping property's value matches its folder exactly; what is inside an assets or other folder is exempt; and fields meant for tools are not names in the tree.
 
 ### Linking
 
@@ -198,6 +216,8 @@ depends_on:
 ```
 
 If a target has no blueprint yet, name it plainly rather than fabricating a link.
+
+A file that is not a blueprint is linked or embedded the same way, and no other: a standard markdown link or image, `![Login flow](../assets/login-flow.png)`, with a path relative to the file it sits in. The path resolves on disk, with no vault, index, or tool in between, so the file reads the same on GitHub, in an editor, and in Obsidian. No wikilinks, no absolute paths, no resolution by filename alone. A check verifies that the path resolves and asks nothing else of the file.
 
 ### Blueprint bodies
 
@@ -235,7 +255,7 @@ The opener is `<!-- <tool>:<region> <args> -->` and the closer `<!-- /<tool>:<re
 
 One derived view the standard defines, regenerated wholesale, annotating rather than gating, with nothing hand-written to preserve.
 
-**The index.** Every collection's blueprints, listed in the framework document under `index`, one list per collection, so a human or agent can find a blueprint without scraping the tree. Each entry is the blueprint's `id`, `title`, `summary` (null when absent, never invented), `path` relative to the collection folder, and `group` when it has one; entries are grouped by sub-folder when the collection has them, flat when it doesn't, in file order. Rebuilt by `index`, which rewrites that key and nothing else in the document.
+**The index.** Every collection's blueprints, listed in the framework document under `index`, one list per collection, so a human or agent can find a blueprint without scraping the tree. Each entry is the blueprint's `id`, `title`, `summary` (null when absent, never invented), `path` relative to the collection folder, and `group` when it has one; entries are grouped by group when the collection has them, flat when it doesn't, in file order. Rebuilt by `index`, which rewrites that key and nothing else in the document.
 
 **Any other view is a tool's.** A map, a graph, a report: a tool that draws one reads the index and the links in the bodies, keeps whatever it needs in its own Properties block or its `plugins/` folder, and writes its output as a top-level doc, registered under `top_level` like any other. The standard declares nothing for it.
 
@@ -252,10 +272,10 @@ The load-bearing conventions.
 7. **One template family per collection, declared as variants.** What flexes is *which* sections appear and *which* variant a blueprint uses; never their order or names within a variant. The template is never forked per category.
 8. **Properties carry a type, a meaning, and an owner.** Every property declares its name, its type, which collections it applies to, whether it is required, and what it means, and one whose value is one of a closed set declares its options; the block it sits in says who owns it (Eidos, the framework, or a tool), and only the owner writes there. Frontmatter is generated from the required properties in the table, so a new blueprint is born conforming and carries nothing it doesn't need.
 9. **Soft labels are views, not structure.** A category label a framework adds drives views and filtering, never structure. Without `options` any value is valid; with them, a value off the list is surfaced, never refused. `variant` carries the structural choice.
-10. **A collection's grouping is the collection's own.** It may group its blueprints one level deep and may declare a property naming that grouping; the value then matches the folder, and an unknown value warns rather than blocks. The standard never names a grouping for it.
+10. **A collection's grouping is the collection's own.** It may group its blueprints in declared sub-folders and may declare a property naming that grouping; the value then matches the group folder, and an unknown value warns rather than blocks. A collection with sub-folders groups: every sub-folder is a declared group, and a group holds blueprints and nothing deeper. The standard never names a grouping for it.
 11. **A template names its own stable part.** Every template has a part that holds still and a part that moves, and says which is which. If the stable part changes substantially, ask whether this is a different blueprint.
 12. **Non-goals carry the most weight.** Where a template declares a section for what a blueprint deliberately will *not* do, that section is its strongest — it is where scope management actually happens. Still not a hard gate.
-13. **A template documents its own conventions.** Section names, their order and meaning, and any labeling a template asks for live in the template file. This standard governs collections, templates, variants, and properties; it never governs a section.
+13. **A template documents its own conventions.** Section names, their order and meaning, and any labeling a template asks for live in the template file. This standard governs folders, templates, variants, and properties; it never governs a section.
 14. **No work-tracking fields.** No `sprint`, `estimate`, or `assignee` — the moment you add them, a blueprint becomes a task and rots. Bridge to a tracker with a link. The same holds in the body: a section describing how you mean to build a product captures intent, never how far along it is.
 15. **The Eidos version is a framework fact.** The standard's version lives in the framework document as `eidos_version`, never as a per-blueprint property. Git holds the history, and a tool that snapshots the root keeps its record in its own `plugins/` folder; a framework that wants date properties declares them like any other.
 16. **Loose prose is revised in place.** A top-level doc, and any collection a framework marks as loose prose, records what is true now and is expected to change. That is revision, not work status.
@@ -263,7 +283,7 @@ The load-bearing conventions.
 18. **Read `me.md` before acting.** Read `.eidos/me.md` and the matching contract in `.eidos/roles/`, and respond as that role defines. The human-first principle holds for every role; only the mode changes. A blank or absent file defaults to full facilitation.
 19. **A declared term is the word.** Where the framework's Vocabulary declares a term, blueprints use it, and a near-miss it names is flagged with the declared term beside it, never refused and never swapped in silently. The standard declares no term of a framework's; a Vocabulary starts empty and grows a row at a time, each saying what the word means and what it is not.
 20. **A region is a tool's, by name.** A tool keeps what it needs inside a markdown file between two HTML comments carrying its own name, the same identifier as its `plugins/` folder and its Properties block, and touches no other tool's. Inside is the tool's, rewritten wholesale; outside is the person's. The standard reads none of it, and a check faults only an opener with no closer.
-21. **Everything at the root is declared.** A folder at the root is `.eidos/` or a declared collection; a file at the root is a top-level doc listed under `top_level`; and nothing is declared that isn't there. The framework owner controls what the root holds, so a reader never has to ask what a file or a folder is. A check surfaces anything without its counterpart; the owner declares it or moves it, and nothing declares it silently.
+21. **Everything at the root is declared.** A folder at the root is `.eidos/` or a folder declared under `folders` with its type; a file at the root is a top-level doc listed under `top_level`; and nothing is declared that isn't there. The framework owner controls what the root holds, so a reader never has to ask what a file or a folder is. A check surfaces anything without its counterpart; the owner declares it or moves it, and nothing declares it silently. What a folder holds is the folder's own rule, by type: a collection's blueprints are its markdown files and anything else in it is ignored; an assets folder and an other folder are never read.
 
 ## Versioning
 
@@ -287,9 +307,9 @@ This file holds the version of **the standard** — right now, **5.2.1** — and
 
 **Leave regions to their owners.** A span between `<!-- <tool>:<region> <args> -->` and `<!-- /<tool>:<region> -->` is that tool's. Read it if it helps; write in it only if you are that tool; when you edit the file around it, carry it across as found. Never fault its contents. Fault an opener with no closer.
 
-**Navigate by the index.** `README.md` for orientation, when the root has one, then `.eidos/Framework.yaml`: its `top_level` and `collections` for what the root holds, its `index` for every collection's blueprints. Read it instead of scraping the tree; regenerate the index when stale.
+**Navigate by the index.** `README.md` for orientation, when the root has one, then `.eidos/Framework.yaml`: its `top_level` and `folders` for what the root holds, its `index` for every collection's blueprints. Read it instead of scraping the tree; regenerate the index when stale.
 
-**Check the root against the framework document.** Every folder at the root is `.eidos/` or a declared collection, every file is listed under `top_level`, and every declared collection and listed doc is there. Report anything without its counterpart; offer to declare it (a collection needs its description and variants, a doc an empty description for the owner to fill) or to move it. Never write a description you made up, and never delete anything. Hidden entries are the host's; leave them.
+**Check the root against the framework document.** Every folder at the root is `.eidos/` or declared under `folders`, every file is listed under `top_level`, and every declared folder and listed doc is there. Report anything without its counterpart; offer to declare it (a folder needs its type and description, a collection its variants too, a doc an empty description for the owner to fill) or to move it. Inside a collection, a file that is not markdown is not a blueprint: leave it alone and say nothing. Inside an assets or other folder, read nothing. Never write a description you made up, and never delete anything. Hidden entries are the host's; leave them.
 
 **Authoring a blueprint:**
 
@@ -298,6 +318,6 @@ This file holds the version of **the standard** — right now, **5.2.1** — and
 3. Lead with the template's opening sections and press hardest on its non-goals section. Read those names off the template rather than assuming them, and follow whatever labeling it asks for. Omit a section that doesn't apply; keep the order and names of the ones that do.
 4. Where the owner is vague, ask. Don't fill the gap with plausible prose.
 
-**Validating a blueprint:** check frontmatter against the framework's Properties table, every block of it (every required property present, `id` unique, dates as `YYYY-MM-DD`, custom and tool properties scoped to the collection, an optional property checked only when present, a value on a property with `options` one of them, `variant` one of the collection's variants, a grouping value one of its groups). Report missing body sections against *the blueprint's variant template*, flagging an absent non-goals section first, and note anything skipping the labeling that template asks for. Note each near-miss the Vocabulary names, with the declared term beside it. Confirm no work-tracking fields crept in. Leave every region's contents alone, and report an opener with no closer. Surface, don't block — the output is a review a human acts on.
+**Validating a blueprint:** check frontmatter against the framework's Properties table, every block of it (every required property present, `id` unique, dates as `YYYY-MM-DD`, custom and tool properties scoped to the collection, an optional property checked only when present, a value on a property with `options` one of them, `variant` one of the collection's variants, a grouping value one of its groups). Report missing body sections against *the blueprint's variant template*, flagging an absent non-goals section first, and note anything skipping the labeling that template asks for. Note each near-miss the Vocabulary names, with the declared term beside it. Confirm no work-tracking fields crept in. Leave every region's contents alone, and report an opener with no closer. Check that every link and image path in the body resolves on disk. Surface, don't block — the output is a review a human acts on.
 
 **Facilitate, don't author.** Format and structure what the owner gives you, supplement, ask, and press on scope. Never invent a blueprint's purpose, decide direction, or hand back a finished blueprint to rubber-stamp. When unsure, ask.
