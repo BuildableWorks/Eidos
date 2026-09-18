@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+- **Everything at the root is declared (Rule 21).** A folder at the root is `.eidos/` or a declared collection, a file at the root is a top-level doc listed under `top_level`, and nothing is declared that isn't there; a check surfaces anything without its counterpart, and the owner declares it or moves it. Hidden entries are the host's. The Layout section carries the paragraph; the `top_level` and `collections` bullets, the term table, the seeds' comments, and `configure`, `eidos`, `format`, and `iterate` follow. Unreleased: the standard's version has not moved.
+
 ## [5.2.1] - 2026-09-17 — Standard: 5.2.1
 
 **The standard moves to 5.2.1: `README.md` is a top-level doc like any other.** Since 4.0.0 the standard had said `top_level` lists the top-level docs "README first", and `README.md` sat in the layout as the one file every root must have. Nothing had ever enforced it: no skill checks for it, no skill parses it, the index does not touch it, and a tool sees it only as a `top_level` entry with a path. What the rule was really carrying is that a person and an agent both land on the README before the framework document, which is a reason to ship one, not a reason to require one. 5.2.1 says that in so many words. Prose only; no file, folder, property, or key moves, and every root conforms as it stands. `versions/v5.2.1.md` is the snapshot.

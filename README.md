@@ -40,7 +40,7 @@ Blueprints/                # the root — may be named anything
     plugins/<name>/        #   a tool's own folder, like .obsidian/plugins/ (optional)
       local.yaml           #     the one personal file in it: one machine's settings (gitignored)
     me.md                  #   who's in the seat (personal, gitignored)
-  <Doc>.md                 # a top-level doc — your own, free-form (optional)
+  <Doc>.md                 # a top-level doc — your own, free-form, listed in the framework (optional)
   <Collection>/            # the blueprints, grouped one level deep
     index.md               #   generated index of the collection
     <Group>/<Title>.md     #   one blueprint per file
@@ -51,7 +51,7 @@ Blueprints/                # the root — may be named anything
 - **Templates & variants** — a **template** is the body a collection's blueprints follow; a collection can offer more than one — **variants** — with one default. Start in the variant that fits and grow into a fuller one later.
 - **Properties** — the frontmatter contract every blueprint carries: four core properties from Eidos (`id`, `title`, `summary`, `variant`), plus whatever the framework adds. Each says whether it is required, so only the fields a framework insists on land on every blueprint; the rest are there when they have a value. One whose value is one of a set declares its `options`, and a value off the list is surfaced, never refused.
 - **Vocabulary** — the term contract: the words the root uses on purpose, each with what it means and what it is *not*, so a distinction made once (a team member is not staff) is not lost three blueprints later. Starts empty; Eidos declares none of them.
-- **Top-level docs** — one-of-a-kind documents at the root: a Vision, a map a tool generates. Free-form, no template, no validation.
+- **Top-level docs** — one-of-a-kind documents at the root: a Vision, a map a tool generates. Free-form, no template, the body never validated; each is listed in the framework document. Everything at the root is declared there, a folder as a collection and a file as a top-level doc, and anything it doesn't declare is surfaced.
 - **Roles** — [`roles/`](seeds) say how the agent talks to each kind of person; the personal, gitignored `me.md` says who *you* are, so the same blueprints answer each reader differently.
 - **Plugins** — `.eidos/` is open the way `.obsidian/` is: a tool that keeps something in the framework takes `plugins/<name>/`, and a Properties row may carry the tool's own fields past the standard's six. Inside a file, a tool keeps what it needs in a **region**, a span between two HTML comments carrying its name, `<!-- <tool>:<region> <args> -->` to `<!-- /<tool>:<region> -->`, whose contents are the tool's own. The standard reads none of it and every skill leaves it alone.
 

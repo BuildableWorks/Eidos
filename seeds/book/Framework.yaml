@@ -12,8 +12,9 @@ naming: kebab-case
 
 # The top-level documents: one entry per one-of-a-kind doc (an Outline of the whole
 # book, a Style Sheet, a Bibliography), each a title, a path from this folder, and a one-line
-# description. The framing docs live in the framing collection, not here. The `eidos` CLI refreshes
-# this list.
+# description. This is the whole list: every file at the root is listed here, and a check surfaces a
+# file with no entry or an entry with no file. The framing docs live in the framing collection, not
+# here. The `eidos` CLI refreshes this list.
 top_level:
   - title: README
     path: ../README.md
@@ -23,6 +24,8 @@ top_level:
 # the framing docs, what the root says first about the product, and Chapters the book's units. Add
 # more with the `eidos` CLI. Each declares its variants (one default; each a template file named
 # <unit>.<variant>.md under templates/, the unit being the word for one of its blueprints) and its grouping.
+# This is the whole list too: every folder at the root outside .eidos/ is a collection declared here, and
+# a check surfaces a folder with no entry or an entry with no folder.
 collections:
   # This framework's framing collection: the docs that set what every other blueprint is judged
   # against. Each frame follows the variant of its kind, and one left unwritten is a gap to surface,

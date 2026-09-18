@@ -32,7 +32,7 @@ Where does this live, and what body does it take? From the Framework, propose th
 
 Three answers matter more than a smooth fit:
 
-- **It fits no collection.** Don't force it. Either it's a top-level doc (one of a kind, free-form) or the framework is missing a collection — `configure` adds one. A forced fit is a wrong blueprint that validates.
+- **It fits no collection.** Don't force it. Either it's a top-level doc (one of a kind, free-form, listed under `top_level`) or the framework is missing a collection — `configure` adds one. A forced fit is a wrong blueprint that validates.
 - **It fits two.** Usually two ideas wearing one name. Say so and offer to split; splitting here is cheap and later it isn't.
 - **It's bigger than a blueprint.** Several blueprints and a theme. Name the pieces and ask which one this session is about — one idea at a time is the whole discipline.
 

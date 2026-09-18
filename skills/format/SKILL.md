@@ -35,7 +35,7 @@ Template the content; don't pour it into a form. The recommended sections are a 
 Two kinds of file land here, and they're reshaped differently:
 
 - **A collection blueprint** — reshape it *toward* its variant's template in `.eidos/templates/` (the collection's default unless the draft's `variant` says otherwise), with frontmatter from `.eidos/Framework.md`.
-- **A free-form top-level doc** (a Vision, a Glossary) — **no template, and none expected.** Only *organize*: readable headings, tables, lists, links over bare names, plus the light frontmatter (`title`, `tags`, `date_created`, `date_modified`).
+- **A free-form top-level doc** (a Vision, a Glossary) — **no template, and none expected.** Only *organize*: readable headings, tables, lists, links over bare names, plus the light frontmatter (`title`, `tags`, `date_created`, `date_modified`). It belongs under `top_level` in the framework document; if the draft has no entry yet, hand that back as a gap (`configure` adds it), never silently.
 
 In both you preserve the author's words and add nothing.
 
