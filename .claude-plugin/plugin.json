@@ -1,6 +1,6 @@
 {
   "name": "eidos",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "Eidos — a human-first system of organization for defining a product: an app, a book, a study, a workflow, anything work produces that has a shape. One markdown file is the complete source of truth for one unit of it, independent of time or status, kept in version control beside the code it describes. These skills are for hosts with no shell; where there is one, the eidos CLI (npm: eidosmd) is the tool.",
   "author": { "name": "Buildable" },
   "homepage": "https://github.com/BuildableWorks/Eidos",

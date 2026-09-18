@@ -8,7 +8,7 @@ description: >-
 
 Keep `.eidos/Framework.yaml` working as the framework's **index and contract** — the authoritative description of the structure everything is written in, with the visible root `README.md` as the friendly door to it. This skill owns five of its keys:
 
-- **`top_level`** — the top-level documents, `README.md` first (the visible front door and the first listed entry), then the owner's own one-of-a-kind docs (a Vision, the generated Blueprint Map), each a title, a path, and a one-line description. The framing docs are **not** here — they are a collection.
+- **`top_level`** — the top-level documents: the visible `README.md` front door when the root has one (every seed ships one, listed first), then the owner's own one-of-a-kind docs (a Vision, the generated Blueprint Map), each a title, a path, and a one-line description. The framing docs are **not** here — they are a collection.
 - **`collections`** — each top-level content folder: its description, its grouping (one level of sub-folders, each group described), and its **variants** (body templates, one marked default).
 - **`properties`** — the property contract every blueprint carries, one block per owner: `core` (the standard's, off-limits here), `custom` (the framework's — the seed's defaults plus your own, each scoped by `applies_to`), and `tools.<tool>` for any tool that declares its own (that tool's, off-limits here too).
 - **`vocabulary`** — the term contract: the words the root uses on purpose, one entry each (`term`, `means`, `not`, and `see` when a blueprint defines it in full). Every seed ships it empty; the terms are the root's own, and Eidos declares none of them.
@@ -125,10 +125,10 @@ Narrowing a property's `options` is retiring values: before a value leaves the l
 
 ## Refreshing the top-level index
 
-1. **Enumerate the top-level documents** at the root — `README.md` first, then the owner's own one-of-a-kind docs. Frames are collection blueprints, not top-level.
-2. **Rebuild the list** under `top_level`: one entry per doc, a `title`, a `path` from `.eidos/` (`../Vision.md`), and a `description`, `README` first. **Keep the owner's existing descriptions**; give a doc with none an empty description and ask. Never invent one.
+1. **Enumerate the top-level documents** at the root — `README.md` first when the root has one, then the owner's own one-of-a-kind docs. Frames are collection blueprints, not top-level.
+2. **Rebuild the list** under `top_level`: one entry per doc, a `title`, a `path` from `.eidos/` (`../Vision.md`), and a `description`, `README` first when there is one. **Keep the owner's existing descriptions**; give a doc with none an empty description and ask. Never invent one.
 3. **Report** — the docs indexed and any still needing a description. A top-level doc that's still a stub is **in progress** — note it so the intention to complete it stays visible.
 
 ## After
 
-The Framework is a current index and contract for the root. From here, `eidos` reads it to know a blueprint's collection and variants when authoring, and validates each blueprint against the updated Properties table — a custom property now counts among the fields it checks for the collections it applies to, surfaced and added with a note where an applicable blueprint is missing it, never failing the file. A declared term is the word `eidos` writes with, and a near-miss it finds is noted with the declared term beside it, never swapped in silently. `index` rebuilds the `index` key beneath it; and `README.md` is the visible door a human lands at first.
+The Framework is a current index and contract for the root. From here, `eidos` reads it to know a blueprint's collection and variants when authoring, and validates each blueprint against the updated Properties table — a custom property now counts among the fields it checks for the collections it applies to, surfaced and added with a note where an applicable blueprint is missing it, never failing the file. A declared term is the word `eidos` writes with, and a near-miss it finds is noted with the declared term beside it, never swapped in silently. `index` rebuilds the `index` key beneath it; and `README.md`, where the root has one, is the visible door a human lands at first.

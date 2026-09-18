@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 5.2.0
+**Version:** 5.2.1
 
 A system of organization for defining a product: an app, a book, a study, a workflow, anything work produces that has a shape. The structure is data, in a hidden folder, that a tool can check a root against; the product is written in markdown against that structure. One file is the complete source of truth for one unit of it, independent of time or status: as true of something planned as of something long finished.
 
@@ -35,7 +35,7 @@ The root is found by the hidden `.eidos/` inside it. It may be named anything; n
 
 ```txt
 Blueprints/              # the root — `Blueprints` is only the default name
-  README.md              # the visible "start here"
+  README.md              # the visible "start here": optional, and every seed ships one
   .eidos/                # the framework (below)
   <Collection>/          # a collection of blueprints; declare as many as the work needs
     <Group>/             #   one level of sub-folders, at most
@@ -74,9 +74,9 @@ A tool touches only the folder it owns. The framework document, the templates, a
 The framework document: the one file describing the structure rather than any single blueprint, exactly one per root. It is data, `Framework.yaml` (or `.yml`), in snake_case, with comments wherever the owner wants them: the version and naming convention, the top-level docs, the collections, the Properties table, the Vocabulary, and the generated index, so a root is one document with everything in it. Scripts and agents parse it without a markdown convention, a person reads it the way they read any config file, and tools edit it in place.
 
 ```yaml
-eidos_version: 5.2.0
+eidos_version: 5.2.1
 naming: kebab-case            # absent = kebab-case
-top_level:                    # the top-level docs, README first
+top_level:                    # the top-level docs
   - title: README
     path: ../README.md
     description: the front door.
@@ -111,7 +111,7 @@ index:                        # generated, regenerated wholesale; never hand-edi
 
 - **`eidos_version`**: the version this framework targets. A migration reads and bumps it.
 - **`naming`**: `kebab-case` (default), `TitleCase`, or `Title Case`. See [Naming](#naming).
-- **`top_level`**: the top-level docs, `README` first, each a `title`, a `path`, and a `description`.
+- **`top_level`**: the top-level docs, each a `title`, a `path`, and a `description`. A `README.md`, when the root has one, is listed here like any other.
 - **`collections`**: one entry each: its `name`, its `description`, its `variants` (`default` marks the default; absent on all of them, the first is), and its `grouping` (a `label`, the custom `property` carrying the group if one does, and its `groups`).
 - **`properties`**: one block per owner. `core` is the standard's, rewritten by a migration (empty means the standard's core for this `eidos_version`); `custom` is the framework's, edited by the owner; `tools.<tool>` is one block per tool that declares properties of its own, that tool's and written by nobody else. `applies_to` is `all` or a list of collections; `required` is `true` or `false`, absent meaning `false`; `options`, when present, is the closed set of values. The six keys the standard names are the standard's; any other key on an entry is a tool's, named for the tool.
 - **`vocabulary`**: the root's own terms, one entry each: `term`, `means`, and `not` as a list, each item free to carry its clause, and `see` for the path to the blueprint that defines the term in full. Starts empty; absent means none declared.
@@ -170,7 +170,7 @@ One role every framework has: the **Framework Owner**, who holds the intent, the
 
 ### `README.md`
 
-A visible front door at the root: what the product is, and pointers into it — the top-level docs, the collections, and the framework document for the full index. Thin, orientation and links, edited in place.
+A visible front door at the root: what the product is, and pointers into it — the top-level docs, the collections, and the framework document for the full index. Thin, orientation and links, edited in place. Optional: every seed ships one and lists it first under `top_level`, because a person and an agent both land on it before the framework document, but nothing reads it and nothing requires it. A root without one is whole; its `top_level` simply starts with whatever it has.
 
 ### Naming
 
@@ -184,7 +184,7 @@ Everything a human reads in the tree — top-level docs, collection and sub-fold
 
 An absent `naming` key means `kebab-case`.
 
-One convention governs the whole folder, and changing it later means renaming files, so it is settled at init. Whichever you pick: `.eidos/` is always lowercase; `README.md` keeps the name every tool already looks for; a grouping property's value matches its folder exactly; and fields meant for tools are not names in the tree.
+One convention governs the whole folder, and changing it later means renaming files, so it is settled at init. Whichever you pick: `.eidos/` is always lowercase; a `README.md`, if the root has one, keeps the name every tool already looks for; a grouping property's value matches its folder exactly; and fields meant for tools are not names in the tree.
 
 ### Linking
 
@@ -264,7 +264,7 @@ The load-bearing conventions.
 
 Semantic Versioning: major for breaking changes, minor for backward-compatible additions, patch for clarifications.
 
-This file holds the version of **the standard** — right now, **5.2.0** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its framework document; a migration reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
+This file holds the version of **the standard** — right now, **5.2.1** — and it moves only when the text of this file moves. A framework records the version it targets as `eidos_version` in its framework document; a migration reads and bumps it there. At tag time this file is copied as-is into `versions/` under its full semver name, so any two releases, even non-adjacent, can be diffed to migrate between them. Worked hops are in `versions/MIGRATIONS.md`. Tools may reject an unsupported version.
 
 **Tools that ship this standard version separately.** A CLI, a plugin, a starting framework: each changes far more often than the standard does, so a release of one leaves this file — and every framework's `eidos_version` — untouched. When you need to know what a framework conforms to, read this version; a tool names the standard it carries.
 
@@ -282,7 +282,7 @@ This file holds the version of **the standard** — right now, **5.2.0** — and
 
 **Leave regions to their owners.** A span between `<!-- <tool>:<region> <args> -->` and `<!-- /<tool>:<region> -->` is that tool's. Read it if it helps; write in it only if you are that tool; when you edit the file around it, carry it across as found. Never fault its contents. Fault an opener with no closer.
 
-**Navigate by the index.** `README.md` for orientation, then `.eidos/Framework.yaml`: its `top_level` and `collections` for what the root holds, its `index` for every collection's blueprints. Read it instead of scraping the tree; regenerate the index when stale.
+**Navigate by the index.** `README.md` for orientation, when the root has one, then `.eidos/Framework.yaml`: its `top_level` and `collections` for what the root holds, its `index` for every collection's blueprints. Read it instead of scraping the tree; regenerate the index when stale.
 
 **Authoring a blueprint:**
 

@@ -10,7 +10,7 @@
 >
 > **Use the [`eidos` CLI](https://eidosmd.com/docs/cli) with your agent.** `npm install -g eidosmd`, then `eidos instructions`. The CLI does the mechanical part (scaffold, generate, check, index) deterministically and hands the agent only what it needs, so a session is faster and spends a fraction of the context that skills reading the standard every time do. Anything running on a host with a shell uses the CLI. The skills here are for hosts with no shell: Claude Desktop chat, the web, Cowork.
 
-## **[Eidos v5.2.0](EIDOS.md)** — the full standard
+## **[Eidos v5.2.1](EIDOS.md)** — the full standard
 
 Eidos is a system of organization for defining a product: an app, a book, a study, a workflow, anything work produces that has a shape. It puts a structure around the documentation that a tool can enforce, so ideation and development progress in one place and the definition keeps pace with both. One file is the complete source of truth for one unit of the product, independent of time or status: as true of something planned as of something long finished. The product is written in plain markdown beside your code; the structure it is written in is data, in a hidden `.eidos/` folder you seldom open. The result is a database of intent: what the product is meant to be, queryable and version-controlled, living in the repo. No SaaS. No lock-in. Nothing outside the repo.
 
@@ -32,7 +32,7 @@ It all lives in one folder — the **root** — that you drop into any repo:
 
 ```txt
 Blueprints/                # the root — may be named anything
-  README.md                # the human "start here"
+  README.md                # the human "start here" (optional; every seed ships one)
   .eidos/                  # the framework (hidden) — the structure everything here is written in
     templates/**             #   body templates, one file per variant
     roles/**                 #   how the agent should talk to each role

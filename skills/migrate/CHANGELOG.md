@@ -8,6 +8,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [5.2.1] - 2026-09-17 — Standard: 5.2.1
+
+**The standard moves to 5.2.1: `README.md` is a top-level doc like any other.** Since 4.0.0 the standard had said `top_level` lists the top-level docs "README first", and `README.md` sat in the layout as the one file every root must have. Nothing had ever enforced it: no skill checks for it, no skill parses it, the index does not touch it, and a tool sees it only as a `top_level` entry with a path. What the rule was really carrying is that a person and an agent both land on the README before the framework document, which is a reason to ship one, not a reason to require one. 5.2.1 says that in so many words. Prose only; no file, folder, property, or key moves, and every root conforms as it stands. `versions/v5.2.1.md` is the snapshot.
+
+### Changed
+
+- **`README.md` is optional.** The layout marks it so; the `top_level` bullet drops "README first" and says a README, when the root has one, is listed like any other doc; the `### README.md` section keeps its description of what to put in one and adds that every seed ships one and lists it first, that nothing reads it, and that a root without one is whole. The naming exception and the "navigate by the index" rule now say "when the root has one".
+- **Every seed still ships a README and lists it first.** The seeds' `top_level` comment drops "README first" and their `eidos_version` is 5.2.1; the file and the entry stay, since the front door is still the recommendation.
+- **`configure` follows.** Its `top_level` description and the "Refreshing the top-level index" steps put the README first when there is one, rather than as a rule. `install` is unchanged: it still installs the seed's README and fills its name. `migrate` fingerprints 5.2.1.
+
 ## [5.2.0] - 2026-09-17 — Standard: 5.2.0
 
 **The standard moves to 5.2.0: property options, and a tool's personal file.** A property can now close its value to a declared set. The Properties table had promised to be the contract for properties, and the seeds had promised that an off-list `status` warns, but the list lived only in a `meaning` sentence, legible to a person or a language model and to nothing else; the table could say a property's shape, scope, and presence and not its values. A sixth field, `options`, says them, so a check compares against a list and a scaffold offers one, the same way `variant` has always been checked against the collection's declared variants. And a tool that keeps a folder under `.eidos/plugins/` usually has two kinds of setting in it: what the root decided and commits, and what one person on one machine chose (a diff viewer command, an editor, a key path). The second kind could not live in a shared root at all unless the split was a rule rather than each tool's habit, which is the trap `.obsidian/plugins/<id>/data.json` falls into: one file, so a shared vault cannot hold a personal preference. 5.2.0 fixes the name of the personal file, `local.yaml`, and that it is never committed. Both additive: an entry without `options` means what it always meant, no root has a `local.yaml` yet, and the migration is one line in `.eidos/.gitignore` plus the `eidos_version` bump. `versions/v5.2.0.md` is the snapshot.
