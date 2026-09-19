@@ -1,7 +1,7 @@
 # The framework document: the structure this root is written in. See EIDOS.md for what each key means;
 # the `eidos` CLI edits this file. Every path is relative to this folder.
 
-eidos_version: 5.3.0
+eidos_version: 5.4.0
 
 # kebab-case | TitleCase | Title Case. Settled at install; changing it later means renaming files.
 naming: kebab-case
@@ -12,12 +12,13 @@ top_level:
     path: ../README.md
     description: "the root's front door: what this is, and pointers in."
 
-# Every folder at the root, one entry each, with its type: collection | assets | other.
+# Every folder at the root, one entry each. `owned_by` names what governs it: "@eidos/collections" for
+# blueprints, "@<tool>/<kind>" for a tool's own folder. Absent, the folder is yours and nothing reads it.
 folders:
   # The framing docs: what every other blueprint is judged against. One left unwritten is a gap to surface,
   # not a failure.
   - name: Frames
-    type: collection
+    owned_by: "@eidos/collections"
     description: "What every other blueprint is judged against: the product's architecture, audience, criteria, and market."
     variants:
       - { name: architecture, template: templates/frame.architecture.md, description: "the product as a built system", default: true }
@@ -25,7 +26,7 @@ folders:
       - { name: criteria, template: templates/frame.criteria.md, description: "budget, scope objectives, timeline" }
       - { name: market, template: templates/frame.market.md, description: "landscape, positioning, and how it earns" }
   - name: Specs
-    type: collection
+    owned_by: "@eidos/collections"
     description: "The product's units, one per blueprint, grouped by domain."
     variants:
       - { name: full, template: templates/spec.full.md, description: "the complete spec template", default: true }
@@ -35,7 +36,6 @@ folders:
       property: domain
       groups: []              # one entry per domain, a name and a description, as they accrue
   - name: assets
-    type: assets
     description: "Images, diagrams, and documents the blueprints link to."
 
 # The property contract, one block per owner. A property applies to `all` collections or a list; a required

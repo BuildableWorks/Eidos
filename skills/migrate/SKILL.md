@@ -48,6 +48,7 @@ If a snapshot is missing, say so. Never fabricate a version's contract.
 
 Full detail in `versions/MIGRATIONS.md`.
 
+- **5.4.0**: `type` on a folder entry becomes `owned_by`: `type: collection` is `owned_by: "@eidos/collections"` (quoted; `@` cannot start a plain YAML scalar), `type: assets` and `type: other` drop the key and keep the folder as the owner's. A folder a tool manages may name it, `owned_by: "@<tool>/<kind>"`, only when the tool says so; never invent one. Add `plugins/*/local/` to `.eidos/.gitignore` under `plugins/*/local.yaml`.
 - **5.3.0**: `collections:` becomes `folders:` with `type: collection` on each entry; a folder may also be `assets` or `other`; every folder and file at the root must be declared; every sub-folder of a collection is a declared group. Rename the key, add the type, then walk the root: offer a declaration or a move for anything undeclared, ask before dropping an entry with nothing behind it.
 - **5.2.1**: prose only; bump.
 - **5.2.0**: `options` on a property entry (offer to move a `meaning` that lists values); `plugins/*/local.yaml` added to `.eidos/.gitignore`.

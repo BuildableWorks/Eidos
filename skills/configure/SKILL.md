@@ -1,7 +1,7 @@
 ---
 name: configure
 description: >-
-  Configure a root's framework in `.eidos/Framework.yaml`: its folders (collections with their variants, assets, other), its Properties table, its Vocabulary, and its top-level index. Use to add a folder ("add a Decisions folder", "add an images folder"), add or change a variant ("add a micro spec template", "make spec.full the default"), add, rename, or retire a custom property and backfill it ("add a `team` field to every spec"), declare, rename, or retire a term ("a team member is not staff, write that down"), or refresh the root's declarations ("the Framework is out of date"). It does not author blueprints (`eidos`), build the index (`index`), or touch the Eidos core properties (`migrate`).
+  Configure a root's framework in `.eidos/Framework.yaml`: its folders (collections with their variants, and any folder a tool or the owner holds), its Properties table, its Vocabulary, and its top-level index. Use to add a folder ("add a Decisions folder", "add an images folder"), add or change a variant ("add a micro spec template", "make spec.full the default"), add, rename, or retire a custom property and backfill it ("add a `team` field to every spec"), declare, rename, or retire a term ("a team member is not staff, write that down"), or refresh the root's declarations ("the Framework is out of date"). It does not author blueprints (`eidos`), build the index (`index`), or touch the Eidos core properties (`migrate`).
 ---
 
 # Eidos Configure
@@ -12,7 +12,7 @@ You edit four keys of `.eidos/Framework.yaml` and nothing else: `top_level`, `fo
 
 A folder, variant, property, or term nobody thought through reads as meaningful while no one knows what it holds. Never invent one; if the owner offers only a name, ask for the rest.
 
-- **A folder:** `name` (in the framework's `naming`), `type` (`collection`, `assets`, or `other`), and a one-line `description`. A collection also needs how it groups (flat, or declared groups) and at least one variant marked default.
+- **A folder:** `name` (in the framework's `naming`), a one-line `description`, and `owned_by` when something governs it: `"@eidos/collections"` for blueprints, `"@<tool>/<kind>"` for a tool's folder (the tool says what goes inside; never invent a kind for it), nothing for a folder the owner just keeps. A collection also needs how it groups (flat, or declared groups) and at least one variant marked default.
 - **A variant:** `name` (lowercase: `full`, `micro`, `api`), a one-line `description`, and its template sections.
 - **A property:** `name` (lowercase, underscores), `type` (Text, List, Number, Checkbox, Date, Date & time; anything richer belongs in the body), `applies_to` (`all` or collections), `required` (default to optional), one-line `meaning`, and `options` only when the value is one of a closed set the owner controls, in the order the values run. `variant` and a grouping property never carry `options`.
 - **A term:** `term`, one-line `means`, and `not`: the near-misses, each with why it differs. Press here the way you press on non-goals; a term with nothing in `not` is not worth declaring yet.
@@ -27,18 +27,19 @@ A folder, variant, property, or term nobody thought through reads as meaningful 
 
 ## Adding a folder
 
-1. Decide name, type, and description with the owner; for a collection, its grouping and default variant too.
+1. Decide name, owner, and description with the owner; for a collection, its grouping and default variant too.
 2. Create the folder under the root in the naming convention. For a grouped collection, create each declared group; a group holds blueprints and nothing deeper.
 3. For a collection, create the default variant's template in `.eidos/templates/<unit>.<variant>.md`, body only, patterned on the existing templates.
 4. Register it under `folders`:
 
    ```yaml
    - name: Decisions
-     type: collection
+     owned_by: "@eidos/collections"
      description: Architecture decision records, one per significant choice.
      variants:
        - { name: full, template: templates/decision.full.md, description: "context, decision, consequences", default: true }
-   - { name: images, type: assets, description: Screenshots and diagrams the specs embed. }
+   - { name: notes, description: Meeting notes and scratch, kept beside the blueprints. }
+   - { name: assets, owned_by: "@eidosmd/asset-manager", description: Images and documents the blueprints embed; the asset manager keeps them. }
    ```
 
 5. A property carrying the grouping is a property change (below). For a collection, run `index`, then point the owner to `eidos` for the first blueprint.
@@ -84,7 +85,7 @@ Report the blueprints touched every time.
 ## Refreshing the root's declarations
 
 1. List every file at the root (any extension) against `top_level`, and every folder against `folders`. Hidden entries (`.gitignore`, `.obsidian/`) are the host's and are not listed.
-2. For a file with no entry, add one with an empty `description` and ask; never invent a description. For a folder with no entry, ask its type and description. For an entry whose file or folder is gone, tell the owner before dropping it; they may want the thing back rather than the entry.
+2. For a file with no entry, add one with an empty `description` and ask; never invent a description. For a folder with no entry, ask its description and whether a tool owns it. For an entry whose file or folder is gone, tell the owner before dropping it; they may want the thing back rather than the entry.
 3. Keep the owner's existing descriptions. Report what was added, what pointed at nothing, and what still needs a description.
 
 ## After

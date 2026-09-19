@@ -1,7 +1,7 @@
 # The framework document: the structure this root is written in. See EIDOS.md for what each key means;
 # the `eidos` CLI edits this file. Every path is relative to this folder.
 
-eidos_version: 5.3.0
+eidos_version: 5.4.0
 
 # kebab-case | TitleCase | Title Case. Settled at install; changing it later means renaming files.
 naming: kebab-case
@@ -12,12 +12,13 @@ top_level:
     path: ../README.md
     description: "the root's front door: what this book is, and pointers in."
 
-# Every folder at the root, one entry each, with its type: collection | assets | other.
+# Every folder at the root, one entry each. `owned_by` names what governs it: "@eidos/collections" for
+# blueprints, "@<tool>/<kind>" for a tool's own folder. Absent, the folder is yours and nothing reads it.
 folders:
   # The framing docs: what every other blueprint is judged against. One left unwritten is a gap to surface,
   # not a failure.
   - name: Frames
-    type: collection
+    owned_by: "@eidos/collections"
     description: "What every chapter is judged against: what the book argues, who it is for, how it sounds, and where it sits."
     variants:
       - { name: premise, template: templates/frame.premise.md, description: "what the book says, and why it has to exist", default: true }
@@ -25,7 +26,7 @@ folders:
       - { name: voice, template: templates/frame.voice.md, description: "person, tense, register, and the rules the prose keeps" }
       - { name: market, template: templates/frame.market.md, description: "shelf, comparables, and how it reaches readers" }
   - name: Chapters
-    type: collection
+    owned_by: "@eidos/collections"
     description: "The book's units, one per chapter, grouped by part."
     variants:
       - { name: full, template: templates/chapter.full.md, description: "the complete chapter template", default: true }
@@ -35,7 +36,6 @@ folders:
       property: part
       groups: []              # one entry per part, a name and a description, as they accrue
   - name: assets
-    type: assets
     description: "Images, diagrams, and documents the blueprints link to."
 
 # The property contract, one block per owner. A property applies to `all` collections or a list; a required
