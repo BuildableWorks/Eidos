@@ -5,13 +5,13 @@
 > [!IMPORTANT]
 > **Docs live at [eidosmd.com](https://eidosmd.com).** This repository holds the standard ([`EIDOS.md`](EIDOS.md)), the seeds, and a Claude plugin of skills. To *use* Eidos, install the CLI: `npm install -g eidosmd`, then `eidos instructions`. The skills are for hosts with no shell (Claude Desktop chat, the web, Cowork).
 
-## **[Eidos v5.4.0](EIDOS.md)**, the standard
+## **[Eidos v5.5.0](EIDOS.md)**, the standard
 
 Eidos defines a product in markdown: an app, a book, a study, anything work produces that has a shape. One file is the complete source of truth for one unit of the product, as true of something planned as of something long shipped. The files live in your repo beside the code; the structure they follow is data in a hidden `.eidos/` folder a tool can check against. No SaaS, no lock-in, nothing outside the repo.
 
 A tracker is a database of work, and work dies when it ships. Eidos is a database of intent. Humans and coding agents read the same source of truth, and every role answers to the same blueprint in the same words.
 
-Eidos is **human-first**: a Framework Owner holds intent, scope, and decisions. An agent formats, asks, and presses on scope. It does not author blueprints for you.
+Eidos is **human-first**: the people who own the product hold intent, scope, and decisions. An agent formats, asks, and presses on scope. It does not author blueprints for you.
 
 ## How it works
 
@@ -26,7 +26,7 @@ Blueprints/              # the root; any name works
     roles/               #   how the agent talks to each role
     templates/           #   body templates, one per variant
     Framework.yaml       #   version, naming, folders, properties, vocabulary, index
-    me.md                #   who you are (personal, gitignored)
+    me.md                #   who you are (local, gitignored)
   <Folder>/              # a tool's, or yours; declared, never read
   <Collection>/          # blueprints of one kind
     <Group>/<Title>.md   #   one blueprint per file

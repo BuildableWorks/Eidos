@@ -1,7 +1,7 @@
 # The framework document: the structure this root is written in. See EIDOS.md for what each key means;
 # the `eidos` CLI edits this file. Every path is relative to this folder.
 
-eidos_version: 5.4.0
+eidos_version: 5.5.0
 
 # kebab-case | TitleCase | Title Case. Settled at install; changing it later means renaming files.
 naming: kebab-case
@@ -34,7 +34,7 @@ folders:
     grouping:
       label: Parts
       property: part
-      groups: []              # one entry per part, a name and a description, as they accrue
+      groups: []              # one entry per part as they accrue: a name, a description, and optionally a default_variant
   - name: assets
     description: "Images, diagrams, and documents the blueprints link to."
 
@@ -46,7 +46,7 @@ properties:
     - { name: id, type: Text, required: true, meaning: "Stable, unique identity, in any form. Assigned once, never changed." }
     - { name: title, type: Text, required: true, meaning: "Human-readable name." }
     - { name: summary, type: Text, meaning: "One line: what this blueprint is. Feeds the index; absent, the index flags it." }
-    - { name: variant, type: Text, meaning: "Which variant this blueprint follows. Absent = the collection's default." }
+    - { name: variant, type: Text, meaning: "Which variant this blueprint follows. Absent = its group's default, else the collection's." }
   # Yours. The seed ships defaults; keep, scope, or drop any of them. Only the grouping is required.
   custom:
     - { name: status, type: Text, applies_to: all, options: [Draft, Outlined, Drafted, Revised, Final, Cut], meaning: "Lifecycle stage." }

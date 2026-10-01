@@ -7,7 +7,7 @@ Does the work. Reads an investigation to answer "what exactly am I testing, how,
 ## How to respond
 
 - **Vocabulary & depth:** full methodological depth — design, sampling, measures, analysis, confounds, power. Be precise, and say when something is underspecified rather than smoothing it over.
-- **Decisions:** clarify and flag, don't decide. The question, the standard of evidence, and what gets published belong to the Framework Owner; surface the gap rather than filling it.
+- **Decisions:** the question, the standard of evidence, and what gets published belong to the owners. A researcher who is one (their **ownership** calibration) makes those calls: bring choices and trade-offs, never resolve an Open Question on their behalf, and press hardest on **Out of Scope**. Otherwise clarify and flag, don't decide; surface the gap rather than filling it.
 - **Surface / hide:** surface Method, Claims & Evidence, What Would Change Our Mind, Dependencies, and Open Questions. Fold away positioning and funding.
 - **Focus:** whether the design can actually answer the Intent; whether a claim's evidence supports it as stated; what would block the work starting.
 

@@ -15,7 +15,7 @@ The starting frameworks Eidos ships. A seed is a root: a complete `.eidos/` (tem
     templates/       #   body templates, <unit>.<variant>.md
     .gitignore       #   keeps me.md, plugins/*/local.yaml, and plugins/*/local/ out of version control
     Framework.yaml   #   the framework document
-    me.md            #   blank; who is in the seat (personal)
+    me.md            #   blank; who is in the seat (local)
   <Collection>/      # every folder Framework.yaml declares, empty but for a .gitkeep
   assets/
   README.md          # the {{Product}} front door

@@ -12,7 +12,7 @@ You edit four keys of `.eidos/Framework.yaml` and nothing else: `top_level`, `fo
 
 A folder, variant, property, or term nobody thought through reads as meaningful while no one knows what it holds. Never invent one; if the owner offers only a name, ask for the rest.
 
-- **A folder:** `name` (in the framework's `naming`), a one-line `description`, and `owned_by` when something governs it: `"@eidos/collections"` for blueprints, `"@<tool>/<kind>"` for a tool's folder (the tool says what goes inside; never invent a kind for it), nothing for a folder the owner just keeps. A collection also needs how it groups (flat, or declared groups) and at least one variant marked default.
+- **A folder:** `name` (in the framework's `naming`), a one-line `description`, and `owned_by` when something governs it: `"@eidos/collections"` for blueprints, `"@<tool>/<kind>"` for a tool's folder (the tool says what goes inside; never invent a kind for it), nothing for a folder the owner just keeps. A collection also needs how it groups (flat, or declared groups) and at least one variant; marking a default is optional.
 - **A variant:** `name` (lowercase: `full`, `micro`, `api`), a one-line `description`, and its template sections.
 - **A property:** `name` (lowercase, underscores), `type` (Text, List, Number, Checkbox, Date, Date & time; anything richer belongs in the body), `applies_to` (`all` or collections), `required` (default to optional), one-line `meaning`, and `options` only when the value is one of a closed set the owner controls, in the order the values run. `variant` and a grouping property never carry `options`.
 - **A term:** `term`, one-line `means`, and `not`: the near-misses, each with why it differs. Press here the way you press on non-goals; a term with nothing in `not` is not worth declaring yet.
@@ -27,9 +27,9 @@ A folder, variant, property, or term nobody thought through reads as meaningful 
 
 ## Adding a folder
 
-1. Decide name, owner, and description with the owner; for a collection, its grouping and default variant too.
+1. Decide name, owner, and description with the owner; for a collection, its grouping and variants too, and which is the default, if any.
 2. Create the folder under the root in the naming convention. For a grouped collection, create each declared group; a group holds blueprints and nothing deeper.
-3. For a collection, create the default variant's template in `.eidos/templates/<unit>.<variant>.md`, body only, patterned on the existing templates.
+3. For a collection, create the default variant's template (the first's, with none marked) in `.eidos/templates/<unit>.<variant>.md`, body only, patterned on the existing templates.
 4. Register it under `folders`:
 
    ```yaml
@@ -49,7 +49,11 @@ A folder, variant, property, or term nobody thought through reads as meaningful 
 1. Decide name, description, and template. A second variant is a lighter one to grow out of or a genuine split in kind, never a fork per category.
 2. Create `.eidos/templates/<unit>.<variant>.md` from the default variant, keeping the order and names of shared sections.
 3. Register it under the collection's `variants`. If it becomes the default, move `default: true` to it alone.
-4. Existing blueprints are untouched; an absent `variant` still means the default.
+4. Existing blueprints are untouched; an absent `variant` still means its group's default, else the collection's.
+
+## Defaults
+
+A collection's default is the variant marked `default: true`; with none marked, it has none. A group may name its own with `default_variant` on its entry under `grouping.groups`, one of the collection's variants; set or clear it as the owner says. Neither touches a blueprint: one without `variant` follows its group's default, else the collection's, and one with neither is a gap `eidos` surfaces. Renaming or removing a variant follows every group that names it.
 
 ## Properties
 

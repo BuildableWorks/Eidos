@@ -12,7 +12,7 @@ A **framework** is the structure (folders, templates, roles, Properties, Vocabul
 
 The owner holds intent, scope, and decisions. Format and structure what they give you, supplement, ask, and press on the template's non-goals. Never invent a blueprint's purpose, generate a whole blueprint from a one-line prompt (when the idea is rough, `iterate` settles it first), resolve open questions for the owner, or bury them in prose. When unsure, ask.
 
-**Read `me.md` first**, then the role contract it names in `.eidos/roles/<role>.md`, and follow it. A framework defines its own roles; read the one that is there rather than assuming a cast. Blank means full, framework-owner-style facilitation; offer `whoami`.
+**Read `me.md` first**, then the role contract it names in `.eidos/roles/<role>.md`, and follow it. A framework defines its own roles; read the one that is there rather than assuming a cast. Blank means full facilitation; offer `whoami`.
 
 **Speak the root's terms.** Write with the declared `vocabulary`. Where the owner's word is a near-miss an entry names, say which term the framework declares and ask; never swap silently. A word they keep using that no entry declares is a candidate for `configure`.
 
@@ -24,15 +24,15 @@ Find the root by its `.eidos/` marker. `Framework.yaml` carries the version, `na
 
 ## Authoring
 
-1. **Place it.** Pick the collection and variant (the default unless the owner chooses). Read that variant's template for the body.
-2. **Frontmatter from the Properties table.** Generate the required properties that apply to the collection; add an optional one only when the owner gives it a value; offer the list where a property has `options`; set `variant` when not the default. Write `summary` now. Name the file for its title in `naming`, with a permanent `id` inside in whatever form the root uses.
+1. **Place it.** Pick the collection and variant: its group's default, else the collection's, unless the owner chooses; with neither, ask. Read that variant's template for the body.
+2. **Frontmatter from the Properties table.** Generate the required properties that apply to the collection; add an optional one only when the owner gives it a value; offer the list where a property has `options`; write the `variant` you resolved. Write `summary` now. Name the file for its title in `naming`, with a permanent `id` inside in whatever form the root uses.
 3. **Body from the template.** Lead with its opening sections, press hardest on non-goals, capture the rest as it surfaces. Where the owner is vague, ask. Link other blueprints and files with relative markdown links, never bare names.
 
 A framing doc is a blueprint like any other, kept loose. A top-level doc has no template, just light frontmatter and an entry under `top_level`; `format` organizes an existing draft.
 
 ## Validating
 
-1. **Frontmatter** against every block of the Properties table: required properties present, optional ones checked only when present, values on `options` properties on the list (surfaced with the list beside them when not), `variant` one of the collection's, a grouping value one of its groups. Keys past the standard's six on a property entry are a tool's; ignore them.
+1. **Frontmatter** against every block of the Properties table: required properties present, optional ones checked only when present, values on `options` properties on the list (surfaced with the list beside them when not), `variant` one of the collection's, a grouping value one of its groups. A group's `default_variant` the collection does not declare is surfaced like an unknown variant; a blueprint without `variant` and no default in its group or collection is a gap. Keys past the standard's six on a property entry are a tool's; ignore them.
 2. **Body** against the blueprint's own variant template, so a lighter variant is not faulted for a fuller one's sections. Report missing sections as suggestions, non-goals first. Flag Vocabulary near-misses with the declared term beside them. Confirm no work-tracking fields, and that approach reads as intent, not progress. Check every link and image path resolves.
 3. **Regions** (`<!-- <tool>:<region> -->` to `<!-- /<tool>:<region> -->`) belong to their tool: leave the contents alone, report an opener with no closer.
 4. **The root** against the framework document: every folder declared under `folders`, every file under `top_level`, and every entry present. Surface anything without its counterpart and offer `configure`. Inside a collection, a non-markdown file is not a blueprint; say nothing. Inside a folder the standard does not own (`owned_by` a tool, or absent), read nothing; a tool's owner is never a fault, only a malformed one or an `@eidos/` kind the standard does not name.

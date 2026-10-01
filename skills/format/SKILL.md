@@ -21,7 +21,7 @@ Tables for structured data, numbered lists for sequences, bullets for enumeratio
 
 ## Two kinds of file
 
-- **A collection blueprint** is reshaped toward its variant's template in `.eidos/templates/` (the collection's default unless the draft's `variant` says otherwise), with frontmatter from `Framework.yaml`.
+- **A collection blueprint** is reshaped toward its variant's template in `.eidos/templates/` (its group's default, else the collection's, unless the draft's `variant` says otherwise; with neither, ask), with frontmatter from `Framework.yaml`.
 - **A top-level doc** has no template. Organize by its own logic, keep the light frontmatter (`title`, `tags`, `date_created`, `date_modified`), and if it has no `top_level` entry yet, hand that back as a gap for `configure`.
 
 No `.eidos/` means offer `install` first; you template toward the framework's real structure, never a guess.

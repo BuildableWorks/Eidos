@@ -48,6 +48,7 @@ If a snapshot is missing, say so. Never fabricate a version's contract.
 
 Full detail in `versions/MIGRATIONS.md`.
 
+- **5.5.0**: a collection with no variant marked `default: true` no longer falls back to its first; mark the first `default: true` in every collection that relied on it. A group may now name its own `default_variant`; nothing sets one. The `.eidos/.gitignore` notes say local where they said personal; offer the new wording, nothing reads it. The framework-owner role leaves the standard; a root that keeps `roles/framework-owner.md`, or a `me.md` naming it, still conforms.
 - **5.4.0**: `type` on a folder entry becomes `owned_by`: `type: collection` is `owned_by: "@eidos/collections"` (quoted; `@` cannot start a plain YAML scalar), `type: assets` and `type: other` drop the key and keep the folder as the owner's. A folder a tool manages may name it, `owned_by: "@<tool>/<kind>"`, only when the tool says so; never invent one. Add `plugins/*/local/` to `.eidos/.gitignore` under `plugins/*/local.yaml`.
 - **5.3.0**: `collections:` becomes `folders:` with `type: collection` on each entry; a folder may also be `assets` or `other`; every folder and file at the root must be declared; every sub-folder of a collection is a declared group. Rename the key, add the type, then walk the root: offer a declaration or a move for anything undeclared, ask before dropping an entry with nothing behind it.
 - **5.2.1**: prose only; bump.

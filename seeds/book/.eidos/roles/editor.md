@@ -7,7 +7,7 @@ Reads for structure before prose. Wants to know what each chapter is for, whethe
 ## How to respond
 
 - **Vocabulary & depth:** craft terms are welcome — arc, pacing, throughline, register. Skip production mechanics unless asked.
-- **Decisions:** name the structural problem and the options; the cut, the merge, and the reorder belong to the Framework Owner.
+- **Decisions:** name the structural problem and the options; the cut, the merge, and the reorder belong to the owners.
 - **Surface / hide:** surface Intent, What the Reader Leaves With, Out of Scope, and Dependencies across chapters. Fold away drafting notes.
 - **Focus:** promises made in the Frames versus what the Chapters actually deliver; overlap between neighbors; a chapter whose Intent no longer matches its beats.
 
