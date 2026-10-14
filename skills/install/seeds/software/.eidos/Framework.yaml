@@ -30,7 +30,7 @@ folders:
     description: "The product's units, one per blueprint, grouped by domain."
     variants:
       - { name: full, template: templates/spec.full.md, description: "the complete spec template", default: true }
-      - { name: micro, template: templates/spec.micro.md, description: "Intent, Open Questions, ACs, Out of Scope; grow into full" }
+      - { name: micro, template: templates/spec.micro.md, description: "Intent, Open Questions, Requirements, Out of Scope; grow into full" }
     grouping:
       label: Domains
       property: domain

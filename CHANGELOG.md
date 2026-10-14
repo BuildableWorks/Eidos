@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 **Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your Eidos folders need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
+## [5.5.1] - 2026-10-14 — Standard: unchanged
+
+**The software seed's specs read as records of intent.** A spec says what one unit of the product is and must do, whether or not it is built, but the seed's template still read like a ticket: acceptance criteria to tick, Implementation Notes on how it would be built, a Testing plan, and Out of Scope prompted as non-goals. A spec shown to someone who was not in the room read as a work item. The two spec templates now ask for Requirements, labelled `**REQ1:**` from 1 in every spec, and drop the sections about building it. The standard's text does not move; `eidos_version` in the seeds stays 5.5.0.
+
+### Changed
+
+- **Behaviors & Acceptance Criteria is Requirements,** in `spec.full` and `spec.micro`. Each is labelled `**REQ1:**`, `**REQ2:**`, …, starting at 1 in every spec and running in order with no gaps, so a requirement is cited as a spec and a label (`sign-in.md#req6`).
+- **Implementation Notes and Testing leave `spec.full`.** How a unit is built and how it is verified belong to the work and the code, not to the record of what it is.
+- **Constraints & Decisions is Decisions.** A hard limit is a requirement, under Design or Quality attributes; the section keeps the append-only log of the calls that shaped the spec.
+- **Out of Scope and Dependencies are concrete.** Out of Scope names each neighbouring concern a reader might expect and links where another spec holds it; Dependencies says what each one is relied on for, a relationship and never an order of work.
+- **Intent stands on its own,** and a section with nothing to say is deleted rather than left empty.
+- **The Developer and Designer roles** point at Requirements and the REQ labels, and the `micro` variant's description in `Framework.yaml` names Requirements.
+
+### Upgrading a root
+
+Nothing breaks: a root's templates are its own, and existing specs conform as they stand. To adopt the new shape, copy the two templates over the root's, then in each spec rename the headings and relabel `**ACn:**` as `**REQn:**` (renumbering from 1 where a spec's labels had gaps, and updating any link to an old label). Move Implementation Notes and Testing out to the work they describe, and a constraint into Requirements. The section and label names are the seed's, not the standard's, so a root may keep the old ones.
+
 ## [5.5.0] - 2026-09-30 — Standard: 5.5.0
 
 **The standard moves to 5.5.0: a group can name its own default variant.** A collection named one default for every group in it, so a group whose blueprints nearly all take a lighter template still started each new one on the collection's. A group entry now carries an optional `default_variant`, one of the collection's variants, and a blueprint without `variant` follows its group's default, else the collection's. A collection with no variant marked `default: true` no longer falls back to its first: it has none, and whoever scaffolds picks. The same release says local, never personal, for the files kept on one machine, and retires the Framework Owner from the standard: the people who own the product hold intent, scope, and decisions, and which people those are is a tool's business. The hop marks a default where a collection relied on the fallback; `versions/v5.5.0.md` is the snapshot.
