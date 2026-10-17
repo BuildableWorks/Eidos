@@ -14,7 +14,7 @@ A folder, variant, property, or term nobody thought through reads as meaningful 
 
 - **A folder:** `name` (in the framework's `naming`), a one-line `description`, and `owned_by` when something governs it: `"@eidos/collections"` for blueprints, `"@<tool>/<kind>"` for a tool's folder (the tool says what goes inside; never invent a kind for it), nothing for a folder the owner just keeps. A collection also needs how it groups (flat, or declared groups) and at least one variant; marking a default is optional.
 - **A variant:** `name` (lowercase: `full`, `micro`, `api`), a one-line `description`, and its template sections.
-- **A property:** `name` (lowercase, underscores), `type` (Text, List, Number, Checkbox, Date, Date & time; anything richer belongs in the body), `applies_to` (`all` or collections), `required` (default to optional), one-line `meaning`, and `options` only when the value is one of a closed set the owner controls, in the order the values run. `variant` and a grouping property never carry `options`.
+- **A property:** `name` (lowercase, underscores), `type` (Text, List, Number, Checkbox, Date, Date & time, or Object for a mapping a tool writes; anything richer belongs in the body), `applies_to` (`all` or collections), `required` (default to optional), one-line `meaning`, and `options` only when the value is one of a closed set the owner controls, in the order the values run. `variant` and a grouping property never carry `options`.
 - **A term:** `term`, one-line `means`, and `not`: the near-misses, each with why it differs. Press here the way you press on non-goals; a term with nothing in `not` is not worth declaring yet.
 
 ## Boundaries

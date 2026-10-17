@@ -1,7 +1,7 @@
 # The framework document: the structure this root is written in. See EIDOS.md for what each key means;
 # the `eidos` CLI edits this file. Every path is relative to this folder.
 
-eidos_version: 5.5.0
+eidos_version: 5.6.0
 
 # kebab-case | TitleCase | Title Case. Settled at install; changing it later means renaming files.
 naming: kebab-case
@@ -48,10 +48,11 @@ properties:
     - { name: summary, type: Text, meaning: "One line: what this blueprint is. Feeds the index; absent, the index flags it." }
     - { name: variant, type: Text, meaning: "Which variant this blueprint follows. Absent = its group's default, else the collection's." }
   # Yours. The seed ships defaults; keep, scope, or drop any of them. Only the grouping is required.
+  # `eidosmd: { new: today }` is the eidos CLI's key, which the standard reads past: `eidos new` fills the date as it scaffolds a blueprint.
   custom:
     - { name: status, type: Text, applies_to: all, options: [Draft, Intake, In Progress, Done, Archived, Deprecated], meaning: "Lifecycle stage." }
-    - { name: date_created, type: Date, applies_to: all, meaning: "YYYY-MM-DD. Set once." }
-    - { name: date_modified, type: Date, applies_to: all, meaning: "YYYY-MM-DD. The last change." }
+    - { name: date_created, type: Date, applies_to: all, meaning: "YYYY-MM-DD. Set once.", eidosmd: { new: today } }
+    - { name: date_modified, type: Date, applies_to: all, meaning: "YYYY-MM-DD. The last change.", eidosmd: { new: today } }
     - { name: tags, type: List, applies_to: all, meaning: "Free tags." }
     - { name: domain, type: Text, required: true, applies_to: [Specs], meaning: "The group: matches the blueprint's sub-folder. An unknown value warns." }
     - { name: depends_on, type: List, applies_to: [Specs], meaning: "Blueprints this one needs, each a markdown link." }

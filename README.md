@@ -5,7 +5,7 @@
 > [!IMPORTANT]
 > **Docs live at [eidosmd.com](https://eidosmd.com).** This repository holds the standard ([`EIDOS.md`](EIDOS.md)), the seeds, and a Claude plugin of skills. To *use* Eidos, install the CLI: `npm install -g eidosmd`, then `eidos instructions`. The skills are for hosts with no shell (Claude Desktop chat, the web, Cowork).
 
-## **[Eidos v5.5.0](EIDOS.md)**, the standard
+## **[Eidos v5.6.0](EIDOS.md)**, the standard
 
 Eidos defines a product in markdown: an app, a book, a study, anything work produces that has a shape. One file is the complete source of truth for one unit of the product, as true of something planned as of something long shipped. The files live in your repo beside the code; the structure they follow is data in a hidden `.eidos/` folder a tool can check against. No SaaS, no lock-in, nothing outside the repo.
 

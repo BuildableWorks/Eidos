@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 **Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your Eidos folders need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
+## [5.6.0] - 2026-10-16 — Standard: 5.6.0
+
+**The standard moves to 5.6.0: a property can hold an Object.** A tool that writes structured data back into a blueprint's frontmatter, such as a connector recording where it published the file (`teams: { activity_id: "1787161550876", channel_id: "19:abc@thread.tacv2" }`), had no type to declare it under: the six types are all single values or flat lists, so the block was declared as Text and warned on every file that carried it. Object joins the type list, a mapping whose values are scalars, lists, or further mappings. The same release closes the type list: a type name outside it was read as Text and never reported, and is now a fault. The seeds' date rows carry the eidos CLI's `eidosmd: { new: today }`, so a root installed from a seed keeps getting its dates on `eidos new`. The hop is additive; `versions/v5.6.0.md` is the snapshot.
+
+### Added
+
+- **The Object type.** A YAML mapping whose values are scalars, lists, or further mappings. The standard declares no keys inside it: what they mean is the owner's, or the tool's that writes them. `options` on an Object is a fault, as an empty list is. A required Object is present when it holds at least one key; absent, null, or `{}` is empty, surfaced like any required property with no value, and an optional one empty is nothing.
+- **`eidosmd: { new: today }` on the seeds' `date_created` and `date_modified` rows,** with a comment naming it the eidos CLI's key. The standard reads past it, as it reads past any key a tool puts on a row; the CLI fills the date from it when it scaffolds a blueprint, where it used to fill those two names whatever the root declared.
+
+### Changed
+
+- **A type outside the list is a fault.** Type names match in any case, so `type: Object` and `type: object` read the same. The Validating bullet for an agent checks each value against its type and the type against the list, and `configure` offers Object for a mapping a tool writes. `eidos_version` in every seed is 5.6.0; the `eidos` CLI needs a sync and a release of its own.
+
+### Upgrading a root
+
+Set `eidos_version: 5.6.0`. A root that already declared `type: Object` keeps working unchanged. A row with any other type the list does not name (`Map`, `JSON`) is now a fault: change it to the nearest of the seven. A root scaffolded with the eidos CLI that wants its dates filled on `eidos new` adds `eidosmd: { new: today }` to those rows.
+
 ## [5.5.1] - 2026-10-14 — Standard: unchanged
 
 **The software seed's specs read as records of intent.** A spec says what one unit of the product is and must do, whether or not it is built, but the seed's template still read like a ticket: acceptance criteria to tick, Implementation Notes on how it would be built, a Testing plan, and Out of Scope prompted as non-goals. A spec shown to someone who was not in the room read as a work item. The two spec templates now ask for Requirements, labelled `**REQ1:**` from 1 in every spec, and drop the sections about building it. The standard's text does not move; `eidos_version` in the seeds stays 5.5.0.
