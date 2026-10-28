@@ -1,0 +1,15 @@
+{
+  "name": "eidos-standard",
+  "private": true,
+  "type": "module",
+  "description": "Checks for the Eidos standard: a Framework.yaml validated against the schema EIDOS.md defines.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "check:frameworks": "node scripts/check-frameworks.mjs",
+    "test": "node --test scripts/check-frameworks.test.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "yaml": "^2.8.0"
+  }
+}

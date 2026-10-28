@@ -1,6 +1,6 @@
 # {{Product}}
 
-> **Start here.** This is the root for **{{Product}}** — the source of truth for what this
+> **Start here.** This is the project for **{{Product}}** — the source of truth for what this
 > book is, chapter by chapter, true whether or not a word of it is drafted.
 
 {{One line: what the book says, and who it is for.}}
@@ -24,4 +24,4 @@ A chapter here describes what the chapter **is**: why it exists, what happens in
 reader leaves with. It is not a draft and not a task. Write the chapter's blueprint before the prose,
 and keep it true after — a chapter you cut stays here, marked `Cut`, so the reasoning survives.
 
-_A root. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.yaml`](.eidos/Framework.yaml) for the full index._
+_An Eidos project. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.yaml`](.eidos/Framework.yaml) for the full index._

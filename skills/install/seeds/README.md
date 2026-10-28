@@ -1,6 +1,6 @@
 # Seeds
 
-The starting frameworks Eidos ships. A seed is a root: a complete `.eidos/` (templates, roles, `Framework.yaml`, `me.md`, `.gitignore`), every folder it declares, and a `README.md`. It is exactly what `eidos init` produces from it, so it can be checked in place and published to the Eidos Registry as a package by path (`seeds/software` and so on). `eidos init` installs the one you pick. Reshape it from there.
+The starting frameworks Eidos ships. A seed is a project: a complete `.eidos/` (templates, roles, `Framework.yaml`, `me.md`, `.gitignore`), every folder it declares, and a `README.md`. It is exactly what `eidos init` produces from it, so it can be checked in place and published to the Eidos Registry as a package by path (`seeds/software` and so on). `eidos init` installs the one you pick. Reshape it from there.
 
 | Seed | For | Folders |
 | --- | --- | --- |

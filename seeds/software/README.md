@@ -1,6 +1,6 @@
 # {{Product}}
 
-> **Start here.** This is the root for **{{Product}}** — the source of truth for what the
+> **Start here.** This is the project for **{{Product}}** — the source of truth for what the
 > product is, true whether or not it's been built.
 
 This README is the front door. The full index and config live in
@@ -22,4 +22,4 @@ _Your own one-of-a-kind docs: a Vision, a set of Design Principles, the generate
 
 ---
 
-_A root. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.yaml`](.eidos/Framework.yaml) for the full index. `eidos index` keeps the index current._
+_An Eidos project. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.yaml`](.eidos/Framework.yaml) for the full index. `eidos index` keeps the index current._

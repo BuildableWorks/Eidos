@@ -1,0 +1,17 @@
+# No eidos_version, a naming outside the three, a 4.x key, a top-level doc with no description, a template off its pattern, and the reserved tool name.
+naming: snake_case
+collections: []
+top_level:
+  - { title: README, path: ../README.md }
+folders:
+  - name: specs
+    owned_by: "@eidos/collections"
+    description: the product's specs
+    variants:
+      - { name: full, template: shapes/Spec.Full.md }
+properties:
+  tools:
+    eidos:
+      - { name: x, type: Text, meaning: reserved }
+vocabulary:
+  - { term: project, means: "", not: "a root" }

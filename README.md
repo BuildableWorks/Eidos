@@ -5,7 +5,7 @@
 > [!IMPORTANT]
 > **Docs live at [eidosmd.com](https://eidosmd.com).** This repository holds the standard ([`EIDOS.md`](EIDOS.md)), the seeds, and a Claude plugin of skills. To *use* Eidos, install the CLI: `npm install -g eidosmd`, then `eidos instructions`. The skills are for hosts with no shell (Claude Desktop chat, the web, Cowork).
 
-## **[Eidos v5.6.0](EIDOS.md)**, the standard
+## **[Eidos v5.7.0](EIDOS.md)**, the standard
 
 Eidos defines a product in markdown: an app, a book, a study, anything work produces that has a shape. One file is the complete source of truth for one unit of the product, as true of something planned as of something long shipped. The files live in your repo beside the code; the structure they follow is data in a hidden `.eidos/` folder a tool can check against. No SaaS, no lock-in, nothing outside the repo.
 
@@ -17,10 +17,10 @@ Eidos is **human-first**: the people who own the product hold intent, scope, and
 
 Three words. A **product** is what you define. A **framework** is the structure you write it in: folders, templates, properties, vocabulary, roles. A **blueprint** is one unit of the product, one file, frontmatter plus body. One framework governs any number of blueprints.
 
-It all lives in one folder, the **root**:
+It all lives in one folder, the **project**:
 
 ```txt
-Blueprints/              # the root; any name works
+Blueprints/              # the project; any name works
   .eidos/                # the framework
     plugins/<name>/      #   a tool's own folder
     roles/               #   how the agent talks to each role
@@ -33,7 +33,7 @@ Blueprints/              # the root; any name works
   <Doc>.md               # a one-of-a-kind doc, listed in the framework
 ```
 
-Every folder and file at the root is declared in `Framework.yaml`, so a reader never asks what something is. A collection's blueprints follow one of its **templates** (a collection may offer several **variants**), carry the framework's **properties** in frontmatter (four from Eidos: `id`, `title`, `summary`, `variant`; the rest are yours), and use the framework's **vocabulary**.
+Every folder and file at the top of the project is declared in `Framework.yaml`, so a reader never asks what something is. A collection's blueprints follow one of its **templates** (a collection may offer several **variants**), carry the framework's **properties** in frontmatter (four from Eidos: `id`, `title`, `summary`, `variant`; the rest are yours), and use the framework's **vocabulary**.
 
 The standard names none of it. The [seeds](seeds) show the same machinery answering to three vocabularies:
 
@@ -72,11 +72,11 @@ For hosts with no shell. Eidos ships as a Claude plugin of eight skills:
 | `eidos`     | author and validate blueprints                                         |
 | `iterate`   | question one rough idea until it holds still; writes nothing           |
 | `format`    | reshape a rough draft into Eidos form                                  |
-| `install`   | scaffold a new root from a seed                                        |
+| `install`   | scaffold a new project from a seed                                     |
 | `configure` | add a folder, variant, property, or term; keep the framework document current |
 | `index`     | regenerate the index                                                   |
 | `whoami`    | set your role in `me.md`                                               |
-| `migrate`   | move a root to a new version of the standard                           |
+| `migrate`   | move a project to a new version of the standard                        |
 
 **Claude Code:** `/plugin marketplace add BuildableWorks/Eidos`, then `/plugin install eidos@eidos`. For a local clone: `claude --plugin-dir /path/to/eidos`.
 
@@ -86,17 +86,21 @@ Three skills (`eidos`, `install`, `migrate`) carry committed copies of `EIDOS.md
 
 ## Seeds
 
-[`seeds/`](seeds) holds the starting frameworks: [`software`](seeds/software) (the default), [`book`](seeds/book), and [`research`](seeds/research). Each is a root as `eidos init` would produce it: a complete `.eidos/` (templates, roles, `Framework.yaml`, `me.md`, `.gitignore`), its declared folders, and a `README.md`, publishable to the Registry as a package by path. A seed is a starting point, not a cage: add a property, adjust a template, retune a role, none of it forks the standard.
+[`seeds/`](seeds) holds the starting frameworks: [`software`](seeds/software) (the default), [`book`](seeds/book), and [`research`](seeds/research). Each is a project as `eidos init` would produce it: a complete `.eidos/` (templates, roles, `Framework.yaml`, `me.md`, `.gitignore`), its declared folders, and a `README.md`, publishable to the Registry as a package by path. A seed is a starting point, not a cage: add a property, adjust a template, retune a role, none of it forks the standard.
+
+## Checking a framework
+
+[`schema/framework.schema.yaml`](schema/framework.schema.yaml) is what `EIDOS.md` says a `Framework.yaml` holds, written as a JSON Schema (draft 2020-12) in YAML and applied to the parsed file, so a framework stays YAML. `npm install`, then `npm run check:frameworks` checks every seed, or `npm run check:frameworks -- path/to/.eidos/Framework.yaml` checks any framework: each fault is printed with its file, its line, and its YAML path, and the command exits 1 on any. `npm test` runs it against the seeds and the broken copies in `test/fixtures/broken/`. Each release's schema is frozen beside its standard in `versions/`.
 
 ## Versioning
 
 Three things version separately, all [SemVer](https://semver.org/):
 
-- **The standard**: the version in `EIDOS.md`, recorded by a root as `eidos_version`. Moves only when the text moves. Each release is frozen in [`versions/`](versions/), with upgrade paths in [`MIGRATIONS.md`](versions/MIGRATIONS.md).
+- **The standard**: the version in `EIDOS.md`, recorded by a project as `eidos_version`. Moves only when the text moves. Each release is frozen in [`versions/`](versions/), with upgrade paths in [`MIGRATIONS.md`](versions/MIGRATIONS.md).
 - **The plugin**: `.claude-plugin/plugin.json`. Moves on every shipped release; tagged `vX.Y.Z`.
 - **The CLI**: its own repo and npm. Each release names the standard it ships.
 
-[`CHANGELOG.md`](CHANGELOG.md) tracks plugin releases and the standard each one ships; *Standard: unchanged* means your roots need nothing.
+[`CHANGELOG.md`](CHANGELOG.md) tracks plugin releases and the standard each one ships; *Standard: unchanged* means your projects need nothing.
 
 ## License
 

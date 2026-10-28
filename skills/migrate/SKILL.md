@@ -1,12 +1,12 @@
 ---
 name: migrate
 description: >-
-  Migrate a root from one version of the Eidos standard to another: "migrate our specs to Eidos 5.3", "we bumped the standard, update the folder", "these specs are on the old format". Migrations are non-sequential: diff the source and target snapshots directly and apply the net change.
+  Migrate a project (a root) from one version of the Eidos standard to another: "migrate our specs to Eidos 5.3", "we bumped the standard, update the folder", "these specs are on the old format". Migrations are non-sequential: diff the source and target snapshots directly and apply the net change.
 ---
 
 # Eidos Migrate
 
-A migration is a diff between two standard snapshots, applied to the root. Go straight from the source to the target; never step through intermediate versions.
+A migration is a diff between two standard snapshots, applied to the project. Go straight from the source to the target; never step through intermediate versions.
 
 ## Facilitate, don't bulldoze
 
@@ -20,7 +20,7 @@ Committed copies in this folder, synced by `scripts/sync-skills.sh`:
 - `versions/MIGRATIONS.md`: the worked hop for each release, newest first. Read the ones spanning your endpoints.
 - `versions/README.md`: one line per release, for finding the source by its fingerprint.
 - `EIDOS.md`: the current standard, the usual target.
-- `seeds/`: for a pre-3.0 root that needs a framework installed.
+- `seeds/`: for a pre-3.0 project that needs a framework installed.
 
 If a snapshot is missing, say so. Never fabricate a version's contract.
 
@@ -28,14 +28,14 @@ If a snapshot is missing, say so. Never fabricate a version's contract.
 
 1. **Target.** The current `EIDOS.md` unless told otherwise.
 
-2. **Source.** Read the version from the framework document: `.eidos/Framework.yaml` (5.0.0+), `_eidos/Framework.md` (4.2 to 4.7), `_eidos/Registry.md` (4.1), `.eidos/Registry.md` (3.0 to 4.0). Pre-3.0 roots have no structure directory; fingerprint the files (`last_validated` and `## Behavior` are 1.x; `created`/`modified` with `AC{n}` labels are 2.x) and confirm with the owner. `versions/README.md` has the rest.
+2. **Source.** Read the version from the framework document: `.eidos/Framework.yaml` (5.0.0+), `_eidos/Framework.md` (4.2 to 4.7), `_eidos/Registry.md` (4.1), `.eidos/Registry.md` (3.0 to 4.0). Pre-3.0 projects have no structure directory; fingerprint the files (`last_validated` and `## Behavior` are 1.x; `created`/`modified` with `AC{n}` labels are 2.x) and confirm with the owner. `versions/README.md` has the rest.
 
-3. **Diff the snapshots** across four concerns: the structure layer (its name and files), properties (added, removed, renamed, re-valued), templates (sections renamed, merged, split, added, removed), and layout (root, folders, generated files). Diffing the endpoints resolves a field renamed twice to its net state on its own.
+3. **Diff the snapshots** across four concerns: the structure layer (its name and files), properties (added, removed, renamed, re-valued), templates (sections renamed, merged, split, added, removed), and layout (the project, folders, generated files). Diffing the endpoints resolves a field renamed twice to its net state on its own.
 
 4. **Write the plan**: each transform per concern, and every point needing a human decision. Show it before touching files.
 
 5. **Apply, in order.**
-   - The structure layer first. A root with none gets a seed installed whole (ask which; across a device bridge, send the files with the file-delivery tool in one call, never re-typed or archived). A root with one has its directory and document renamed to the target's names, then only the standard's core block rewritten.
+   - The structure layer first. A project with none gets a seed installed whole (ask which; across a device bridge, send the files with the file-delivery tool in one call, never re-typed or archived). A project with one has its directory and document renamed to the target's names, then only the standard's core block rewritten.
    - Each blueprint: map frontmatter onto the target's Properties, drop removed fields after surfacing their content, add newly required ones as stubs, restructure the body to the target variant's template with new sections as flagged empty stubs.
    - Structural changes across the folder (renamed keys, moved folders).
    - Set `eidos_version` in the framework document.
@@ -48,6 +48,7 @@ If a snapshot is missing, say so. Never fabricate a version's contract.
 
 Full detail in `versions/MIGRATIONS.md`.
 
+- **5.7.0**: prose only; a root is now called a project, and nothing a project holds changes. Bump; offer to refresh the seed's comments in `Framework.yaml` where they still read as the 5.6.0 seed wrote them.
 - **5.6.0**: additive. Object joins the property types; `options` on one is a fault. A row with a type outside the seven (matched in any case) is now a fault: offer the nearest, Object for a mapping, and ask. Offer `eidosmd: { new: today }` on the date rows of a root that uses the eidos CLI.
 - **5.5.0**: a collection with no variant marked `default: true` no longer falls back to its first; mark the first `default: true` in every collection that relied on it. A group may now name its own `default_variant`; nothing sets one. The `.eidos/.gitignore` notes say local where they said personal; offer the new wording, nothing reads it. The framework-owner role leaves the standard; a root that keeps `roles/framework-owner.md`, or a `me.md` naming it, still conforms.
 - **5.4.0**: `type` on a folder entry becomes `owned_by`: `type: collection` is `owned_by: "@eidos/collections"` (quoted; `@` cannot start a plain YAML scalar), `type: assets` and `type: other` drop the key and keep the folder as the owner's. A folder a tool manages may name it, `owned_by: "@<tool>/<kind>"`, only when the tool says so; never invent one. Add `plugins/*/local/` to `.eidos/.gitignore` under `plugins/*/local.yaml`.

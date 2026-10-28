@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 **Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your Eidos folders need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
+## [5.7.0] - 2026-10-28 — Standard: 5.7.0
+
+**The standard moves to 5.7.0: a root is called a project.** Root named the folder Eidos lives in by where it sits in a file tree, and to a person opening it the word said nothing about the work done there. Eidos is for working on a product, so the folder is a project: the term in the Terms table, the layout, the rules, and the guidance for an agent say project, with the same meaning. Nothing on disk is renamed, so every root on 5.6.0 is a conforming project as it stands. The hop is prose only; `versions/v5.7.0.md` is the snapshot.
+
+### Changed
+
+- **Root is project.** The Terms table names the project ("Called a root before 5.7.0"), and folder, top-level doc, and plugin are defined against it. The layout rule and rule 21 read "Everything at the top of the project is declared", rule 2 "The project owns its framework", and the agent finds the project by `.eidos/` and speaks the project's declared terms. The `top_level`, `folders`, `vocabulary`, and `index` descriptions follow.
+- **The seeds say project.** The comments in each seed's `Framework.yaml`, its `README.md` ("This is the project for {{Product}}"), and its roles note; `eidos_version` in every seed is 5.7.0.
+- **A framework can be checked against the standard.** `schema/framework.schema.yaml` writes what EIDOS.md says a `Framework.yaml` holds as a JSON Schema in YAML, each rule quoting its section, and `npm run check:frameworks` applies it to the parsed YAML, every seed by default or any framework named, printing each fault with its file, line, and YAML path. The framework stays YAML. `versions/v5.7.0.schema.yaml` is the frozen copy.
+- **The skills say project.** Each skill's description names a project and keeps "root" beside it (`a project's (a root's) framework`), so what people already ask for still finds the skill. The `migrate` skill fingerprints 5.7.0.
+
+### Upgrading a root
+
+Set `eidos_version: 5.7.0`. Nothing else has to move. A project whose `Framework.yaml` still carries the 5.6.0 seed comments word for word may take the new ones; its README, roles, and blueprints are its own. The `eidos` CLI needs a sync and a release of its own.
+
 ## [5.6.0] - 2026-10-16 — Standard: 5.6.0
 
 **The standard moves to 5.6.0: a property can hold an Object.** A tool that writes structured data back into a blueprint's frontmatter, such as a connector recording where it published the file (`teams: { activity_id: "1787161550876", channel_id: "19:abc@thread.tacv2" }`), had no type to declare it under: the six types are all single values or flat lists, so the block was declared as Text and warned on every file that carried it. Object joins the type list, a mapping whose values are scalars, lists, or further mappings. The same release closes the type list: a type name outside it was read as Text and never reported, and is now a fault. The seeds' date rows carry the eidos CLI's `eidosmd: { new: today }`, so a root installed from a seed keeps getting its dates on `eidos new`. The hop is additive; `versions/v5.6.0.md` is the snapshot.

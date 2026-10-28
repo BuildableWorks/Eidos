@@ -1,7 +1,7 @@
 ---
 name: index
 description: >-
-  Rebuild the generated `index` key in a root's `.eidos/Framework.yaml`, one list per collection, so a human or agent finds a blueprint without scraping the tree. Use for "regenerate the index", "reindex the blueprints", "the index is stale", or after blueprints are added, renamed, moved, or removed. Runs `eidos index` where there is a shell; does the walk by hand otherwise. Regenerable, never gates.
+  Rebuild the generated `index` key in a project's (a root's) `.eidos/Framework.yaml`, one list per collection, so a human or agent finds a blueprint without scraping the tree. Use for "regenerate the index", "reindex the blueprints", "the index is stale", or after blueprints are added, renamed, moved, or removed. Runs `eidos index` where there is a shell; does the walk by hand otherwise. Regenerable, never gates.
 ---
 
 # Eidos Index

@@ -1,0 +1,5 @@
+# A property whose type is not one of the seven.
+eidos_version: 5.7.0
+properties:
+  custom:
+    - { name: teams, type: Map, applies_to: all, meaning: where the file was published }

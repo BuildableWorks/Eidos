@@ -1,0 +1,6 @@
+# An empty options list, and options on an Object.
+eidos_version: 5.7.0
+properties:
+  custom:
+    - { name: status, type: Text, applies_to: all, options: [], meaning: where it stands }
+    - { name: teams, type: object, applies_to: all, options: [a], meaning: where it was published }

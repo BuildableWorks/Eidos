@@ -9,3 +9,6 @@ dist/
 
 # Python bytecode
 __pycache__/
+
+# Node dependencies of the framework check (npm install)
+node_modules/

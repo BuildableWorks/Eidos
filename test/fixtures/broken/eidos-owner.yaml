@@ -1,0 +1,9 @@
+# An @eidos/ kind the standard does not name, a malformed owner, and variants on a folder that is not a collection.
+eidos_version: 5.7.0
+folders:
+  - { name: assets, owned_by: "@eidos/assets", description: images }
+  - { name: canvas, owned_by: "canvas", description: boards }
+  - name: notes
+    description: the owner's own
+    variants:
+      - { name: full, template: templates/note.full.md }

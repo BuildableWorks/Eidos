@@ -81,6 +81,7 @@ zip -rqX "$out" . \
      '.claude/*' \
      '.obsidian/*' \
      'dist/*' \
+     'node_modules/*' \
      '*.DS_Store' '*/.DS_Store'
 
 size=$(du -h "$out" | cut -f1 | tr -d '[:space:]')

@@ -1,7 +1,7 @@
 ---
 name: whoami
 description: >-
-  Set or update who you are in a root: your role and calibration, written to your local `.eidos/me.md`. Use for "set my user", "I'm the designer", "change my role", "the AI is talking over my head", "it's explaining things I already know", or when `me.md` is blank or absent. Offers the roles the framework installed, calibrates the chosen one on three axes, and writes the file. Local and gitignored; the agent reads it before acting.
+  Set or update who you are in a project (a root): your role and calibration, written to your local `.eidos/me.md`. Use for "set my user", "I'm the designer", "change my role", "the AI is talking over my head", "it's explaining things I already know", or when `me.md` is blank or absent. Offers the roles the framework installed, calibrates the chosen one on three axes, and writes the file. Local and gitignored; the agent reads it before acting.
 ---
 
 # Eidos Whoami

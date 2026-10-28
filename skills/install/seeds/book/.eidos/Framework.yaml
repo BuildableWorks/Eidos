@@ -1,18 +1,18 @@
-# The framework document: the structure this root is written in. See EIDOS.md for what each key means;
+# The framework document: the structure this project is written in. See EIDOS.md for what each key means;
 # the `eidos` CLI edits this file. Every path is relative to this folder.
 
-eidos_version: 5.6.0
+eidos_version: 5.7.0
 
 # kebab-case | TitleCase | Title Case. Settled at install; changing it later means renaming files.
 naming: kebab-case
 
-# Every file at the root, one entry each.
+# Every file at the top of the project, one entry each.
 top_level:
   - title: README
     path: ../README.md
-    description: "the root's front door: what this book is, and pointers in."
+    description: "the project's front door: what this book is, and pointers in."
 
-# Every folder at the root, one entry each. `owned_by` names what governs it: "@eidos/collections" for
+# Every folder at the top of the project, one entry each. `owned_by` names what governs it: "@eidos/collections" for
 # blueprints, "@<tool>/<kind>" for a tool's own folder. Absent, the folder is yours and nothing reads it.
 folders:
   # The framing docs: what every other blueprint is judged against. One left unwritten is a gap to surface,
@@ -57,6 +57,6 @@ properties:
     - { name: part, type: Text, required: true, applies_to: [Chapters], meaning: "The group: matches the blueprint's sub-folder. An unknown value warns." }
     - { name: depends_on, type: List, applies_to: [Chapters], meaning: "Chapters a reader must have read first, each a markdown link." }
 
-# The root's own terms: term, means, not (the near-misses and why), and see (the blueprint that defines it).
+# The project's own terms: term, means, not (the near-misses and why), and see (the blueprint that defines it).
 # Starts empty; Eidos declares none.
 vocabulary: []

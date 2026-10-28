@@ -1,7 +1,7 @@
 ---
 name: configure
 description: >-
-  Configure a root's framework in `.eidos/Framework.yaml`: its folders (collections with their variants, and any folder a tool or the owner holds), its Properties table, its Vocabulary, and its top-level index. Use to add a folder ("add a Decisions folder", "add an images folder"), add or change a variant ("add a micro spec template", "make spec.full the default"), add, rename, or retire a custom property and backfill it ("add a `team` field to every spec"), declare, rename, or retire a term ("a team member is not staff, write that down"), or refresh the root's declarations ("the Framework is out of date"). It does not author blueprints (`eidos`), build the index (`index`), or touch the Eidos core properties (`migrate`).
+  Configure a project's (a root's) framework in `.eidos/Framework.yaml`: its folders (collections with their variants, and any folder a tool or the owner holds), its Properties table, its Vocabulary, and its top-level index. Use to add a folder ("add a Decisions folder", "add an images folder"), add or change a variant ("add a micro spec template", "make spec.full the default"), add, rename, or retire a custom property and backfill it ("add a `team` field to every spec"), declare, rename, or retire a term ("a team member is not staff, write that down"), or refresh the project's declarations ("the Framework is out of date"). It does not author blueprints (`eidos`), build the index (`index`), or touch the Eidos core properties (`migrate`).
 ---
 
 # Eidos Configure
@@ -20,7 +20,7 @@ A folder, variant, property, or term nobody thought through reads as meaningful 
 ## Boundaries
 
 - **Never touch** `properties.core` (the standard's; `migrate`), any `properties.tools.<tool>` block or tool key on an entry (that tool's; carry them across unchanged), `.eidos/plugins/`, the `index` key (`index`), or blueprint bodies (`eidos`).
-- **Needs a framework.** No `.eidos/` means offer `install`. A root on `Framework.md` (before 5.0.0) means offer `migrate`.
+- **Needs a framework.** No `.eidos/` means offer `install`. A project on `Framework.md` (before 5.0.0) means offer `migrate`.
 - **Read `me.md` first** and tune how you facilitate to the role.
 - **Templates are the owner's.** Scaffold a starting point by trimming the collection's default variant; let the owner shape it.
 - **Never silently drop values.** Renaming or retiring a property or narrowing its `options` touches real blueprints. Surface what is there first.
@@ -28,7 +28,7 @@ A folder, variant, property, or term nobody thought through reads as meaningful 
 ## Adding a folder
 
 1. Decide name, owner, and description with the owner; for a collection, its grouping and variants too, and which is the default, if any.
-2. Create the folder under the root in the naming convention. For a grouped collection, create each declared group; a group holds blueprints and nothing deeper.
+2. Create the folder in the project in the naming convention. For a grouped collection, create each declared group; a group holds blueprints and nothing deeper.
 3. For a collection, create the default variant's template (the first's, with none marked) in `.eidos/templates/<unit>.<variant>.md`, body only, patterned on the existing templates.
 4. Register it under `folders`:
 
@@ -86,9 +86,9 @@ Report the blueprints touched every time.
 
 **Retire:** surface where the term is used and ask whether the distinction or just the word is going. Remove the entry; the blueprints keep their text.
 
-## Refreshing the root's declarations
+## Refreshing the project's declarations
 
-1. List every file at the root (any extension) against `top_level`, and every folder against `folders`. Hidden entries (`.gitignore`, `.obsidian/`) are the host's and are not listed.
+1. List every file at the top of the project (any extension) against `top_level`, and every folder against `folders`. Hidden entries (`.gitignore`, `.obsidian/`) are the host's and are not listed.
 2. For a file with no entry, add one with an empty `description` and ask; never invent a description. For a folder with no entry, ask its description and whether a tool owns it. For an entry whose file or folder is gone, tell the owner before dropping it; they may want the thing back rather than the entry.
 3. Keep the owner's existing descriptions. Report what was added, what pointed at nothing, and what still needs a description.
 

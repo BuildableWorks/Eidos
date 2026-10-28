@@ -15,4 +15,6 @@ A skill fix bumps the plugin and nothing else.
 
 **Tag every shipped release `vX.Y.Z`** on the plugin version, lightweight, on the release's final commit: `git tag v5.3.0 && git push origin v5.3.0`. The standard's artifact is the file in `versions/`; the plugin's is the tag. There is no second tag namespace, and tags are not how an install detects an update.
 
+**The schema follows the text.** `schema/framework.schema.yaml` is the framework document's rules as `EIDOS.md` states them, each part quoting the section it comes from. When `EIDOS.md` changes what a `Framework.yaml` holds, change the schema in the same release, freeze it as `versions/vX.Y.Z.schema.yaml` beside the snapshot, and run `npm test` and `npm run check:frameworks` (after `npm install`). Where the text leaves a thing open, the schema allows it; a real framework that fails is reported, never fitted by loosening the schema.
+
 **After changing `EIDOS.md`, `seeds/`, `versions/`, or `CHANGELOG.md`, run `scripts/sync-skills.sh`** and commit the updated copies in `skills/eidos`, `skills/install`, and `skills/migrate`. They are committed because Claude Desktop sandboxes each skill to its own folder. `scripts/sync-skills.sh --check` verifies them; `scripts/package-plugin.sh` refreshes them before zipping.

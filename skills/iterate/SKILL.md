@@ -11,7 +11,7 @@ One idea, questioned until it holds still. You write no file; the output is a sh
 ## Before you ask anything
 
 - **Read `me.md`** and the role contract it names; follow it. Blank means full facilitation; offer `whoami`.
-- **Read the framework**: `Framework.yaml` for folders, variants, grouping, Properties, and Vocabulary. Ask in the root's own terms; where the owner uses a near-miss, ask which they mean. No `.eidos/` means offer `install`.
+- **Read the framework**: `Framework.yaml` for folders, variants, grouping, Properties, and Vocabulary. Ask in the project's own terms; where the owner uses a near-miss, ask which they mean. No `.eidos/` means offer `install`.
 - **Read the neighbors**: the target collection's `index` entries and any adjacent blueprint. Questions asked against what exists are worth ten asked in a vacuum.
 
 ## Three passes
