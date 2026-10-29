@@ -1,7 +1,7 @@
 # The framework document: the structure this project is written in. See EIDOS.md for what each key means;
 # the `eidos` CLI edits this file. Every path is relative to this folder.
 
-eidos_version: 5.7.0
+eidos_version: 5.8.0
 
 # kebab-case | TitleCase | Title Case. Settled at install; changing it later means renaming files.
 naming: kebab-case

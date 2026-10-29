@@ -1,11 +1,11 @@
-# The rules EIDOS.md 5.7.0 sets for a framework document, `.eidos/Framework.yaml`, as a JSON Schema
+# The rules EIDOS.md 5.8.0 sets for a framework document, `.eidos/Framework.yaml`, as a JSON Schema
 # (draft 2020-12) written in YAML. It is a rule set applied to the parsed YAML: the framework stays
 # YAML. Each part says the EIDOS.md section it comes from. Where EIDOS.md leaves a thing open (a
 # tool's keys on an entry, the generated index), the schema allows it rather than forbids it.
 # Checked by `npm run check:frameworks`; frozen per release beside the standard in versions/.
 $schema: https://json-schema.org/draft/2020-12/schema
 $id: https://github.com/BuildableWorks/Eidos/schema/framework.schema.yaml
-title: Eidos framework document (Framework.yaml), standard 5.7.0
+title: Eidos framework document (Framework.yaml), standard 5.8.0
 description: >-
   EIDOS.md, `Framework.yaml`: "One per project, `Framework.yaml` or `.yml`, snake_case, comments
   welcome. Every path is relative to `.eidos/`." The keys are the ones its sample names.
@@ -37,13 +37,13 @@ properties:
     items: { $ref: '#/$defs/folder' }
   properties:
     description: >-
-      `properties`: "one block per owner. `core` is the standard's, rewritten by a migration.
-      `custom` is the owner's. `tools.<tool>` is that tool's alone."
+      `properties`: "one block per owner. `core` holds the standard properties, rewritten by a
+      migration. `custom` is the owner's. `tools.<tool>` is that tool's alone."
     type: object
     additionalProperties: false
     properties:
       core:
-        description: 'The sample: "the standard''s; empty = the core for this eidos_version".'
+        description: 'The sample: "the standard''s; empty = the standard properties for this eidos_version".'
         type: array
         items: { $ref: '#/$defs/property' }
       custom:
@@ -189,7 +189,7 @@ $defs:
     description: >-
       Properties: "Each entry: `name`, `type`, `applies_to`, `required`, `meaning`, and `options`
       when the value is one of a closed set." Rule 8: "Every property has a type, a meaning, and an
-      owner." The core table carries no `applies_to` and `required` may be absent, so the list is
+      owner." The standard properties table carries no `applies_to` and `required` may be absent, so the list is
       not the required set: name, type, and meaning are. `properties`: "any other key on an entry is a tool's", so other keys are allowed.
     type: object
     required: [name, type, meaning]

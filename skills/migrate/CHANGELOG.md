@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 **Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your Eidos folders need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
+## [5.8.0] - 2026-10-29 — Standard: 5.8.0
+
+**The standard moves to 5.8.0: the part of a project that defines the product is the Core.** The standard had words for each piece (a blueprint, a top-level doc) and none for all of them together, so a person or a tool speaking of what the product is had to list them. The Core is the top-level docs, the blueprints in the collections, and the records a tool keeps for the product, such as decisions; the framework is the shape it takes, not part of it, and a draft is not in it until published. A tool's records are documentation in the Core while their folder stays the tool's: the standard checks the top-level docs and the collections and leaves records to the tool that keeps them. The same release stops calling `Blueprints/` the default folder, since a project is made in the folder chosen, and says standard properties where the prose said the core. Nothing on disk is renamed, so every project on 5.7.0 conforms as it stands. The hop is prose only; `versions/v5.8.0.md` is the snapshot.
+
+### Added
+
+- **The Core.** A row in the Terms table: the part of the project that defines the product, the top-level docs, the blueprints in the collections, and the records a tool keeps for the product (decisions, for example). A blueprint is one piece of it. The standard checks the top-level docs and the collections; a record counts as documentation while its folder stays its tool's, read by nothing in the standard. A draft is not in it until published, and the framework is the shape it takes, not part of it.
+
+### Changed
+
+- **No default folder.** The layout shows the project as `<Project>/` ("the project: any folder, found by its .eidos/"), where it read `Blueprints/` with "this is the default". The README's layout follows, and the `install` skill asks where the project goes instead of offering `Blueprints/`.
+- **Standard properties, not the core.** The `core: []` comment in the sample, the `properties` bullet, and the line above the table of the standard's own properties say standard properties, and name the `core` key where the key is meant. The key itself is unchanged. The `configure` and `migrate` skills say the same, and `schema/framework.schema.yaml` quotes the new wording; `versions/v5.8.0.schema.yaml` is the frozen copy.
+- **The seeds and the skills.** `eidos_version` in every seed is 5.8.0, and the `migrate` skill fingerprints 5.8.0.
+
+### Upgrading a project
+
+Set `eidos_version: 5.8.0`. Nothing else has to move: a project stays in the folder it is in, whatever its name, and `properties.core` keeps its key. The `eidos` CLI needs a sync and a release of its own.
+
 ## [5.7.0] - 2026-10-28 — Standard: 5.7.0
 
 **The standard moves to 5.7.0: a root is called a project.** Root named the folder Eidos lives in by where it sits in a file tree, and to a person opening it the word said nothing about the work done there. Eidos is for working on a product, so the folder is a project: the term in the Terms table, the layout, the rules, and the guidance for an agent say project, with the same meaning. Nothing on disk is renamed, so every root on 5.6.0 is a conforming project as it stands. The hop is prose only; `versions/v5.7.0.md` is the snapshot.

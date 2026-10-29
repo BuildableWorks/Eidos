@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 5.7.0
+**Version:** 5.8.0
 
 Eidos is a way to define a product in markdown: an app, a book, a study, anything work produces that has a shape. The structure is data in a hidden folder that a tool can check against; the product is written in markdown against that structure. One file is the complete source of truth for one unit of the product, as true of something planned as of something long shipped.
 
@@ -8,30 +8,31 @@ This file is the contract: the terms, the layout, and the rules. It names no col
 
 ## Terms
 
-| Term              | What it is                                                                                                                                                             |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **product**       | What you are defining.                                                                                                                                                 |
-| **framework**     | How the files are organized: folders, templates, properties, vocabulary, roles. Lives in `.eidos/`; one framework can govern many products.                            |
-| **project**       | The folder it all lives in. Found by the `.eidos/` inside it, never by its name. Called a root before 5.7.0.                                                           |
-| **folder**        | A top-level folder in the project, declared with who owns it: `@eidos/collections` for the standard, `@<tool>/<kind>` for a tool, nobody for the person's own.         |
-| **collection**    | A folder owned by `@eidos/collections`, holding blueprints of one kind: specs, chapters, investigations. Its sub-folders, if any, are its declared groups.             |
-| **blueprint**     | One markdown file in a collection, defining one unit of the product completely: properties on top, a body below.                                                       |
-| **unit**          | What one blueprint defines: a spec, a chapter, an investigation. Templates are named for it, singular.                                                                 |
-| **template**      | The body a collection's blueprints follow: sections in order, under set names. Body only. One file per variant in `.eidos/templates/`.                                 |
-| **variant**       | One of a collection's templates (`<unit>.<variant>.md`). The collection, or a group in it, may name a default; a blueprint on another says so in `variant`.            |
-| **property**      | One frontmatter field: name, type, which collections it applies to, whether required, meaning, and options when closed. The whole table is the framework's Properties. |
-| **vocabulary**    | The framework's table of words used on purpose: what each means and what it is not.                                                                                    |
-| **top-level doc** | A one-of-a-kind file at the top of the project, listed in the framework document. No template; the body is never validated.                                            |
-| **role**          | How an agent talks to one kind of person. `.eidos/me.md` says which role is in the seat.                                                                               |
-| **plugin**        | A tool's own folder, `.eidos/plugins/<name>/`, and any project folder it owns. The standard reads none of it.                                                          |
-| **region**        | A span in a markdown file that a tool owns, fenced by two HTML comments carrying its name. The standard reads none of it.                                              |
+| Term              | What it is                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **product**       | What you are defining.                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| **framework**     | How the files are organized: folders, templates, properties, vocabulary, roles. Lives in `.eidos/`; one framework can govern many products.                                                                                                                                                                                                                                                                                                           |
+| **project**       | The folder it all lives in. Found by the `.eidos/` inside it, never by its name. Called a root before 5.7.0.                                                                                                                                                                                                                                                                                                                                          |
+| **folder**        | A top-level folder in the project, declared with who owns it: `@eidos/collections` for the standard, `@<tool>/<kind>` for a tool, nobody for the person's own.                                                                                                                                                                                                                                                                                        |
+| **collection**    | A folder owned by `@eidos/collections`, holding blueprints of one kind: specs, chapters, investigations. Its sub-folders, if any, are its declared groups.                                                                                                                                                                                                                                                                                            |
+| **blueprint**     | One markdown file in a collection, defining one unit of the product completely: properties on top, a body below.                                                                                                                                                                                                                                                                                                                                      |
+| **unit**          | What one blueprint defines: a spec, a chapter, an investigation. Templates are named for it, singular.                                                                                                                                                                                                                                                                                                                                                |
+| **template**      | The body a collection's blueprints follow: sections in order, under set names. Body only. One file per variant in `.eidos/templates/`.                                                                                                                                                                                                                                                                                                                |
+| **variant**       | One of a collection's templates (`<unit>.<variant>.md`). The collection, or a group in it, may name a default; a blueprint on another says so in `variant`.                                                                                                                                                                                                                                                                                           |
+| **property**      | One frontmatter field: name, type, which collections it applies to, whether required, meaning, and options when closed. The whole table is the framework's Properties.                                                                                                                                                                                                                                                                                |
+| **vocabulary**    | The framework's table of words used on purpose: what each means and what it is not.                                                                                                                                                                                                                                                                                                                                                                   |
+| **top-level doc** | A one-of-a-kind file at the top of the project, listed in the framework document. No template; the body is never validated.                                                                                                                                                                                                                                                                                                                           |
+| **Core**          | The part of the project that defines the product: the top-level docs, the blueprints in the collections, and the records a tool keeps for the product (decisions, for example). A blueprint is one piece of it. The standard checks the top-level docs and the collections; a record is documentation in the Core while its folder stays its tool's. A draft is not in it until published. The framework is the shape the Core takes, not part of it. |
+| **role**          | How an agent talks to one kind of person. `.eidos/me.md` says which role is in the seat.                                                                                                                                                                                                                                                                                                                                                              |
+| **plugin**        | A tool's own folder, `.eidos/plugins/<name>/`, and any project folder it owns. The standard reads none of it.                                                                                                                                                                                                                                                                                                                                         |
+| **region**        | A span in a markdown file that a tool owns, fenced by two HTML comments carrying its name. The standard reads none of it.                                                                                                                                                                                                                                                                                                                             |
 
 A task describes work and dies when it ships. A blueprint describes the product and stays accurate for its whole life.
 
 ## Layout
 
 ```txt
-Blueprints/              # the project; any name works, this is the default
+<Project>/               # the project: any folder, found by its .eidos/
   .eidos/                # the framework
     plugins/<name>/      #   a tool's own folder; local.yaml and local/ inside it stay on this machine (gitignored)
     roles/<role>.md      #   response contracts
@@ -69,7 +70,7 @@ The top level of `.eidos/` is the standard's. A tool keeps what it needs in `.ei
 One per project, `Framework.yaml` or `.yml`, snake_case, comments welcome. Every path is relative to `.eidos/`.
 
 ```yaml
-eidos_version: 5.7.0
+eidos_version: 5.8.0
 naming: kebab-case            # kebab-case (default) | TitleCase | Title Case
 top_level:
   - { title: <Title>, path: ../<Doc>.md, description: one line }
@@ -87,7 +88,7 @@ folders:
   - { name: <Folder>, owned_by: "@<tool>/<kind>", description: one line }
   - { name: <Folder>, description: one line }
 properties:
-  core: []                    # the standard's; empty = the core for this eidos_version
+  core: []                    # the standard's; empty = the standard properties for this eidos_version
   custom:
     - { name: <name>, type: Text, applies_to: all, required: true, meaning: one line }
     - { name: <name>, type: Text, applies_to: [<Collection>], options: [<Value>, <Value>], meaning: one line }
@@ -103,7 +104,7 @@ index:                        # generated; never hand-edited
 
 - **`top_level`**: every file at the top of the project, each a `title`, `path`, and `description`.
 - **`folders`**: every folder at the top of the project, each a `name` and `description`, and `owned_by` when something owns it. A `@eidos/collections` folder also carries `variants` (`default: true` marks the collection's default; with none marked, it has none) and `grouping`. A group may name its own default with `default_variant`, one of the collection's variants. A malformed owner, or an `@eidos/` kind the standard does not name, is a fault; a tool's owner never is.
-- **`properties`**: one block per owner. `core` is the standard's, rewritten by a migration. `custom` is the owner's. `tools.<tool>` is that tool's alone. The six keys the standard names are the standard's; any other key on an entry is a tool's.
+- **`properties`**: one block per owner. `core` holds the standard properties, rewritten by a migration. `custom` is the owner's. `tools.<tool>` is that tool's alone. The six keys the standard names are the standard's; any other key on an entry is a tool's.
 - **`vocabulary`**: the project's own terms. Starts empty.
 - **`index`**: every collection's blueprints, rebuilt wholesale by whatever indexes the project, which touches no other key.
 
@@ -120,7 +121,7 @@ Each entry: `name`, `type`, `applies_to`, `required`, `meaning`, and `options` w
 - **required** (absent = `false`): a required property is generated into every new blueprint and surfaced when missing. An optional one is written when it has a value; its absence is never a gap. An Object holding no key (absent, null, or `{}`) is empty.
 - **options**: an ordered, non-empty list of allowed values, compared exactly. An off-list value is surfaced, never refused. An empty list is a fault, as is `options` on an Object. No default rides with it. `variant` and a grouping property take their sets from the structure and never carry `options`.
 
-The block a property sits in owns it, and only the owner writes there. The core:
+The block a property sits in owns it, and only the owner writes there. The standard properties, in `core`:
 
 | Name      | Type | Required | Meaning                                                                                    |
 | --------- | ---- | -------- | ------------------------------------------------------------------------------------------ |

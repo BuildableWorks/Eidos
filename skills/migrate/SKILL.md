@@ -35,7 +35,7 @@ If a snapshot is missing, say so. Never fabricate a version's contract.
 4. **Write the plan**: each transform per concern, and every point needing a human decision. Show it before touching files.
 
 5. **Apply, in order.**
-   - The structure layer first. A project with none gets a seed installed whole (ask which; across a device bridge, send the files with the file-delivery tool in one call, never re-typed or archived). A project with one has its directory and document renamed to the target's names, then only the standard's core block rewritten.
+   - The structure layer first. A project with none gets a seed installed whole (ask which; across a device bridge, send the files with the file-delivery tool in one call, never re-typed or archived). A project with one has its directory and document renamed to the target's names, then only the standard's properties (`core`) rewritten.
    - Each blueprint: map frontmatter onto the target's Properties, drop removed fields after surfacing their content, add newly required ones as stubs, restructure the body to the target variant's template with new sections as flagged empty stubs.
    - Structural changes across the folder (renamed keys, moved folders).
    - Set `eidos_version` in the framework document.
@@ -48,6 +48,7 @@ If a snapshot is missing, say so. Never fabricate a version's contract.
 
 Full detail in `versions/MIGRATIONS.md`.
 
+- **5.8.0**: prose only; the Terms table names the Core, the layout shows `<Project>/` with no default folder, and the prose says standard properties (the `core` key stays). Nothing a project holds changes. Bump.
 - **5.7.0**: prose only; a root is now called a project, and nothing a project holds changes. Bump; offer to refresh the seed's comments in `Framework.yaml` where they still read as the 5.6.0 seed wrote them.
 - **5.6.0**: additive. Object joins the property types; `options` on one is a fault. A row with a type outside the seven (matched in any case) is now a fault: offer the nearest, Object for a mapping, and ask. Offer `eidosmd: { new: today }` on the date rows of a root that uses the eidos CLI.
 - **5.5.0**: a collection with no variant marked `default: true` no longer falls back to its first; mark the first `default: true` in every collection that relied on it. A group may now name its own `default_variant`; nothing sets one. The `.eidos/.gitignore` notes say local where they said personal; offer the new wording, nothing reads it. The framework-owner role leaves the standard; a root that keeps `roles/framework-owner.md`, or a `me.md` naming it, still conforms.
@@ -55,5 +56,5 @@ Full detail in `versions/MIGRATIONS.md`.
 - **5.3.0**: `collections:` becomes `folders:` with `type: collection` on each entry; a folder may also be `assets` or `other`; every folder and file at the root must be declared; every sub-folder of a collection is a declared group. Rename the key, add the type, then walk the root: offer a declaration or a move for anything undeclared, ask before dropping an entry with nothing behind it.
 - **5.2.1**: prose only; bump.
 - **5.2.0**: `options` on a property entry (offer to move a `meaning` that lists values); `plugins/*/local.yaml` added to `.eidos/.gitignore`.
-- **5.1.0**: regions and `required` on property entries; rewrite the core with `id` and `title` required.
+- **5.1.0**: regions and `required` on property entries; rewrite the standard properties (`core`) with `id` and `title` required.
 - **5.0.0**: `_eidos/` back to `.eidos/`, `shapes/` to `templates/`, `flavor` to `variant`, `Schema` to `Properties`, one `Framework.yaml` with the index inside; `versions` key dropped.

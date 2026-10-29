@@ -6,6 +6,10 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
+## 5.7.0 → 5.8.0
+
+**Prose only: set `eidos_version: 5.8.0`; nothing else has to move.** The standard names the Core: the top-level docs, the blueprints in the collections, and the records a tool keeps for the product, the part of the project that defines it, with the framework as the shape it takes and a draft outside it until published. A tool's records are documentation in the Core, but their folder stays the tool's and the standard still reads nothing inside it. The layout shows the project as `<Project>/`, any folder, found by its `.eidos/`, where it called `Blueprints/` the default; a project keeps whatever folder it is in. The prose says standard properties where it said the core, and the `properties.core` key is unchanged. No key, file, folder, marker, or property is renamed, so a project on 5.7.0 conforms as it stands and a check reports nothing new. The core block is rewritten as on every bump; templates, the Vocabulary, regions, plugins, and owned folders are untouched.
+
 ## 5.6.0 → 5.7.0
 
 **Prose only: set `eidos_version: 5.7.0`; nothing else has to move.** The folder Eidos lives in is called a project where it was called a root: the term in the Terms table, the layout, the rules, and the guidance for an agent say project, and the meaning is unchanged. No key, file, folder, marker, or property is renamed, so a project on 5.6.0 conforms as it stands and a check reports nothing new. The seeds' comments in `Framework.yaml` (the header, the `top_level`, `folders`, and `vocabulary` notes), their `README.md`, and their roles note say project; offer the new comments to a project whose `Framework.yaml` still carries the 5.6.0 wording word for word, since nothing reads a comment, and leave a project's own README, roles, and blueprints as written. The core block is rewritten as on every bump; templates, the Vocabulary, regions, plugins, and owned folders are untouched.

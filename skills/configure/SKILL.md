@@ -1,7 +1,7 @@
 ---
 name: configure
 description: >-
-  Configure a project's (a root's) framework in `.eidos/Framework.yaml`: its folders (collections with their variants, and any folder a tool or the owner holds), its Properties table, its Vocabulary, and its top-level index. Use to add a folder ("add a Decisions folder", "add an images folder"), add or change a variant ("add a micro spec template", "make spec.full the default"), add, rename, or retire a custom property and backfill it ("add a `team` field to every spec"), declare, rename, or retire a term ("a team member is not staff, write that down"), or refresh the project's declarations ("the Framework is out of date"). It does not author blueprints (`eidos`), build the index (`index`), or touch the Eidos core properties (`migrate`).
+  Configure a project's (a root's) framework in `.eidos/Framework.yaml`: its folders (collections with their variants, and any folder a tool or the owner holds), its Properties table, its Vocabulary, and its top-level index. Use to add a folder ("add a Decisions folder", "add an images folder"), add or change a variant ("add a micro spec template", "make spec.full the default"), add, rename, or retire a custom property and backfill it ("add a `team` field to every spec"), declare, rename, or retire a term ("a team member is not staff, write that down"), or refresh the project's declarations ("the Framework is out of date"). It does not author blueprints (`eidos`), build the index (`index`), or touch the standard's properties (`migrate`).
 ---
 
 # Eidos Configure
