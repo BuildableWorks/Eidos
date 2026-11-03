@@ -22,7 +22,7 @@ Run in order, as a conversation, not a script.
 
 **2. What is the intent.** Who is it for and what changes for them? What does it do that nothing here does today? What breaks if it is never made? What will it deliberately not do? Press hardest on non-goals, offering candidates to reject: "so this doesn't cover X?" is easier than an open question.
 
-**3. How it fits.** What must exist first? What does it touch? Where is the seam with the nearest existing blueprint? Does it obsolete or contradict anything written? Which group, and is "a new one" a decision made on purpose?
+**3. How it fits.** What must exist first? What does it touch? Where is the seam with the nearest existing blueprint? Does it obsolete or contradict anything written? Which category, and is "a new one" a decision made on purpose?
 
 ## How to ask
 

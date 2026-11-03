@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 **Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your Eidos folders need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
+## [5.9.0] - 2026-11-03 — Standard: 5.9.0
+
+**The standard moves to 5.9.0: a collection's groups are called categories.** A group read as nothing in particular, and Eidos online now gathers projects into groups, so a collection's one-level sub-folders take a word of their own. The Terms table gains category, a declared sub-folder of a collection that the collection may call by a label of its own (Domains, Parts), and the prose says category wherever it said group. Nothing on disk is renamed, so every project on 5.8.0 conforms as it stands. `versions/v5.9.0.md` is the snapshot.
+
+### Added
+
+- **Category.** A row in the Terms table: a declared sub-folder of a collection, one level deep, holding its blueprints, declared under `grouping` and called a group before 5.9.0.
+
+### Changed
+
+- **Category, not group.** The layout (`<Category>/`), the Folders section, the `folders` key description, the naming table, the index section, rule 10 ("A collection's categories are its own"), and the guidance for an agent say category. The keys `grouping`, `label`, `property`, `groups`, and `default_variant`, and the index's `group`, are unchanged; the prose says `groups` lists the categories.
+- **A label property.** Rule 9 says a label property drives filtering, where it said a category property, so category means one thing.
+- **The standard properties.** `variant` means "Absent = its category's default, else the collection's."
+- **The seeds, the schema, and the skills.** `eidos_version` in every seed is 5.9.0; the grouping properties mean "The category: matches the blueprint's sub-folder", and the software seed's `type` is a "Soft label". `schema/framework.schema.yaml` quotes the new wording; `versions/v5.9.0.schema.yaml` is the frozen copy. The `configure`, `eidos`, `format`, `index`, `install`, and `iterate` skills say category, and `migrate` fingerprints 5.9.0.
+
+### Upgrading a project
+
+Set `eidos_version: 5.9.0` and rewrite the standard properties. Nothing else has to move. Where a project's `Framework.yaml` still carries a seed's 5.8.0 meaning for its grouping property word for word, the new one may be offered. The `eidos` CLI needs a sync and a release of its own.
+
 ## [5.8.1] - 2026-11-03 — Standard: unchanged
 
 **The skills and the README install the CLI as it now ships, from eidosmd.com.** The `eidos` CLI is one self-contained binary with no Node or npm before it, and npm no longer carries it: `npx eidosmd` and `npm install -g eidosmd` reach an old release that never updates. The standard and the seeds are unchanged.

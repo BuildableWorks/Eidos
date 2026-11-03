@@ -1,11 +1,11 @@
-# The rules EIDOS.md 5.8.0 sets for a framework document, `.eidos/Framework.yaml`, as a JSON Schema
+# The rules EIDOS.md 5.9.0 sets for a framework document, `.eidos/Framework.yaml`, as a JSON Schema
 # (draft 2020-12) written in YAML. It is a rule set applied to the parsed YAML: the framework stays
 # YAML. Each part says the EIDOS.md section it comes from. Where EIDOS.md leaves a thing open (a
 # tool's keys on an entry, the generated index), the schema allows it rather than forbids it.
 # Checked by `npm run check:frameworks`; frozen per release beside the standard in versions/.
 $schema: https://json-schema.org/draft/2020-12/schema
 $id: https://github.com/BuildableWorks/Eidos/schema/framework.schema.yaml
-title: Eidos framework document (Framework.yaml), standard 5.8.0
+title: Eidos framework document (Framework.yaml), standard 5.9.0
 description: >-
   EIDOS.md, `Framework.yaml`: "One per project, `Framework.yaml` or `.yml`, snake_case, comments
   welcome. Every path is relative to `.eidos/`." The keys are the ones its sample names.
@@ -66,7 +66,7 @@ properties:
     description: >-
       `index`: "every collection's blueprints, rebuilt wholesale by whatever indexes the project."
       The index: each entry carries `id`, `title`, `summary` (null when absent), `path`, and
-      `group`. Generated, so only its shape is checked and anything more is allowed.
+      `group` (its category). Generated, so only its shape is checked and anything more is allowed.
     type: object
     additionalProperties:
       type: array
@@ -166,8 +166,8 @@ $defs:
 
   grouping:
     description: >-
-      Folders: "A collection is flat or grouped. Grouped, every sub-folder is a declared group".
-      The sample: a `label`, the `property` carrying the group if one does, and the `groups`.
+      Folders: "A collection is flat or sorted into categories. Sorted, every sub-folder is a declared category".
+      The sample: a `label`, the `property` carrying the category if one does, and the `groups`, its categories.
     type: object
     required: [groups]
     properties:
@@ -182,7 +182,7 @@ $defs:
             name: { type: string, minLength: 1 }
             description: { $ref: '#/$defs/line' }
             default_variant:
-              description: '`folders`: "A group may name its own default with `default_variant`, one of the collection''s variants."'
+              description: '`folders`: "A category may name its own default with `default_variant`, one of the collection''s variants."'
               type: string
 
   property:

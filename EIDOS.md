@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 5.8.0
+**Version:** 5.9.0
 
 Eidos is a way to define a product in markdown: an app, a book, a study, anything work produces that has a shape. The structure is data in a hidden folder that a tool can check against; the product is written in markdown against that structure. One file is the complete source of truth for one unit of the product, as true of something planned as of something long shipped.
 
@@ -14,11 +14,12 @@ This file is the contract: the terms, the layout, and the rules. It names no col
 | **framework**     | How the files are organized: folders, templates, properties, vocabulary, roles. Lives in `.eidos/`; one framework can govern many products.                                                                                                                                                                                                                                                                                                           |
 | **project**       | The folder it all lives in. Found by the `.eidos/` inside it, never by its name. Called a root before 5.7.0.                                                                                                                                                                                                                                                                                                                                          |
 | **folder**        | A top-level folder in the project, declared with who owns it: `@eidos/collections` for the standard, `@<tool>/<kind>` for a tool, nobody for the person's own.                                                                                                                                                                                                                                                                                        |
-| **collection**    | A folder owned by `@eidos/collections`, holding blueprints of one kind: specs, chapters, investigations. Its sub-folders, if any, are its declared groups.                                                                                                                                                                                                                                                                                            |
+| **collection**    | A folder owned by `@eidos/collections`, holding blueprints of one kind: specs, chapters, investigations. Its sub-folders, if any, are its declared categories.                                                                                                                                                                                                                                                                                        |
+| **category**      | A declared sub-folder of a collection, one level deep, holding its blueprints; the collection may call its categories by a label of its own (Domains, Parts). Declared under `grouping`, and called a group before 5.9.0.                                                                                                                                                                                                                             |
 | **blueprint**     | One markdown file in a collection, defining one unit of the product completely: properties on top, a body below.                                                                                                                                                                                                                                                                                                                                      |
 | **unit**          | What one blueprint defines: a spec, a chapter, an investigation. Templates are named for it, singular.                                                                                                                                                                                                                                                                                                                                                |
 | **template**      | The body a collection's blueprints follow: sections in order, under set names. Body only. One file per variant in `.eidos/templates/`.                                                                                                                                                                                                                                                                                                                |
-| **variant**       | One of a collection's templates (`<unit>.<variant>.md`). The collection, or a group in it, may name a default; a blueprint on another says so in `variant`.                                                                                                                                                                                                                                                                                           |
+| **variant**       | One of a collection's templates (`<unit>.<variant>.md`). The collection, or a category in it, may name a default; a blueprint on another says so in `variant`.                                                                                                                                                                                                                                                                                        |
 | **property**      | One frontmatter field: name, type, which collections it applies to, whether required, meaning, and options when closed. The whole table is the framework's Properties.                                                                                                                                                                                                                                                                                |
 | **vocabulary**    | The framework's table of words used on purpose: what each means and what it is not.                                                                                                                                                                                                                                                                                                                                                                   |
 | **top-level doc** | A one-of-a-kind file at the top of the project, listed in the framework document. No template; the body is never validated.                                                                                                                                                                                                                                                                                                                           |
@@ -41,7 +42,7 @@ A task describes work and dies when it ships. A blueprint describes the product 
     Framework.yaml       #   the framework document
     me.md                #   who is in the seat (local, gitignored)
   <Collection>/          # owned by @eidos/collections: blueprints
-    <Group>/             #   a declared group; nothing deeper
+    <Category>/          #   a declared category; nothing deeper
       <Title>.md         #     one blueprint per file
   <Folder>/              # owned by a tool (@<tool>/<kind>) or by nobody: declared, never read
   <Doc>.md               # a top-level doc, listed under top_level
@@ -51,15 +52,15 @@ A task describes work and dies when it ships. A blueprint describes the product 
 
 ### Folders
 
-| Owner                | Holds                                     | The standard                                                                    |
-| -------------------- | ----------------------------------------- | ------------------------------------------------------------------------------- |
-| `@eidos/collections` | blueprints, optionally in declared groups | generates, validates, and indexes the markdown files; ignores any other file    |
-| `@<tool>/<kind>`     | whatever that tool says                   | reads nothing inside; the folder is declared and left to its tool, known or not |
-| none                 | whatever the description says             | reads nothing inside; the folder is declared and otherwise left alone           |
+| Owner                | Holds                                         | The standard                                                                    |
+| -------------------- | --------------------------------------------- | ------------------------------------------------------------------------------- |
+| `@eidos/collections` | blueprints, optionally in declared categories | generates, validates, and indexes the markdown files; ignores any other file    |
+| `@<tool>/<kind>`     | whatever that tool says                       | reads nothing inside; the folder is declared and left to its tool, known or not |
+| none                 | whatever the description says                 | reads nothing inside; the folder is declared and otherwise left alone           |
 
 An owner is `@<tool>/<kind>`, quoted in YAML: the tool's one identifier, then the tool's own name for what the folder holds, in the same characters. The standard owns `@eidos/collections` and defines nothing else under `@eidos/`. A tool registers as many kinds as it needs, and what a folder under one holds, how it is named, and what is checked inside are that tool's to say. A check faults an owner that is malformed or an `@eidos/` kind the standard does not name, and never a tool's.
 
-A collection is flat or grouped. Grouped, every sub-folder is a declared group, and a group holds blueprints and nothing deeper. A grouping property's value is the group's name; an unknown value warns.
+A collection is flat or sorted into categories. Sorted, every sub-folder is a declared category, and a category holds blueprints and nothing deeper. The collection declares them under `grouping`, its `label` the collection's own word for them (Domains, Parts) and `groups` the list of categories. A grouping property's value is the category's name; an unknown value warns.
 
 ### Plugins
 
@@ -70,7 +71,7 @@ The top level of `.eidos/` is the standard's. A tool keeps what it needs in `.ei
 One per project, `Framework.yaml` or `.yml`, snake_case, comments welcome. Every path is relative to `.eidos/`.
 
 ```yaml
-eidos_version: 5.8.0
+eidos_version: 5.9.0
 naming: kebab-case            # kebab-case (default) | TitleCase | Title Case
 top_level:
   - { title: <Title>, path: ../<Doc>.md, description: one line }
@@ -82,9 +83,9 @@ folders:
       - { name: <variant>, template: templates/<unit>.<variant>.md, description: one line, default: true }
     grouping:
       label: <Grouping>
-      property: <name>          # the custom property carrying the group, if one does
+      property: <name>          # the custom property carrying the category, if one does
       groups:
-        - { name: <Group>, description: one line, default_variant: <variant> }   # optional: this group's default
+        - { name: <Category>, description: one line, default_variant: <variant> }   # optional: this category's default
   - { name: <Folder>, owned_by: "@<tool>/<kind>", description: one line }
   - { name: <Folder>, description: one line }
 properties:
@@ -99,11 +100,11 @@ vocabulary:
   - { term: <Term>, means: one line, not: ["<near-miss>, and why"], see: ../<Collection>/<Title>.md }
 index:                        # generated; never hand-edited
   <Collection>:
-    - { id: <id>, title: <Title>, summary: <summary>, path: <Group>/<Title>.md, group: <Group> }
+    - { id: <id>, title: <Title>, summary: <summary>, path: <Category>/<Title>.md, group: <Category> }
 ```
 
 - **`top_level`**: every file at the top of the project, each a `title`, `path`, and `description`.
-- **`folders`**: every folder at the top of the project, each a `name` and `description`, and `owned_by` when something owns it. A `@eidos/collections` folder also carries `variants` (`default: true` marks the collection's default; with none marked, it has none) and `grouping`. A group may name its own default with `default_variant`, one of the collection's variants. A malformed owner, or an `@eidos/` kind the standard does not name, is a fault; a tool's owner never is.
+- **`folders`**: every folder at the top of the project, each a `name` and `description`, and `owned_by` when something owns it. A `@eidos/collections` folder also carries `variants` (`default: true` marks the collection's default; with none marked, it has none) and `grouping`, which lists its categories under `groups`. A category may name its own default with `default_variant`, one of the collection's variants. A malformed owner, or an `@eidos/` kind the standard does not name, is a fault; a tool's owner never is.
 - **`properties`**: one block per owner. `core` holds the standard properties, rewritten by a migration. `custom` is the owner's. `tools.<tool>` is that tool's alone. The six keys the standard names are the standard's; any other key on an entry is a tool's.
 - **`vocabulary`**: the project's own terms. Starts empty.
 - **`index`**: every collection's blueprints, rebuilt wholesale by whatever indexes the project, which touches no other key.
@@ -123,14 +124,14 @@ Each entry: `name`, `type`, `applies_to`, `required`, `meaning`, and `options` w
 
 The block a property sits in owns it, and only the owner writes there. The standard properties, in `core`:
 
-| Name      | Type | Required | Meaning                                                                                    |
-| --------- | ---- | -------- | ------------------------------------------------------------------------------------------ |
-| `id`      | Text | yes      | Stable, unique identity, in any form. Assigned once, never changed.                        |
-| `title`   | Text | yes      | Human-readable name. Rename freely; `id` holds still.                                      |
-| `summary` | Text | no       | One line: what this blueprint is. Feeds the index; absent, the index flags it.             |
-| `variant` | Text | no       | Which variant this blueprint follows. Absent = its group's default, else the collection's. |
+| Name      | Type | Required | Meaning                                                                                       |
+| --------- | ---- | -------- | --------------------------------------------------------------------------------------------- |
+| `id`      | Text | yes      | Stable, unique identity, in any form. Assigned once, never changed.                           |
+| `title`   | Text | yes      | Human-readable name. Rename freely; `id` holds still.                                         |
+| `summary` | Text | no       | One line: what this blueprint is. Feeds the index; absent, the index flags it.                |
+| `variant` | Text | no       | Which variant this blueprint follows. Absent = its category's default, else the collection's. |
 
-A tool that scaffolds a blueprint writes the variant it resolved; with no default at either level, the person picks. Moving a blueprint to another group never changes its `variant`.
+A tool that scaffolds a blueprint writes the variant it resolved; with no default at either level, the person picks. Moving a blueprint to another category never changes its `variant`.
 
 Eidos defines no custom properties. Status, dates, grouping, dependencies: all the framework's choice.
 
@@ -148,11 +149,11 @@ Each entry: `term`, `means`, `not` (the near-misses and why each differs), and `
 
 Everything a human reads in the tree follows `naming`. Absent means `kebab-case`.
 
-| Convention               | A blueprint file          | A group folder | Trade                                 |
-| ------------------------ | ------------------------- | -------------- | ------------------------------------- |
-| **kebab-case** (default) | `blueprint-title-here.md` | `group-name/`  | readable everywhere, no `%20`         |
-| **TitleCase**            | `BlueprintTitleHere.md`   | `GroupName/`   | space-free, capitalized               |
-| **Title Case**           | `Blueprint Title Here.md` | `Group Name/`  | reads like prose, `%20` in every link |
+| Convention               | A blueprint file          | A category folder | Trade                                 |
+| ------------------------ | ------------------------- | ----------------- | ------------------------------------- |
+| **kebab-case** (default) | `blueprint-title-here.md` | `category-name/`  | readable everywhere, no `%20`         |
+| **TitleCase**            | `BlueprintTitleHere.md`   | `CategoryName/`   | space-free, capitalized               |
+| **Title Case**           | `Blueprint Title Here.md` | `Category Name/`  | reads like prose, `%20` in every link |
 
 Exceptions: `.eidos/` is lowercase, `README.md` keeps its name, a grouping value matches its folder exactly, a folder a tool owns is named as the tool says, and nothing inside a folder the standard does not own is held to the convention.
 
@@ -170,7 +171,7 @@ A tool keeps what it needs inside a markdown file between `<!-- <tool>:<region> 
 
 ## The index
 
-The one derived view the standard defines. Every collection's blueprints, under `index`: `id`, `title`, `summary` (null when absent, never invented), `path` relative to the collection, and `group`. Grouped by group when the collection has them, in file order. Any other view is a tool's, written as a top-level doc.
+The one derived view the standard defines. Every collection's blueprints, under `index`: `id`, `title`, `summary` (null when absent, never invented), `path` relative to the collection, and `group` (its category). Grouped by category when the collection has them, in file order. Any other view is a tool's, written as a top-level doc.
 
 ## Rules
 
@@ -182,8 +183,8 @@ The one derived view the standard defines. Every collection's blueprints, under 
 6. **Reference blueprints with links, not bare names,** in prose and properties alike. `id` sits behind the link.
 7. **One template family per collection, as variants.** What flexes is which sections appear; never their order or names.
 8. **Every property has a type, a meaning, and an owner.** Frontmatter is generated from the required ones, so a new blueprint is born conforming.
-9. **Soft labels are views, not structure.** A category property drives filtering, never structure. `variant` carries the structural choice.
-10. **A collection's grouping is its own.** Every sub-folder is a declared group; a group holds blueprints and nothing deeper.
+9. **Soft labels are views, not structure.** A label property drives filtering, never structure. `variant` carries the structural choice.
+10. **A collection's categories are its own.** Every sub-folder is a declared category; a category holds blueprints and nothing deeper.
 11. **A template names its own stable part.** If the stable part changes substantially, ask whether this is a different blueprint.
 12. **Non-goals carry the most weight.** Where a template has a section for what a blueprint will not do, that section is its strongest.
 13. **A template documents its own conventions.** The standard governs folders, templates, variants, and properties; never a section.
@@ -209,5 +210,5 @@ Semantic Versioning. This file's version moves only when its text moves; a frame
 - **Leave plugins, regions, and owned folders to their owners.** Carry them across as found; fault only an opener with no closer.
 - **Navigate by the framework document,** not the tree: `top_level`, `folders`, `index`. Check the project against it and surface what is missing on either side; never invent a description, never delete a file.
 - **Authoring:** take the Properties table, Vocabulary, naming, and the collection's variants; generate frontmatter from the required properties; follow the template's sections, pressing hardest on non-goals; where the owner is vague, ask.
-- **Validating:** frontmatter against every block of the Properties table, each value against its type and a type outside the list faulted; body against the blueprint's variant; a group's `default_variant` the collection does not declare surfaced like an unknown variant; a blueprint without `variant` and no default in its group or collection surfaced as a gap; links resolve; no work-tracking fields; near-misses flagged. Surface, don't block.
+- **Validating:** frontmatter against every block of the Properties table, each value against its type and a type outside the list faulted; body against the blueprint's variant; a category's `default_variant` the collection does not declare surfaced like an unknown variant; a blueprint without `variant` and no default in its category or collection surfaced as a gap; links resolve; no work-tracking fields; near-misses flagged. Surface, don't block.
 - **Facilitate, don't author.** Never invent a blueprint's purpose or hand back a finished one to rubber-stamp.
