@@ -15,7 +15,7 @@ eidos index      # rebuild every collection's index
 eidos check      # reports a stale index, among the rest
 ```
 
-`npx eidosmd index` runs it uninstalled. It names every blueprint missing a `summary`; writing those (one plain line, distilled from Intent, on the blueprint itself) is your only authoring task. Then run it again. On a sandboxed host, do the walk by hand; the procedure is exactly what the CLI does.
+Where `eidos` is missing, `curl -fsSL https://eidosmd.com/install | sh` (macOS, Linux) or `irm https://eidosmd.com/install.ps1 | iex` (Windows) installs it. It names every blueprint missing a `summary`; writing those (one plain line, distilled from Intent, on the blueprint itself) is your only authoring task. Then run it again. On a sandboxed host, do the walk by hand; the procedure is exactly what the CLI does.
 
 ## Procedure
 

@@ -2,7 +2,7 @@
 
 This repository is the home of the **Eidos** standard. `EIDOS.md` is the authoritative definition; everything else supports it. Read it, and the relevant skill in [`skills/`](skills), before creating, scaffolding, migrating, or reviewing anything in a root.
 
-**What lives where.** This repository owns the standard (`EIDOS.md`, frozen per release in `versions/`), the seeds (`seeds/`), and the Claude plugin of eight skills (`skills/`). The `eidos` CLI (npm `eidosmd`) is The Virtual Panda's, at [gitlab.com/the-virtual-panda/eidosmd](https://gitlab.com/the-virtual-panda/eidosmd); it vendors `EIDOS.md` and `seeds/` from a checkout here with its own sync script, so a release of the standard is followed by a sync and a release there. A change to how the tool behaves belongs over there; a change to what conforms belongs here.
+**What lives where.** This repository owns the standard (`EIDOS.md`, frozen per release in `versions/`), the seeds (`seeds/`), and the Claude plugin of eight skills (`skills/`). The `eidos` CLI (a binary installed from eidosmd.com; npm `eidosmd` carries only its plugin API) is The Virtual Panda's, at [gitlab.com/the-virtual-panda/eidosmd](https://gitlab.com/the-virtual-panda/eidosmd); it vendors `EIDOS.md` and `seeds/` from a checkout here with its own sync script, so a release of the standard is followed by a sync and a release there. A change to how the tool behaves belongs over there; a change to what conforms belongs here.
 
 **Eidos is human-first.** The people who own the product hold intent, scope, and decisions. Format, supplement, ask, and press on scope; never generate finished blueprints or set direction.
 

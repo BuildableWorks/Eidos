@@ -3,7 +3,7 @@
 ***εἶδος** (eidos), Greek: the form or essence of a thing, the look that makes it what it is.*
 
 > [!IMPORTANT]
-> **Docs live at [eidosmd.com](https://eidosmd.com).** This repository holds the standard ([`EIDOS.md`](EIDOS.md)), the seeds, and a Claude plugin of skills. To *use* Eidos, install the CLI: `npm install -g eidosmd`, then `eidos instructions`. The skills are for hosts with no shell (Claude Desktop chat, the web, Cowork).
+> **Docs live at [eidosmd.com](https://eidosmd.com).** This repository holds the standard ([`EIDOS.md`](EIDOS.md)), the seeds, and a Claude plugin of skills. To *use* Eidos, install the CLI: `curl -fsSL https://eidosmd.com/install | sh` (macOS, Linux) or `irm https://eidosmd.com/install.ps1 | iex` (Windows), then `eidos instructions`. The skills are for hosts with no shell (Claude Desktop chat, the web, Cowork).
 
 ## **[Eidos v5.8.0](EIDOS.md)**, the standard
 
@@ -48,7 +48,7 @@ Pick the nearest and reshape it. A framework that ends up looking like none of t
 
 ## Quick start
 
-1. `npm install -g eidosmd`, or install the [skills](#the-skills) where there is no shell.
+1. Install the CLI with `curl -fsSL https://eidosmd.com/install | sh` (macOS, Linux) or `irm https://eidosmd.com/install.ps1 | iex` (Windows), or install the [skills](#the-skills) where there is no shell.
 2. `eidos init` (or the `install` skill). Pick a seed; everything in it is reshapeable later.
 3. Fill the framing docs first. Loose prose: write what is known, leave the rest.
 4. Author blueprints, one file each. Frontmatter is generated; the body follows the template. Press hardest on the non-goals section.
@@ -61,7 +61,7 @@ eidos check
 eidos index
 ```
 
-The CLI is published as [`eidosmd`](https://www.npmjs.com/package/eidosmd) and maintained by [The Virtual Panda](https://gitlab.com/the-virtual-panda/eidosmd); [eidosmd.com/docs/cli](https://eidosmd.com/docs/cli) documents every command. It carries its own copy of the standard and the seeds and versions separately; `eidos --version` names the standard it ships.
+The CLI is one self-contained binary, with no Node or npm before it, maintained by [The Virtual Panda](https://gitlab.com/the-virtual-panda/eidosmd); [eidosmd.com/docs/cli](https://eidosmd.com/docs/cli) documents every command. It carries its own copy of the standard and the seeds and versions separately; `eidos --version` names the standard it ships.
 
 ## The skills
 

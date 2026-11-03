@@ -14,7 +14,7 @@ A committed copy of `seeds/` ships in this folder. Each seed is a project laid o
 
 ## Run the CLI when you can
 
-With a shell (`npx eidosmd` runs it uninstalled):
+With a shell, and the CLI installed (`curl -fsSL https://eidosmd.com/install | sh` (macOS, Linux) or `irm https://eidosmd.com/install.ps1 | iex` (Windows)):
 
 ```
 eidos seeds

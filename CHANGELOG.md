@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 **Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your Eidos folders need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
+## [5.8.1] - 2026-11-03 — Standard: unchanged
+
+**The skills and the README install the CLI as it now ships, from eidosmd.com.** The `eidos` CLI is one self-contained binary with no Node or npm before it, and npm no longer carries it: `npx eidosmd` and `npm install -g eidosmd` reach an old release that never updates. The standard and the seeds are unchanged.
+
+### Changed
+
+- **Installing the CLI.** The `install` and `index` skills, the README, and `AGENTS.md` install it with `curl -fsSL https://eidosmd.com/install | sh` on macOS and Linux, or `irm https://eidosmd.com/install.ps1 | iex` on Windows, where they said `npx eidosmd` or `npm install -g eidosmd`.
+
 ## [5.8.0] - 2026-10-29 — Standard: 5.8.0
 
 **The standard moves to 5.8.0: the part of a project that defines the product is the Core.** The standard had words for each piece (a blueprint, a top-level doc) and none for all of them together, so a person or a tool speaking of what the product is had to list them. The Core is the top-level docs, the blueprints in the collections, and the records a tool keeps for the product, such as decisions; the framework is the shape it takes, not part of it, and a draft is not in it until published. A tool's records are documentation in the Core while their folder stays the tool's: the standard checks the top-level docs and the collections and leaves records to the tool that keeps them. The same release stops calling `Blueprints/` the default folder, since a project is made in the folder chosen, and says standard properties where the prose said the core. Nothing on disk is renamed, so every project on 5.7.0 conforms as it stands. The hop is prose only; `versions/v5.8.0.md` is the snapshot.
