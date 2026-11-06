@@ -6,6 +6,10 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
+## 5.9.0 → 5.10.0
+
+**Additive: set `eidos_version: 5.10.0`.** A `folders` entry, a category, and a variant may carry `title`, the name people read, apart from the `name` that is the path. Title Case is marked deprecated: it stays valid in a project that has it, and a tool should not create a new one. A framework without `title` conforms, and a project in Title Case conforms. Moving a project off Title Case is the owner's choice, mechanical through `eidos configure:naming`.
+
 ## 5.8.0 → 5.9.0
 
 **Prose and the standard properties: set `eidos_version: 5.9.0` and rewrite the core block.** A collection's declared sub-folders are called categories where they were called groups: the Terms table gains category, and the layout, the Folders section, the `folders` key description, the index section, rules 9 and 10, and the guidance for an agent follow, with the same meaning. Rule 9's soft label is a label property, so category means one thing. The `variant` property's meaning says "its category's default", so the core block reads differently, and it is rewritten as on every bump. No key, file, folder, marker, or finding is renamed: `grouping`, its `label`, `property`, and `groups`, a category's `default_variant`, and the index's `group` keep their names (their rename waits for 6.0), so a project on 5.8.0 conforms as it stands and a check reports nothing new. The seeds' grouping properties (`domain`, `part`, `strand`) mean "The category: matches the blueprint's sub-folder", and the software seed's `type` is a "Soft label"; offer the new meanings to a project whose `Framework.yaml` still carries the 5.8.0 wording word for word, and leave any meaning the owner wrote. Templates, the Vocabulary, regions, plugins, and owned folders are untouched.

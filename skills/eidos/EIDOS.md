@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 5.9.0
+**Version:** 5.10.0
 
 Eidos is a way to define a product in markdown: an app, a book, a study, anything work produces that has a shape. The structure is data in a hidden folder that a tool can check against; the product is written in markdown against that structure. One file is the complete source of truth for one unit of the product, as true of something planned as of something long shipped.
 
@@ -71,12 +71,13 @@ The top level of `.eidos/` is the standard's. A tool keeps what it needs in `.ei
 One per project, `Framework.yaml` or `.yml`, snake_case, comments welcome. Every path is relative to `.eidos/`.
 
 ```yaml
-eidos_version: 5.9.0
+eidos_version: 5.10.0
 naming: kebab-case            # kebab-case (default) | TitleCase | Title Case
 top_level:
   - { title: <Title>, path: ../<Doc>.md, description: one line }
 folders:
   - name: <Collection>
+    title: <The name people read>   # optional, as on a category and a variant
     owned_by: "@eidos/collections"
     description: one line
     variants:
@@ -104,7 +105,7 @@ index:                        # generated; never hand-edited
 ```
 
 - **`top_level`**: every file at the top of the project, each a `title`, `path`, and `description`.
-- **`folders`**: every folder at the top of the project, each a `name` and `description`, and `owned_by` when something owns it. A `@eidos/collections` folder also carries `variants` (`default: true` marks the collection's default; with none marked, it has none) and `grouping`, which lists its categories under `groups`. A category may name its own default with `default_variant`, one of the collection's variants. A malformed owner, or an `@eidos/` kind the standard does not name, is a fault; a tool's owner never is.
+- **`folders`**: every folder at the top of the project, each a `name` and `description`, and `owned_by` when something owns it. A folder, a category, and a variant may carry `title`, the name people read; absent, tools show `name`. `name` remains the path and the key everything refers to, and a tool never matches a path or a grouping value against `title`. A `@eidos/collections` folder also carries `variants` (`default: true` marks the collection's default; with none marked, it has none) and `grouping`, which lists its categories under `groups`. A category may name its own default with `default_variant`, one of the collection's variants. A malformed owner, or an `@eidos/` kind the standard does not name, is a fault; a tool's owner never is.
 - **`properties`**: one block per owner. `core` holds the standard properties, rewritten by a migration. `custom` is the owner's. `tools.<tool>` is that tool's alone. The six keys the standard names are the standard's; any other key on an entry is a tool's.
 - **`vocabulary`**: the project's own terms. Starts empty.
 - **`index`**: every collection's blueprints, rebuilt wholesale by whatever indexes the project, which touches no other key.
@@ -153,7 +154,9 @@ Everything a human reads in the tree follows `naming`. Absent means `kebab-case`
 | ------------------------ | ------------------------- | ----------------- | ------------------------------------- |
 | **kebab-case** (default) | `blueprint-title-here.md` | `category-name/`  | readable everywhere, no `%20`         |
 | **TitleCase**            | `BlueprintTitleHere.md`   | `CategoryName/`   | space-free, capitalized               |
-| **Title Case**           | `Blueprint Title Here.md` | `Category Name/`  | reads like prose, `%20` in every link |
+| **Title Case** (deprecated) | `Blueprint Title Here.md` | `Category Name/`  | reads like prose, `%20` in every link |
+
+Title Case stays valid in a project that has it, and a tool should not create a new one: spaces in a path need quoting in every script.
 
 Exceptions: `.eidos/` is lowercase, `README.md` keeps its name, a grouping value matches its folder exactly, a folder a tool owns is named as the tool says, and nothing inside a folder the standard does not own is held to the convention.
 

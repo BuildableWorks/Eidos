@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 **Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your Eidos folders need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
+## [5.10.0] - 2026-11-05 — Standard: 5.10.0
+
+**The standard moves to 5.10.0: a folder, a category, and a variant may carry a title, and Title Case is deprecated.** A folder's `name` was both its path and the only name a tool had to show, so a project chose between readable paths and readable names. The two now come apart, as they always have for a blueprint.
+
+### Added
+
+- **`title`.** Optional on a `folders` entry, a category, and a variant: the name people read. Absent, tools show `name`. `name` remains the path and the key everything refers to, and a tool never matches a path or a grouping value against `title`.
+
+### Changed
+
+- **Title Case is deprecated.** It stays valid in a project that has it, and a tool should not create a new one: spaces in a path need quoting in every script.
+- **The seeds, the schema, and the skills.** `eidos_version` in every seed is 5.10.0, `schema/framework.schema.yaml` takes `title`, and the migrate skill names the hop.
+
+### Upgrading a project
+
+Set `eidos_version: 5.10.0`. Nothing else has to move.
+
 ## [5.9.0] - 2026-11-03 — Standard: 5.9.0
 
 **The standard moves to 5.9.0: a collection's groups are called categories.** A group read as nothing in particular, and Eidos online now gathers projects into groups, so a collection's one-level sub-folders take a word of their own. The Terms table gains category, a declared sub-folder of a collection that the collection may call by a label of its own (Domains, Parts), and the prose says category wherever it said group. Nothing on disk is renamed, so every project on 5.8.0 conforms as it stands. `versions/v5.9.0.md` is the snapshot.
