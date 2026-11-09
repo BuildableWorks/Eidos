@@ -6,6 +6,10 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
+## 5.10.0 → 5.11.0
+
+**Additive: set `eidos_version: 5.11.0`.** A top-level doc may open with frontmatter: the properties whose `applies_to` names `top_level`, and `id`, unique across the project, so a doc can be pointed at the way a blueprint is. The doc's `title` and its one line stay under `top_level`. `all` keeps meaning every collection, so a property the project declares reaches no doc until the owner adds `top_level` to its list. A doc with no frontmatter conforms, and a check reports nothing new for it; a doc that already opened with frontmatter has its keys read now, so a key no row scopes to `top_level` is surfaced, the way an undeclared key on a blueprint is. Giving each doc an `id` is the owner's choice, mechanical through the CLI.
+
 ## 5.9.0 → 5.10.0
 
 **Additive: set `eidos_version: 5.10.0`.** A `folders` entry, a category, and a variant may carry `title`, the name people read, apart from the `name` that is the path. Title Case is marked deprecated: it stays valid in a project that has it, and a tool should not create a new one. A framework without `title` conforms, and a project in Title Case conforms. Moving a project off Title Case is the owner's choice, mechanical through `eidos configure:naming`.

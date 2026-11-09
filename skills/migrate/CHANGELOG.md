@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 **Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your Eidos folders need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
+## [5.11.0] - 2026-11-09 — Standard: 5.11.0
+
+**The standard moves to 5.11.0: a top-level doc may carry properties.** A top-level doc had nowhere to say who owns it, where it stands, or anything else a blueprint says in its frontmatter, and nothing could point at it by an id. It may now open with frontmatter, checked as a blueprint's is.
+
+### Added
+
+- **`top_level` in `applies_to`.** A property whose list names `top_level` applies to every top-level doc. `all` still means every collection, so no property a project declares reaches its docs until the owner says so.
+- **Properties on a top-level doc.** A doc's frontmatter holds the properties that apply to `top_level`, and `id`, unique across the project. Its `title` and one line stay under `top_level`, so it carries no `title`, `summary`, or `variant`. A doc with no frontmatter, or none with `id`, conforms.
+
+### Changed
+
+- **The seeds, the schema, and the skills.** `eidos_version` in every seed is 5.11.0, `schema/framework.schema.yaml` quotes the new `applies_to` wording, and the migrate skill names the hop.
+
+### Upgrading a project
+
+Set `eidos_version: 5.11.0`. Nothing else has to move.
+
 ## [5.10.0] - 2026-11-05 — Standard: 5.10.0
 
 **The standard moves to 5.10.0: a folder, a category, and a variant may carry a title, and Title Case is deprecated.** A folder's `name` was both its path and the only name a tool had to show, so a project chose between readable paths and readable names. The two now come apart, as they always have for a blueprint.

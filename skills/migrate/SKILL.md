@@ -48,6 +48,7 @@ If a snapshot is missing, say so. Never fabricate a version's contract.
 
 Full detail in `versions/MIGRATIONS.md`.
 
+- **5.11.0**: additive; a top-level doc may open with frontmatter (`id` and the properties whose `applies_to` names `top_level`), and `all` still means every collection. Set the version; giving the docs ids is the owner's choice.
 - **5.10.0**: additive; a `folders` entry, a category, and a variant may carry `title`, and Title Case is deprecated, still valid. Set the version; moving a project off Title Case is the owner's choice, through `eidos configure:naming`.
 - **5.9.0**: prose only; a collection's groups are now called categories, the `variant` property's meaning says its category's default, and the seeds' grouping properties say category (the `grouping` and `groups` keys and the index's `group` stay). Bump; rewrite the standard properties; offer the seed's new meanings where a project still carries the 5.8.0 wording word for word.
 - **5.8.0**: prose only; the Terms table names the Core, the layout shows `<Project>/` with no default folder, and the prose says standard properties (the `core` key stays). Nothing a project holds changes. Bump.

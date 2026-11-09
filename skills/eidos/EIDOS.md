@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 5.10.0
+**Version:** 5.11.0
 
 Eidos is a way to define a product in markdown: an app, a book, a study, anything work produces that has a shape. The structure is data in a hidden folder that a tool can check against; the product is written in markdown against that structure. One file is the complete source of truth for one unit of the product, as true of something planned as of something long shipped.
 
@@ -20,9 +20,9 @@ This file is the contract: the terms, the layout, and the rules. It names no col
 | **unit**          | What one blueprint defines: a spec, a chapter, an investigation. Templates are named for it, singular.                                                                                                                                                                                                                                                                                                                                                |
 | **template**      | The body a collection's blueprints follow: sections in order, under set names. Body only. One file per variant in `.eidos/templates/`.                                                                                                                                                                                                                                                                                                                |
 | **variant**       | One of a collection's templates (`<unit>.<variant>.md`). The collection, or a category in it, may name a default; a blueprint on another says so in `variant`.                                                                                                                                                                                                                                                                                        |
-| **property**      | One frontmatter field: name, type, which collections it applies to, whether required, meaning, and options when closed. The whole table is the framework's Properties.                                                                                                                                                                                                                                                                                |
+| **property**      | One frontmatter field: name, type, which collections (or the top-level docs) it applies to, whether required, meaning, and options when closed. The whole table is the framework's Properties.                                                                                                                                                                                                                                                        |
 | **vocabulary**    | The framework's table of words used on purpose: what each means and what it is not.                                                                                                                                                                                                                                                                                                                                                                   |
-| **top-level doc** | A one-of-a-kind file at the top of the project, listed in the framework document. No template; the body is never validated.                                                                                                                                                                                                                                                                                                                           |
+| **top-level doc** | A one-of-a-kind file at the top of the project, listed in the framework document. No template; the body is never validated. It may open with properties, checked as a blueprint's are.                                                                                                                                                                                                                                                                |
 | **Core**          | The part of the project that defines the product: the top-level docs, the blueprints in the collections, and the records a tool keeps for the product (decisions, for example). A blueprint is one piece of it. The standard checks the top-level docs and the collections; a record is documentation in the Core while its folder stays its tool's. A draft is not in it until published. The framework is the shape the Core takes, not part of it. |
 | **role**          | How an agent talks to one kind of person. `.eidos/me.md` says which role is in the seat.                                                                                                                                                                                                                                                                                                                                                              |
 | **plugin**        | A tool's own folder, `.eidos/plugins/<name>/`, and any project folder it owns. The standard reads none of it.                                                                                                                                                                                                                                                                                                                                         |
@@ -71,7 +71,7 @@ The top level of `.eidos/` is the standard's. A tool keeps what it needs in `.ei
 One per project, `Framework.yaml` or `.yml`, snake_case, comments welcome. Every path is relative to `.eidos/`.
 
 ```yaml
-eidos_version: 5.10.0
+eidos_version: 5.11.0
 naming: kebab-case            # kebab-case (default) | TitleCase | Title Case
 top_level:
   - { title: <Title>, path: ../<Doc>.md, description: one line }
@@ -94,6 +94,7 @@ properties:
   custom:
     - { name: <name>, type: Text, applies_to: all, required: true, meaning: one line }
     - { name: <name>, type: Text, applies_to: [<Collection>], options: [<Value>, <Value>], meaning: one line }
+    - { name: <name>, type: Text, applies_to: [top_level], meaning: one line }   # the top-level docs
   tools:
     <tool>:
       - { name: <name>, type: Text, applies_to: all, meaning: one line }
@@ -119,7 +120,7 @@ A template is body only: sections in order, under set names, with guidance. Fron
 Each entry: `name`, `type`, `applies_to`, `required`, `meaning`, and `options` when the value is one of a closed set.
 
 - **type** is one of Text, List, Number, Checkbox, Date, Date & time, Object, matched in any case; any other is a fault. An Object is a mapping whose values are scalars, lists, or further mappings. The standard declares no keys inside it: what they mean is the owner's, or the tool's that writes them.
-- **applies_to** is `all` or a list of collections.
+- **applies_to** is `all` or a list of collections, where `top_level` names the top-level docs. `all` is every collection; a property reaches the top-level docs only when its list names `top_level`, and `top_level` is never a collection's name.
 - **required** (absent = `false`): a required property is generated into every new blueprint and surfaced when missing. An optional one is written when it has a value; its absence is never a gap. An Object holding no key (absent, null, or `{}`) is empty.
 - **options**: an ordered, non-empty list of allowed values, compared exactly. An off-list value is surfaced, never refused. An empty list is a fault, as is `options` on an Object. No default rides with it. `variant` and a grouping property take their sets from the structure and never carry `options`.
 
@@ -133,6 +134,8 @@ The block a property sits in owns it, and only the owner writes there. The stand
 | `variant` | Text | no       | Which variant this blueprint follows. Absent = its category's default, else the collection's. |
 
 A tool that scaffolds a blueprint writes the variant it resolved; with no default at either level, the person picks. Moving a blueprint to another category never changes its `variant`.
+
+**A top-level doc may carry properties too.** Its frontmatter holds the properties whose `applies_to` names `top_level`, and `id`, unique across the project like a blueprint's, so a link, a comment, or a tool can point at the doc by it. A doc's `title` and its one line stay under `top_level`, so it carries no `title`, `summary`, or `variant`. A doc with no frontmatter conforms, and so does one without `id`; a required property that applies to `top_level` is surfaced where a doc lacks it, as on a blueprint.
 
 Eidos defines no custom properties. Status, dates, grouping, dependencies: all the framework's choice.
 
@@ -213,5 +216,5 @@ Semantic Versioning. This file's version moves only when its text moves; a frame
 - **Leave plugins, regions, and owned folders to their owners.** Carry them across as found; fault only an opener with no closer.
 - **Navigate by the framework document,** not the tree: `top_level`, `folders`, `index`. Check the project against it and surface what is missing on either side; never invent a description, never delete a file.
 - **Authoring:** take the Properties table, Vocabulary, naming, and the collection's variants; generate frontmatter from the required properties; follow the template's sections, pressing hardest on non-goals; where the owner is vague, ask.
-- **Validating:** frontmatter against every block of the Properties table, each value against its type and a type outside the list faulted; body against the blueprint's variant; a category's `default_variant` the collection does not declare surfaced like an unknown variant; a blueprint without `variant` and no default in its category or collection surfaced as a gap; links resolve; no work-tracking fields; near-misses flagged. Surface, don't block.
+- **Validating:** frontmatter, a blueprint's and a top-level doc's, against every block of the Properties table, each value against its type and a type outside the list faulted; body against the blueprint's variant; a category's `default_variant` the collection does not declare surfaced like an unknown variant; a blueprint without `variant` and no default in its category or collection surfaced as a gap; links resolve; no work-tracking fields; near-misses flagged. Surface, don't block.
 - **Facilitate, don't author.** Never invent a blueprint's purpose or hand back a finished one to rubber-stamp.

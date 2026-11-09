@@ -1,11 +1,11 @@
-# The rules EIDOS.md 5.9.0 sets for a framework document, `.eidos/Framework.yaml`, as a JSON Schema
+# The rules EIDOS.md 5.11.0 sets for a framework document, `.eidos/Framework.yaml`, as a JSON Schema
 # (draft 2020-12) written in YAML. It is a rule set applied to the parsed YAML: the framework stays
 # YAML. Each part says the EIDOS.md section it comes from. Where EIDOS.md leaves a thing open (a
 # tool's keys on an entry, the generated index), the schema allows it rather than forbids it.
 # Checked by `npm run check:frameworks`; frozen per release beside the standard in versions/.
 $schema: https://json-schema.org/draft/2020-12/schema
 $id: https://github.com/BuildableWorks/Eidos/schema/framework.schema.yaml
-title: Eidos framework document (Framework.yaml), standard 5.9.0
+title: Eidos framework document (Framework.yaml), standard 5.11.0
 description: >-
   EIDOS.md, `Framework.yaml`: "One per project, `Framework.yaml` or `.yml`, snake_case, comments
   welcome. Every path is relative to `.eidos/`." The keys are the ones its sample names.
@@ -213,8 +213,10 @@ $defs:
         x-says: is not one of the seven types (Text, List, Number, Checkbox, Date, Date & time, Object), matched in any case
         pattern: '^([Tt][Ee][Xx][Tt]|[Ll][Ii][Ss][Tt]|[Nn][Uu][Mm][Bb][Ee][Rr]|[Cc][Hh][Ee][Cc][Kk][Bb][Oo][Xx]|[Dd][Aa][Tt][Ee] & [Tt][Ii][Mm][Ee]|[Dd][Aa][Tt][Ee]|[Oo][Bb][Jj][Ee][Cc][Tt])$'
       applies_to:
-        description: 'Properties: "applies_to is `all` or a list of collections."'
-        x-says: is neither all nor a list of collections
+        description: >-
+          Properties: "applies_to is `all` or a list of collections, where `top_level` names the
+          top-level docs."
+        x-says: is neither all nor a list of collections (and top_level)
         oneOf:
           - const: all
           - type: array
