@@ -48,6 +48,7 @@ If a snapshot is missing, say so. Never fabricate a version's contract.
 
 Full detail in `versions/MIGRATIONS.md`.
 
+- **5.13.0**: additive; a template is opt-in, so a blueprint with no `variant` and no default conforms and a collection may declare no variants. Set the version; nothing else moves.
 - **5.12.0**: mechanical; a collection's folders nest to any depth and a blueprint may sit beside them, and a category is a folder. Move `grouping` to `label`, `folder_property`, and `folders`, writing `loose_files: false` and `undeclared_folders: false` where a collection had a grouping; rewrite the standard properties; the next index build writes `folder` for `group`. A `category` Vocabulary row is the owner's.
 - **5.11.0**: additive; a top-level doc may open with frontmatter (`id` and the properties whose `applies_to` names `top_level`), and `all` still means every collection. Set the version; giving the docs ids is the owner's choice.
 - **5.10.0**: additive; a `folders` entry, a category, and a variant may carry `title`, and Title Case is deprecated, still valid. Set the version; moving a project off Title Case is the owner's choice, through `eidos configure:naming`.

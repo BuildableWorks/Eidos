@@ -53,7 +53,7 @@ A folder, variant, property, or term nobody thought through reads as meaningful 
 
 ## Defaults
 
-A collection's default is the variant marked `default: true`; with none marked, it has none. A folder may name its own with `default_variant` on its entry under the collection's `folders`, one of the collection's variants, and it holds for everything beneath that folder until a deeper one names its own; set or clear it as the owner says. Neither touches a blueprint: one without `variant` follows the nearest default on its folder's path, else the collection's, and one with neither is a gap `eidos` surfaces. Renaming or removing a variant follows every folder that names it.
+A collection's default is the variant marked `default: true`; with none marked, it has none. A folder may name its own with `default_variant` on its entry under the collection's `folders`, one of the collection's variants, and it holds for everything beneath that folder until a deeper one names its own; set or clear it as the owner says. Neither touches a blueprint: one without `variant` follows the nearest default on its folder's path, else the collection's, and one with neither follows no template and conforms. A collection may declare no variants at all. Renaming or removing a variant follows every folder that names it.
 
 ## Properties
 

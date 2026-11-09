@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 5.12.0
+**Version:** 5.13.0
 
 Eidos is a way to define a product in markdown: an app, a book, a study, anything work produces that has a shape. The structure is data in a hidden folder that a tool can check against; the product is written in markdown against that structure. One file is the complete source of truth for one unit of the product, as true of something planned as of something long shipped.
 
@@ -73,7 +73,7 @@ The top level of `.eidos/` is the standard's. A tool keeps what it needs in `.ei
 One per project, `Framework.yaml` or `.yml`, snake_case, comments welcome. Every path is relative to `.eidos/`.
 
 ```yaml
-eidos_version: 5.12.0
+eidos_version: 5.13.0
 naming: kebab-case            # kebab-case (default) | TitleCase | Title Case
 top_level:
   - { title: <Title>, path: ../<Doc>.md, description: one line }
@@ -113,7 +113,7 @@ index:                        # generated; never hand-edited
 ```
 
 - **`top_level`**: every file at the top of the project, each a `title`, `path`, and `description`.
-- **`folders`**: every folder at the top of the project, each a `name` and `description`, and `owned_by` when something owns it. A folder, a collection's folder, and a variant may carry `title`, the name people read; absent, tools show `name`. `name` remains the path and the key everything refers to, and a tool never matches a path or a folder property's value against `title`. A `@eidos/collections` folder also carries `variants` (`default: true` marks the collection's default; with none marked, it has none), and may carry `label`, `folder_property`, `loose_files`, `undeclared_folders`, and `folders`, the folders it declares, each with `folders` of its own. A collection's folder may name a default with `default_variant`, one of the collection's variants. A malformed owner, or an `@eidos/` kind the standard does not name, is a fault; a tool's owner never is.
+- **`folders`**: every folder at the top of the project, each a `name` and `description`, and `owned_by` when something owns it. A folder, a collection's folder, and a variant may carry `title`, the name people read; absent, tools show `name`. `name` remains the path and the key everything refers to, and a tool never matches a path or a folder property's value against `title`. A `@eidos/collections` folder may carry `variants`, its templates, and may declare none (`default: true` marks the collection's default; with none marked, it has none), and may carry `label`, `folder_property`, `loose_files`, `undeclared_folders`, and `folders`, the folders it declares, each with `folders` of its own. A collection's folder may name a default with `default_variant`, one of the collection's variants. A malformed owner, or an `@eidos/` kind the standard does not name, is a fault; a tool's owner never is.
 - **`properties`**: one block per owner. `core` holds the standard properties, rewritten by a migration. `custom` is the owner's. `tools.<tool>` is that tool's alone. The six keys the standard names are the standard's; any other key on an entry is a tool's.
 - **`vocabulary`**: the project's own terms. Starts empty.
 - **`index`**: every collection's blueprints, rebuilt wholesale by whatever indexes the project, which touches no other key.
@@ -140,7 +140,7 @@ The block a property sits in owns it, and only the owner writes there. The stand
 | `summary` | Text | no       | One line: what this blueprint is. Feeds the index; absent, the index flags it.                |
 | `variant` | Text | no       | Which variant this blueprint follows. Absent = the nearest default on its folder's path, else the collection's. |
 
-A tool that scaffolds a blueprint writes the variant it resolved; with no default on its folder's path or the collection, the person picks. Moving a blueprint to another folder never changes its `variant`.
+A tool that scaffolds a blueprint writes the variant it resolved; with no default on its folder's path or the collection, it writes none unless the person picks one. A blueprint without `variant` and no default follows no template, and conforms: a template is offered, never owed, and whether a project insists on one is a tool's rule. Moving a blueprint to another folder never changes its `variant`.
 
 **A top-level doc may carry properties too.** Its frontmatter holds the properties whose `applies_to` names `top_level`, and `id`, unique across the project like a blueprint's, so a link, a comment, or a tool can point at the doc by it. A doc's `title` and its one line stay under `top_level`, so it carries no `title`, `summary`, or `variant`. A doc with no frontmatter conforms, and so does one without `id`; a required property that applies to `top_level` is surfaced where a doc lacks it, as on a blueprint.
 
@@ -176,7 +176,7 @@ A standard markdown link, path relative to the file it sits in, text the human t
 
 ### Bodies
 
-A blueprint's body follows its variant's template: keep the order and names, leave out a section that doesn't apply rather than leaving it empty, and write it like a person would read it. A top-level doc is loose prose, revised in place, with no template.
+A blueprint's body follows its variant's template, when it has one: keep the order and names, leave out a section that doesn't apply rather than leaving it empty, and write it like a person would read it. A blueprint with no template is its author's own sections. A top-level doc is loose prose, revised in place, with no template.
 
 ### Regions
 
@@ -223,5 +223,5 @@ Semantic Versioning. This file's version moves only when its text moves; a frame
 - **Leave plugins, regions, and owned folders to their owners.** Carry them across as found; fault only an opener with no closer.
 - **Navigate by the framework document,** not the tree: `top_level`, `folders`, `index`. Check the project against it and surface what is missing on either side; never invent a description, never delete a file.
 - **Authoring:** take the Properties table, Vocabulary, naming, and the collection's variants; generate frontmatter from the required properties; follow the template's sections, pressing hardest on non-goals; where the owner is vague, ask.
-- **Validating:** frontmatter, a blueprint's and a top-level doc's, against every block of the Properties table, each value against its type and a type outside the list faulted; body against the blueprint's variant; a folder's `default_variant` the collection does not declare surfaced like an unknown variant; a blueprint without `variant` and no default on its folder's path or in its collection surfaced as a gap; links resolve; no work-tracking fields; near-misses flagged. Surface, don't block.
+- **Validating:** frontmatter, a blueprint's and a top-level doc's, against every block of the Properties table, each value against its type and a type outside the list faulted; body against the blueprint's variant, where it has one; a folder's `default_variant` the collection does not declare surfaced like an unknown variant; a blueprint without `variant` and no default on its folder's path or in its collection valid, its body checked against nothing; links resolve; no work-tracking fields; near-misses flagged. Surface, don't block.
 - **Facilitate, don't author.** Never invent a blueprint's purpose or hand back a finished one to rubber-stamp.

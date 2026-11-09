@@ -129,8 +129,9 @@ $defs:
           x-says: names an @eidos/ kind the standard does not define; it defines @eidos/collections alone
       variants:
         description: >-
-          `folders`: "A `@eidos/collections` folder also carries `variants` (`default: true` marks
-          the collection's default; with none marked, it has none)". One default at most.
+          `folders`: "A `@eidos/collections` folder may carry `variants`, its templates, and may
+          declare none (`default: true` marks the collection's default; with none marked, it has
+          none)". One default at most.
         type: array
         items: { $ref: '#/$defs/variant' }
         contains:
