@@ -1,0 +1,19 @@
+# A collection carries the older grouping or the folder keys, never both, and a folder entry names one folder.
+eidos_version: 5.12.0
+folders:
+  - name: life
+    owned_by: "@eidos/collections"
+    description: one line
+    label: Areas
+    grouping:
+      groups: [{ name: health }]
+  - name: notes
+    owned_by: "@eidos/collections"
+    description: one line
+    folders:
+      - name: health
+        folders:
+          - name: fitness/strength
+  - name: plain
+    description: one line
+    loose_files: false

@@ -11,7 +11,7 @@ One idea, questioned until it holds still. You write no file; the output is a sh
 ## Before you ask anything
 
 - **Read `me.md`** and the role contract it names; follow it. Blank means full facilitation; offer `whoami`.
-- **Read the framework**: `Framework.yaml` for folders, variants, grouping, Properties, and Vocabulary. Ask in the project's own terms; where the owner uses a near-miss, ask which they mean. No `.eidos/` means offer `install`.
+- **Read the framework**: `Framework.yaml` for folders, variants, a collection's folders, Properties, and Vocabulary. Ask in the project's own terms; where the owner uses a near-miss, ask which they mean. No `.eidos/` means offer `install`.
 - **Read the neighbors**: the target collection's `index` entries and any adjacent blueprint. Questions asked against what exists are worth ten asked in a vacuum.
 
 ## Three passes
@@ -22,7 +22,7 @@ Run in order, as a conversation, not a script.
 
 **2. What is the intent.** Who is it for and what changes for them? What does it do that nothing here does today? What breaks if it is never made? What will it deliberately not do? Press hardest on non-goals, offering candidates to reject: "so this doesn't cover X?" is easier than an open question.
 
-**3. How it fits.** What must exist first? What does it touch? Where is the seam with the nearest existing blueprint? Does it obsolete or contradict anything written? Which category, and is "a new one" a decision made on purpose?
+**3. How it fits.** What must exist first? What does it touch? Where is the seam with the nearest existing blueprint? Does it obsolete or contradict anything written? Which folder, and is "a new one" a decision made on purpose?
 
 ## How to ask
 

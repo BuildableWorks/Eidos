@@ -1,11 +1,11 @@
-# The rules EIDOS.md 5.11.0 sets for a framework document, `.eidos/Framework.yaml`, as a JSON Schema
+# The rules EIDOS.md 5.12.0 sets for a framework document, `.eidos/Framework.yaml`, as a JSON Schema
 # (draft 2020-12) written in YAML. It is a rule set applied to the parsed YAML: the framework stays
 # YAML. Each part says the EIDOS.md section it comes from. Where EIDOS.md leaves a thing open (a
 # tool's keys on an entry, the generated index), the schema allows it rather than forbids it.
 # Checked by `npm run check:frameworks`; frozen per release beside the standard in versions/.
 $schema: https://json-schema.org/draft/2020-12/schema
 $id: https://github.com/BuildableWorks/Eidos/schema/framework.schema.yaml
-title: Eidos framework document (Framework.yaml), standard 5.11.0
+title: Eidos framework document (Framework.yaml), standard 5.12.0
 description: >-
   EIDOS.md, `Framework.yaml`: "One per project, `Framework.yaml` or `.yml`, snake_case, comments
   welcome. Every path is relative to `.eidos/`." The keys are the ones its sample names.
@@ -66,7 +66,8 @@ properties:
     description: >-
       `index`: "every collection's blueprints, rebuilt wholesale by whatever indexes the project."
       The index: each entry carries `id`, `title`, `summary` (null when absent), `path`, and
-      `group` (its category). Generated, so only its shape is checked and anything more is allowed.
+      `folder`, the folder's path from the collection, null at the top; an index written before
+      5.12.0 says `group`. Generated, so only its shape is checked and anything more is allowed.
     type: object
     additionalProperties:
       type: array
@@ -77,6 +78,7 @@ properties:
           title: { type: string }
           summary: { type: [string, 'null'] }
           path: { type: string }
+          folder: { type: [string, 'null'] }
           group: { type: [string, 'null'] }
 
 $defs:
@@ -138,17 +140,78 @@ $defs:
         minContains: 0
         maxContains: 1
         x-says: 'marks more than one variant `default: true`; a collection has one default at most'
+      label:
+        description: 'Folders: "its `label` is the collection''s own word for them (Areas, Domains, Parts)".'
+        type: string
+      folder_property:
+        description: 'The sample: "the custom property carrying the folder''s path, if one does".'
+        type: string
+        minLength: 1
+      loose_files:
+        description: 'Folders: "`loose_files: false` keeps every blueprint in a folder that holds no folders"; on when absent.'
+        type: boolean
+      undeclared_folders:
+        description: 'Folders: "`undeclared_folders: false` makes every folder be declared"; on when absent.'
+        type: boolean
+      folders:
+        description: >-
+          Folders: "A collection may declare its folders under its own `folders`, each entry the
+          shape of a top-level folder's (`name`, `title`, `description`) and `default_variant`, with
+          `folders` of its own beneath it."
+        type: array
+        items: { $ref: '#/$defs/collectionFolder' }
       grouping: { $ref: '#/$defs/grouping' }
     dependentSchemas:
       variants: { $ref: '#/$defs/collectionOnly' }
-      grouping: { $ref: '#/$defs/collectionOnly' }
+      grouping: { $ref: '#/$defs/groupingAlone' }
+      label: { $ref: '#/$defs/collectionOnly' }
+      folder_property: { $ref: '#/$defs/collectionOnly' }
+      loose_files: { $ref: '#/$defs/collectionOnly' }
+      undeclared_folders: { $ref: '#/$defs/collectionOnly' }
+      folders: { $ref: '#/$defs/collectionOnly' }
 
   collectionOnly:
-    description: 'Variants and grouping are what a `@eidos/collections` folder carries.'
+    description: 'Variants and folders are what a `@eidos/collections` folder carries.'
     required: [owned_by]
     properties:
       owned_by: { const: '@eidos/collections' }
-    x-says: 'carries variants or grouping, which only a folder owned by "@eidos/collections" has'
+    x-says: 'carries variants or folders, which only a folder owned by "@eidos/collections" has'
+
+  groupingAlone:
+    description: >-
+      Folders: "A collection carries `grouping` or the new keys, never both." The older block is
+      read as one level of folders with both settings off.
+    allOf:
+      - { $ref: '#/$defs/collectionOnly' }
+      - not:
+          anyOf:
+            - { required: [label] }
+            - { required: [folder_property] }
+            - { required: [loose_files] }
+            - { required: [undeclared_folders] }
+            - { required: [folders] }
+        x-says: 'carries the older `grouping` beside the folder keys; a collection carries one or the other'
+
+  collectionFolder:
+    description: >-
+      Folders: "A collection's folders nest to any depth, and a folder holds blueprints, folders,
+      or both." Each entry: `name`, `title`, `description`, `default_variant`, and `folders`.
+    type: object
+    required: [name]
+    properties:
+      name:
+        type: string
+        minLength: 1
+        not: { pattern: '/' }
+        x-says: 'is a path; a folder entry names one folder, and its `folders` hold the ones beneath it'
+      title: { $ref: '#/$defs/title' }
+      description: { $ref: '#/$defs/line' }
+      default_variant:
+        description: 'Folders: "A folder''s `default_variant` holds for everything beneath it until a deeper folder names its own."'
+        type: string
+      folders:
+        type: array
+        items: { $ref: '#/$defs/collectionFolder' }
 
   variant:
     type: object
@@ -168,15 +231,16 @@ $defs:
 
   title:
     description: >-
-      `folders`: "A folder, a category, and a variant may carry `title`, the name people read;
+      `folders`: "A folder, a collection's folder, and a variant may carry `title`, the name people read;
       absent, tools show `name`."
     type: string
     minLength: 1
 
   grouping:
     description: >-
-      Folders: "A collection is flat or sorted into categories. Sorted, every sub-folder is a declared category".
-      The sample: a `label`, the `property` carrying the category if one does, and the `groups`, its categories.
+      Folders: "A collection that still carries the older `grouping` block (`label`, `property`,
+      `groups`, from before 5.12.0) is read as the same collection with `label`, `folder_property`,
+      one level of `folders`, and both settings off".
     type: object
     required: [groups]
     properties:
@@ -192,7 +256,7 @@ $defs:
             title: { $ref: '#/$defs/title' }
             description: { $ref: '#/$defs/line' }
             default_variant:
-              description: '`folders`: "A category may name its own default with `default_variant`, one of the collection''s variants."'
+              description: '`folders`: "A collection''s folder may name a default with `default_variant`, one of the collection''s variants."'
               type: string
 
   property:

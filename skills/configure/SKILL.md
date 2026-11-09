@@ -12,9 +12,9 @@ You edit four keys of `.eidos/Framework.yaml` and nothing else: `top_level`, `fo
 
 A folder, variant, property, or term nobody thought through reads as meaningful while no one knows what it holds. Never invent one; if the owner offers only a name, ask for the rest.
 
-- **A folder:** `name` (in the framework's `naming`), a one-line `description`, and `owned_by` when something governs it: `"@eidos/collections"` for blueprints, `"@<tool>/<kind>"` for a tool's folder (the tool says what goes inside; never invent a kind for it), nothing for a folder the owner just keeps. A collection also needs whether it has categories (flat, or declared categories, under a label of its own) and at least one variant; marking a default is optional.
+- **A folder:** `name` (in the framework's `naming`), a one-line `description`, and `owned_by` when something governs it: `"@eidos/collections"` for blueprints, `"@<tool>/<kind>"` for a tool's folder (the tool says what goes inside; never invent a kind for it), nothing for a folder the owner just keeps. A collection also needs at least one variant; marking a default is optional. Its folders need nothing up front: they nest to any depth and are made as the work needs them. Declare one under the collection's `folders` only to give it a description or a default variant, and turn on `loose_files: false` or `undeclared_folders: false` only when the owner wants that strictness; `label` is the collection's own word for its folders.
 - **A variant:** `name` (lowercase: `full`, `micro`, `api`), a one-line `description`, and its template sections.
-- **A property:** `name` (lowercase, underscores), `type` (Text, List, Number, Checkbox, Date, Date & time, or Object for a mapping a tool writes; anything richer belongs in the body), `applies_to` (`all` or collections), `required` (default to optional), one-line `meaning`, and `options` only when the value is one of a closed set the owner controls, in the order the values run. `variant` and a grouping property never carry `options`.
+- **A property:** `name` (lowercase, underscores), `type` (Text, List, Number, Checkbox, Date, Date & time, or Object for a mapping a tool writes; anything richer belongs in the body), `applies_to` (`all` or collections), `required` (default to optional), one-line `meaning`, and `options` only when the value is one of a closed set the owner controls, in the order the values run. `variant` and a folder property never carry `options`.
 - **A term:** `term`, one-line `means`, and `not`: the near-misses, each with why it differs. Press here the way you press on non-goals; a term with nothing in `not` is not worth declaring yet.
 
 ## Boundaries
@@ -27,8 +27,8 @@ A folder, variant, property, or term nobody thought through reads as meaningful 
 
 ## Adding a folder
 
-1. Decide name, owner, and description with the owner; for a collection, its grouping and variants too, and which is the default, if any.
-2. Create the folder in the project in the naming convention. For a collection with categories, create each declared category; a category holds blueprints and nothing deeper.
+1. Decide name, owner, and description with the owner; for a collection, its variants too, which is the default, if any, and any folders the owner wants to describe now.
+2. Create the folder in the project in the naming convention. For a collection, create each folder it declares, at its path.
 3. For a collection, create the default variant's template (the first's, with none marked) in `.eidos/templates/<unit>.<variant>.md`, body only, patterned on the existing templates.
 4. Register it under `folders`:
 
@@ -42,18 +42,18 @@ A folder, variant, property, or term nobody thought through reads as meaningful 
    - { name: assets, owned_by: "@eidosmd/asset-manager", description: Images and documents the blueprints embed; the asset manager keeps them. }
    ```
 
-5. A property carrying the grouping is a property change (below). For a collection, run `index`, then point the owner to `eidos` for the first blueprint.
+5. A property carrying the folder (`folder_property`) is a property change (below). For a collection, run `index`, then point the owner to `eidos` for the first blueprint.
 
 ## Adding a variant
 
-1. Decide name, description, and template. A second variant is a lighter one to grow out of or a genuine split in kind, never a fork per category.
+1. Decide name, description, and template. A second variant is a lighter one to grow out of or a genuine split in kind, never a fork per folder.
 2. Create `.eidos/templates/<unit>.<variant>.md` from the default variant, keeping the order and names of shared sections.
 3. Register it under the collection's `variants`. If it becomes the default, move `default: true` to it alone.
-4. Existing blueprints are untouched; an absent `variant` still means its category's default, else the collection's.
+4. Existing blueprints are untouched; an absent `variant` still means the nearest default on its folder's path, else the collection's.
 
 ## Defaults
 
-A collection's default is the variant marked `default: true`; with none marked, it has none. A category may name its own with `default_variant` on its entry under `grouping.groups`, one of the collection's variants; set or clear it as the owner says. Neither touches a blueprint: one without `variant` follows its category's default, else the collection's, and one with neither is a gap `eidos` surfaces. Renaming or removing a variant follows every category that names it.
+A collection's default is the variant marked `default: true`; with none marked, it has none. A folder may name its own with `default_variant` on its entry under the collection's `folders`, one of the collection's variants, and it holds for everything beneath that folder until a deeper one names its own; set or clear it as the owner says. Neither touches a blueprint: one without `variant` follows the nearest default on its folder's path, else the collection's, and one with neither is a gap `eidos` surfaces. Renaming or removing a variant follows every folder that names it.
 
 ## Properties
 

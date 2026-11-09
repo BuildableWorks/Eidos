@@ -21,7 +21,7 @@ Tables for structured data, numbered lists for sequences, bullets for enumeratio
 
 ## Two kinds of file
 
-- **A collection blueprint** is reshaped toward its variant's template in `.eidos/templates/` (its category's default, else the collection's, unless the draft's `variant` says otherwise; with neither, ask), with frontmatter from `Framework.yaml`.
+- **A collection blueprint** is reshaped toward its variant's template in `.eidos/templates/` (the nearest default on its folder's path, else the collection's, unless the draft's `variant` says otherwise; with neither, ask), with frontmatter from `Framework.yaml`.
 - **A top-level doc** has no template. Organize by its own logic, keep the light frontmatter (`title`, `tags`, `date_created`, `date_modified`), and if it has no `top_level` entry yet, hand that back as a gap for `configure`.
 
 No `.eidos/` means offer `install` first; you template toward the framework's real structure, never a guess.
@@ -32,6 +32,6 @@ No `.eidos/` means offer `install` first; you template toward the framework's re
 2. Open the variant's template and `Framework.yaml` (Properties and Vocabulary). Read section names off the template, never from memory.
 3. Route content by meaning: what it won't do into non-goals, what is taken as given into assumptions, what is unanswered into open questions, observable outcomes among the checkable statements. Where the template has no home for a passage, say so.
 4. Format for readability, labeled the way the template asks.
-5. Fill only derivable frontmatter: `title` from the heading, dates to today. Leave `id`, a lifecycle, a grouping, and anything you can't derive honestly.
+5. Fill only derivable frontmatter: `title` from the heading, dates to today. Leave `id`, a lifecycle, a folder, and anything you can't derive honestly.
 6. List the gaps and your changes: empty sections (non-goals first), inferred structure, and each Vocabulary near-miss with the declared term beside it. Swapping a word is changing the author's words, so it goes on the list, not in the file.
 7. Hand back the file plus the list. If one dump covers several units, say so and ask how to split it rather than splitting silently.

@@ -1,7 +1,7 @@
 # The framework document: the structure this project is written in. See EIDOS.md for what each key means;
 # the `eidos` CLI edits this file. Every path is relative to this folder.
 
-eidos_version: 5.11.0
+eidos_version: 5.12.0
 
 # kebab-case | TitleCase | Title Case. Settled at install; changing it later means renaming files.
 naming: kebab-case
@@ -31,10 +31,9 @@ folders:
     variants:
       - { name: full, template: templates/investigation.full.md, description: "the complete investigation template", default: true }
       - { name: note, template: templates/investigation.note.md, description: "Intent, Open Questions, Claims, Out of Scope; grow into full" }
-    grouping:
-      label: Strands
-      property: strand
-      groups: []              # one entry per strand as they accrue: a name, a description, and optionally a default_variant
+    label: Strands
+    folder_property: strand
+    folders: []               # one entry per strand as they accrue, if you want to describe one: a name, a description, optionally a default_variant, and folders of its own
   - name: assets
     description: "Images, diagrams, and documents the blueprints link to."
 
@@ -46,15 +45,15 @@ properties:
     - { name: id, type: Text, required: true, meaning: "Stable, unique identity, in any form. Assigned once, never changed." }
     - { name: title, type: Text, required: true, meaning: "Human-readable name." }
     - { name: summary, type: Text, meaning: "One line: what this blueprint is. Feeds the index; absent, the index flags it." }
-    - { name: variant, type: Text, meaning: "Which variant this blueprint follows. Absent = its category's default, else the collection's." }
-  # Yours. The seed ships defaults; keep, scope, or drop any of them. Only the grouping is required.
+    - { name: variant, type: Text, meaning: "Which variant this blueprint follows. Absent = the nearest default on its folder's path, else the collection's." }
+  # Yours. The seed ships defaults; keep, scope, or drop any of them.
   # `eidosmd: { new: today }` is the eidos CLI's key, which the standard reads past: `eidos new` fills the date as it scaffolds a blueprint.
   custom:
     - { name: status, type: Text, applies_to: all, options: [Draft, Open, Running, Answered, Inconclusive, Abandoned], meaning: "Lifecycle stage." }
     - { name: date_created, type: Date, applies_to: all, meaning: "YYYY-MM-DD. Set once.", eidosmd: { new: today } }
     - { name: date_modified, type: Date, applies_to: all, meaning: "YYYY-MM-DD. The last change.", eidosmd: { new: today } }
     - { name: tags, type: List, applies_to: all, meaning: "Free tags." }
-    - { name: strand, type: Text, required: true, applies_to: [Investigations], meaning: "The category: matches the blueprint's sub-folder. An unknown value warns." }
+    - { name: strand, type: Text, applies_to: [Investigations], meaning: "The folder: the path of the blueprint's folder in the collection, such as a/b. A value that is not its folder warns." }
     - { name: depends_on, type: List, applies_to: [Investigations], meaning: "Investigations, data, or approvals this one needs first, each a markdown link." }
 
 # The project's own terms: term, means, not (the near-misses and why), and see (the blueprint that defines it).

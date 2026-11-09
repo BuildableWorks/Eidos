@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 **Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your Eidos folders need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
+## [5.12.0] - 2026-11-09 — Standard: 5.12.0
+
+**The standard moves to 5.12.0: a collection's folders nest, with blueprints beside them.** A collection was flat or sorted into one level of declared categories, and a blueprint left at its top was a warning. That fit a product's specs and little else: notes on a household, a course, a client practice, or a research archive each want folders inside folders, an overview beside them, and a new folder made when the work needs it.
+
+### Added
+
+- **Folders to any depth.** A collection's folders nest, and a folder holds blueprints, folders, or both. A folder's place is its path from the collection (`health/fitness`), and a folder property's value is that path.
+- **`loose_files` and `undeclared_folders`.** Both on when absent: a blueprint may sit beside folders, and a folder on disk is a folder without being declared. Turned off, they keep blueprints in the deepest folders and make every folder be declared, as categories were.
+- **A collection's own `folders`, `label`, and `folder_property`.** A declared folder carries `name`, `title`, `description`, `default_variant` (which holds for everything beneath it until a deeper folder names its own), and `folders` of its own.
+
+### Changed
+
+- **A category is a folder.** The Terms table, the layout, the Folders section, the naming table, the index section, Rule 10, and the guidance for an agent say folder. The `variant` property's meaning says the nearest default on its folder's path.
+- **The index's `group` is `folder`,** the folder's path from the collection, null at the top.
+- **The seeds** declare `label`, `folder_property`, and `folders`, and their folder properties are optional. The schema, the skills, and the migrate skill follow.
+
+### Deprecated
+
+- **`grouping`.** A collection that still carries it conforms, read as one level of folders with both settings off. It cannot sit beside the new keys.
+
+### Upgrading a project
+
+Move each `grouping` block to `label`, `folder_property`, and `folders`, and give that collection `loose_files: false` and `undeclared_folders: false` so it is checked as before. Then set `eidos_version: 5.12.0`. `versions/MIGRATIONS.md` has the details.
+
 ## [5.11.0] - 2026-11-09 — Standard: 5.11.0
 
 **The standard moves to 5.11.0: a top-level doc may carry properties.** A top-level doc had nowhere to say who owns it, where it stands, or anything else a blueprint says in its frontmatter, and nothing could point at it by an id. It may now open with frontmatter, checked as a blueprint's is.

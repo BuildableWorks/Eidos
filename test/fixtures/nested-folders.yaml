@@ -1,0 +1,30 @@
+# Folders to any depth, the two settings, and a default deep in the tree: conforms.
+eidos_version: 5.12.0
+folders:
+  - name: life
+    owned_by: "@eidos/collections"
+    description: one line
+    variants:
+      - { name: note, template: templates/note.note.md, default: true }
+      - { name: log, template: templates/note.log.md }
+    label: Areas
+    folder_property: area
+    loose_files: true
+    undeclared_folders: false
+    folders:
+      - name: health
+        description: one line
+        folders:
+          - { name: fitness, default_variant: log }
+          - name: medical
+      - name: money
+  - name: specs
+    owned_by: "@eidos/collections"
+    description: one line
+    grouping:
+      label: Domains
+      property: domain
+      groups: [{ name: identity, default_variant: note }]
+index:
+  life:
+    - { id: a, title: A, summary: null, path: health/fitness/a.md, folder: health/fitness }

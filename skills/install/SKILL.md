@@ -18,10 +18,10 @@ With a shell, and the CLI installed (`curl -fsSL https://eidosmd.com/install | s
 
 ```
 eidos seeds
-eidos init <project> --seed <seed> --naming "<convention>" --category "<Category>" --product "<Name>"
+eidos init <project> --seed <seed> --naming "<convention>" --folder "<Folder>" --product "<Name>"
 ```
 
-It installs the seed, sets `naming`, renames folders into the convention, creates every declared folder and category, scaffolds one blank blueprint per framing variant, adds the starting categories to `grouping.groups`, and builds the index. It writes no prose. `--dry-run` shows every write. On a sandboxed host, do steps 5 and 6 by hand; they are exactly what it does.
+It installs the seed, sets `naming`, renames folders into the convention, creates every declared folder, scaffolds one blank blueprint per framing variant, creates any starting folder the owner names inside the main collection, and builds the index. It writes no prose. `--dry-run` shows every write. On a sandboxed host, do steps 5 and 6 by hand; they are exactly what it does.
 
 ## Procedure
 
@@ -30,7 +30,7 @@ It installs the seed, sets `naming`, renames folders into the convention, create
 3. **Choose the project folder.** Ask where the project goes; there is no default name. Nothing points at it by path, so any folder works, and it is found by its `.eidos/`.
 4. **Choose `naming`.** kebab-case (default), TitleCase, or Title Case. It governs the whole project and changing it later means renaming files.
 5. **Install the framework.** Copy the seed's `.eidos/` to `<project>/.eidos/` and its `README.md` to `<project>/README.md`; the seed's empty folders are recreated in step 6. Set `naming`. Take every file from one seed; roles are written against their own folders. Across a device bridge, send the files with the file-delivery tool and write them to their final paths in one call; never re-type, base64, or archive them.
-6. **Scaffold the folders.** Read `folders` from the installed `Framework.yaml` and create each in the convention: the framing collection with one blank blueprint per variant (frontmatter from the Properties table, body from the template, prompts kept), the collection with categories with a sub-folder per starting category the owner names (each added to `grouping.groups` with a description they supply), and every other declared folder, empty. Fill the README's name and one line. Leave `top_level` at the README and `vocabulary` empty. Build the index.
+6. **Scaffold the folders.** Read `folders` from the installed `Framework.yaml` and create each in the convention: the framing collection with one blank blueprint per variant (frontmatter from the Properties table, body from the template, prompts kept), the main collection with a folder for each starting folder the owner names, if any (declared under the collection's `folders` only when they give it a description), and every other declared folder, empty. Fill the README's name and one line. Leave `top_level` at the README and `vocabulary` empty. Build the index.
 7. **Set who you are.** Run `whoami` into `.eidos/me.md`. Blank is fine.
 8. **Hand off.** Report the seed, what landed in `.eidos/`, and the folders scaffolded; point to `eidos` to author.
 

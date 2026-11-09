@@ -29,7 +29,19 @@ test('an owner is @<tool>/<kind>, @eidos/collections is the one @eidos/ kind, an
   assert.deepEqual(says(broken('eidos-owner.yaml')), [
     'folders[0].owned_by: names an @eidos/ kind the standard does not define; it defines @eidos/collections alone',
     'folders[1].owned_by: is not an owner (@<tool>/<kind>, lowercase letters, digits, hyphens)',
-    'folders[2]: carries variants or grouping, which only a folder owned by "@eidos/collections" has',
+    'folders[2]: carries variants or folders, which only a folder owned by "@eidos/collections" has',
+  ]);
+});
+
+test('folders nest to any depth, and the older grouping still conforms', () => {
+  assert.deepEqual(checkFramework(path.join(repo, 'test', 'fixtures', 'nested-folders.yaml')), []);
+});
+
+test('a collection carries grouping or the folder keys, never both, and a folder entry names one folder', () => {
+  assert.deepEqual(says(broken('folders.yaml')), [
+    'folders[0]: carries the older `grouping` beside the folder keys; a collection carries one or the other',
+    'folders[1].folders[0].folders[0].name: is a path; a folder entry names one folder, and its `folders` hold the ones beneath it',
+    'folders[2]: carries variants or folders, which only a folder owned by "@eidos/collections" has',
   ]);
 });
 
