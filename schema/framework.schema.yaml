@@ -208,7 +208,7 @@ $defs:
       title: { $ref: '#/$defs/title' }
       description: { $ref: '#/$defs/line' }
       default_variant:
-        description: 'Folders: "A folder''s `default_variant` holds for everything beneath it until a deeper folder names its own."'
+        description: 'Folders: "A folder''s `default_variant` holds for everything beneath it until a deeper folder names its own; `default_variant: none` gives everything beneath it no default, the collection''s included."'
         type: string
       folders:
         type: array
@@ -218,7 +218,13 @@ $defs:
     type: object
     required: [name, template]
     properties:
-      name: { type: string, minLength: 1 }
+      name:
+        description: >-
+          `folders`: "`none` is never a variant's name: a variant so named is a fault."
+        type: string
+        minLength: 1
+        not: { pattern: '^[Nn][Oo][Nn][Ee]$' }
+        x-says: is named none, which a blueprint writes in `variant` for no template
       title: { $ref: '#/$defs/title' }
       template:
         description: >-
@@ -257,7 +263,7 @@ $defs:
             title: { $ref: '#/$defs/title' }
             description: { $ref: '#/$defs/line' }
             default_variant:
-              description: '`folders`: "A collection''s folder may name a default with `default_variant`, one of the collection''s variants."'
+              description: '`folders`: "A collection''s folder may name a default with `default_variant`, one of the collection''s variants or `none`."'
               type: string
 
   property:

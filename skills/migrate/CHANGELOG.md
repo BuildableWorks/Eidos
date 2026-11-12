@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 **Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your Eidos folders need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
+## [5.14.0] - 2026-11-12 — Standard: 5.14.0
+
+**The standard moves to 5.14.0: a blueprint can follow no template anywhere.** Where a folder or collection names a default, `variant: none` lets a blueprint opt out of it, so a template stays offered and never owed.
+
+### Added
+
+- **`variant: none` follows no template.** A blueprint that says it is checked against nothing, wherever it sits. Before, leaving `variant` out in a folder with a default followed that default, with no way to say otherwise.
+- **`default_variant: none` gives a folder no default.** Everything beneath it starts from no template, the collection's default included, until a deeper folder names its own. Before, clearing a folder's default fell back to the collection's.
+
+### Changed
+
+- **`none` is reserved.** A variant named `none` is a fault, in the text and the schema. The `variant` row's meaning says `none` = no template, so the core block is rewritten.
+
+### Upgrading a project
+
+Set `eidos_version: 5.14.0` and rewrite the core block. Rename a variant named `none`, with the owner. `versions/MIGRATIONS.md` has the details.
+
 ## [5.13.1] - 2026-11-12 — Standard: 5.13.1
 
 **The standard moves to 5.13.1: the Terms table says each thing once.** The region row ended on the same sentence as the plugin row above it; it now says the standard reads nothing inside a region. Prose only; every project conforms as it stands.

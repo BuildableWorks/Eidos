@@ -25,6 +25,10 @@ test('a collection has one default at most', () => {
   assert.deepEqual(says(broken('two-defaults.yaml')), ['folders[0].variants: marks more than one variant `default: true`; a collection has one default at most']);
 });
 
+test('none is never a variant’s name', () => {
+  assert.deepEqual(says(broken('variant-none.yaml')), ['folders[0].variants[1].name: is named none, which a blueprint writes in `variant` for no template']);
+});
+
 test('an owner is @<tool>/<kind>, @eidos/collections is the one @eidos/ kind, and variants are a collection’s', () => {
   assert.deepEqual(says(broken('eidos-owner.yaml')), [
     'folders[0].owned_by: names an @eidos/ kind the standard does not define; it defines @eidos/collections alone',

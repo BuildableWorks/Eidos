@@ -1,0 +1,9 @@
+# A collection that names a variant none, the word a blueprint writes in `variant` for no template.
+eidos_version: 5.14.0
+folders:
+  - name: specs
+    owned_by: "@eidos/collections"
+    description: the product's specs
+    variants:
+      - { name: full, template: templates/spec.full.md, default: true }
+      - { name: None, template: templates/spec.none.md }

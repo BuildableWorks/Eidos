@@ -6,6 +6,10 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
+## 5.13.1 → 5.14.0
+
+**Additive, and the core block: set `eidos_version: 5.14.0` and rewrite the core block.** A blueprint may say `variant: none` to follow no template where its folder or collection names a default, and a folder may say `default_variant: none` to give everything beneath it no default, the collection's included, which 5.13.1 had no way to say: leaving `variant` out followed the default, and clearing a folder's default fell back to the collection's. `none` is reserved, so a variant named `none` is a fault. The `variant` row's meaning gains "`none` = no template", so the core block reads differently and is rewritten as on every bump. Every blueprint keeps its `variant` as written and a check reports nothing new, unless a collection declares a variant named `none`. **Needs the owner:** such a variant is renamed to a name the owner picks, and every blueprint naming it follows; offer one and never pick silently. Templates, the Vocabulary, regions, plugins, and owned folders are untouched; no file or folder moves.
+
 ## 5.13.0 → 5.13.1
 
 **Prose only: set `eidos_version: 5.13.1`; nothing else moves.** The Terms table's region row ended on the same sentence as the plugin row; it now says the standard reads nothing inside a region. The meaning is unchanged: no file, folder, property, or key moves, and a check reports nothing new.

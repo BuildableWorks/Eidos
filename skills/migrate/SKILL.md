@@ -48,6 +48,7 @@ If a snapshot is missing, say so. Never fabricate a version's contract.
 
 Full detail in `versions/MIGRATIONS.md`.
 
+- **5.14.0**: additive; `variant: none` opts a blueprint out of a default, `default_variant: none` a folder, and `none` is never a variant's name. Set the version and rewrite the core block; rename a variant named `none` with the owner.
 - **5.13.1**: prose only; bump.
 - **5.13.0**: additive; a template is opt-in, so a blueprint with no `variant` and no default conforms and a collection may declare no variants. Set the version; nothing else moves.
 - **5.12.0**: mechanical; a collection's folders nest to any depth and a blueprint may sit beside them, and a category is a folder. Move `grouping` to `label`, `folder_property`, and `folders`, writing `loose_files: false` and `undeclared_folders: false` where a collection had a grouping; rewrite the standard properties; the next index build writes `folder` for `group`. A `category` Vocabulary row is the owner's.
