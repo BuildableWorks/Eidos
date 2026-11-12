@@ -6,6 +6,10 @@ A migration is a **diff between two snapshots**, so these are conveniences, not 
 
 Each entry says what moves, what stays, and what needs a human decision.
 
+## 5.13.0 → 5.13.1
+
+**Prose only: set `eidos_version: 5.13.1`; nothing else moves.** The Terms table's region row ended on the same sentence as the plugin row; it now says the standard reads nothing inside a region. The meaning is unchanged: no file, folder, property, or key moves, and a check reports nothing new.
+
 ## 5.12.0 → 5.13.0
 
 **Additive: set `eidos_version: 5.13.0`.** A template is opt-in: a collection may declare no variants, and a blueprint without `variant` and no default on its folder's path or in its collection follows no template and conforms, where 5.12.0 surfaced it as a gap. A tool that scaffolds such a blueprint writes no `variant` unless the person picks one. Whether a project insists on a template is a tool's rule, as required sections are; the standard gains no key. Every blueprint keeps its `variant` as written, every collection keeps its variants and defaults, and a check reports nothing new; one finding goes away. The core block is unchanged. Templates, the Vocabulary, regions, plugins, and owned folders are untouched.

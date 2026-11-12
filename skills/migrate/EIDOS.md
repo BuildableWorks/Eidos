@@ -1,6 +1,6 @@
 # Eidos
 
-**Version:** 5.13.0
+**Version:** 5.13.1
 
 Eidos is a way to define a product in markdown: an app, a book, a study, anything work produces that has a shape. The structure is data in a hidden folder that a tool can check against; the product is written in markdown against that structure. One file is the complete source of truth for one unit of the product, as true of something planned as of something long shipped.
 
@@ -25,7 +25,7 @@ This file is the contract: the terms, the layout, and the rules. It names no col
 | **Core**          | The part of the project that defines the product: the top-level docs, the blueprints in the collections, and the records a tool keeps for the product (decisions, for example). A blueprint is one piece of it. The standard checks the top-level docs and the collections; a record is documentation in the Core while its folder stays its tool's. A draft is not in it until published. The framework is the shape the Core takes, not part of it. |
 | **role**          | How an agent talks to one kind of person. `.eidos/me.md` says which role is in the seat.                                                                                                                                                                                                                                                                                                                                                              |
 | **plugin**        | A tool's own folder, `.eidos/plugins/<name>/`, and any project folder it owns. The standard reads none of it.                                                                                                                                                                                                                                                                                                                                         |
-| **region**        | A span in a markdown file that a tool owns, fenced by two HTML comments carrying its name. The standard reads none of it.                                                                                                                                                                                                                                                                                                                             |
+| **region**        | A span in a markdown file that a tool owns, fenced by two HTML comments carrying its name. The standard reads nothing inside it.                                                                                                                                                                                                                                                                                                                             |
 
 A task describes work and dies when it ships. A blueprint describes the product and stays accurate for its whole life.
 
@@ -73,7 +73,7 @@ The top level of `.eidos/` is the standard's. A tool keeps what it needs in `.ei
 One per project, `Framework.yaml` or `.yml`, snake_case, comments welcome. Every path is relative to `.eidos/`.
 
 ```yaml
-eidos_version: 5.13.0
+eidos_version: 5.13.1
 naming: kebab-case            # kebab-case (default) | TitleCase | Title Case
 top_level:
   - { title: <Title>, path: ../<Doc>.md, description: one line }
