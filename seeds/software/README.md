@@ -1,27 +1,19 @@
 # {{Product}}
 
-> **Start here.** This is the project for **{{Product}}**: the source of truth for what the
-> product is, true whether or not it has been built.
+> **Start here.** This is where the team writes down what **{{Product}}** is and how it should
+> work, whether it has been built yet or not.
 
-This README is the front door. The full index and the framework live in
-[`.eidos/Framework.yaml`](.eidos/Framework.yaml); this file orients you and points the way.
+_One or two sentences: what {{Product}} is, and who it is for._
 
-## What this is
+## What's in each folder
 
-_One or two sentences: what {{Product}} is, and for whom._
+- **[Frames](frames/)**: the big picture, in four pages. Architecture shows how the system fits together. Audience covers who uses it. Criteria sets the budget, the goals, and the dates. Market says who else is out there and how this makes money. Write these first. Every feature is checked against them.
+- **[Specs](specs/)**: one page per feature or part of the product, saying what it must do and what it won't. Group related pages into folders, such as one for sign-in and one for billing. Add a page when the team starts talking about something new.
+- **[Decisions](decisions/)**: the important calls and why they were made. Each one starts as a proposal and stays open until the person in charge accepts or rejects it. Add one when a choice gives something up or changes what was agreed.
+- **[Backlog](backlog/)**: the work to do, one task per file, on a board that runs from To Do to Done. Each task says which pages it serves. Add a task when someone needs to build, fix, or check something.
+- **[Assets](assets/)**: the diagrams, mockups, screenshots, prototypes, and documents the pages point to. Add a file when a picture says it better than words.
 
-## Top-level documents
+## Where to start
 
-_Your own one-of-a-kind docs: a Vision, a set of Design Principles, a Glossary. Add them here as you write them._
-
-## Folders
-
-- **[Frames](frames/)**: what every spec is judged against: Architecture, Audience, Criteria, Market.
-- **[Specs](specs/)**: the product's units, one spec each, sorted into domains.
-- **[Decisions](decisions/)**: the calls that shaped the product, each proposed and then accepted or rejected.
-- **[Backlog](backlog/)**: the work that realizes the specs, one task each, on a board.
-- **[Assets](assets/)**: the diagrams, mockups, prototypes, and documents the blueprints link to.
-
----
-
-_An Eidos project. Its framework lives in [`.eidos/`](.eidos/); `eidos check` validates it and `eidos index` keeps the index current._
+1. Write the Audience and Criteria pages in Frames: who this is for, and what it has to be by when.
+2. Add a page in Specs for the first feature you want to build.

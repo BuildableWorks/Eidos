@@ -41,6 +41,8 @@ check:
   warn_section_order: true
   warn_unknown_properties: true
 installed: []
+home:
+  overview: README.md
 icons:
   folders:
     frames:
