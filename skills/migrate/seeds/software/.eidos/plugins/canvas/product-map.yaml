@@ -1,0 +1,8 @@
+# A canvas, authored in the Eidos MD app. Nodes are sketches, stickies, or blueprints; the canvas holds the flows, frames, and layout, and its comment threads are the Comments plugin's. Documented by `eidos canvas --help`.
+
+title: Product Map
+pages:
+  - id: overview
+    title: Overview
+    nodes: []
+    edges: []

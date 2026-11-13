@@ -14,4 +14,4 @@ _Publisher, self-published, serialized, a course, a newsletter first. The path f
 
 ## What Success Looks Like
 
-_Copies, readers, citations, invitations, a changed mind. Say which, and roughly how much — a book with no stated bar can't be finished._
+_Copies, readers, citations, invitations, a changed mind. Say which, and roughly how much. A book with no stated bar can't be finished._

@@ -14,9 +14,10 @@ _What you don't yet know about how to run this — an undecided measure, an unre
 
 ## Claims & Evidence
 
-_What this investigation asserts, and what supports each assertion. Label each claim **C1:**, **C2:**, … (bold, unique within this investigation). Give each its evidence and its strength; a claim with no evidence yet is still a claim — mark it so. Push data, tables, and instrument detail into a sub-section a claim points to, not onto the line. Evolves freely._
+_What this investigation asserts, and what supports each assertion. Each claim is a record, labeled **C1**, **C2**, … in order, with its evidence and its support: untested, weak, moderate, strong, or contradicted. A claim with no evidence yet is still a claim; say so rather than leave it out. Push data, tables, and instrument detail into a sub-section or a file in Data that a claim points to, not onto the line. Evolves freely._
 
-- **C1:** <!-- the assertion --> <!-- evidence: … -->
+<!-- records:section type=claim -->
+<!-- /records:section -->
 
 ## What Would Change Our Mind
 
@@ -34,8 +35,20 @@ _What this needs before it can run: data, access, approvals, instruments, or ano
 
 _How the question is actually approached: design, sample, measures, analysis. Enough that a reader can judge whether the Claims follow. Detail belongs here rather than on a claim line; a full protocol can live in its own top-level doc this section points at._
 
-## Notes & Decisions
+## Decisions
 
-_Two things under one header. **Notes**: threats to validity, things to chase, what surprised you. **Decisions**: an append-only log, one line each, with an optional but recommended date._
+_The calls that shape what this investigation can conclude: a method or analysis choice, a deviation from the plan, a change of scope, an ethics amendment. Each is a record that waits for the person who decides, marked when it was made before the data it touches was seen, and never deleted, so the path from plan to claim can be retraced._
 
-<!-- 2026-08-26: Dropped the second cohort, consent window closed. (Brenton) -->
+<!-- records:section type=decision -->
+<!-- /records:section -->
+
+## Work
+
+_The runs, analyses, reviews, and write-ups that serve this investigation, listed here from the Backlog. Add a task there for this page and it shows up here._
+
+<!-- backlog:tasks -->
+<!-- /backlog:tasks -->
+
+## Notes
+
+_Threats to validity, things to chase, what surprised you. A call that carries weight goes in Decisions, not here._

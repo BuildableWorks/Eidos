@@ -1,0 +1,138 @@
+# Backlog (backlog) settings shared by everyone in this project. Edit here, or on the Plugins page.
+statuses:
+  - To Do
+  - In Progress
+  - Waiting
+  - Done
+columns:
+  - name: To Do
+    statuses:
+      - To Do
+  - name: In Progress
+    statuses:
+      - In Progress
+  - name: Waiting
+    statuses:
+      - Waiting
+  - name: Done
+    statuses:
+      - Done
+default_status: To Do
+status_colors: {}
+status_categories:
+  To Do: todo
+  In Progress: in_progress
+  Waiting: in_progress
+  Done: done
+priorities:
+  - High
+  - Medium
+  - Low
+priority_icons: {}
+priority_colors: {}
+column_cards: 7
+forms_section: true
+milestones: []
+properties: []
+builtin_properties: []
+sections:
+  - title: Description
+    type: text
+    meaning: what the work is and why, read first
+  - title: Acceptance Criteria
+    type: checklist
+    meaning: what must be true when it is done, one line each, ticked as each is met
+types:
+  - name: default
+    title: Task
+    icon: circle
+    color: gray
+  - name: run
+    title: Run
+    icon: spark
+    color: purple
+    sections:
+      - title: What to run
+        type: text
+        meaning: the experiment, session, or collection it carries out, linked to its
+          investigation
+      - title: Checks
+        type: checklist
+        meaning: what must hold before and during the run (approval in place, instrument
+          calibrated, protocol version), one line each
+      - title: Run log
+        type: text
+        meaning: what happened, written as it happens; a departure from the protocol
+          becomes a decision record
+  - name: literature-review
+    title: Literature Review
+    icon: bookmark
+    color: blue
+    sections:
+      - title: What to find out
+        type: text
+        meaning: the question to answer, linked to the frame or investigation it serves
+      - title: Sources
+        type: links
+        meaning: what was read, one link a line
+      - title: Findings
+        type: text
+        meaning: what was learned, written as it comes; what holds goes into Prior Work
+  - name: analysis
+    title: Analysis
+    icon: diamond
+    color: teal
+    sections:
+      - title: What to find out
+        type: text
+        meaning: the question to answer, linked to the investigation it serves
+      - title: Data
+        type: links
+        meaning: the data used, one link a line
+      - title: Findings
+        type: text
+        meaning: what came out, written as it comes; one that stands goes into the
+          investigation as a claim
+  - name: draft
+    title: Draft
+    icon: square
+    color: blue
+    sections:
+      - title: What to write
+        type: text
+        meaning: the piece, what it covers and how long
+      - title: Audience
+        type: text
+        meaning: who it is for
+      - title: Key points
+        type: checklist
+        meaning: what it must say, one line each, ticked as each is covered
+  - name: review
+    title: Review
+    icon: check
+    color: purple
+    sections:
+      - title: What to review
+        type: text
+        meaning: the thing to look at, with a link to it
+      - title: Outcome
+        type: text
+        meaning: what the review found, written once it is; a call that carries weight
+          becomes a decision record
+link_types:
+  - name: blocks
+    outward: blocks
+    inward: is blocked by
+  - name: relates
+    outward: relates to
+    inward: relates to
+  - name: duplicates
+    outward: duplicates
+    inward: is duplicated by
+  - name: clones
+    outward: clones
+    inward: is cloned by
+boards: []
+sprints: false
+setup_offered: false
+milestone_properties: []

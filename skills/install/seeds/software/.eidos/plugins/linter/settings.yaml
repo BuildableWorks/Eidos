@@ -1,0 +1,4 @@
+# Linter (linter) settings shared by everyone in this project. Edit here, or on the Plugins page.
+on_save:
+  - property: date_modified
+    set: today

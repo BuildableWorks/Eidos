@@ -6,7 +6,7 @@ _First, second, or third; past or present. Whether it varies, and where._
 
 ## Register
 
-_How it sounds read aloud — plain, formal, wry, urgent. Two or three writers or books it stands near, and how it differs from each._
+_How it sounds read aloud: plain, formal, wry, urgent. Two or three writers or books it stands near, and how it differs from each._
 
 ## Rules It Keeps
 

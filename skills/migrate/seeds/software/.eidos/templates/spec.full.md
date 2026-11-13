@@ -30,7 +30,7 @@ _What it does, as observable outcomes: if it isn't listed here, it isn't promise
 
 ### External interface
 
-- **REQ4:** <!-- how it connects to users, hardware, other software, networks: UI, APIs, protocols -->
+- **REQ4:** <!-- how it connects to users, hardware, other software, networks: UI, APIs, protocols; link a mockup or prototype from assets -->
 
 ### Quality attributes
 
@@ -38,7 +38,7 @@ _What it does, as observable outcomes: if it isn't listed here, it isn't promise
 
 ## Out of Scope
 
-_What a reader might expect this spec to cover and it does not, each named and, where another spec holds it, linked there. This is where scope is held: name the neighbouring concerns one by one rather than pointing at a whole spec._
+_What a reader might expect this spec to cover and it does not, each named and, where another spec holds it, linked there. This is where scope is held: name the neighboring concerns one by one rather than pointing at a whole spec._
 
 ## Dependencies
 
@@ -46,6 +46,7 @@ _What this relies on to work, and what for: services, libraries, data, or other 
 
 ## Decisions
 
-_The calls that shaped this spec and why, one line each, newest last, with the date and who made it. Append-only: a reversal is a new line, never an edit to the old one._
+_The calls that shaped this spec and why: a trade-off the owners would want to weigh in on, a scope line drawn, a contract changed. Each is a decision record of its own, proposed and then accepted or rejected by whoever decides, and listed here as it is made. A reversal is a new decision that supersedes the old one, never an edit to it._
 
-<!-- 2026-06-17: Dropped the SMS fallback, carrier cost. (Brenton) -->
+<!-- records:section type=decision -->
+<!-- /records:section -->

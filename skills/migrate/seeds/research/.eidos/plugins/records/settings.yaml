@@ -1,0 +1,73 @@
+# Records (records) settings shared by everyone in this project. Edit here, or on the Plugins page.
+types:
+  - name: decision
+    title: Decisions
+    mode: file
+    sidebar: true
+    folder: decisions
+    numbering: ids
+    id_prefix: D
+    statuses:
+      - name: Proposed
+        category: open
+      - name: Confirmed
+        category: closed
+      - name: Rejected
+        category: cancelled
+      - name: Superseded
+        category: cancelled
+    default_status: Proposed
+    sign_off: true
+    listed: true
+    tasks: true
+    fields:
+      - name: type
+        type: list
+        options:
+          - method
+          - analysis
+          - deviation
+          - scope
+          - ethics
+        required: true
+        meanings:
+          method: "How the evidence is gathered: the design, the sample and its stopping
+            rule, a measure or an instrument. Settled before the work it governs
+            runs."
+          analysis: "How the data is turned into a claim: the model, a test or threshold,
+            an exclusion rule, how missing data is handled. Best settled before
+            the data is seen, and marked when it was not."
+          deviation: "The work departed from a plan already agreed or preregistered: what
+            changed, why, and what the change costs the claims."
+          scope: "What the program or an investigation asks or leaves out: a question
+            taken up or dropped, a population or mechanism set aside, a
+            confirmed scope reversed."
+          ethics: "Who is affected and on what terms: consent, data handling, an approval
+            sought or amended, a risk accepted."
+      - name: before_data
+        type: checkbox
+  - name: claim
+    title: Claims
+    label: C{n}
+    mode: inline
+    fields:
+      - name: evidence
+        type: text
+      - name: support
+        type: list
+        options:
+          - untested
+          - weak
+          - moderate
+          - strong
+          - contradicted
+        meanings:
+          untested: Asserted, with no evidence gathered for it yet.
+          weak: Some evidence points this way, but it would not survive a determined
+            reviewer.
+          moderate: The evidence supports it as stated, with threats to validity still
+            open.
+          strong: The evidence supports it as stated and the main threats have been
+            addressed.
+          contradicted: The evidence points the other way; the claim stays here so the
+            attempt is on record.

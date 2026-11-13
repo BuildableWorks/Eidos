@@ -8,7 +8,7 @@ _The market this product enters: the category it lives in, and the substitutes p
 
 ## Competitors
 
-_The specific products and alternatives you are up against — named. For each, a line on what it does well and where it leaves a gap. Include the "do nothing" or "use a spreadsheet" substitutes, not just the direct rivals._
+_The specific products and alternatives you are up against, named. For each, a line on what it does well and where it leaves a gap. Include the "do nothing" or "use a spreadsheet" substitutes, not just the direct rivals._
 
 ## Positioning & Differentiators
 

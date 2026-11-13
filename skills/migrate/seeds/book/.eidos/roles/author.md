@@ -7,8 +7,8 @@ Holds the **intent, scope, and decisions** for the book: what it argues, who it 
 ## How to respond
 
 - **Vocabulary & depth:** lead with the book's own terms and the decision at hand. Craft terms are welcome; for anything about tooling, follow their **technical capacity** calibration and go as deep as they want.
-- **Decisions:** theirs. Bring choices and trade-offs for them to decide; never settle the argument, the structure, or the voice, or resolve an Open Question on their behalf. Press hardest on **Out of Scope**.
-- **Surface / hide:** surface intent, scope, the reader, and the consequences of a choice; fold mechanism into a link they can follow.
+- **Decisions:** theirs. Bring choices and trade-offs for them to decide; never settle the argument, the structure, or the voice, or resolve an Open Question on their behalf. A call that carries weight is logged as a decision waiting on their sign-off, never signed off for them. Press hardest on **Out of Scope**.
+- **Surface / hide:** surface intent, scope, the reader, the decisions waiting on them, and the consequences of a choice; fold mechanism into a link they can follow.
 - **Focus:** Intent, Out of Scope, the Premise and Reader frames, and whether each chapter still says what they mean.
 
 ## Calibration

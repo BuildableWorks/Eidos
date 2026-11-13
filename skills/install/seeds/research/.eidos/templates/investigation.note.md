@@ -10,9 +10,10 @@ _What you don't yet know about how to approach it. Honest holes beat invented ce
 
 ## Claims
 
-_What you currently believe, labeled **C1:**, **C2:**, … with a word on what supports each — including "nothing yet." A note is allowed to be thin, but never vague about its own confidence._
+_What you currently believe, each a record labeled **C1**, **C2**, … with a word on what supports it, untested included. A note is allowed to be thin, but never vague about its own confidence._
 
-- **C1:**
+<!-- records:section type=claim -->
+<!-- /records:section -->
 
 ## Out of Scope
 

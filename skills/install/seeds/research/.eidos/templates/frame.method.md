@@ -2,7 +2,7 @@
 
 ## Approach
 
-_The kind of evidence this programme produces — experimental, observational, qualitative, computational, mixed — and why that kind can answer the question._
+_The kind of evidence this program produces — experimental, observational, qualitative, computational, mixed — and why that kind can answer the question._
 
 ## Standard of Evidence
 
@@ -14,4 +14,4 @@ _The ways this whole approach could mislead — selection, measurement, confound
 
 ## What You Will Share
 
-_Data, code, materials, negative results. Where they go, and when. A programme that only publishes what worked is a programme that cannot be checked._
+_Data, code, materials, negative results. Where they go, and when. A program that only publishes what worked is a program that cannot be checked._

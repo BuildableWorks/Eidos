@@ -3,7 +3,7 @@
 
 eidos_version: 5.14.0
 
-# kebab-case | TitleCase | Title Case. Settled at install; changing it later means renaming files.
+# kebab-case | TitleCase. `eidos configure:naming` moves the project to another, renaming every file and keeping each old name as its title.
 naming: kebab-case
 
 # Every file at the top of the project, one entry each.
@@ -17,25 +17,37 @@ top_level:
 folders:
   # The framing docs: what every other blueprint is judged against. One left unwritten is a gap to surface,
   # not a failure.
-  - name: Frames
+  - name: frames
+    title: Frames
     owned_by: "@eidos/collections"
     description: "What every other blueprint is judged against: the product's architecture, audience, criteria, and market."
     variants:
-      - { name: architecture, template: templates/frame.architecture.md, description: "the product as a built system", default: true }
-      - { name: audience, template: templates/frame.audience.md, description: "who it serves, and how each kind differs" }
-      - { name: criteria, template: templates/frame.criteria.md, description: "budget, scope objectives, timeline" }
-      - { name: market, template: templates/frame.market.md, description: "landscape, positioning, and how it earns" }
-  - name: Specs
+      - { name: architecture, title: Architecture, template: templates/frame.architecture.md, description: "the product as a built system", default: true }
+      - { name: audience, title: Audience, template: templates/frame.audience.md, description: "who it serves, and how each kind differs" }
+      - { name: criteria, title: Criteria, template: templates/frame.criteria.md, description: "budget, scope objectives, timeline, and the factors that move scope" }
+      - { name: market, title: Market, template: templates/frame.market.md, description: "landscape, positioning, and how it earns" }
+  - name: specs
+    title: Specs
     owned_by: "@eidos/collections"
-    description: "The product's units, one per blueprint, grouped by domain."
+    description: "The product's units, one spec per blueprint, sorted into domains that nest as deep as the product needs."
     variants:
-      - { name: full, template: templates/spec.full.md, description: "the complete spec template", default: true }
-      - { name: micro, template: templates/spec.micro.md, description: "Intent, Open Questions, Requirements, Out of Scope; grow into full" }
+      - { name: full, title: Full Spec, template: templates/spec.full.md, description: "the complete spec: intent, requirements by category, scope, dependencies, and decisions", default: true }
+      - { name: micro, title: Micro Spec, template: templates/spec.micro.md, description: "intent, open questions, requirements, and out of scope; grows into a full spec" }
     label: Domains
     folder_property: domain
-    folders: []               # one entry per domain as they accrue, if you want to describe one: a name, a description, optionally a default_variant, and folders of its own
+    folders: [] # one entry per domain as they accrue, if you want to describe one: a name, a description, optionally a default_variant, and folders of its own
   - name: assets
-    description: "Images, diagrams, and documents the blueprints link to."
+    title: Assets
+    owned_by: "@assets/files"
+    description: "Images, diagrams, documents, and prototypes the blueprints link to; files that ship together go in one bundle."
+  - name: backlog
+    title: Backlog
+    owned_by: "@backlog/tasks"
+    description: "The work that realizes the blueprints: one task per file, each naming the blueprints it serves."
+  - name: decisions
+    title: Decisions
+    owned_by: "@records/decision"
+    description: "The calls that shaped the product: one decision record per file, proposed and then accepted or rejected by whoever decides."
 
 # The property contract, one block per owner. A property applies to `all` collections or a list; a required
 # one is generated into every new blueprint and surfaced when missing; `options` closes the value to a set.
@@ -49,14 +61,19 @@ properties:
   # Yours. The seed ships defaults; keep, scope, or drop any of them.
   # `eidosmd: { new: today }` is the eidos CLI's key, which the standard reads past: `eidos new` fills the date as it scaffolds a blueprint.
   custom:
-    - { name: status, type: Text, applies_to: all, options: [Draft, Intake, In Progress, Done, Archived, Deprecated], meaning: "Lifecycle stage." }
+    - { name: status, type: Text, applies_to: all, options: [ Draft, In Review, Approved, Deprecated, Archived ], meaning: "Where the blueprint stands as a definition: Draft while it is written, In Review while the team reads it, Approved once it is agreed, Deprecated when the product moves past it, Archived when kept only for the record. The work it takes lives on the Backlog." }
     - { name: date_created, type: Date, applies_to: all, meaning: "YYYY-MM-DD. Set once.", eidosmd: { new: today } }
     - { name: date_modified, type: Date, applies_to: all, meaning: "YYYY-MM-DD. The last change.", eidosmd: { new: today } }
     - { name: tags, type: List, applies_to: all, meaning: "Free tags." }
-    - { name: domain, type: Text, applies_to: [Specs], meaning: "The folder: the path of the blueprint's folder in the collection, such as a/b. A value that is not its folder warns." }
-    - { name: depends_on, type: List, applies_to: [Specs], meaning: "Blueprints this one needs, each a markdown link." }
-    - { name: type, type: Text, applies_to: [Specs], meaning: "Soft label: drives views and filtering, never structure. e.g. feature, capability, integration." }
+    - { name: domain, type: Text, applies_to: [ specs ], meaning: "The folder: the path of the blueprint's folder in the collection, such as a/b. A value that is not its folder warns." }
+    - { name: depends_on, type: List, applies_to: [ specs ], meaning: "Blueprints this one needs, each a markdown link." }
+    - { name: type, type: Text, applies_to: [ specs ], meaning: "Soft label: drives views and filtering, never structure. e.g. feature, capability, integration." }
 
 # The project's own terms: term, means, not (the near-misses and why), and see (the blueprint that defines it).
 # Starts empty; Eidos declares none.
 vocabulary: []
+
+# Generated by `eidos index`; never hand-edited. One list per collection, in the order the markdown index would use.
+index:
+  frames: []
+  specs: []

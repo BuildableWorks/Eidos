@@ -1,0 +1,40 @@
+# Records (records) settings shared by everyone in this project. Edit here, or on the Plugins page.
+types:
+  - name: decisions
+    title: Decisions
+    label: D{n}
+    mode: file
+    sidebar: true
+    folder: decisions
+    numbering: ids
+    id_prefix: D
+    statuses:
+      - name: Proposed
+        category: open
+      - name: Settled
+        category: closed
+      - name: Withdrawn
+        category: cancelled
+    default_status: Proposed
+    sign_off: true
+    listed: true
+    tasks: true
+    fields:
+      - name: kind
+        type: list
+        options:
+          - structure
+          - scope
+          - voice
+        required: true
+        meanings:
+          structure: "where something sits: the order of chapters, a part, a split or a
+            merge"
+          scope: what the book covers or leaves out, or a promise in the Premise or Reader
+            frame widened or narrowed
+          voice: "how the book sounds: a rule the Voice frame keeps or breaks, a style
+            call for the whole manuscript"
+  - name: beats
+    title: Beats
+    label: B{n}
+    mode: inline

@@ -10,9 +10,8 @@ defaults to full facilitation and offers to record who you are.
 ## You are:
 
 <!-- Name your role and how you want to be helped. The roles this framework installed:
-     - Researcher — does the work; full methodological depth, and the calls when they own the programme.
-     - Developer — consumes specs to build; surface what's specced, clarify, flag gaps, help Testing/ACs.
-     - Stakeholder — reviews direction; explain, summarize, surface risk.
-     - Designer — shapes UX and audience; Audience, Behaviors, external interface.
-     - Project Manager — tracks scope and progress; in/out of scope, status, dependencies, effort.
+     - Researcher: does the work; full methodological depth, and the calls when they own the programme.
+     - Supervisor: the PI or advisor; holds the question and signs off the decisions.
+     - Reviewer: reads to find the hole; adversarial by design.
+     - Sponsor: funds or answers for it; needs what it can and cannot conclude.
      Or write your own. -->

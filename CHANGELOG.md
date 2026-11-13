@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 **Entries are plugin releases.** The plugin and the standard version separately: the plugin moves on every shipped release, the standard only when the text of `EIDOS.md` moves. Each entry from 4.3.2 on names the standard it ships, so **Standard: unchanged** means your Eidos folders need nothing; entries before that predate the split, when the two were one number. The current standard always lives in `EIDOS.md`; each of its releases is frozen in `versions/` under its full semver name, with the upgrade path in `versions/MIGRATIONS.md`.
 
+## [5.14.1] - 2026-11-13 — Standard: unchanged
+
+**The three seeds start a project with everything Eidos now offers, named in kebab-case with readable titles.** A new software, book, or research project opens on a README that says in plain words what goes in each folder and where to begin, and comes with a backlog, signed-off decisions, reading budgets, and icons. The standard is unchanged.
+
+### Changed
+
+- **Kebab-case names, friendly titles.** Every seed is `naming: kebab-case`: folders such as `frames/`, `specs/`, `chapters/`, and `investigations/` each keep a title (Frames, Specs, Chapters, Investigations), so the app shows the words and the disk keeps the slugs.
+- **The software seed.** Decisions and requirements are records, the backlog carries the work, a Product Map canvas draws the specs, reading budgets measure each page, ids are adaptive (`B-W04`), and a QA engineer joins the roles. The status options are Draft, In Review, Approved, Deprecated, and Archived.
+- **The book seed.** Chapters gain part and scene variants, decisions are settled by the author, beats are records, and the backlog holds drafts, revisions, and fact checks.
+- **The research seed.** Strands nest as deep as the study needs, an experiment variant joins full and note, claims and decisions are records, and data, figures, and literature have folders of their own.
+- **A front page for everyone.** Each seed's Home opens on its README, rewritten as a short map of the project for people who have never used Eidos, and the project and its collection folders carry icons, with color kept to the project's look.
+
+### Known limitations
+
+- **Install the seeds with an `eidos` newer than 0.24.0.** 0.24.0 cannot install a kebab-case seed into a Title Case project; the next release can.
+
 ## [5.14.0] - 2026-11-12 — Standard: 5.14.0
 
 **The standard moves to 5.14.0: a blueprint can follow no template anywhere.** Where a folder or collection names a default, `variant: none` lets a blueprint opt out of it, so a template stays offered and never owed.
