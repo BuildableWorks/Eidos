@@ -10,32 +10,53 @@ naming: kebab-case
 top_level:
   - title: README
     path: ../README.md
-    description: "the project's front door: what this programme asks, and pointers in."
+    description: "the project's front door: what this program asks, and pointers in."
 
 # Every folder at the top of the project, one entry each. `owned_by` names what governs it: "@eidos/collections" for
 # blueprints, "@<tool>/<kind>" for a tool's own folder. Absent, the folder is yours and nothing reads it.
 folders:
   # The framing docs: what every other blueprint is judged against. One left unwritten is a gap to surface,
   # not a failure.
-  - name: Frames
+  - name: frames
+    title: Frames
     owned_by: "@eidos/collections"
     description: "What every investigation is judged against: what is asked, what is known, what would count as knowing, and who is affected."
     variants:
-      - { name: question, template: templates/frame.question.md, description: "what the programme asks, and why it matters", default: true }
-      - { name: prior-work, template: templates/frame.prior-work.md, description: "what is already known, and where this sits" }
-      - { name: method, template: templates/frame.method.md, description: "how anyone would know, and the standard of evidence" }
-      - { name: ethics, template: templates/frame.ethics.md, description: "who is affected, what they consented to, what could go wrong" }
-  - name: Investigations
+      - { name: question, title: Question, template: templates/frame.question.md, description: "what the program asks, and why it matters", default: true }
+      - { name: prior-work, title: Prior Work, template: templates/frame.prior-work.md, description: "what is already known, and where this sits" }
+      - { name: method, title: Method, template: templates/frame.method.md, description: "how anyone would know, and the standard of evidence" }
+      - { name: ethics, title: Ethics, template: templates/frame.ethics.md, description: "who is affected, what they consented to, what could go wrong" }
+  - name: investigations
+    title: Investigations
     owned_by: "@eidos/collections"
-    description: "The programme's units, one per line of inquiry, grouped by strand."
+    description: "The program's lines of inquiry, in folders that nest: a strand, the studies in it, and the experiments in each study, with a blueprint for the strand or the study beside its folders."
     variants:
-      - { name: full, template: templates/investigation.full.md, description: "the complete investigation template", default: true }
-      - { name: note, template: templates/investigation.note.md, description: "Intent, Open Questions, Claims, Out of Scope; grow into full" }
+      - { name: full, title: Full, template: templates/investigation.full.md, description: "a line of inquiry in full: a strand's or a study's question, claims, falsifier, and scope", default: true }
+      - { name: note, title: Note, template: templates/investigation.note.md, description: "Intent, Open Questions, Claims, Out of Scope; grow into full" }
+      - { name: experiment, title: Experiment, template: templates/investigation.experiment.md, description: "one test inside a study: its prediction, design, and analysis plan written before the run, then its result" }
     label: Strands
     folder_property: strand
-    folders: []               # one entry per strand as they accrue, if you want to describe one: a name, a description, optionally a default_variant, and folders of its own
-  - name: assets
-    description: "Images, diagrams, and documents the blueprints link to."
+    folders: [] # one entry per strand as they accrue, if you want to describe one: a name, a description, optionally a default_variant, and folders of its own
+  - name: figures
+    title: Figures
+    owned_by: "@assets/files"
+    description: "Figures, diagrams, and slides the blueprints show. A figure that ships with its data and the script that draws it goes in as a bundle."
+  - name: backlog
+    title: Backlog
+    owned_by: "@backlog/tasks"
+    description: "The work that serves the investigations: runs, analyses, write-ups, and approvals, one task each."
+  - name: decisions
+    title: Decisions
+    owned_by: "@records/decision"
+    description: "The method, analysis, scope, and ethics calls, and every deviation from a plan, one file each: the record a lab notebook or a preregistration keeps."
+  - name: data
+    title: Data
+    owned_by: "@assets/files"
+    description: Small datasets, codebooks, and data dictionaries the investigations cite; a CSV opens as a table. Raw data that is large or sensitive stays in its governed store, linked by URL.
+  - name: literature
+    title: Literature
+    owned_by: "@assets/files"
+    description: The papers, preprints, and reports Prior Work cites, one file each, linked to the frames and investigations that lean on them.
 
 # The property contract, one block per owner. A property applies to `all` collections or a list; a required
 # one is generated into every new blueprint and surfaced when missing; `options` closes the value to a set.
@@ -49,13 +70,19 @@ properties:
   # Yours. The seed ships defaults; keep, scope, or drop any of them.
   # `eidosmd: { new: today }` is the eidos CLI's key, which the standard reads past: `eidos new` fills the date as it scaffolds a blueprint.
   custom:
-    - { name: status, type: Text, applies_to: all, options: [Draft, Open, Running, Answered, Inconclusive, Abandoned], meaning: "Lifecycle stage." }
+    - { name: status, type: Text, applies_to: all, options: [ Draft, Open, Running, Answered, Inconclusive, Abandoned ], meaning: "Lifecycle stage: Draft while the question is shaped, Open once it is set, Running while evidence is gathered, then Answered, Inconclusive, or Abandoned, each kept as part of what the program knows." }
     - { name: date_created, type: Date, applies_to: all, meaning: "YYYY-MM-DD. Set once.", eidosmd: { new: today } }
     - { name: date_modified, type: Date, applies_to: all, meaning: "YYYY-MM-DD. The last change.", eidosmd: { new: today } }
     - { name: tags, type: List, applies_to: all, meaning: "Free tags." }
-    - { name: strand, type: Text, applies_to: [Investigations], meaning: "The folder: the path of the blueprint's folder in the collection, such as a/b. A value that is not its folder warns." }
-    - { name: depends_on, type: List, applies_to: [Investigations], meaning: "Investigations, data, or approvals this one needs first, each a markdown link." }
+    - { name: strand, type: Text, applies_to: [ investigations ], meaning: "The folder: the path of the blueprint's folder in the collection, such as a strand or strand/study. A value that is not its folder warns." }
+    - { name: depends_on, type: List, applies_to: [ investigations ], meaning: "Investigations, data, or approvals this one needs first, each a markdown link." }
+    - { name: preregistration, type: Text, applies_to: [ investigations ], meaning: "Where the plan was registered before the data was seen, as a link (a registry entry, a timestamped protocol). Absent when it was not." }
 
 # The project's own terms: term, means, not (the near-misses and why), and see (the blueprint that defines it).
 # Starts empty; Eidos declares none.
 vocabulary: []
+
+# Generated by `eidos index`; never hand-edited. One list per collection, in the order the markdown index would use.
+index:
+  frames: []
+  investigations: []

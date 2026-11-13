@@ -14,4 +14,4 @@ _What is collected, how it is stored, who can see it, how long it lives, and wha
 
 ## What Could Go Wrong
 
-_Foreseeable harm from doing the work, and foreseeable harm from the finding being misread or misused. What you will do about each. A programme with an empty version of this section has not looked._
+_Foreseeable harm from doing the work, and foreseeable harm from the finding being misread or misused. What you will do about each. A program with an empty version of this section has not looked._

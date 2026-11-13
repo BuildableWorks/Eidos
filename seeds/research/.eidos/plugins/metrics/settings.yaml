@@ -1,0 +1,62 @@
+# Metrics (metrics) settings shared by everyone in this project. Edit here, or on the Plugins page.
+filler: true
+filler_phrases:
+  - in order to
+  - it is important to note
+  - it's important to note
+  - it is worth noting
+  - it's worth noting
+  - it should be noted
+  - needless to say
+  - it goes without saying
+  - at the end of the day
+  - for all intents and purposes
+  - as a matter of fact
+  - due to the fact that
+  - the fact that
+  - at this point in time
+  - in the event that
+  - in terms of
+  - with regard to
+  - with respect to
+  - first and foremost
+  - last but not least
+  - each and every
+  - a wide range of
+  - plays a crucial role
+  - plays a key role
+  - in today's world
+  - delve into
+  - seamless
+  - seamlessly
+  - cutting-edge
+  - state-of-the-art
+  - world-class
+  - best-in-class
+  - game-changer
+  - basically
+  - essentially
+  - arguably
+repeated-sentence: true
+near-duplicate: true
+near_duplicate_similarity: 0.7
+near_duplicate_min_words: 25
+budgets:
+  - collection: frames
+    minutes: 5
+  - collection: investigations
+    variant: full
+    minutes: 10
+  - collection: investigations
+    variant: experiment
+    minutes: 5
+  - collection: investigations
+    variant: note
+    minutes: 3
+metrics:
+  - name: claims-with-support
+    collection: investigations
+    measure: filled
+    record_type: claim
+    field: support
+    min: 100
