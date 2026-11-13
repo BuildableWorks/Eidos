@@ -41,3 +41,12 @@ check:
   warn_section_order: true
   warn_unknown_properties: true
 installed: []
+icons:
+  folders:
+    frames:
+      icon: lucide:compass
+    investigations:
+      icon: lucide:flask-conical
+  project:
+    icon: lucide:microscope
+    color: teal
