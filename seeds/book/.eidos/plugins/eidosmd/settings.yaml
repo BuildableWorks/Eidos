@@ -41,3 +41,12 @@ check:
   warn_section_order: true
   warn_unknown_properties: true
 installed: []
+icons:
+  folders:
+    frames:
+      icon: lucide:compass
+    chapters:
+      icon: lucide:library
+  project:
+    icon: lucide:book-open
+    color: orange
