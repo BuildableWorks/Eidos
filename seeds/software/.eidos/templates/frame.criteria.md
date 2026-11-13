@@ -16,4 +16,4 @@ _The limits time imposes. Hard dates, milestones, or seasons that bound the work
 
 ## Parameters & Variables
 
-_The large-scale factors that move scope — the things that, if they change, change what is feasible or sensible to build. An integration going live, a development partner coming on or dropping off, a funding milestone, a platform deadline, a key hire. Name each one and what it would change._
+_The large-scale factors that move scope: the things that, if they change, change what is feasible or sensible to build. An integration going live, a development partner coming on or dropping off, a funding milestone, a platform deadline, a key hire. Name each one and what it would change._

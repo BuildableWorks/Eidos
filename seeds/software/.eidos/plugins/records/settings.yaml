@@ -1,0 +1,42 @@
+# Records (records) settings shared by everyone in this project. Edit here, or on the Plugins page.
+types:
+  - name: decision
+    title: Decisions
+    label: D{n}
+    mode: file
+    sidebar: true
+    folder: decisions
+    numbering: ids
+    id_prefix: D
+    statuses:
+      - name: Proposed
+        category: open
+      - name: Accepted
+        category: closed
+      - name: Rejected
+        category: cancelled
+      - name: Superseded
+        category: cancelled
+    default_status: Proposed
+    sign_off: true
+    listed: true
+    tasks: true
+    fields:
+      - name: type
+        type: list
+        options:
+          - development
+          - scope
+        required: true
+        meanings:
+          development: "How it is built, where a real trade-off was made: a departure from
+            what was agreed, a changed contract (an API, a data shape, a
+            default), or a choice between alternatives that each cost something
+            lasting."
+          scope: "What the product does or leaves out: a behavior promised or dropped, a
+            boundary drawn between features or systems, or an accepted scope
+            reversed."
+  - name: requirement
+    title: Requirements
+    label: REQ{n}
+    mode: inline

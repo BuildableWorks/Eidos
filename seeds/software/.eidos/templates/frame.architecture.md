@@ -1,6 +1,6 @@
 # {{title}}
 
-_The overarching shape of the product as a built system. When the detail outgrows a single file, expand into an optional `Arch/` folder and keep this doc as the map that points into it._
+_The overarching shape of the product as a built system. When the detail outgrows a single file, give it an `architecture` folder beside this doc in Frames, its docs following no template (the folder's default variant set to none), and keep this doc as the map that points into it. Link the system diagram from assets rather than describing it twice._
 
 ## Shape
 
