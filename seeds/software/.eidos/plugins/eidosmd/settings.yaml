@@ -41,6 +41,15 @@ check:
   warn_section_order: true
   warn_unknown_properties: true
 installed: []
+icons:
+  folders:
+    frames:
+      icon: lucide:frame
+    specs:
+      icon: lucide:file-code
+  project:
+    icon: lucide:code-xml
+    color: blue
 ids:
   scheme: adaptive
   padding: 0
