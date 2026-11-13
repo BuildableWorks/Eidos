@@ -17,25 +17,39 @@ top_level:
 folders:
   # The framing docs: what every other blueprint is judged against. One left unwritten is a gap to surface,
   # not a failure.
-  - name: Frames
+  - name: frames
+    title: Frames
     owned_by: "@eidos/collections"
     description: "What every chapter is judged against: what the book argues, who it is for, how it sounds, and where it sits."
     variants:
-      - { name: premise, template: templates/frame.premise.md, description: "what the book says, and why it has to exist", default: true }
-      - { name: reader, template: templates/frame.reader.md, description: "who it is for, and what changes for them" }
-      - { name: voice, template: templates/frame.voice.md, description: "person, tense, register, and the rules the prose keeps" }
-      - { name: market, template: templates/frame.market.md, description: "shelf, comparables, and how it reaches readers" }
-  - name: Chapters
+      - { name: premise, title: Premise, template: templates/frame.premise.md, description: "what the book says, and why it has to exist", default: true }
+      - { name: reader, title: Reader, template: templates/frame.reader.md, description: "who it is for, and what changes for them" }
+      - { name: voice, title: Voice, template: templates/frame.voice.md, description: "person, tense, register, and the rules the prose keeps" }
+      - { name: market, title: Market, template: templates/frame.market.md, description: "shelf, comparables, and how it reaches readers" }
+  - name: chapters
+    title: Chapters
     owned_by: "@eidos/collections"
-    description: "The book's units, one per chapter, grouped by part."
+    description: "The book's units, one file each: parts, each chapter in them, and the scenes or sections a chapter grows, nested folder by folder."
     variants:
-      - { name: full, template: templates/chapter.full.md, description: "the complete chapter template", default: true }
-      - { name: sketch, template: templates/chapter.sketch.md, description: "Intent, Open Questions, What Happens, Out of Scope; grow into full" }
+      - { name: full, title: Chapter, template: templates/chapter.full.md, description: "a chapter in full: intent, beats, what the reader leaves with, scope, dependencies, notes, and decisions", default: true }
+      - { name: sketch, title: Chapter Sketch, template: templates/chapter.sketch.md, description: "a chapter still taking shape: intent, open questions, beats, and scope; grow it into a full chapter" }
+      - { name: part, title: Part, template: templates/chapter.part.md, description: "what one part does in the arc, each chapter it holds, and where it hands off; it sits in the part's folder beside them" }
+      - { name: scene, title: Scene or Section, template: templates/chapter.scene.md, description: one scene or section of a chapter that has grown a folder of its own; the chapter's blueprint sits beside its scenes }
     label: Parts
     folder_property: part
-    folders: []               # one entry per part as they accrue, if you want to describe one: a name, a description, optionally a default_variant, and folders of its own
+    folders: [] # one entry per part as they accrue, if you want to describe one: a name, a description, optionally a default_variant, and folders of its own
   - name: assets
+    title: Assets
+    owned_by: "@assets/files"
     description: "Images, diagrams, and documents the blueprints link to."
+  - name: backlog
+    title: Backlog
+    owned_by: "@backlog/tasks"
+    description: "The drafting and revision work, one task per file: what to write next, what is with the editor, and what is done."
+  - name: decisions
+    title: Decisions
+    owned_by: "@records/decisions"
+    description: The editorial calls on structure, scope, and voice, one file each, each waiting on the author's sign-off.
 
 # The property contract, one block per owner. A property applies to `all` collections or a list; a required
 # one is generated into every new blueprint and surfaced when missing; `options` closes the value to a set.
@@ -49,13 +63,27 @@ properties:
   # Yours. The seed ships defaults; keep, scope, or drop any of them.
   # `eidosmd: { new: today }` is the eidos CLI's key, which the standard reads past: `eidos new` fills the date as it scaffolds a blueprint.
   custom:
-    - { name: status, type: Text, applies_to: all, options: [Draft, Outlined, Drafted, Revised, Final, Cut], meaning: "Lifecycle stage." }
+    - { name: status, type: Text, applies_to: all, options: [ Idea, Outlined, Drafted, Revised, Final, Cut ], meaning: "Where the chapter or frame stands: Idea is a thought, Outlined has its beats, Drafted has prose, Revised has taken an editor's pass, Final is locked, Cut is out of the book and kept for its reasoning." }
     - { name: date_created, type: Date, applies_to: all, meaning: "YYYY-MM-DD. Set once.", eidosmd: { new: today } }
     - { name: date_modified, type: Date, applies_to: all, meaning: "YYYY-MM-DD. The last change.", eidosmd: { new: today } }
     - { name: tags, type: List, applies_to: all, meaning: "Free tags." }
-    - { name: part, type: Text, applies_to: [Chapters], meaning: "The folder: the path of the blueprint's folder in the collection, such as a/b. A value that is not its folder warns." }
-    - { name: depends_on, type: List, applies_to: [Chapters], meaning: "Chapters a reader must have read first, each a markdown link." }
+    - { name: part, type: Text, applies_to: [ chapters ], meaning: "Where the blueprint sits in Chapters: its folder's path, a part and, for a scene, its chapter, such as part-one/the-crossing. A value that is not its folder warns." }
+    - { name: depends_on, type: List, applies_to: [ chapters ], meaning: "Chapters a reader must have read first, each a markdown link." }
 
 # The project's own terms: term, means, not (the near-misses and why), and see (the blueprint that defines it).
 # Starts empty; Eidos declares none.
-vocabulary: []
+vocabulary:
+  - term: beat
+    means: One move a chapter or scene makes on the reader, in order, labeled B1, B2, and so on in What Happens.
+    not:
+      - scene, which is a file of its own under a chapter and may carry several beats
+      - draft, which is the prose; a beat is what the prose has to do
+  - term: part
+    means: "One movement of the book's arc: a folder in Chapters holding each chapter of it, with its own Part page."
+    not:
+      - section, which here is a piece of one chapter, kept as a scene or section file
+
+# Generated by `eidos index`; never hand-edited. One list per collection, in the order the markdown index would use.
+index:
+  frames: []
+  chapters: []

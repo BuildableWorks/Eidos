@@ -1,0 +1,120 @@
+# Backlog (backlog) settings shared by everyone in this project. Edit here, or on the Plugins page.
+statuses:
+  - To Do
+  - Writing
+  - With Editor
+  - Done
+columns:
+  - name: To Do
+    statuses:
+      - To Do
+  - name: Writing
+    statuses:
+      - Writing
+  - name: With Editor
+    statuses:
+      - With Editor
+  - name: Done
+    statuses:
+      - Done
+default_status: To Do
+status_colors:
+  With Editor: purple
+status_categories:
+  To Do: todo
+  Writing: in_progress
+  With Editor: in_progress
+  Done: done
+priorities:
+  - High
+  - Medium
+  - Low
+priority_icons: {}
+priority_colors: {}
+column_cards: 7
+forms_section: true
+milestones: []
+properties: []
+builtin_properties: []
+sections:
+  - title: Description
+    type: text
+    meaning: what the work is and why, read first
+  - title: Done When
+    type: checklist
+    meaning: what must be true when it is done, one line each, ticked as each is met
+types:
+  - name: default
+    title: Task
+    icon: circle
+    color: gray
+  - name: draft
+    title: Draft
+    icon: bookmark
+    color: blue
+    sections:
+      - title: Description
+        type: text
+        meaning: which chapter, part, or scene to draft, and anything to know before
+          starting, read first
+      - title: Done When
+        type: checklist
+        meaning: what the draft has to do before it goes to the editor, one line each,
+          usually the beats it must land, ticked as each is
+      - title: Writing Notes
+        type: text
+        meaning: "what came up while drafting: a beat that would not land, a source
+          still to chase, a question for the owner"
+    prefix: D
+  - name: revision
+    title: Revision
+    icon: layers
+    color: orange
+    sections:
+      - title: Description
+        type: text
+        meaning: which draft this pass is over, and what kind of pass it is (structural,
+          line, copy, or a response to readers), read first
+      - title: Notes to Answer
+        type: checklist
+        meaning: the editor's or readers' notes this pass takes on, one line each with
+          who raised it, ticked as each is answered or set aside
+      - title: Revision Notes
+        type: text
+        meaning: what changed and why, and any note set aside with the reason
+    prefix: R
+  - name: fact-check
+    title: Fact Check
+    icon: check
+    color: teal
+    sections:
+      - title: Claim
+        type: text
+        meaning: the claim, quote, or figure to check, and the chapter and beat it sits
+          in, read first
+      - title: Sources
+        type: links
+        meaning: "where it was checked: the primary source first, then anything that
+          corroborates it"
+      - title: Verdict
+        type: text
+        meaning: what the sources bear out, and what the chapter has to change if it is
+          wrong
+    prefix: F
+link_types:
+  - name: blocks
+    outward: blocks
+    inward: is blocked by
+  - name: relates
+    outward: relates to
+    inward: relates to
+  - name: duplicates
+    outward: duplicates
+    inward: is duplicated by
+  - name: clones
+    outward: clones
+    inward: is cloned by
+boards: []
+sprints: false
+setup_offered: true
+milestone_properties: []
