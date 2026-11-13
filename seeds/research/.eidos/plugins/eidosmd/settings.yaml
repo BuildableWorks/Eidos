@@ -50,3 +50,5 @@ icons:
   project:
     icon: lucide:microscope
     color: teal
+home:
+  overview: README.md
