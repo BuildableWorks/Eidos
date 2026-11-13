@@ -1,32 +1,21 @@
 # {{Product}}
 
-> **Start here.** This is the project for **{{Product}}**: the source of truth for what this
-> book is, chapter by chapter, true whether or not a word of it is drafted.
+This is where **{{Product}}** is planned, one chapter at a time. Each page says what a chapter is for and
+what it has to do, so you can see the whole book before every word is written.
 
 {{One line: what the book says, and who it is for.}}
 
-## Where things are
+## What's here
 
-- **[Frames](frames/)**: what the book argues, who reads it, how it sounds, and where it sits.
-- **[Chapters](chapters/)**: one file per chapter, in a folder per part. A part's own page sits in that folder too, and a chapter that grows scenes or sections gets a folder of its own beside it.
-- **[Decisions](decisions/)**: the editorial calls on structure, scope, and voice, each waiting on the author's sign-off.
-- **[Backlog](backlog/)**: the drafting and revision work, from To Do through Writing and With Editor to Done.
-- **[Assets](assets/)**: images, diagrams, research, and documents a chapter links to. Files that travel together, such as a cover delivery or a permissions packet, go in a bundle.
+- **[Frames](frames/)**: four short pages the rest of the book answers to. The Premise says what the book argues, the Reader says who it is for, the Voice says how it sounds, and the Market says where it sits on the shelf. Fill them in first and come back when your idea of the book changes.
+- **[Chapters](chapters/)**: one page per chapter, in a folder for each part. Add a page when you know a chapter should exist, even if you only have a sentence. A chapter that grows into scenes or sections gets a folder of its own.
+- **[Decisions](decisions/)**: the big calls about the book, like moving a chapter, cutting a scene, or changing who the book is for. Each one waits until the author agrees to it.
+- **[Backlog](backlog/)**: the writing work: drafts to write, revisions to make after an editor's notes, and facts to check. Each one moves from To Do to Writing, then With Editor, then Done.
+- **[Assets](assets/)**: pictures, research, and documents a chapter points to, such as a map, an interview, or a cover design.
 
-## Top-level documents
+The pages here describe the book. The prose itself lives wherever you like to write.
 
-_Your own one-of-a-kind docs: an Outline of the whole book, a Style Sheet (spellings, names, hyphenation), a Bibliography. Add them here as you write them._
+## Where to start
 
-The full index (every folder, its variants, and the Properties table) is in
-[`.eidos/Framework.yaml`](.eidos/Framework.yaml).
-
-## How to use it
-
-A chapter here describes what the chapter **is**: why it exists, what happens in it, and what the
-reader leaves with. It is not the draft and not a task. Write the chapter's page before the prose,
-and keep it true after: a chapter you cut stays here, marked `Cut`, so the reasoning survives.
-
-The prose lives wherever you write it. Writing it and revising it are tasks on the Backlog, each
-serving the chapter it is for, and an editor's notes become the Notes to Answer on a Revision.
-
-_An Eidos project. Its framework lives in [`.eidos/`](.eidos/); see [`.eidos/Framework.yaml`](.eidos/Framework.yaml) for the full index._
+1. Open the Premise and write, in a few sentences, what the book is about.
+2. Add a page for the first chapter you can picture, and say why it belongs in the book.

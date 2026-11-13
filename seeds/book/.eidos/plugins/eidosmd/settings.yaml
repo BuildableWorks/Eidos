@@ -50,3 +50,5 @@ icons:
   project:
     icon: lucide:book-open
     color: orange
+home:
+  overview: README.md
